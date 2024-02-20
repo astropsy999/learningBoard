@@ -1,7 +1,14 @@
-import { Typography, Box, useTheme } from "@mui/material";
-import { tokens } from "../theme";
+import { Typography, Box, useTheme } from '@mui/material';
+import { tokens } from '../theme';
+import { FC } from 'react';
+import React from 'react';
 
-const Header = ({ title, subtitle }) => {
+interface HeaderProps {
+  title: string;
+  subtitle: string;
+}
+
+const Header: FC<HeaderProps> = ({ title, subtitle }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
@@ -10,7 +17,7 @@ const Header = ({ title, subtitle }) => {
         variant="h2"
         color={colors.grey[100]}
         fontWeight="bold"
-        sx={{ m: "0 0 5px 0" }}
+        sx={{ m: '0 0 5px 0' }}
       >
         {title}
       </Typography>
