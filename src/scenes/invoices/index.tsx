@@ -3,6 +3,9 @@ import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { mockDataInvoices } from "../../data/mockData";
 import Header from "../../components/Header";
+import React from "react";
+
+type ParamsType =  { row: { cost: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined; }; }
 
 const Invoices = () => {
   const theme = useTheme();
@@ -29,7 +32,7 @@ const Invoices = () => {
       field: "cost",
       headerName: "Cost",
       flex: 1,
-      renderCell: (params) => (
+      renderCell: (params: ParamsType) => (
         <Typography color={colors.greenAccent[500]}>
           ${params.row.cost}
         </Typography>
@@ -44,7 +47,7 @@ const Invoices = () => {
 
   return (
     <Box m="20px">
-      <Header title="INVOICES" subtitle="List of Invoice Balances" />
+      <Header title="ЗАПИСЬ НА КУРСЫ" subtitle="Назначение обучающих материалов" />
       <Box
         m="40px 0 0 0"
         height="75vh"

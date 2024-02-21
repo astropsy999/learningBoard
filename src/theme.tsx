@@ -1,5 +1,7 @@
 import { createContext, useState, useMemo } from 'react';
 import { createTheme, Theme } from '@mui/material/styles';
+import { ruRU } from '@mui/material/locale';
+import { ruRU as datagridRU } from '@mui/x-data-grid';
 
 type ThemeMode = 'light' | 'dark';
 
@@ -198,6 +200,7 @@ export const themeSettings = (mode: ThemeMode) => {
         fontSize: 14,
       },
     },
+    
   };
 };
 
@@ -217,6 +220,6 @@ export const useMode = (): [Theme, { toggleColorMode: () => void }] => {
     [],
   );
 
-  const theme = useMemo(() => createTheme(themeSettings(mode)), [mode]);
+  const theme = useMemo(() => createTheme(themeSettings(mode), ruRU, datagridRU), [mode]);
   return [theme, colorMode];
 };

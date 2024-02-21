@@ -12,7 +12,9 @@ import GeographyChart from '../../components/GeographyChart';
 import BarChart from '../../components/BarChart';
 import StatBox from '../../components/StatBox';
 import ProgressCircle from '../../components/ProgressCircle';
-import React from 'react';
+import React, { FC } from 'react';
+
+
 
 const Dashboard = () => {
   const theme = useTheme();
@@ -22,7 +24,7 @@ const Dashboard = () => {
     <Box m="20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
+        <Header title="ПАНЕЛЬ ОБУЧЕНИЯ" subtitle="Общая статистика" />
 
         <Box>
           <Button
@@ -35,7 +37,7 @@ const Dashboard = () => {
             }}
           >
             <DownloadOutlinedIcon sx={{ mr: '10px' }} />
-            Download Reports
+            Скачать отчет
           </Button>
         </Box>
       </Box>
@@ -51,15 +53,15 @@ const Dashboard = () => {
         <Box
           gridColumn="span 3"
           sx={{
-            backgroundColor: colors.primary[400], // Установка цвета фона
+            backgroundColor: colors.primary[400], 
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
           }}
         >
           <StatBox
-            title="12,361"
-            subtitle="Emails Sent"
+            title="12"
+            subtitle="Писем отправлено"
             progress={0.75}
             increase="+14%"
             icon={
@@ -79,8 +81,8 @@ const Dashboard = () => {
           }}
         >
           <StatBox
-            title="431,225"
-            subtitle="Sales Obtained"
+            title="5"
+            subtitle="Уроков пройдено"
             progress={0.5}
             increase="+21%"
             icon={
@@ -100,8 +102,8 @@ const Dashboard = () => {
           }}
         >
           <StatBox
-            title="32,441"
-            subtitle="New Clients"
+            title="30"
+            subtitle="Учеников"
             progress={0.3}
             increase="+5%"
             icon={
@@ -121,8 +123,8 @@ const Dashboard = () => {
           }}
         >
           <StatBox
-            title="1,325,134"
-            subtitle="Traffic Received"
+            title="10"
+            subtitle="Курсов добавлено"
             progress={0.8}
             increase="+43%"
             icon={
@@ -154,14 +156,14 @@ const Dashboard = () => {
                 fontWeight="600"
                 color={colors.grey[100]}
               >
-                Revenue Generated
+                Успеваемость
               </Typography>
               <Typography
                 variant="h3"
                 fontWeight="bold"
                 color={colors.greenAccent[500]}
               >
-                $59,342.32
+                59%
               </Typography>
             </Box>
             <Box>
@@ -195,7 +197,7 @@ const Dashboard = () => {
             }}
           >
             <Typography color={colors.grey[100]} variant="h5" fontWeight="600">
-              Recent Transactions
+              Последнее посещение
             </Typography>
           </Box>
           {mockTransactions.map((transaction, i) => (

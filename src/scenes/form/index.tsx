@@ -3,17 +3,18 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
+import React from "react";
 
 const Form = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
-  const handleFormSubmit = (values) => {
+  const handleFormSubmit = (values: any) => {
     console.log(values);
   };
 
   return (
     <Box m="20px">
-      <Header title="CREATE USER" subtitle="Create a New User Profile" />
+      <Header title="ДОБАВИТЬ УЧЕНИКА" subtitle="Создать нового ученика" />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -47,7 +48,7 @@ const Form = () => {
                 value={values.firstName}
                 name="firstName"
                 error={!!touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
+                helperText={touched.firstName && errors.firstName ? 'Ошибка в поле "Имя"' : ''}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -60,7 +61,7 @@ const Form = () => {
                 value={values.lastName}
                 name="lastName"
                 error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
+                helperText={touched.lastName && errors.lastName ? 'Ошибка в поле "Фамилия"' : ''}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -73,7 +74,7 @@ const Form = () => {
                 value={values.email}
                 name="email"
                 error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
+                helperText={touched.email && errors.email ? 'Ошибка в поле "Email"' : ''}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
@@ -86,7 +87,7 @@ const Form = () => {
                 value={values.contact}
                 name="contact"
                 error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
+                helperText={touched.contact && errors.contact ? 'Ошибка в поле "Номер"' : ''}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
@@ -99,7 +100,7 @@ const Form = () => {
                 value={values.address1}
                 name="address1"
                 error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
+                helperText={touched.address1 && errors.address1 ? 'Ошибка в поле "Адрес"' : ''}
                 sx={{ gridColumn: "span 4" }}
               />
               <TextField
@@ -112,7 +113,7 @@ const Form = () => {
                 value={values.address2}
                 name="address2"
                 error={!!touched.address2 && !!errors.address2}
-                helperText={touched.address2 && errors.address2}
+                helperText={touched.address2 && errors.address2 ? 'Ошибка в поле "Адрес 2"' : '' }
                 sx={{ gridColumn: "span 4" }}
               />
             </Box>
