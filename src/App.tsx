@@ -23,11 +23,6 @@ function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
 
-   Base.Request.SendData('https://testerp.giapdc.ru/index.php/profile/info', {}, (data)=> {
-    console.log('data: ', data);
-    
-  })
-
 
   return (
     <ColorModeContext.Provider value={colorMode}>

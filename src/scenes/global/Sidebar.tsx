@@ -1,4 +1,4 @@
-import { FC, ReactElement, useState } from "react";
+import { FC, ReactElement, useEffect, useState } from "react";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -17,6 +17,7 @@ import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import React from "react";
+import { Base } from "../../api/Request";
 
 interface ItemProps {
   title: string,
@@ -28,6 +29,25 @@ interface ItemProps {
 
 interface SidebarProps {
   isSidebar: boolean;
+}
+
+interface CurrentUserData {
+  Email?: string;
+  GDC: number;
+  ID: number;
+  LastActivity?: number;
+  LinkedObjID?: string;
+  Locked?: boolean; 
+  Login: string;
+  MobileNumber?: string;
+  Name: string;
+  NameLinkedObjID: string;
+  PhotoName?: string;
+  Position: string;
+  father_name?: string;
+  first_name?: string;
+  last_name?: string;
+  learn_show: number;
 }
 
 const Item: React.FC<ItemProps> = ({ title, to, icon, selected, setSelected }) => {
@@ -53,6 +73,13 @@ const Sidebar: FC<SidebarProps> = () => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
+  const [currentUserData, setCurrentUserData] = useState<CurrentUserData | null>(null);
+
+  useEffect(() => {
+    Base.Request.send('https://testerp.giapdc.ru/index.php/profile/info', (data: CurrentUserData)=> {
+      setCurrentUserData(data)
+    });
+  }, []);
 
   return (
     <Box
@@ -120,10 +147,10 @@ const Sidebar: FC<SidebarProps> = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  Стужук Е.В.
+                 {currentUserData?.Name}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  Инженер
+                  {currentUserData?.Position}
                 </Typography>
               </Box>
             </Box>

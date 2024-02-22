@@ -1,5 +1,4 @@
-import { toast } from 'react-toastify';
-
+import { Base as BaseNotice } from "./Notice";
 export namespace Base {
 
 	type ResponseBase<Type extends string, Data> = {
@@ -7,9 +6,7 @@ export namespace Base {
 		data: Data
 	}
 
-
-
-	type ResponseNoticeData	= { type: 'ok' | 'info' | 'warning' | 'error', message: string, title?: string | undefined };
+	type ResponseNoticeData		= { type: 'ok' | 'info' | 'warning' | 'error', message: string, title: string };
 	type ResponseDataData		= any;
 
 	type ResponseNotice			= ResponseBase<'notice', ResponseNoticeData>
@@ -19,29 +16,27 @@ export namespace Base {
 
 	export class Response {
 
-		public static Parsing(response: ResponseInstance[], handler?: Function) {
-			for (const i in response) Response.Execute(response[i].type, response[i].data, handler);
+		public static parsing(response: ResponseInstance[], handler?: Function) {
+			for (const i in response) Response.execute(response[i].type, response[i].data, handler);
 		}
 
-		private static Execute(type: string, data: any, handler?: Function): void {
+		private static execute(type: string, data: any, handler?: Function): void {
 			switch (type) {
-				case 'data': Response.ExecuteHandler(handler, data); break;
-				case 'notice': Response.ExecuteNotice(data); break;
+				case 'data': Response.executeHandler(handler, data); break;
+				case 'notice': Response.executeNotice(data); break;
 			}
 		}
 
-		private static ExecuteHandler(handler: Function | null, data: ResponseDataData): void {
+		private static executeHandler(handler: Function | null, data: ResponseDataData): void {
 			if (handler) handler(data);
 		}
 
-		private static ExecuteNotice({type, message, title}: ResponseNoticeData): void {
-
-			
+		private static executeNotice({type, message, title}: ResponseNoticeData): void {
 			switch (type) {
-				case 'ok': toast.success(message); break;
-				case 'info': toast.info(message); break;
-				case 'warning': toast.warning(message); break;
-				case 'error': toast.error(message); break;
+				case 'ok': BaseNotice.Notice.ok(message, title); break;
+				case 'info': BaseNotice.Notice.info(message, title); break;
+				case 'warning': BaseNotice.Notice.warning(message, title); break;
+				case 'error': BaseNotice.Notice.error(message, title); break;
 			}
 		}
 

@@ -1,4 +1,4 @@
-import {Base as BaseResponse} from './Response'
+import { Base as ResponseBase } from "./Response";
 export namespace Base {
 
 	type RequestOptionsMethod			= 'get' | 'post';
@@ -13,7 +13,7 @@ export namespace Base {
 
 	export class Request {
 
-		private static Send(url: string, data: BodyInit, successHandler?: Function, alwaysHandler?: Function, errorHandler?: Function, options?: RequestOptions) {
+		private static XHR(url: string, data: BodyInit, successHandler?: Function, alwaysHandler?: Function, errorHandler?: Function, options?: RequestOptions) {
 			let method			: RequestOptionsMethod			= 'post';
 			let cache			: RequestOptionsCache			= 'no-cache';
 			let credentials		: RequestOptionsCredentials		= 'include';
@@ -32,7 +32,7 @@ export namespace Base {
 			})
 			.then(async response => {
 				let result = await response.json();
-				BaseResponse.Response.Parsing(result, successHandler);
+				ResponseBase.Response.parsing(result, successHandler);
 				if (alwaysHandler) alwaysHandler();
 			})
 			.catch(error => {
@@ -42,21 +42,25 @@ export namespace Base {
 			});
 		}
 
-		public static SendData(url: string, data: { [key: string]: string | number }, successHandler?: Function, alwaysHandler?: Function, errorHandler?: Function, options?: RequestOptions) {
-			let formData = new FormData();
-			for (const key in data) formData.append(key, data[key].toString());
-			Request.Send(url, formData, successHandler, alwaysHandler, errorHandler, options);
+		public static send(url: string, successHandler?: Function, alwaysHandler?: Function, errorHandler?: Function, options?: RequestOptions) {
+			Request.XHR(url, '', successHandler, alwaysHandler, errorHandler, options);
 		}
 
-		public static SendForm(form: HTMLFormElement, successHandler ?:Function, alwaysHandler?: Function, errorHandler?: Function, options?: RequestOptions) {
+		public static sendData(url: string, data: { [key: string]: string | number }, successHandler?: Function, alwaysHandler?: Function, errorHandler?: Function, options?: RequestOptions) {
+			let formData = new FormData();
+			for (const key in data) formData.append(key, data[key].toString());
+			Request.XHR(url, formData, successHandler, alwaysHandler, errorHandler, options);
+		}
+
+		public static sendForm(form: HTMLFormElement, successHandler ?:Function, alwaysHandler?: Function, errorHandler?: Function, options?: RequestOptions) {
 			let url = form.getAttribute('action');
 			let formData = new FormData(form);
 
-			Request.Send(url, formData, successHandler, alwaysHandler, errorHandler, options);
+			Request.XHR(url, formData, successHandler, alwaysHandler, errorHandler, options);
 		}
 
-		public static SubmitForm(element: HTMLElement, successHandler ?:Function, alwaysHandler ?:Function, errorHandler?: Function) {
-			Request.SendForm(element.closest('form'), successHandler, alwaysHandler, errorHandler);
+		public static submitForm(element: HTMLElement, successHandler ?:Function, alwaysHandler ?:Function, errorHandler?: Function) {
+			Request.sendForm(element.closest('form'), successHandler, alwaysHandler, errorHandler);
 		}
 
 	}
