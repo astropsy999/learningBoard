@@ -1,19 +1,21 @@
 // store.ts
 
-import create from "zustand";
-import { UserState, UserActions } from "../../types";
+import { create } from "zustand";
+import { UserState, UserActions, AllUserData } from "../../types";
 
-const useStore = create<UserState & UserActions>((set) => ({
+
+export const useUsers = create<UserState & UserActions>((set) => ({
   users: [],
+  allUsers: null,
   fetchCurrentUserData: () => {
     
   },
-  fetchUsers: () => {
-    // реализация запроса для получения пользователей
-  },
+  getAllUsers: (newAllUsers: AllUserData[]) => set({
+    allUsers: newAllUsers
+  }),
   addUser: (user) => {
     set((state) => ({ users: [...state.users, user] }));
   },
 }));
 
-export default useStore;
+

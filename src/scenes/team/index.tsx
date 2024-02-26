@@ -1,21 +1,46 @@
-import { Box, Typography, useTheme } from "@mui/material";
-import { DataGrid, GridColumns } from "@mui/x-data-grid";
-import { tokens } from "../../theme";
-import { mockDataTeam } from "../../data/mockData";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
+import { Box, Typography, useTheme } from "@mui/material";
+import { DataGrid, GridColumns, GridOverlay } from "@mui/x-data-grid";
+import React, { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
+import { AllUsersData } from "../../../types";
+import { Base } from "../../api/Request";
+import configApi from "../../api/config.api";
+import { url } from "../../api/url.api";
 import Header from "../../components/Header";
-import React from "react";
+import { mockDataTeam } from "../../data/mockData";
+import { useUsers } from "../../data/store";
+import { tokens } from "../../theme";
 
 const Team = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [loading, setLoading] = useState(false)
+
+  const {allUsers, getAllUsers} = useUsers() 
+  
+
+  // Вызов функции для получения всех пользователей при монтировании компонента
+  useEffect(() => {
+    setLoading(true)
+    Base.Request.send(configApi.srv + url.GetAllUsers, (data: AllUsersData)=> {
+      getAllUsers(data.users)
+      setLoading(false)
+    })
+  }, [getAllUsers]);
+
+  useEffect(() => {
+    // Вывод данных в консоль, когда allUsers изменился
+    console.log('allUsers: ', allUsers);
+  }, [allUsers]);
+  
   const columns: GridColumns = [
     { field: "id", headerName: "ID" },
     {
       field: "name",
-      headerName: "Name",
+      headerName: "ФИО" ,
       flex: 1,
       cellClassName: "name-column--cell",
     },
@@ -72,6 +97,15 @@ const Team = () => {
     },
   ];
 
+  const SkeletonOverlay = () => (
+    <GridOverlay>
+      <div style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}>
+      <Skeleton height={'100%'} style={{opacity: '0.7'}}/>
+      </div>
+    </GridOverlay>
+  );
+  
+
   return (
     <Box m="20px">
       <Header title="МОИ УЧЕНИКИ" subtitle="Список учеников" />
@@ -104,7 +138,16 @@ const Team = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={mockDataTeam} columns={columns} />
+        <DataGrid 
+          checkboxSelection 
+          rows={mockDataTeam} 
+          columns={columns} 
+          components={{
+            LoadingOverlay: SkeletonOverlay 
+          }}
+          loading={loading} 
+          />
+        <Skeleton/>
       </Box>
     </Box>
   );

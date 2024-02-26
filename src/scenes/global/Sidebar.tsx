@@ -18,6 +18,10 @@ import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import MapOutlinedIcon from "@mui/icons-material/MapOutlined";
 import React from "react";
 import { Base } from "../../api/Request";
+import configApi from "../../api/config.api";
+import { url } from "../../api/url.api";
+import Skeleton from "react-loading-skeleton";
+import 'react-loading-skeleton/dist/skeleton.css'
 
 interface ItemProps {
   title: string,
@@ -68,16 +72,37 @@ const Item: React.FC<ItemProps> = ({ title, to, icon, selected, setSelected }) =
   );
 };
 
+
+
+
 const Sidebar: FC<SidebarProps> = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
   const [currentUserData, setCurrentUserData] = useState<CurrentUserData | null>(null);
+  const [loading, setLoading] = useState(false)
+
+const avatarSrc = `${configApi.srv}${configApi.avatarUrl}${currentUserData?.PhotoName}`
+
+const SidebarUserAvatar = () => {
+  return (
+  <img
+    alt="profile-user"
+    width="100px"
+    height="100px"
+    src={avatarSrc}
+    style={{ cursor: "pointer", borderRadius: "50%" }}
+    />
+    )
+}
+  
 
   useEffect(() => {
-    Base.Request.send('https://testerp.giapdc.ru/index.php/profile/info', (data: CurrentUserData)=> {
+    setLoading(true)
+    Base.Request.send(`${configApi.srv}${url.getUserProfileData}`, (data: CurrentUserData)=> {
       setCurrentUserData(data)
+      setLoading(false)
     });
   }, []);
 
@@ -119,6 +144,7 @@ const Sidebar: FC<SidebarProps> = () => {
                 alignItems="center"
                 ml="15px"
               >
+                
                 <Typography variant="h3" color={colors.grey[100]}>
               
                 </Typography>
@@ -132,13 +158,8 @@ const Sidebar: FC<SidebarProps> = () => {
           {!isCollapsed && (
             <Box mb="25px">
               <Box display="flex" justifyContent="center" alignItems="center">
-                <img
-                  alt="profile-user"
-                  width="100px"
-                  height="100px"
-                  src={`../../assets/user.png`}
-                  style={{ cursor: "pointer", borderRadius: "50%" }}
-                />
+               
+                {!loading ? <SidebarUserAvatar/> : <Skeleton width={100} height={100} circle  />}
               </Box>
               <Box textAlign="center">
                 <Typography
@@ -147,10 +168,10 @@ const Sidebar: FC<SidebarProps> = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                 {currentUserData?.Name}
+                 {!loading ? currentUserData?.Name : <Skeleton width={180} />}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  {currentUserData?.Position}
+                 {!loading ? currentUserData?.Position : <Skeleton width={110} />}
                 </Typography>
               </Box>
             </Box>
@@ -223,7 +244,7 @@ const Sidebar: FC<SidebarProps> = () => {
               setSelected={setSelected}
             />
 
-            <Typography
+            {/* <Typography
               variant="h6"
               color={colors.grey[300]}
               sx={{ m: "15px 0 5px 20px" }}
@@ -257,7 +278,7 @@ const Sidebar: FC<SidebarProps> = () => {
               icon={<MapOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> */}
           </Box>
         </Menu>
       </ProSidebar>
