@@ -1,7 +1,7 @@
 // store.ts
 
 import { create } from 'zustand';
-import { UserState, UserActions, AllUserData, AllUsersData } from '../../types';
+import { AllUsersData, UserActions, UserState } from '../../types';
 
 export const useUsers = create<UserState & UserActions>((set) => ({
   users: [],

@@ -22,7 +22,7 @@ export namespace Base {
 
   export class Request {
     private static XHR(
-      url: string,
+      url: string | null,
       data: BodyInit,
       successHandler?: Function,
       alwaysHandler?: Function,
@@ -39,7 +39,7 @@ export namespace Base {
         if (options.credentials) credentials = options.credentials;
       }
 
-      fetch(url, {
+      fetch(url as string, {
         method: method,
         body: data,
         cache: cache,
@@ -95,18 +95,19 @@ export namespace Base {
     }
 
     public static sendForm(
-      form: HTMLFormElement,
+      form: HTMLFormElement | null | undefined,
       successHandler?: Function,
       alwaysHandler?: Function,
       errorHandler?: Function,
       options?: RequestOptions,
     ) {
-      let url = form.getAttribute('action');
-      let formData = new FormData(form);
+      let url = form?.getAttribute('action');
+      let formData;
+      if (form) formData = new FormData(form);
 
       Request.XHR(
-        url,
-        formData,
+        url as string,
+        formData as FormData,
         successHandler,
         alwaysHandler,
         errorHandler,

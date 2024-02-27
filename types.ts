@@ -36,8 +36,8 @@ export type AllUsersData = {
 
 export type UserState = {
   users: User[];
-  allUsers: AllUserData[];
-  allUsersData: AllUsersData;
+  allUsers: AllUserData[] | null;
+  allUsersData: AllUsersData | null;
 };
 
 export type UserActions = {

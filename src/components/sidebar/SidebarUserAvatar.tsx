@@ -1,6 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react';
 
-export const SidebarUserAvatar = ({ avatarSrc }) => {
+interface SidebarUserAvatarProps {
+  avatarSrc: string;
+}
+
+export const SidebarUserAvatar: FC<SidebarUserAvatarProps> = ({
+  avatarSrc,
+}) => {
   return (
     <img
       alt="profile-user"
