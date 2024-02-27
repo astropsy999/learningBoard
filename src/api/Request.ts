@@ -102,8 +102,7 @@ export namespace Base {
       options?: RequestOptions,
     ) {
       let url = form?.getAttribute('action');
-      let formData;
-      if (form) formData = new FormData(form);
+      let formData = new FormData(form);
 
       Request.XHR(
         url!,
