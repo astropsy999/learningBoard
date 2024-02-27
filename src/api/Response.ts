@@ -27,7 +27,7 @@ export namespace Base {
       if (type) {
         switch (type) {
           case 'data':
-            Response.executeHandler(handler, data);
+            Response.executeHandler(handler as Function, data);
             break;
           case 'notice':
             Response.executeNotice(data);
@@ -37,7 +37,7 @@ export namespace Base {
     }
 
     private static executeHandler(
-      handler: Function | null,
+      handler: Function,
       data: ResponseDataData,
     ): void {
       if (handler) handler(data);

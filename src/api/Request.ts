@@ -22,7 +22,7 @@ export namespace Base {
 
   export class Request {
     private static XHR(
-      url: string | null,
+      url: string,
       data: BodyInit,
       successHandler?: Function,
       alwaysHandler?: Function,
@@ -95,7 +95,7 @@ export namespace Base {
     }
 
     public static sendForm(
-      form: HTMLFormElement | null | undefined,
+      form: HTMLFormElement,
       successHandler?: Function,
       alwaysHandler?: Function,
       errorHandler?: Function,
@@ -106,8 +106,8 @@ export namespace Base {
       if (form) formData = new FormData(form);
 
       Request.XHR(
-        url as string,
-        formData as FormData,
+        url!,
+        formData!,
         successHandler,
         alwaysHandler,
         errorHandler,
@@ -122,7 +122,7 @@ export namespace Base {
       errorHandler?: Function,
     ) {
       Request.sendForm(
-        element.closest('form'),
+        element.closest('form')!,
         successHandler,
         alwaysHandler,
         errorHandler,
