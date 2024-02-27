@@ -1,14 +1,14 @@
-import { Box, IconButton, useTheme } from "@mui/material";
-import { FC, useContext } from "react";
-import { ColorModeContext, tokens } from "../../theme";
-import InputBase from "@mui/material/InputBase";
-import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
-import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
-import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import SearchIcon from "@mui/icons-material/Search";
-import React from "react";
+import { Box, Button, IconButton, useTheme } from '@mui/material';
+import { FC, useContext } from 'react';
+import { ColorModeContext, tokens } from '../../theme';
+import InputBase from '@mui/material/InputBase';
+import LightModeOutlinedIcon from '@mui/icons-material/LightModeOutlined';
+import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
+import SchoolIcon from '@mui/icons-material/School';
+import SearchIcon from '@mui/icons-material/Search';
+import React from 'react';
+import CastForEducationIcon from '@mui/icons-material/CastForEducation';
+import GroupsIcon from '@mui/icons-material/Groups';
 
 interface TopbarProps {
   setIsSidebar: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,27 +23,39 @@ const Topbar: FC<TopbarProps> = () => {
     <Box display="flex" justifyContent="space-between" p={2}>
       {/* SEARCH BAR */}
       <Box
-        sx = {{
-        display:"flex",
-        backgroundColor:colors.primary[400],
-        borderRadius:"3px"}}
+        sx={{
+          display: 'flex',
+          backgroundColor: colors.primary[400],
+          borderRadius: '3px',
+        }}
       >
         <InputBase sx={{ ml: 2, flex: 1 }} placeholder="Search" />
         <IconButton type="button" sx={{ p: 1 }}>
           <SearchIcon />
         </IconButton>
+
+        <Button variant="outlined" startIcon={<SchoolIcon />}>
+          Панель обучения
+        </Button>
+        <Button variant="outlined" startIcon={<GroupsIcon />}>
+          Мои ученики
+        </Button>
+        <Button variant="outlined" startIcon={<CastForEducationIcon />}>
+          Обучающие материалы
+        </Button>
       </Box>
 
       {/* ICONS */}
       <Box display="flex">
         <IconButton onClick={colorMode.toggleColorMode}>
-          {theme.palette.mode === "dark" ? (
+          {theme.palette.mode === 'dark' ? (
             <DarkModeOutlinedIcon />
           ) : (
             <LightModeOutlinedIcon />
           )}
         </IconButton>
-        <IconButton>
+
+        {/* <IconButton>
           <NotificationsOutlinedIcon />
         </IconButton>
         <IconButton>
@@ -51,7 +63,7 @@ const Topbar: FC<TopbarProps> = () => {
         </IconButton>
         <IconButton>
           <PersonOutlinedIcon />
-        </IconButton>
+        </IconButton> */}
       </Box>
     </Box>
   );
