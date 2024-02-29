@@ -20,6 +20,8 @@
     "@testing-library/user-event": "^13.5.0",
     "chart.js": "^3.9.1",
     "formik": "^2.2.9",
+    "fs-extra": "^11.2.0",
+    "ky": "^1.2.1",
     "react": "^18.2.0",
     "react-chartjs-2": "^4.3.1",
     "react-dom": "^18.2.0",
@@ -37,7 +39,7 @@
   },
   "scripts": {
     "start": "npx cross-env  HOST=127.0.0.1 PORT=5500 react-scripts start",
-    "build": "set NODE_ENV=production && react-scripts build",
+    "build": "set NODE_ENV=production && react-scripts build && node postbuild.js",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

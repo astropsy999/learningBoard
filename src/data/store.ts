@@ -1,16 +1,16 @@
 // store.ts
 
 import { create } from 'zustand';
-import { AllUsersData, UserActions, UserState } from '../../types';
+import { UserActions, UserState } from './types.store';
 
 export const useUsers = create<UserState & UserActions>((set) => ({
   users: [],
   allUsers: null,
   allUsersData: null,
   fetchCurrentUserData: () => {},
-  getAllUsers: (newAllUsers: AllUsersData) =>
+  setAllUsers: (newAllUsers: any) =>
     set({
-      allUsersData: newAllUsers,
+      allUsers: newAllUsers,
     }),
   addUser: (user) => {
     set((state) => ({ users: [...state.users, user] }));

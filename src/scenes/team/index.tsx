@@ -10,20 +10,33 @@ import Header from '../../components/Header';
 import { mockDataTeam } from '../../data/mockData';
 // import { useUsers } from '../../data/store';
 import { tokens } from '../../theme';
+import { getAllUsers, getLinkedAllUsers, getLinkedUsers } from '../../api/gdc.users.api';
+import { useUsers } from '../../data/store';
 
 const Team = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [loading, setLoading] = useState(false);
 
-  // const { allUsersData, getAllUsers } = useUsers();
+  const { allUsers, setAllUsers } = useUsers();
+ 
 
-  // Вызов функции для получения всех пользователей при монтировании компонента
   useEffect(() => {
-    // Base.Request.send(configApi.srv + url.GetAllUsers, (data) => {
-    //   console.log('🚀 ~ Base.Request.send ~ data:', data); //<=== сюда ничего не приходит😢
-    // });
-  }, []);
+    const fetchAllUsers= async () => {
+      try {
+        setAllUsers(await getAllUsers());
+      } catch (error) {
+        console.log('error: ', error);
+      }
+    };
+
+    fetchAllUsers();
+  }, [setAllUsers]);
+
+  useEffect(()=> {
+    console.log('allUsers: ', allUsers);
+  },[allUsers])
+
 
   const columns: GridColumns = [
     { field: 'id', headerName: 'ID' },

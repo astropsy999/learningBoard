@@ -41,6 +41,6 @@ export type UserState = {
 };
 
 export type UserActions = {
-  getAllUsers: Function;
+  setAllUsers: Function;
   addUser: (user: User) => void;
 };
