@@ -16,6 +16,8 @@ const Topbar: FC<TopbarProps> = () => {
 
   const { SELECTED_ROWS_DATA } = useUsers();
 
+  const isAssignAllButton = SELECTED_ROWS_DATA.length > 0;
+
   return (
     <Box
       display="flex"
@@ -27,17 +29,24 @@ const Topbar: FC<TopbarProps> = () => {
       width={'100%'}
     >
       <Box ml={4} sx={{ display: 'flex', gap: '16px', marginLeft: '20px' }}>
-        <Link to={'/'}>
-          <Button variant="outlined" startIcon={<SchoolIcon />}>
+        {!isAssignAllButton ? (
+          <Link to={'/'}>
+            <Button variant="outlined" startIcon={<SchoolIcon />}>
+              Панель обучения
+            </Button>
+          </Link>
+        ) : (
+          <Button variant="outlined" startIcon={<SchoolIcon />} disabled>
             Панель обучения
           </Button>
-        </Link>
+        )}
+
         <Link to={'/team'}>
           <Button variant="outlined" startIcon={<GroupsIcon />}>
             Мои ученики
           </Button>
         </Link>
-        {SELECTED_ROWS_DATA.length > 0 ? <RenderAssignAllButton /> : ''}
+        {isAssignAllButton && <RenderAssignAllButton />}
       </Box>
     </Box>
   );
