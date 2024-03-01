@@ -11,6 +11,7 @@ import { TransitionProps } from '@mui/material/transitions';
 import * as React from 'react';
 import { FC } from 'react';
 import CourseCard from '../../components/CourseCard';
+import { SelectedRowData } from '../mylearners/MyLearners';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -25,7 +26,7 @@ type CoursesToLearnerProps = {
   onOpen: boolean;
   onClose: () => void;
   name?: string;
-  lernersData?: Object[];
+  lernersData?: SelectedRowData[] | undefined;
 };
 
 export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
@@ -34,6 +35,10 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
   name,
   lernersData,
 }) => {
+  const getLearnersNamesToString = (learnersArray: SelectedRowData[]) => {
+    return learnersArray.map((learner) => learner.name).join(', ');
+  };
+
   return (
     <React.Fragment>
       <Dialog
@@ -53,7 +58,10 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
               <CloseIcon />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Назначение обучения для {name}
+              Назначение обучения для{' '}
+              {lernersData?.length
+                ? getLearnersNamesToString(lernersData)
+                : name}
             </Typography>
             <Button autoFocus color="inherit" onClick={onClose}>
               Сохранить

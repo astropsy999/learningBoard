@@ -11,13 +11,15 @@ import { useUsers } from '../../data/store';
 import { tokens } from '../../theme';
 import { CoursesToLearner } from '../coursestolearner/CoursesToLearner';
 
-type SelectedRowData = {
+export type SelectedRowData = {
   id: number;
   name: string;
+  position?: string;
+  division?: string;
   email: string;
   age: number;
   phone: string;
-  access: string;
+  access?: string;
   courses: string[];
 };
 
@@ -28,7 +30,7 @@ const MyLearners = () => {
   const { COURSES_TO_LEARNERS_DIALOG, openCoursesDialog } = useUsers();
   const [learnerName, setLearnerName] = useState('');
   const [selectedRows, setSelectedRows] = useState<
-    (SelectedRowData | undefined)[]
+    SelectedRowData[] | undefined
   >([]);
 
   const handleCoursesDialogOpen = (learnerName: string) => {
@@ -39,7 +41,7 @@ const MyLearners = () => {
 
   const { setSelectedRowsDataOnMyLearners } = useUsers();
 
-  const isSelectedUser = selectedRows.length > 0;
+  const isSelectedUser = selectedRows!.length > 0;
 
   const handleCoursesDialogClose = () => {
     // setDialogOpen(false);
@@ -47,9 +49,10 @@ const MyLearners = () => {
   };
 
   const handleSelectionModelChange = (newSelection: Object[]) => {
-    const selectedRowData = newSelection.map((rowId) => {
-      return mockDataTeam.find((row) => row.id === rowId); // Примерный метод поиска строки в данных
-    });
+    const selectedRowData: SelectedRowData[] = newSelection
+      .map((rowId) => mockDataTeam.find((row) => row.id === rowId))
+      .filter((row) => !!row) as SelectedRowData[];
+
     console.log('🚀 ~ selectedRowData ~ selectedRowData:', selectedRowData);
     setSelectedRows(selectedRowData);
     setSelectedRowsDataOnMyLearners(selectedRowData);
@@ -74,11 +77,11 @@ const MyLearners = () => {
   // }, [allUsers]);
 
   const columns: GridColumns = [
-    { field: 'id', headerName: 'ID' },
+    { field: 'id', headerName: 'ID', flex: 0.1 },
     {
       field: 'name',
       headerName: 'ФИО',
-      flex: 1,
+      flex: 1.2,
       cellClassName: 'name-column--cell',
     },
     {
@@ -86,6 +89,7 @@ const MyLearners = () => {
       headerName: 'Должность',
       type: 'string',
       headerAlign: 'left',
+      flex: 0.8,
       align: 'left',
     },
     {
@@ -95,8 +99,8 @@ const MyLearners = () => {
     },
     {
       field: 'courses',
-      headerName: 'Обучение',
-      flex: 1,
+      headerName: 'Обучающие материалы',
+      flex: 1.5,
       renderCell: ({ row }) => {
         // Предполагая, что курсы хранятся в массиве `courses` объектов
         const coursesList = row.courses
@@ -108,14 +112,14 @@ const MyLearners = () => {
     {
       field: 'addCourses',
       headerName: 'Назначение',
-      flex: 1,
+      flex: 0.6,
       renderCell: ({ row }) => {
         const hasCourses = row.courses.length;
         return (
           <>
             <Button
               variant="contained"
-              color="secondary"
+              color={!hasCourses ? 'info' : 'secondary'}
               startIcon={<AddToQueueIcon />}
               onClick={() => handleCoursesDialogOpen(row.name)}
               disabled={isSelectedUser}
@@ -194,6 +198,7 @@ const MyLearners = () => {
         onOpen={COURSES_TO_LEARNERS_DIALOG}
         onClose={handleCoursesDialogClose}
         name={learnerName}
+        lernersData={selectedRows}
       />
     </Box>
   );
