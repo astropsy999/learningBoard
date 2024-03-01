@@ -12,10 +12,10 @@ import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { Menu, MenuItem, Sidebar } from 'react-pro-sidebar';
 
-import { Base } from '../../api/Request';
-import configApi from '../../api/config.api';
-import { url } from '../../api/url.api';
-import { tokens } from '../../theme';
+import { Base } from '../../../api/Request';
+import configApi from '../../../api/config.api';
+import { url } from '../../../api/url.api';
+import { tokens } from '../../../theme';
 import { MenuSeparator } from './MenuSeparator';
 import { SidebarMenuItem } from './SidebarMenuItem';
 import { SidebarUserAvatar } from './SidebarUserAvatar';

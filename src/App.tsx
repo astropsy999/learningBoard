@@ -1,20 +1,17 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import Dashboard from './scenes/dashboard';
-import Topbar from './scenes/global/Topbar';
-import Team from './scenes/team';
+import Topbar from './components/topbar/Topbar';
+import Dashboard from './scenes/learningboard/LearningBoard';
+import Team from './scenes/mylearners/MyLearners';
 
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import React from 'react';
-import Courses from './scenes/courses';
+import Courses from './components/unused/courses';
 import { ColorModeContext, useMode } from './theme';
-import { getLinkedAllUsers, getLinkedUsers, getUsersForManagers } from './api/gdc.users.api';
 
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
-
-
 
   return (
     <ColorModeContext.Provider value={colorMode}>
@@ -22,8 +19,8 @@ function App() {
         <CssBaseline />
         <div className="app">
           {/* <MySidebar /> */}
+          <Topbar setIsSidebar={setIsSidebar} />
           <main className="content">
-            <Topbar setIsSidebar={setIsSidebar} />
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/team" element={<Team />} />

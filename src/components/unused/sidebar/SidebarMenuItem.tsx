@@ -1,6 +1,6 @@
 import { Typography, useTheme } from '@mui/material';
 import { SidebarMenuItemProps } from './types';
-import { tokens } from '../../theme';
+import { tokens } from '../../../theme';
 import { MenuItem } from 'react-pro-sidebar';
 import { Link } from 'react-router-dom';
 import React from 'react';

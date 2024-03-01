@@ -2,7 +2,7 @@ import { Box, IconButton, Typography, useTheme } from '@mui/material';
 import React, { useState } from 'react';
 import { Menu, MenuItem, Sidebar, SubMenu } from 'react-pro-sidebar';
 import { Link } from 'react-router-dom';
-import { tokens } from '../../theme';
+import { tokens } from '../../../theme';
 import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
 import ContactsOutlinedIcon from '@mui/icons-material/ContactsOutlined';
 import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';

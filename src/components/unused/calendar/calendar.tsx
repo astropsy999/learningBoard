@@ -13,9 +13,9 @@ import {
   useTheme,
 } from '@mui/material';
 import { EventClickArg } from '@fullcalendar/core';
-import { tokens } from '../../theme';
+import { tokens } from '../../../theme';
 import React from 'react';
-import Header from '../../components/Header';
+import Header from '../../Header';
 
 interface Event {
   id: string;

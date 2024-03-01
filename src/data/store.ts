@@ -7,12 +7,16 @@ export const useUsers = create<UserState & UserActions>((set) => ({
   users: [],
   allUsers: null,
   allUsersData: null,
-  fetchCurrentUserData: () => {},
+  SELECTED_ROWS_DATA: [],
+  COURSES_TO_LEARNERS_DIALOG: false,
   setAllUsers: (newAllUsers: any) =>
     set({
       allUsers: newAllUsers,
     }),
-  addUser: (user) => {
-    set((state) => ({ users: [...state.users, user] }));
-  },
+  setSelectedRowsDataOnMyLearners: (newSelectedRowsData: []) =>
+    set({ SELECTED_ROWS_DATA: newSelectedRowsData }),
+  openCoursesDialog: (newDialogData: boolean) =>
+    set({
+      COURSES_TO_LEARNERS_DIALOG: newDialogData,
+    }),
 }));

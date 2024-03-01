@@ -117,15 +117,15 @@ export const tokens = (mode: ThemeMode): ThemeColors => ({
           900: '#f8dcdb',
         },
         blueAccent: {
-          100: '#151632',
-          200: '#2a2d64',
-          300: '#3e4396',
-          400: '#535ac8',
-          500: '#6870fa',
-          600: '#868dfb',
-          700: '#a4a9fc',
-          800: '#c3c6fd',
-          900: '#e1e2fe',
+          900: '#E6F0FF', // Более светлый оттенок синего
+          800: '#B3D4FF',
+          700: '#80BFFF',
+          600: '#4DA8FF',
+          500: '#1A91FF', // Основной синий оттенок
+          400: '#007FFF',
+          300: '#005C99',
+          200: '#003966',
+          100: '#001633', // Насыщенный темно-синий оттенок
         },
       }),
 });
@@ -200,7 +200,6 @@ export const themeSettings = (mode: ThemeMode) => {
         fontSize: 14,
       },
     },
-    
   };
 };
 
@@ -220,6 +219,9 @@ export const useMode = (): [Theme, { toggleColorMode: () => void }] => {
     [],
   );
 
-  const theme = useMemo(() => createTheme(themeSettings(mode), ruRU, datagridRU), [mode]);
+  const theme = useMemo(
+    () => createTheme(themeSettings(mode), ruRU, datagridRU),
+    [mode],
+  );
   return [theme, colorMode];
 };

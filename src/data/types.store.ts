@@ -42,5 +42,8 @@ export type UserState = {
 
 export type UserActions = {
   setAllUsers: Function;
-  addUser: (user: User) => void;
+  SELECTED_ROWS_DATA: Object[];
+  COURSES_TO_LEARNERS_DIALOG: boolean;
+  setSelectedRowsDataOnMyLearners: Function;
+  openCoursesDialog: Function;
 };
