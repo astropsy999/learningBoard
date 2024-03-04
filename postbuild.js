@@ -3,31 +3,31 @@ const path = require('path');
 const fse = require('fs-extra'); // Require fs-extra
 
 const indexPath = path.join(__dirname, 'build', 'index.html');
-const destDir = 'C:/OSPanel/domains/gdclocal/htdocs/assets/views/modules/learnBoard';
+const destDir =
+  'C:/OSPanel/domains/gdclocal/htdocs/assets/views/modules/learnBoard';
 const sourceDir = path.resolve(__dirname, 'build');
 const buildDir = path.join(__dirname, 'build');
 const jsDir = path.join(buildDir, 'static', 'js');
 const cssDir = path.join(buildDir, 'static', 'css');
+let newJsName, newCssName;
 
 // Функция для переименования файлов и удаления лишних файлов
 function renameAndCleanupFiles(directory) {
-  let newJsName, newCssName
   fs.readdir(directory, (err, files) => {
     if (err) {
       console.error(`Error reading directory ${directory}:`, err);
       return;
     }
 
-    
-    
     files.forEach((file) => {
       if (file.endsWith('.js') || file.endsWith('.css')) {
         const oldPath = path.join(directory, file);
         const newName = file.replace(/(\.[^.]+)$/, '.min$1');
-        if(file.endsWith('.js')) {
-          newJsName = newName
-        } else {
-          newCssName = newName
+        if (file.endsWith('.js')) {
+          newJsName = file.replace(/(\.[^.]+)$/, '.min$1');
+        }
+        if (file.endsWith('.css')) {
+          newCssName = file.replace(/(\.[^.]+)$/, '.min$1');
         }
 
         const newPath = path.join(directory, newName);
@@ -53,13 +53,8 @@ function renameAndCleanupFiles(directory) {
     });
 
     modifyIndexHtml(newJsName, newCssName);
-   
   });
-
- 
 }
-
-
 
 // Функция для изменения ссылок в index.html
 function modifyIndexHtml(newJsName, newCssName) {
@@ -68,15 +63,11 @@ function modifyIndexHtml(newJsName, newCssName) {
       console.error('Error reading index.html:', err);
       return;
     }
-    
 
     // Замена ссылок на скрипты и стили
-    const modifiedData = data.replace(/src="\/static\/js\/([^"]+)"/g, `src="/assets/views/modules/learnBoard/static/js/${newJsName}"`)
-                          .replace(/href="\/static\/css\/([^"]+)"/g, `href="/assets/views/modules/learnBoard/static/css/${newCssName}"`);
-
-
-    console.log('modifiedData: ', modifiedData);
-
+    const modifiedData = data
+      .replace(/main\.[a-f0-9]+\.js/g, `${newJsName}`)
+      .replace(/main\.[a-f0-9]+\.css/g, `${newCssName}`);
 
     // Запись измененных данных обратно в файл
     fs.writeFile(indexPath, modifiedData, 'utf8', (err) => {
@@ -120,8 +111,6 @@ function copyAndModifyFiles() {
       process.exit(1);
     }
     console.log('Files copied successfully from', sourceDir, 'to', destDir);
-
-
   });
 }
 

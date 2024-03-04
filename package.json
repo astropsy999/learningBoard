@@ -1,5 +1,6 @@
 {
   "name": "react-admin",
+  "homepage": "/assets/views/modules/learnBoard/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
