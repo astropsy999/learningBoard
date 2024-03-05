@@ -1,15 +1,26 @@
 import { Box, Button, Typography, useTheme } from '@mui/material';
-import { DataGrid, GridColumns, GridOverlay } from '@mui/x-data-grid';
-import React, { useState } from 'react';
+import {
+  DataGrid,
+  GridColDef,
+  // GridColumns,
+  GridOverlay,
+  useGridApiContext,
+  useGridApiRef,
+} from '@mui/x-data-grid';
+import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 // import { AllUsersData } from '../../../types';
 import Header from '../../components/Header';
 import { mockDataTeam } from '../../data/mockData';
 // import { useUsers } from '../../data/store';
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
+import { useQuery } from '@tanstack/react-query';
 import { useUsers } from '../../data/store';
+import { fetchAllLearners } from '../../services/learners.service';
 import { tokens } from '../../theme';
 import { CoursesToLearner } from '../coursestolearner/CoursesToLearner';
+import { GridApiCommunity } from '@mui/x-data-grid/models/api/gridApiCommunity';
+import { GridApi } from '@mui/x-data-grid';
 
 export type SelectedRowData = {
   id: number;
@@ -26,15 +37,44 @@ export type SelectedRowData = {
 const MyLearners = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [loading, setLoading] = useState(false);
-  const { COURSES_TO_LEARNERS_DIALOG, openCoursesDialog } = useUsers();
+  const {
+    COURSES_TO_LEARNERS_DIALOG,
+    openCoursesDialog,
+    turnOffDivisionFilter,
+  } = useUsers();
   const [learnerName, setLearnerName] = useState('');
   const [selectedRows, setSelectedRows] = useState<
     SelectedRowData[] | undefined
   >([]);
 
+  const apiRef = useGridApiRef();
+
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ['allLearners'],
+    queryFn: fetchAllLearners,
+  });
+
+  const filteredDivision = {
+    items: [
+      {
+        field: 'division',
+        operator: 'contains',
+        value: 'ОИТ',
+      },
+    ],
+  };
+
+  const unsetDivisionFilter = {
+    items: [
+      {
+        field: 'division',
+        operator: '',
+        value: 'ОИТ',
+      },
+    ],
+  };
+
   const handleCoursesDialogOpen = (learnerName: string) => {
-    // setDialogOpen(true);
     openCoursesDialog(true);
     setLearnerName(learnerName);
   };
@@ -43,8 +83,16 @@ const MyLearners = () => {
 
   const isSelectedUser = selectedRows!.length > 0;
 
+  useEffect(() => {
+    // console.log('🚀 ~ useEffect ~ api:', apiRef);
+    if (turnOffDivisionFilter) {
+      apiRef.current.setFilterModel(unsetDivisionFilter);
+    } else {
+      apiRef.current.setFilterModel(filteredDivision);
+    }
+  }, [apiRef, turnOffDivisionFilter]);
+
   const handleCoursesDialogClose = () => {
-    // setDialogOpen(false);
     openCoursesDialog(false);
   };
 
@@ -53,36 +101,22 @@ const MyLearners = () => {
       .map((rowId) => mockDataTeam.find((row) => row.id === rowId))
       .filter((row) => !!row) as SelectedRowData[];
 
-    console.log('🚀 ~ selectedRowData ~ selectedRowData:', selectedRowData);
     setSelectedRows(selectedRowData);
     setSelectedRowsDataOnMyLearners(selectedRowData);
   };
 
-  const { allUsers, setAllUsers } = useUsers();
-
-  // useEffect(() => {
-  //   const fetchAllUsers = async () => {
-  //     try {
-  //       setAllUsers(await getAllUsers());
-  //     } catch (error) {
-  //       console.log('error: ', error);
-  //     }
-  //   };
-
-  //   fetchAllUsers();
-  // }, [setAllUsers]);
-
-  // useEffect(() => {
-  //   console.log('allUsers: ', allUsers);
-  // }, [allUsers]);
-
-  const columns: GridColumns = [
-    { field: 'id', headerName: 'ID', flex: 0.1 },
+  const columns: GridColDef[] = [
+    {
+      field: 'id',
+      headerName: 'ID',
+      flex: 0.1,
+      headerClassName: 'name-column--cell',
+    },
     {
       field: 'name',
       headerName: 'ФИО',
       flex: 1.2,
-      cellClassName: 'name-column--cell',
+      headerClassName: 'name-column--cell',
     },
     {
       field: 'position',
@@ -91,11 +125,13 @@ const MyLearners = () => {
       headerAlign: 'left',
       flex: 0.8,
       align: 'left',
+      headerClassName: 'name-column--cell',
     },
     {
       field: 'division',
       headerName: 'Подразделение',
       flex: 1,
+      headerClassName: 'name-column--cell',
     },
     {
       field: 'courses',
@@ -108,11 +144,13 @@ const MyLearners = () => {
           .join(', ');
         return <Typography>{coursesList}</Typography>;
       },
+      headerClassName: 'name-column--cell',
     },
     {
       field: 'addCourses',
       headerName: 'Назначение',
       flex: 0.6,
+      headerClassName: 'name-column--cell',
       renderCell: ({ row }) => {
         const hasCourses = row.courses.length;
         return (
@@ -129,28 +167,13 @@ const MyLearners = () => {
           </>
         );
       },
+      disableColumnMenu: true,
     },
   ];
 
-  const SkeletonOverlay = () => (
-    <GridOverlay>
-      <div
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-        }}
-      >
-        <Skeleton height={'100%'} style={{ opacity: '0.7' }} />
-      </div>
-    </GridOverlay>
-  );
-
   return (
-    <Box m="20px">
-      <Header title="МОИ УЧЕНИКИ" subtitle="Список учеников" />
+    <Box m="20px" pt={2}>
+      <Header title="" subtitle="" />
 
       <Box
         m="10px 0 0 0"
@@ -159,11 +182,12 @@ const MyLearners = () => {
           '& .MuiDataGrid-root': {
             border: 'none',
           },
+
           '& .MuiDataGrid-cell': {
             borderBottom: 'none',
           },
           '& .name-column--cell': {
-            color: colors.greenAccent[300],
+            backgroundColor: colors.blueAccent[800],
           },
           '& .MuiDataGrid-columnHeaders': {
             backgroundColor: colors.blueAccent[800],
@@ -181,18 +205,25 @@ const MyLearners = () => {
           },
         }}
       >
-        <DataGrid
-          checkboxSelection
-          disableSelectionOnClick
-          rows={mockDataTeam}
-          columns={columns}
-          components={{
-            LoadingOverlay: SkeletonOverlay,
-          }}
-          loading={loading}
-          onSelectionModelChange={handleSelectionModelChange}
-        />
-        <Skeleton />
+        {isError ? (
+          <Typography variant="body1">Ошибка при загрузке данных...</Typography>
+        ) : (
+          <DataGrid
+            autoHeight={true}
+            apiRef={apiRef}
+            checkboxSelection
+            disableRowSelectionOnClick
+            rows={isLoading ? [] : data!}
+            columns={columns}
+            loading={isLoading}
+            onRowSelectionModelChange={handleSelectionModelChange}
+            initialState={{
+              filter: {
+                filterModel: filteredDivision,
+              },
+            }}
+          />
+        )}
       </Box>
       <CoursesToLearner
         onOpen={COURSES_TO_LEARNERS_DIALOG}

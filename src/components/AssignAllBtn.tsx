@@ -11,7 +11,7 @@ export const RenderAssignAllButton = () => {
   return (
     <Button
       variant="contained"
-      color="info"
+      color="secondary"
       startIcon={<PlaylistAddIcon />}
       onClick={() => handleAssignAll()}
     >

@@ -38,12 +38,52 @@ export type UserState = {
   users: User[];
   allUsers: AllUserData[] | null;
   allUsersData: AllUsersData | null;
+  ALL_LEARNERS: ILearner[];
+  CURRENT_USER_DATA: CurrentUserData | null;
+  currentUserName?: string | null;
+  filteredLearners: ILearner[] | null;
+  turnOffDivisionFilter: boolean | null;
+  COURSES_TO_LEARNERS_DIALOG: boolean;
+  SELECTED_ROWS_DATA: Object[];
 };
 
 export type UserActions = {
   setAllUsers: Function;
-  SELECTED_ROWS_DATA: Object[];
-  COURSES_TO_LEARNERS_DIALOG: boolean;
   setSelectedRowsDataOnMyLearners: Function;
   openCoursesDialog: Function;
+  setAllLearners: Function;
+  setCurrentUserData: Function;
+  setFilteredLearners: Function;
+  setCurrenUserName: Function;
+  setTurnOffDivisionFilter: Function;
 };
+
+export interface ILearner {
+  id: number;
+  name: string;
+  email?: string;
+  age?: number;
+  phone?: string;
+  position: string;
+  division: string;
+  courses: string[];
+}
+
+export interface CurrentUserData {
+  ID: number;
+  Login: string;
+  Name?: string;
+  first_name?: string;
+  last_name?: string;
+  father_name?: string;
+  Email?: string;
+  MobileNumber?: string;
+  LastActivity: number;
+  Locked?: null;
+  GDC: number;
+  LinkedObjID: string;
+  NameLinkedObjID: string;
+  Position?: string;
+  PhotoName?: string;
+  learn_show?: number;
+}

@@ -12,6 +12,16 @@ export const mockDataTeam = [
     courses: ['Охрана труда', 'Коррозия'],
   },
   {
+    id: 18,
+    name: 'Стужук Е.В.',
+    email: 'jaimelannister@gmail.com',
+    age: 45,
+    phone: '(422)982-6739',
+    position: 'Инженер',
+    division: 'ОИТ',
+    courses: ['Охрана труда', 'Коррозия'],
+  },
+  {
     id: 2,
     name: 'Cersei Lannister',
     email: 'jaimelannister@gmail.com',

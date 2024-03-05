@@ -1,7 +1,7 @@
 import { createContext, useState, useMemo } from 'react';
 import { createTheme, Theme } from '@mui/material/styles';
 import { ruRU } from '@mui/material/locale';
-import { ruRU as datagridRU } from '@mui/x-data-grid';
+import { ruRU as datagridRU } from '@mui/x-data-grid/locales';
 
 type ThemeMode = 'light' | 'dark';
 

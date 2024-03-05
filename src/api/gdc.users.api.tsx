@@ -8,16 +8,40 @@ import ky from 'ky';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import configApi from './config.api';
-import { AllLinkedUsersRes, LinkedUsersResType, UsersForManagersRes } from './types.api';
+import {
+  AllLinkedUsersRes,
+  LinkedUsersResType,
+  UsersForManagersRes,
+} from './types.api';
 import { AllUsersData } from '../data/types.store';
+import { Base } from './Request';
+import axios from 'axios';
+
+export const getCurrentUserData = async () => {
+  let userData;
+  // const formData = new FormData();
+  try {
+    await fetch(configApi.srv + url.getUserProfileData, {
+      method: 'POST',
+      credentials: 'include',
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        userData = data[0].data;
+      });
+    return userData;
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
 
 /**
  * Функция получения всех пользователей (учеников) из модуля пользователи(ученики)
- * 
+ *
  */
 
 export const getAllUsers = async () => {
-  let allUsersFD = new FormData()
+  let allUsersFD = new FormData();
 
   let allUsersData: AllUsersData = await ky
     .post(configApi.srv + url.GetAllUsers, {
@@ -27,9 +51,8 @@ export const getAllUsers = async () => {
     })
     .json();
 
-  return allUsersData.users
-
-}
+  return allUsersData.users;
+};
 
 /**
  * Получение пользователей прикрелпенных к руководителю.
@@ -49,7 +72,7 @@ let approvedDates: Record<string, any> = {};
 const managersLevels: Record<string, any> = {};
 let usersSavedMessagesDates: Record<string, any> = {};
 const today = new Date();
-const yesterday = new Date(new Date().setDate(new Date().getDate() - 1))
+const yesterday = new Date(new Date().setDate(new Date().getDate() - 1));
 
 export const getLinkedUsers = async () => {
   let getLinkedUsersFD = new FormData();
@@ -213,10 +236,10 @@ export const getLinkedAllUsers = async () => {
     })
     .json();
 
-  const linkedUsersArr = allLinkedUsersRes.TreeContent[0].ParamsDATA[3].LinkedObjIDs;
+  const linkedUsersArr =
+    allLinkedUsersRes.TreeContent[0].ParamsDATA[3].LinkedObjIDs;
 
   return linkedUsersArr;
-  
 };
 
 /**
@@ -226,8 +249,10 @@ export const getLinkedAllUsers = async () => {
  * @returns {tableDataArr, objectsArr, typesArr, divesArr, eventsDataFioObjNew, subTypesArr}
  */
 
-
-export const getUsersForManagers = async (startDate=yesterday, endDate=today) => {
+export const getUsersForManagers = async (
+  startDate = yesterday,
+  endDate = today,
+) => {
   console.log('getUsersForManagers ЗАПУСК');
   namesDatesDayIDsObj = {};
   usersSavedMessagesDates = {};
@@ -308,10 +333,9 @@ export const getUsersForManagers = async (startDate=yesterday, endDate=today) =>
     })
     .json();
 
-
   // customLoader(false);
 
-  let tableDataArr: { ФИО: string; }[] = [];
+  let tableDataArr: { ФИО: string }[] = [];
   const namesArray: any[] = [];
 
   const res = UsersForManagersRes.data;
@@ -356,11 +380,13 @@ export const getUsersForManagers = async (startDate=yesterday, endDate=today) =>
     }
 
     // Проверяем, есть ли уже объект с такой датой
-    const hasBlockedDate = lockedDates[name].find((entry: { hasOwnProperty: (arg0: string) => any; }) =>
-      entry.hasOwnProperty(date),
+    const hasBlockedDate = lockedDates[name].find(
+      (entry: { hasOwnProperty: (arg0: string) => any }) =>
+        entry.hasOwnProperty(date),
     );
-    const hasApprovedDate = approvedDates[name].find((entry: { hasOwnProperty: (arg0: string) => any; }) =>
-      entry.hasOwnProperty(date),
+    const hasApprovedDate = approvedDates[name].find(
+      (entry: { hasOwnProperty: (arg0: string) => any }) =>
+        entry.hasOwnProperty(date),
     );
 
     if (isBlocked && isBlocked !== '' && !hasBlockedDate) {
@@ -372,8 +398,9 @@ export const getUsersForManagers = async (startDate=yesterday, endDate=today) =>
     }
 
     // Проверяем, есть ли уже объект с такой датой
-    const existingEntry = namesDatesDayIDsObj[name].find((entry: { hasOwnProperty: (arg0: string) => any; }) =>
-      entry.hasOwnProperty(date),
+    const existingEntry = namesDatesDayIDsObj[name].find(
+      (entry: { hasOwnProperty: (arg0: string) => any }) =>
+        entry.hasOwnProperty(date),
     );
 
     // Если такого объекта нет, добавляем новый
@@ -403,7 +430,7 @@ export const getUsersForManagers = async (startDate=yesterday, endDate=today) =>
 
     let total = 0;
 
-    type Employment =  'Отпуск' | 'Больничный' | 'Выходной'
+    type Employment = 'Отпуск' | 'Больничный' | 'Выходной';
 
     nameArray.map((nameA) => {
       const date = nameA[7].Value;
@@ -515,7 +542,9 @@ export const getUsersForManagers = async (startDate=yesterday, endDate=today) =>
       } else if (
         timeOnObj !== '' &&
         employment &&
-        (employment !== 'Отпуск' || employment !== 'Больничный' || employment !== 'Выходной')
+        (employment !== 'Отпуск' ||
+          employment !== 'Больничный' ||
+          employment !== 'Выходной')
       ) {
         dateObj[date].push({
           title,
@@ -581,7 +610,7 @@ export const getUsersForManagers = async (startDate=yesterday, endDate=today) =>
           return '';
         }
       };
-      let currObjIDArr: { [x: number]: any; }[] = [];
+      let currObjIDArr: { [x: number]: any }[] = [];
       let fullEventsWithMets = {};
       let objStrMeth = '';
       methArr.map((obj) => {
@@ -633,24 +662,45 @@ export const getUsersForManagers = async (startDate=yesterday, endDate=today) =>
       if (currObjIDArr.length !== 0) {
         let objStrWithMeths = '';
 
-        const generateEventsWithMethods = (arr: { [x: number]: any; }[]) => {
+        const generateEventsWithMethods = (arr: { [x: number]: any }[]) => {
           const methodDataMap: Record<string, any> = {};
 
-          arr.forEach((item: { [x: string]: any; hasOwnProperty: (arg0: string) => any; }) => {
-            for (const method in item) {
-              if (item.hasOwnProperty(method)) {
-                if (!methodDataMap[method]) {
-                  methodDataMap[method] = [];
+          arr.forEach(
+            (item: {
+              [x: string]: any;
+              hasOwnProperty: (arg0: string) => any;
+            }) => {
+              for (const method in item) {
+                if (item.hasOwnProperty(method)) {
+                  if (!methodDataMap[method]) {
+                    methodDataMap[method] = [];
+                  }
+                  methodDataMap[method].push(item[method]);
                 }
-                methodDataMap[method].push(item[method]);
               }
-            }
-          });
+            },
+          );
 
           for (let methodEv in methodDataMap) {
             if (methodDataMap.hasOwnProperty(methodEv)) {
               const resultObject = methodDataMap[methodEv].reduce(
-                (acc: { [x: string]: any; meth: any[]; methObj: any[]; methZones: any[]; time: any[]; hasOwnProperty: (arg0: string) => any; }, obj: { [x: string]: any; meth: any; methObj: any; methZones: any; time: any; }) => {
+                (
+                  acc: {
+                    [x: string]: any;
+                    meth: any[];
+                    methObj: any[];
+                    methZones: any[];
+                    time: any[];
+                    hasOwnProperty: (arg0: string) => any;
+                  },
+                  obj: {
+                    [x: string]: any;
+                    meth: any;
+                    methObj: any;
+                    methZones: any;
+                    time: any;
+                  },
+                ) => {
                   const { meth, methObj, methZones, time, ...rest } = obj;
 
                   if (!acc.meth) {
@@ -680,7 +730,12 @@ export const getUsersForManagers = async (startDate=yesterday, endDate=today) =>
                 {},
               );
 
-              const methodsView = (meth: any[], methObj: { [x: string]: any; }, methZones: { [x: string]: any; }, methTime: { [x: string]: any; }) => {
+              const methodsView = (
+                meth: any[],
+                methObj: { [x: string]: any },
+                methZones: { [x: string]: any },
+                methTime: { [x: string]: any },
+              ) => {
                 let metViewObj = ''; // ВО-1ч(об-1,зон-3)
 
                 meth.map((item, i) => {

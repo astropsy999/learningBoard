@@ -12,6 +12,9 @@ import * as React from 'react';
 import { FC } from 'react';
 import CourseCard from '../../components/CourseCard';
 import { SelectedRowData } from '../mylearners/MyLearners';
+import { fetchAllLearners } from '../../services/learners.service';
+
+fetchAllLearners();
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
