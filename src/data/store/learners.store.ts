@@ -6,10 +6,10 @@ import {
   ILearner,
   UserActions,
   UserState,
-} from './types.store';
+} from '../types.store';
 import { devtools } from 'zustand/middleware';
 
-export const useUsers = create<UserState & UserActions>()(
+export const useLearners = create<UserState & UserActions>()(
   devtools((set) => ({
     users: [],
     CURRENT_USER_DATA: null,

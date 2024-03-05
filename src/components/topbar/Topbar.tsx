@@ -4,7 +4,7 @@ import { Box, Button } from '@mui/material';
 import React, { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { RenderAssignAllButton } from '../AssignAllBtn';
-import { useUsers } from '../../data/store';
+import { useLearners } from '../../data/store/learners.store';
 import SplitButton from '../SplitButton';
 import { getCurrentUserData } from '../../api/gdc.users.api';
 import { useQuery } from '@tanstack/react-query';
@@ -25,7 +25,7 @@ const Topbar: FC<TopbarProps> = () => {
     setCurrentUserData,
     setCurrenUserName,
     ALL_LEARNERS,
-  } = useUsers();
+  } = useLearners();
 
   const isAssignAllButton = SELECTED_ROWS_DATA.length > 0;
 

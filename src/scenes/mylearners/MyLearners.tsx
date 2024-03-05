@@ -1,26 +1,16 @@
-import { Box, Button, Typography, useTheme } from '@mui/material';
-import {
-  DataGrid,
-  GridColDef,
-  // GridColumns,
-  GridOverlay,
-  useGridApiContext,
-  useGridApiRef,
-} from '@mui/x-data-grid';
-import React, { memo, useEffect, useMemo, useRef, useState } from 'react';
-import Skeleton from 'react-loading-skeleton';
+import { Box, Button, Chip, Typography, useTheme } from '@mui/material';
+import { DataGrid, GridColDef, useGridApiRef } from '@mui/x-data-grid';
+import React, { useEffect, useState } from 'react';
 // import { AllUsersData } from '../../../types';
 import Header from '../../components/Header';
 import { mockDataTeam } from '../../data/mockData';
 // import { useUsers } from '../../data/store';
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
 import { useQuery } from '@tanstack/react-query';
-import { useUsers } from '../../data/store';
+import { useLearners } from '../../data/store/learners.store';
 import { fetchAllLearners } from '../../services/learners.service';
 import { tokens } from '../../theme';
 import { CoursesToLearner } from '../coursestolearner/CoursesToLearner';
-import { GridApiCommunity } from '@mui/x-data-grid/models/api/gridApiCommunity';
-import { GridApi } from '@mui/x-data-grid';
 
 export type SelectedRowData = {
   id: number;
@@ -41,7 +31,7 @@ const MyLearners = () => {
     COURSES_TO_LEARNERS_DIALOG,
     openCoursesDialog,
     turnOffDivisionFilter,
-  } = useUsers();
+  } = useLearners();
   const [learnerName, setLearnerName] = useState('');
   const [selectedRows, setSelectedRows] = useState<
     SelectedRowData[] | undefined
@@ -79,7 +69,7 @@ const MyLearners = () => {
     setLearnerName(learnerName);
   };
 
-  const { setSelectedRowsDataOnMyLearners } = useUsers();
+  const { setSelectedRowsDataOnMyLearners } = useLearners();
 
   const isSelectedUser = selectedRows!.length > 0;
 
@@ -138,11 +128,14 @@ const MyLearners = () => {
       headerName: 'Обучающие материалы',
       flex: 1.5,
       renderCell: ({ row }) => {
-        // Предполагая, что курсы хранятся в массиве `courses` объектов
-        const coursesList = row.courses
-          .map((course: string) => course)
-          .join(', ');
-        return <Typography>{coursesList}</Typography>;
+        return row.courses.map((course: string) => (
+          <Chip
+            key={course}
+            label={course}
+            variant="outlined"
+            sx={{ margin: '2px' }}
+          />
+        ));
       },
       headerClassName: 'name-column--cell',
     },
@@ -188,6 +181,7 @@ const MyLearners = () => {
           },
           '& .name-column--cell': {
             backgroundColor: colors.blueAccent[800],
+            fontWeight: 'bold',
           },
           '& .MuiDataGrid-columnHeaders': {
             backgroundColor: colors.blueAccent[800],
@@ -202,6 +196,9 @@ const MyLearners = () => {
           },
           '& .MuiCheckbox-root': {
             color: `${colors.greenAccent[200]} !important`,
+          },
+          '& .MuiDataGrid-columnHeaderCheckbox': {
+            backgroundColor: colors.blueAccent[800],
           },
         }}
       >

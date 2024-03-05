@@ -10,11 +10,10 @@ import Typography from '@mui/material/Typography';
 import { TransitionProps } from '@mui/material/transitions';
 import * as React from 'react';
 import { FC } from 'react';
-import CourseCard from '../../components/CourseCard';
+import { CourseCard } from '../../components/CourseCard';
 import { SelectedRowData } from '../mylearners/MyLearners';
-import { fetchAllLearners } from '../../services/learners.service';
-
-fetchAllLearners();
+import { useCourses } from '../../data/store/courses.store';
+import { SubmitDialog } from '../../components/SubmitDialog';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -42,6 +41,17 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
     return learnersArray.map((learner) => learner.name).join(', ');
   };
 
+  const { allCourses, setAllCourses } = useCourses();
+  const [openSubmitDialog, setOpenSubmitDialog] = React.useState(false);
+
+  React.useEffect(() => {
+    setAllCourses(); // Вызов функции для загрузки данных при монтировании компонента
+  }, [allCourses, setAllCourses]);
+
+  const handleSaveCourses = () => {
+    setOpenSubmitDialog(true);
+  };
+
   return (
     <React.Fragment>
       <Dialog
@@ -66,7 +76,12 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
                 ? getLearnersNamesToString(lernersData)
                 : name}
             </Typography>
-            <Button autoFocus color="inherit" onClick={onClose}>
+            <Button
+              autoFocus
+              color="warning"
+              onClick={handleSaveCourses}
+              variant="contained"
+            >
               Сохранить
             </Button>
           </Toolbar>
@@ -79,18 +94,19 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
             justifyContent={'center'}
             mt={2}
           >
-            <Grid item>
-              <CourseCard />
-            </Grid>
-            <Grid item>
-              <CourseCard />
-            </Grid>
-            <Grid item>
-              <CourseCard />
-            </Grid>
+            {allCourses &&
+              allCourses.map((course) => (
+                <Grid item key={course.id}>
+                  <CourseCard courseItem={course} />
+                </Grid>
+              ))}
           </Grid>
         </Container>
       </Dialog>
+      <SubmitDialog
+        isOpen={openSubmitDialog}
+        onClose={() => setOpenSubmitDialog(false)}
+      />
     </React.Fragment>
   );
 };

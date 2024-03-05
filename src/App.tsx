@@ -4,16 +4,10 @@ import Dashboard from './scenes/learningboard/LearningBoard';
 import Team from './scenes/mylearners/MyLearners';
 
 import { CssBaseline, ThemeProvider } from '@mui/material';
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQuery,
-} from '@tanstack/react-query';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import Courses from './components/unused/courses';
 import { ColorModeContext, useMode } from './theme';
-import { getCurrentUserData } from './api/gdc.users.api';
-import MySidebar from './components/unused/sidebar/MySidebar';
 
 function App() {
   const queryClient = new QueryClient();

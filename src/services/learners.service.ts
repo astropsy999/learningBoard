@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { mockDataTeam } from '../data/mockData';
+import { mockDataCourses, mockDataTeam } from '../data/mockData';
 import { ILearner, User, UserState } from '../data/types.store';
 
 export const fetchAllLearners = async () => {
@@ -7,6 +7,12 @@ export const fetchAllLearners = async () => {
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
   return mockDataTeam;
+};
+export const fetchAllCourses = async () => {
+  // Имитируем асинхронный запрос с задержкой
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+
+  return mockDataCourses;
 };
 
 export const filterLearners = (division: string, allLearners: ILearner[]) => {

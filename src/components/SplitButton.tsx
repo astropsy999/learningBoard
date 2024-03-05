@@ -11,13 +11,14 @@ import MenuList from '@mui/material/MenuList';
 import GroupsIcon from '@mui/icons-material/Groups';
 import Groups2Icon from '@mui/icons-material/Groups2';
 import Groups2 from '@mui/icons-material/Groups2';
-import { useUsers } from '../data/store';
+import { useLearners } from '../data/store/learners.store';
 import {
   filterLearners,
   getCurrentUserDivision,
 } from '../services/learners.service';
 import { CurrentUserData } from '../data/types.store';
 import { useGridApiRef } from '@mui/x-data-grid';
+import { CircularProgress } from '@mui/material';
 
 const options = ['Все сотрудники', 'Мое подразделение'];
 
@@ -30,7 +31,7 @@ export default function SplitButton() {
   //   const { Name } = useUsers((state) => state.CURRENT_USER_DATA);
   //   const { allLearners } = useUsers((state) => state.ALL_LEARNERS);
 
-  const { CURRENT_USER_DATA, setTurnOffDivisionFilter } = useUsers();
+  const { CURRENT_USER_DATA, setTurnOffDivisionFilter } = useLearners();
 
   const handleClick = () => {
     console.info(`You clicked ${options[selectedIndex]}`);
@@ -85,7 +86,11 @@ export default function SplitButton() {
           onClick={handleToggle}
           startIcon={<Groups2Icon />}
         >
-          <ArrowDropDownIcon />
+          {CURRENT_USER_DATA ? (
+            <ArrowDropDownIcon />
+          ) : (
+            <CircularProgress size={20} />
+          )}
         </Button>
       </ButtonGroup>
       <Popper
@@ -96,7 +101,7 @@ export default function SplitButton() {
         anchorEl={anchorRef.current}
         role={undefined}
         transition
-        disablePortal
+        // disablePortal={true}
         // placeholder={'Мое подразделение'}
       >
         {({ TransitionProps, placement }) => (
