@@ -1,15 +1,14 @@
-import GroupsIcon from '@mui/icons-material/Groups';
 import SchoolIcon from '@mui/icons-material/School';
 import { Box, Button } from '@mui/material';
+import { useQuery } from '@tanstack/react-query';
 import React, { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { RenderAssignAllButton } from '../AssignAllBtn';
-import { useLearners } from '../../data/store/learners.store';
-import SplitButton from '../SplitButton';
-import { getCurrentUserData } from '../../api/gdc.users.api';
-import { useQuery } from '@tanstack/react-query';
-import { CurrentUserData } from '../../data/types.store';
-import { getCurrentUserDivision } from '../../services/learners.service';
+import { getCurrentUserData } from '../api/gdc.users.api';
+import { useLearners } from '../data/store/learners.store';
+import { CurrentUserData } from '../data/types.store';
+import { RenderAssignAllButton } from './AssignAllBtn';
+import SplitButton from './SplitButton';
+import { useGridApiRef } from '@mui/x-data-grid';
 
 interface TopbarProps {
   setIsSidebar?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,13 +18,8 @@ const Topbar: FC<TopbarProps> = () => {
   // const theme = useTheme();
   // const colorMode = useContext(ColorModeContext);
 
-  const {
-    SELECTED_ROWS_DATA,
-    CURRENT_USER_DATA,
-    setCurrentUserData,
-    setCurrenUserName,
-    ALL_LEARNERS,
-  } = useLearners();
+  const { SELECTED_ROWS_DATA, setCurrentUserData, setCurrenUserName } =
+    useLearners();
 
   const isAssignAllButton = SELECTED_ROWS_DATA.length > 0;
 
@@ -65,9 +59,6 @@ const Topbar: FC<TopbarProps> = () => {
         )}
 
         <Link to={'/team'}>
-          {/* <Button variant="outlined" startIcon={<GroupsIcon />}>
-            Мои ученики
-          </Button> */}
           <SplitButton />
         </Link>
         {isAssignAllButton && <RenderAssignAllButton />}

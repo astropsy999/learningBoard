@@ -1,5 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
-import Topbar from './components/topbar/Topbar';
+import Topbar from './components/Topbar';
 import Dashboard from './scenes/learningboard/LearningBoard';
 import Team from './scenes/mylearners/MyLearners';
 

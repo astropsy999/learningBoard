@@ -1,10 +1,10 @@
-import { Checkbox, Chip, colors, useTheme } from '@mui/material';
+import { Checkbox, Chip, useTheme } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { CourseData } from '../data/store/courses.store';
+import { CourseData, useCourses } from '../data/store/courses.store';
 import { tokens } from '../theme';
 
 interface CourseCardProps {
@@ -13,6 +13,7 @@ interface CourseCardProps {
 
 export const CourseCard: React.FC<CourseCardProps> = ({ courseItem }) => {
   const [checked, setChecked] = React.useState(false);
+  const { selectedCoursesToSave, setSelectedCoursesToSave } = useCourses();
 
   const theme = useTheme();
 
@@ -20,6 +21,13 @@ export const CourseCard: React.FC<CourseCardProps> = ({ courseItem }) => {
 
   const handleCardClick = () => {
     setChecked(!checked);
+    if (!checked) {
+      setSelectedCoursesToSave([...selectedCoursesToSave, courseItem]);
+    } else {
+      setSelectedCoursesToSave(
+        selectedCoursesToSave.filter((item) => item !== courseItem),
+      );
+    }
   };
 
   return (
@@ -48,7 +56,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ courseItem }) => {
         <Chip
           label={courseItem.type}
           color={courseItem.type === 'Тест' ? 'info' : 'success'}
-          variant={courseItem.type === 'Тест' ? 'filled' : 'outlined'}
+          variant={'outlined'}
         />
       </CardActions>
     </Card>

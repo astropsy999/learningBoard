@@ -1,24 +1,17 @@
-import * as React from 'react';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import Groups2Icon from '@mui/icons-material/Groups2';
+import { CircularProgress } from '@mui/material';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 import Grow from '@mui/material/Grow';
-import Paper from '@mui/material/Paper';
-import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
-import GroupsIcon from '@mui/icons-material/Groups';
-import Groups2Icon from '@mui/icons-material/Groups2';
-import Groups2 from '@mui/icons-material/Groups2';
+import Paper from '@mui/material/Paper';
+import Popper from '@mui/material/Popper';
+import * as React from 'react';
 import { useLearners } from '../data/store/learners.store';
-import {
-  filterLearners,
-  getCurrentUserDivision,
-} from '../services/learners.service';
-import { CurrentUserData } from '../data/types.store';
 import { useGridApiRef } from '@mui/x-data-grid';
-import { CircularProgress } from '@mui/material';
 
 const options = ['Все сотрудники', 'Мое подразделение'];
 
@@ -27,14 +20,21 @@ export default function SplitButton() {
   const anchorRef = React.useRef<HTMLDivElement>(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [buttonColor, setButtonColor] = React.useState('warning');
-
-  //   const { Name } = useUsers((state) => state.CURRENT_USER_DATA);
-  //   const { allLearners } = useUsers((state) => state.ALL_LEARNERS);
-
   const { CURRENT_USER_DATA, setTurnOffDivisionFilter } = useLearners();
 
   const handleClick = () => {
     console.info(`You clicked ${options[selectedIndex]}`);
+  };
+
+  // const apiRef = useGridApiRef();
+
+  const deSelectAll = () => {
+    const checkbox = document.querySelector(
+      'input.PrivateSwitchBase-input',
+    ) as HTMLInputElement;
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    checkbox?.checked ? checkbox?.click() : null;
   };
 
   const handleMenuItemClick = (
@@ -46,9 +46,11 @@ export default function SplitButton() {
     if (index === 0) {
       setButtonColor('info');
       setTurnOffDivisionFilter(true);
+      deSelectAll();
     } else {
       setButtonColor('warning');
       setTurnOffDivisionFilter(false);
+      deSelectAll();
     }
   };
 
@@ -101,8 +103,6 @@ export default function SplitButton() {
         anchorEl={anchorRef.current}
         role={undefined}
         transition
-        // disablePortal={true}
-        // placeholder={'Мое подразделение'}
       >
         {({ TransitionProps, placement }) => (
           <Grow

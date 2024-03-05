@@ -44,7 +44,8 @@ export type UserState = {
   filteredLearners: ILearner[] | null;
   turnOffDivisionFilter: boolean | null;
   COURSES_TO_LEARNERS_DIALOG: boolean;
-  SELECTED_ROWS_DATA: Object[];
+  SELECTED_ROWS_DATA: ILearner[];
+  onlyLearnerName: string;
 };
 
 export type UserActions = {
@@ -56,6 +57,7 @@ export type UserActions = {
   setFilteredLearners: Function;
   setCurrenUserName: Function;
   setTurnOffDivisionFilter: Function;
+  setOnlyLearnerName: Function;
 };
 
 export interface ILearner {

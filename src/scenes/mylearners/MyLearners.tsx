@@ -1,6 +1,6 @@
 import { Box, Button, Chip, Typography, useTheme } from '@mui/material';
 import { DataGrid, GridColDef, useGridApiRef } from '@mui/x-data-grid';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 // import { AllUsersData } from '../../../types';
 import Header from '../../components/Header';
 import { mockDataTeam } from '../../data/mockData';
@@ -11,6 +11,7 @@ import { useLearners } from '../../data/store/learners.store';
 import { fetchAllLearners } from '../../services/learners.service';
 import { tokens } from '../../theme';
 import { CoursesToLearner } from '../coursestolearner/CoursesToLearner';
+import { useCourses } from '../../data/store/courses.store';
 
 export type SelectedRowData = {
   id: number;
@@ -32,7 +33,8 @@ const MyLearners = () => {
     openCoursesDialog,
     turnOffDivisionFilter,
   } = useLearners();
-  const [learnerName, setLearnerName] = useState('');
+  const { setOnlyLearnerName, setSelectedRowsDataOnMyLearners } = useLearners();
+  const { setSelectedCoursesToSave } = useCourses();
   const [selectedRows, setSelectedRows] = useState<
     SelectedRowData[] | undefined
   >([]);
@@ -44,46 +46,49 @@ const MyLearners = () => {
     queryFn: fetchAllLearners,
   });
 
-  const filteredDivision = {
-    items: [
-      {
-        field: 'division',
-        operator: 'contains',
-        value: 'ОИТ',
-      },
-    ],
-  };
+  const filteredDivision = useMemo(() => {
+    return {
+      items: [
+        {
+          field: 'division',
+          operator: 'contains',
+          value: 'ОИТ',
+        },
+      ],
+    };
+  }, []);
 
-  const unsetDivisionFilter = {
-    items: [
-      {
-        field: 'division',
-        operator: '',
-        value: 'ОИТ',
-      },
-    ],
-  };
+  const unsetDivisionFilter = useMemo(() => {
+    return {
+      items: [
+        {
+          field: 'division',
+          operator: '',
+          value: 'ОИТ',
+        },
+      ],
+    };
+  }, []);
 
   const handleCoursesDialogOpen = (learnerName: string) => {
     openCoursesDialog(true);
-    setLearnerName(learnerName);
+    setOnlyLearnerName(learnerName);
   };
-
-  const { setSelectedRowsDataOnMyLearners } = useLearners();
 
   const isSelectedUser = selectedRows!.length > 0;
 
   useEffect(() => {
-    // console.log('🚀 ~ useEffect ~ api:', apiRef);
     if (turnOffDivisionFilter) {
       apiRef.current.setFilterModel(unsetDivisionFilter);
     } else {
       apiRef.current.setFilterModel(filteredDivision);
     }
-  }, [apiRef, turnOffDivisionFilter]);
+  }, [apiRef, filteredDivision, turnOffDivisionFilter, unsetDivisionFilter]);
 
   const handleCoursesDialogClose = () => {
     openCoursesDialog(false);
+    setOnlyLearnerName('');
+    setSelectedCoursesToSave([]);
   };
 
   const handleSelectionModelChange = (newSelection: Object[]) => {
@@ -225,8 +230,6 @@ const MyLearners = () => {
       <CoursesToLearner
         onOpen={COURSES_TO_LEARNERS_DIALOG}
         onClose={handleCoursesDialogClose}
-        name={learnerName}
-        lernersData={selectedRows}
       />
     </Box>
   );

@@ -1,5 +1,5 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { Container, Grid } from '@mui/material';
+import { Chip, Container, Grid } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -14,6 +14,8 @@ import { CourseCard } from '../../components/CourseCard';
 import { SelectedRowData } from '../mylearners/MyLearners';
 import { useCourses } from '../../data/store/courses.store';
 import { SubmitDialog } from '../../components/SubmitDialog';
+import { useLearners } from '../../data/store/learners.store';
+import SaveAltIcon from '@mui/icons-material/SaveAlt';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -34,18 +36,13 @@ type CoursesToLearnerProps = {
 export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
   onOpen,
   onClose,
-  name,
-  lernersData,
 }) => {
-  const getLearnersNamesToString = (learnersArray: SelectedRowData[]) => {
-    return learnersArray.map((learner) => learner.name).join(', ');
-  };
-
-  const { allCourses, setAllCourses } = useCourses();
+  const { allCourses, setAllCourses, selectedCoursesToSave } = useCourses();
   const [openSubmitDialog, setOpenSubmitDialog] = React.useState(false);
+  const { onlyLearnerName, SELECTED_ROWS_DATA } = useLearners();
 
   React.useEffect(() => {
-    setAllCourses(); // Вызов функции для загрузки данных при монтировании компонента
+    setAllCourses();
   }, [allCourses, setAllCourses]);
 
   const handleSaveCourses = () => {
@@ -71,19 +68,39 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
               <CloseIcon />
             </IconButton>
             <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              Назначение обучения для{' '}
-              {lernersData?.length
-                ? getLearnersNamesToString(lernersData)
-                : name}
+              <b>Назначение обучения для:</b>{' '}
+              {onlyLearnerName.length ? (
+                <Chip
+                  label={onlyLearnerName}
+                  color="primary"
+                  variant="outlined"
+                  size="medium"
+                />
+              ) : (
+                SELECTED_ROWS_DATA?.map((item) => (
+                  <Chip
+                    label={item.name}
+                    color="primary"
+                    variant="outlined"
+                    size="medium"
+                    key={item.id}
+                    sx={{ margin: '2px' }}
+                    onDelete={() => null}
+                  />
+                ))
+              )}
             </Typography>
-            <Button
-              autoFocus
-              color="warning"
-              onClick={handleSaveCourses}
-              variant="contained"
-            >
-              Сохранить
-            </Button>
+            {selectedCoursesToSave.length > 0 && (
+              <Button
+                autoFocus
+                color="warning"
+                onClick={handleSaveCourses}
+                variant="contained"
+                startIcon={<SaveAltIcon />}
+              >
+                Сохранить
+              </Button>
+            )}
           </Toolbar>
         </AppBar>
         <Container>
@@ -106,6 +123,7 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
       <SubmitDialog
         isOpen={openSubmitDialog}
         onClose={() => setOpenSubmitDialog(false)}
+        dialogTitle="Сохранить назначение обучающих материалов?"
       />
     </React.Fragment>
   );

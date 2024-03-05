@@ -8,6 +8,10 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
+import { useCourses } from '../data/store/courses.store';
+import { Chip } from '@mui/material';
+import { useLearners } from '../data/store/learners.store';
+import CheckIcon from '@mui/icons-material/Check';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -21,38 +25,44 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
 interface SubmitDialogProps {
   isOpen: boolean;
   onClose: () => void;
+  dialogTitle: string;
 }
 
 export const SubmitDialog: React.FC<SubmitDialogProps> = ({
   isOpen,
   onClose,
+  dialogTitle,
 }) => {
   const [open, setOpen] = React.useState(isOpen);
+  const { selectedCoursesToSave } = useCourses();
+  const { SELECTED_ROWS_DATA } = useLearners();
 
   React.useEffect(() => {
     setOpen(isOpen);
   }, [isOpen]);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
   const handleClose = () => {
     setOpen(false);
     onClose();
   };
 
+  const handleDelete = (id: number) => {};
+
   return (
     <React.Fragment>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open dialog
-      </Button>
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
       >
-        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Modal title
+        <DialogTitle
+          sx={{ m: 0, p: 2 }}
+          id="customized-dialog-title"
+          fontSize={16}
+          fontWeight={'bold'}
+          color={'steelblue'}
+        >
+          {dialogTitle}
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -68,24 +78,51 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
         </IconButton>
         <DialogContent dividers>
           <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta
-            ac consectetur ac, vestibulum at eros.
+            <b>Вы выбрали следующие курсы:</b>
+            <br />{' '}
+            {selectedCoursesToSave.map((course) => (
+              <Chip
+                key={course.id}
+                label={course.title}
+                variant="outlined"
+                sx={{ margin: '2px' }}
+                onDelete={handleDelete}
+              />
+            ))}
           </Typography>
           <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor
-            auctor.
+            <b>Они будут назначены сотрудникам:</b>
+            <br />
           </Typography>
           <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo
-            cursus magna, vel scelerisque nisl consectetur et. Donec sed odio
-            dui. Donec ullamcorper nulla non metus auctor fringilla.
+            {SELECTED_ROWS_DATA.length > 0 &&
+              SELECTED_ROWS_DATA.map((row) => (
+                <Chip
+                  key={row.id}
+                  label={row.name}
+                  variant="outlined"
+                  sx={{ margin: '2px' }}
+                />
+              ))}
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Save changes
+          <Button
+            onClick={handleClose}
+            color="warning"
+            startIcon={<CloseIcon />}
+            variant="outlined"
+          >
+            Отменить
+          </Button>
+          <Button
+            autoFocus
+            onClick={handleClose}
+            color="secondary"
+            variant="contained"
+            startIcon={<CheckIcon />}
+          >
+            Подтвердить
           </Button>
         </DialogActions>
       </BootstrapDialog>
