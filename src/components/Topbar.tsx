@@ -8,7 +8,6 @@ import { useLearners } from '../data/store/learners.store';
 import { CurrentUserData } from '../data/types.store';
 import { RenderAssignAllButton } from './AssignAllBtn';
 import SplitButton from './SplitButton';
-import { useGridApiRef } from '@mui/x-data-grid';
 
 interface TopbarProps {
   setIsSidebar?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -44,10 +43,18 @@ const Topbar: FC<TopbarProps> = () => {
       position={'fixed'}
       bgcolor={'whitesmoke'}
       width={'100%'}
+      boxShadow={
+        '0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)'
+      }
     >
       <Box ml={4} sx={{ display: 'flex', gap: '16px', marginLeft: '20px' }}>
+        {isAssignAllButton && <RenderAssignAllButton />}
+
+        <Link to={'/'}>
+          <SplitButton />
+        </Link>
         {!isAssignAllButton ? (
-          <Link to={'/'}>
+          <Link to={'/stat'}>
             <Button variant="outlined" startIcon={<SchoolIcon />}>
               Статистика
             </Button>
@@ -57,11 +64,6 @@ const Topbar: FC<TopbarProps> = () => {
             Статистика
           </Button>
         )}
-
-        <Link to={'/team'}>
-          <SplitButton />
-        </Link>
-        {isAssignAllButton && <RenderAssignAllButton />}
       </Box>
     </Box>
   );

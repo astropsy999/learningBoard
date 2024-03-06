@@ -68,5 +68,13 @@ export const useLearners = create<UserState & UserActions>()(
         false,
         'openCoursesDialog',
       ),
+    deSelectAll: () => {
+      const checkbox = document.querySelector(
+        'input.PrivateSwitchBase-input',
+      ) as HTMLInputElement;
+
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      checkbox?.checked ? checkbox?.click() : null;
+    },
   })),
 );

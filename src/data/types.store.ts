@@ -58,6 +58,7 @@ export type UserActions = {
   setCurrenUserName: Function;
   setTurnOffDivisionFilter: Function;
   setOnlyLearnerName: Function;
+  deSelectAll: () => void;
 };
 
 export interface ILearner {

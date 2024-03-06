@@ -20,22 +20,14 @@ export default function SplitButton() {
   const anchorRef = React.useRef<HTMLDivElement>(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [buttonColor, setButtonColor] = React.useState('warning');
-  const { CURRENT_USER_DATA, setTurnOffDivisionFilter } = useLearners();
+  const { CURRENT_USER_DATA, setTurnOffDivisionFilter, deSelectAll } =
+    useLearners();
 
   const handleClick = () => {
     console.info(`You clicked ${options[selectedIndex]}`);
   };
 
   // const apiRef = useGridApiRef();
-
-  const deSelectAll = () => {
-    const checkbox = document.querySelector(
-      'input.PrivateSwitchBase-input',
-    ) as HTMLInputElement;
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-    checkbox?.checked ? checkbox?.click() : null;
-  };
 
   const handleMenuItemClick = (
     event: React.MouseEvent<HTMLLIElement, MouseEvent>,

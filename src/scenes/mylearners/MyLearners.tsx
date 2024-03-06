@@ -1,10 +1,8 @@
 import { Box, Button, Chip, Typography, useTheme } from '@mui/material';
 import { DataGrid, GridColDef, useGridApiRef } from '@mui/x-data-grid';
 import React, { useEffect, useMemo, useState } from 'react';
-// import { AllUsersData } from '../../../types';
 import Header from '../../components/Header';
 import { mockDataTeam } from '../../data/mockData';
-// import { useUsers } from '../../data/store';
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
 import { useQuery } from '@tanstack/react-query';
 import { useLearners } from '../../data/store/learners.store';
@@ -33,7 +31,8 @@ const MyLearners = () => {
     openCoursesDialog,
     turnOffDivisionFilter,
   } = useLearners();
-  const { setOnlyLearnerName, setSelectedRowsDataOnMyLearners } = useLearners();
+  const { setOnlyLearnerName, setSelectedRowsDataOnMyLearners, deSelectAll } =
+    useLearners();
   const { setSelectedCoursesToSave } = useCourses();
   const [selectedRows, setSelectedRows] = useState<
     SelectedRowData[] | undefined
@@ -89,6 +88,7 @@ const MyLearners = () => {
     openCoursesDialog(false);
     setOnlyLearnerName('');
     setSelectedCoursesToSave([]);
+    deSelectAll();
   };
 
   const handleSelectionModelChange = (newSelection: Object[]) => {

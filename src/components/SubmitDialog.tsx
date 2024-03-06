@@ -9,9 +9,10 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import { useCourses } from '../data/store/courses.store';
-import { Chip } from '@mui/material';
+import { Box, Chip } from '@mui/material';
 import { useLearners } from '../data/store/learners.store';
 import CheckIcon from '@mui/icons-material/Check';
+import { Bounce, toast } from 'react-toastify';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -34,8 +35,8 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
   dialogTitle,
 }) => {
   const [open, setOpen] = React.useState(isOpen);
-  const { selectedCoursesToSave } = useCourses();
-  const { SELECTED_ROWS_DATA } = useLearners();
+  const { selectedCoursesToSave, setSelectedCoursesToSave } = useCourses();
+  const { SELECTED_ROWS_DATA, onlyLearnerName } = useLearners();
 
   React.useEffect(() => {
     setOpen(isOpen);
@@ -46,7 +47,28 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
     onClose();
   };
 
-  const handleDelete = (id: number) => {};
+  const handleDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
+    if (selectedCoursesToSave.length === 1) {
+      toast.warn('Необходимо выбрать хотя бы один курс!', {
+        position: 'top-center',
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      });
+      return;
+    }
+    const deleteCourse = event.currentTarget.parentElement as HTMLButtonElement;
+    const id = Number(deleteCourse.getAttribute('data-item-id'));
+    const newSelectedCourses = selectedCoursesToSave.filter(
+      (course) => course.id !== id,
+    );
+    setSelectedCoursesToSave(newSelectedCourses);
+  };
 
   return (
     <React.Fragment>
@@ -55,27 +77,35 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
         aria-labelledby="customized-dialog-title"
         open={open}
       >
-        <DialogTitle
-          sx={{ m: 0, p: 2 }}
-          id="customized-dialog-title"
-          fontSize={16}
-          fontWeight={'bold'}
-          color={'steelblue'}
+        <Box
+          display="flex"
+          alignItems="center"
+          gap={4}
+          justifyContent={'space-between'}
+          minWidth={450}
         >
-          {dialogTitle}
-        </DialogTitle>
-        <IconButton
-          aria-label="close"
-          onClick={handleClose}
-          sx={{
-            position: 'absolute',
-            right: 8,
-            top: 8,
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <CloseIcon />
-        </IconButton>
+          <DialogTitle
+            sx={{ m: 0, p: 2 }}
+            id="customized-dialog-title"
+            fontSize={16}
+            fontWeight={'bold'}
+            color={'steelblue'}
+          >
+            {dialogTitle}
+          </DialogTitle>
+          <IconButton
+            aria-label="close"
+            onClick={handleClose}
+            sx={{
+              position: 'absolute',
+              right: 8,
+              top: 8,
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <CloseIcon />
+          </IconButton>
+        </Box>
         <DialogContent dividers>
           <Typography gutterBottom>
             <b>Вы выбрали следующие курсы:</b>
@@ -87,6 +117,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
                 variant="outlined"
                 sx={{ margin: '2px' }}
                 onDelete={handleDelete}
+                data-item-id={course.id}
               />
             ))}
           </Typography>
@@ -95,7 +126,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
             <br />
           </Typography>
           <Typography gutterBottom>
-            {SELECTED_ROWS_DATA.length > 0 &&
+            {SELECTED_ROWS_DATA.length > 0 ? (
               SELECTED_ROWS_DATA.map((row) => (
                 <Chip
                   key={row.id}
@@ -103,7 +134,14 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
                   variant="outlined"
                   sx={{ margin: '2px' }}
                 />
-              ))}
+              ))
+            ) : (
+              <Chip
+                label={onlyLearnerName}
+                variant="outlined"
+                sx={{ margin: '2px' }}
+              />
+            )}
           </Typography>
         </DialogContent>
         <DialogActions>

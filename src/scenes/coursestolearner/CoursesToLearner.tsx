@@ -1,5 +1,6 @@
 import CloseIcon from '@mui/icons-material/Close';
-import { Chip, Container, Grid } from '@mui/material';
+import SaveAltIcon from '@mui/icons-material/SaveAlt';
+import { Box, Chip, Container, Grid } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
@@ -10,12 +11,13 @@ import Typography from '@mui/material/Typography';
 import { TransitionProps } from '@mui/material/transitions';
 import * as React from 'react';
 import { FC } from 'react';
+// import { Bounce } from 'react-toastify/dist/components';
 import { CourseCard } from '../../components/CourseCard';
-import { SelectedRowData } from '../mylearners/MyLearners';
-import { useCourses } from '../../data/store/courses.store';
 import { SubmitDialog } from '../../components/SubmitDialog';
+import { useCourses } from '../../data/store/courses.store';
 import { useLearners } from '../../data/store/learners.store';
-import SaveAltIcon from '@mui/icons-material/SaveAlt';
+import { SelectedRowData } from '../mylearners/MyLearners';
+import { Bounce, toast } from 'react-toastify';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -39,7 +41,12 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
 }) => {
   const { allCourses, setAllCourses, selectedCoursesToSave } = useCourses();
   const [openSubmitDialog, setOpenSubmitDialog] = React.useState(false);
-  const { onlyLearnerName, SELECTED_ROWS_DATA } = useLearners();
+  // const [atLeastOneLearner, setAtleastOneLearner] = React.useState(false);
+  const {
+    onlyLearnerName,
+    SELECTED_ROWS_DATA,
+    setSelectedRowsDataOnMyLearners,
+  } = useLearners();
 
   React.useEffect(() => {
     setAllCourses();
@@ -47,6 +54,31 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
 
   const handleSaveCourses = () => {
     setOpenSubmitDialog(true);
+  };
+
+  const handleDeleteLearnerFromGroup = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  ) => {
+    if (SELECTED_ROWS_DATA.length === 1) {
+      toast.warn('Необходимо выбрать хотя бы одного ученика!', {
+        position: 'top-center',
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+        transition: Bounce,
+      });
+      return;
+    }
+    const chipElement = event.currentTarget.parentElement as HTMLButtonElement;
+
+    const itemId = chipElement.getAttribute('data-item-id');
+    setSelectedRowsDataOnMyLearners([
+      ...SELECTED_ROWS_DATA.filter((item) => item.id !== Number(itemId)),
+    ]);
   };
 
   return (
@@ -67,40 +99,56 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
             >
               <CloseIcon />
             </IconButton>
-            <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
-              <b>Назначение обучения для:</b>{' '}
-              {onlyLearnerName.length ? (
-                <Chip
-                  label={onlyLearnerName}
-                  color="primary"
-                  variant="outlined"
-                  size="medium"
-                />
-              ) : (
-                SELECTED_ROWS_DATA?.map((item) => (
-                  <Chip
-                    label={item.name}
-                    color="primary"
-                    variant="outlined"
-                    size="medium"
-                    key={item.id}
-                    sx={{ margin: '2px' }}
-                    onDelete={() => null}
-                  />
-                ))
-              )}
-            </Typography>
-            {selectedCoursesToSave.length > 0 && (
+            <Box
+              sx={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                alignItems: 'center',
+                flexDirection: 'row',
+                width: '100%',
+              }}
+            >
+              <Box>
+                <b>Назначение обучения для:</b>{' '}
+              </Box>
+              <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
+                <Box m={1}>
+                  {onlyLearnerName.length ? (
+                    <Chip
+                      label={onlyLearnerName}
+                      color="primary"
+                      variant="outlined"
+                      size="medium"
+                    />
+                  ) : (
+                    SELECTED_ROWS_DATA?.map((item) => (
+                      <Chip
+                        label={item.name}
+                        color="primary"
+                        variant="outlined"
+                        size="medium"
+                        key={item.id}
+                        sx={{ margin: '2px' }}
+                        onDelete={handleDeleteLearnerFromGroup}
+                        data-item-id={item.id}
+                        data-item-name={item.name}
+                      />
+                    ))
+                  )}
+                </Box>
+              </Typography>
               <Button
                 autoFocus
                 color="warning"
                 onClick={handleSaveCourses}
                 variant="contained"
                 startIcon={<SaveAltIcon />}
+                sx={{ height: '40px' }}
+                disabled={selectedCoursesToSave.length === 0}
               >
                 Сохранить
               </Button>
-            )}
+            </Box>
           </Toolbar>
         </AppBar>
         <Container>
@@ -118,13 +166,13 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
                 </Grid>
               ))}
           </Grid>
+          <SubmitDialog
+            isOpen={openSubmitDialog}
+            onClose={() => setOpenSubmitDialog(false)}
+            dialogTitle="Сохранить назначение обучающих материалов?"
+          />
         </Container>
       </Dialog>
-      <SubmitDialog
-        isOpen={openSubmitDialog}
-        onClose={() => setOpenSubmitDialog(false)}
-        dialogTitle="Сохранить назначение обучающих материалов?"
-      />
     </React.Fragment>
   );
 };

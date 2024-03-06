@@ -19,6 +19,13 @@ export const CourseCard: React.FC<CourseCardProps> = ({ courseItem }) => {
 
   const colors = tokens(theme.palette.mode);
 
+  React.useEffect(() => {
+    const isChecked = selectedCoursesToSave.some(
+      (selectedCourse) => selectedCourse === courseItem,
+    );
+    setChecked(isChecked);
+  }, [selectedCoursesToSave, courseItem]);
+
   const handleCardClick = () => {
     setChecked(!checked);
     if (!checked) {
