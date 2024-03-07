@@ -2,7 +2,6 @@
 
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { fetchAllCourses } from '../../services/learners.service';
 
 export type CourseData = {
   id: number;
@@ -30,10 +29,13 @@ export const useCourses = create<CoursesState>()(
         false,
         'setSelectedCoursesToSave',
       ),
-    setAllCourses: async () => {
-      const response = await fetchAllCourses();
-
-      set({ allCourses: response }, false, 'setAllCourses');
-    },
+    setAllCourses: (newAllCourses: CourseData[]) =>
+      set(
+        {
+          allCourses: newAllCourses,
+        },
+        false,
+        'setAllCourses',
+      ),
   })),
 );

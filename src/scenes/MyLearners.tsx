@@ -1,15 +1,15 @@
+import AddToQueueIcon from '@mui/icons-material/AddToQueue';
 import { Box, Button, Chip, Typography, useTheme } from '@mui/material';
 import { DataGrid, GridColDef, useGridApiRef } from '@mui/x-data-grid';
 import React, { useEffect, useMemo, useState } from 'react';
-import Header from '../../components/Header';
-import { mockDataTeam } from '../../data/mockData';
-import AddToQueueIcon from '@mui/icons-material/AddToQueue';
-import { useQuery } from '@tanstack/react-query';
-import { useLearners } from '../../data/store/learners.store';
-import { fetchAllLearners } from '../../services/learners.service';
-import { tokens } from '../../theme';
-import { CoursesToLearner } from '../coursestolearner/CoursesToLearner';
-import { useCourses } from '../../data/store/courses.store';
+import useSWR from 'swr';
+import Header from '../components/Header';
+import { mockDataTeam } from '../data/mockData';
+import { useCourses } from '../data/store/courses.store';
+import { useLearners } from '../data/store/learners.store';
+import { fetchAllLearners } from '../services/api.service';
+import { tokens } from '../theme';
+import { CoursesToLearner } from './CoursesToLearner';
 
 export type SelectedRowData = {
   id: number;
@@ -40,10 +40,11 @@ const MyLearners = () => {
 
   const apiRef = useGridApiRef();
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ['allLearners'],
-    queryFn: fetchAllLearners,
-  });
+  const {
+    data,
+    error: isError,
+    isLoading,
+  } = useSWR('allLearners', fetchAllLearners);
 
   const filteredDivision = useMemo(() => {
     return {

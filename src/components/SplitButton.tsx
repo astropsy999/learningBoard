@@ -11,7 +11,6 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import * as React from 'react';
 import { useLearners } from '../data/store/learners.store';
-import { useGridApiRef } from '@mui/x-data-grid';
 
 const options = ['Все сотрудники', 'Мое подразделение'];
 

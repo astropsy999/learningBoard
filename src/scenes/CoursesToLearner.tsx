@@ -11,13 +11,14 @@ import Typography from '@mui/material/Typography';
 import { TransitionProps } from '@mui/material/transitions';
 import * as React from 'react';
 import { FC } from 'react';
-// import { Bounce } from 'react-toastify/dist/components';
-import { CourseCard } from '../../components/CourseCard';
-import { SubmitDialog } from '../../components/SubmitDialog';
-import { useCourses } from '../../data/store/courses.store';
-import { useLearners } from '../../data/store/learners.store';
-import { SelectedRowData } from '../mylearners/MyLearners';
+import { CourseCard } from '../components/CourseCard';
+import { SubmitDialog } from '../components/SubmitDialog';
+import { useCourses } from '../data/store/courses.store';
+import { useLearners } from '../data/store/learners.store';
+import { SelectedRowData } from './MyLearners';
 import { Bounce, toast } from 'react-toastify';
+import useSWR from 'swr';
+import { fetchAllCourses } from '../services/api.service';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -34,7 +35,6 @@ type CoursesToLearnerProps = {
   name?: string;
   lernersData?: SelectedRowData[] | undefined;
 };
-
 export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
   onOpen,
   onClose,
@@ -48,9 +48,11 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
     setSelectedRowsDataOnMyLearners,
   } = useLearners();
 
+  const { data } = useSWR('allCourses', fetchAllCourses);
+
   React.useEffect(() => {
-    setAllCourses();
-  }, [allCourses, setAllCourses]);
+    setAllCourses(data);
+  }, [allCourses, data, setAllCourses]);
 
   const handleSaveCourses = () => {
     setOpenSubmitDialog(true);

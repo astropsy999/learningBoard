@@ -5,13 +5,13 @@ import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 import TrafficIcon from '@mui/icons-material/Traffic';
 import { Box, Button, IconButton, Typography, useTheme } from '@mui/material';
 import React from 'react';
-import BarChart from '../../components/BarChart';
-import Header from '../../components/Header';
-import LineChart from '../../components/LineChart';
-import ProgressCircle from '../../components/ProgressCircle';
-import StatBox from '../../components/StatBox';
-import { mockTransactions } from '../../data/mockData';
-import { tokens } from '../../theme';
+import BarChart from '../components/BarChart';
+import Header from '../components/Header';
+import LineChart from '../components/LineChart';
+import ProgressCircle from '../components/ProgressCircle';
+import StatBox from '../components/StatBox';
+import { mockTransactions } from '../data/mockData';
+import { tokens } from '../theme';
 
 const Dashboard = () => {
   const theme = useTheme();

@@ -1,9 +1,9 @@
 import SchoolIcon from '@mui/icons-material/School';
 import { Box, Button } from '@mui/material';
-import { useQuery } from '@tanstack/react-query';
 import React, { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { getCurrentUserData } from '../api/gdc.users.api';
+import useSWR from 'swr';
+import { getCurrentUserData } from '../services/api.service';
 import { useLearners } from '../data/store/learners.store';
 import { CurrentUserData } from '../data/types.store';
 import { RenderAssignAllButton } from './AssignAllBtn';
@@ -22,10 +22,14 @@ const Topbar: FC<TopbarProps> = () => {
 
   const isAssignAllButton = SELECTED_ROWS_DATA.length > 0;
 
-  const { data, isLoading, isError } = useQuery<CurrentUserData | undefined>({
-    queryKey: ['currentUserData'],
-    queryFn: getCurrentUserData,
-  });
+  const {
+    data,
+    isLoading,
+    error: isError,
+  } = useSWR<CurrentUserData | undefined>(
+    'currentUserData',
+    getCurrentUserData,
+  );
 
   useEffect(() => {
     if (!isLoading && !isError && data) {
