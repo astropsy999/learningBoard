@@ -41,18 +41,21 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
 }) => {
   const { allCourses, setAllCourses, selectedCoursesToSave } = useCourses();
   const [openSubmitDialog, setOpenSubmitDialog] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(true);
   // const [atLeastOneLearner, setAtleastOneLearner] = React.useState(false);
   const {
     onlyLearnerName,
     SELECTED_ROWS_DATA,
     setSelectedRowsDataOnMyLearners,
+    allData
   } = useLearners();
 
-  const { data } = useSWR('allCourses', fetchAllCourses);
+  
 
   React.useEffect(() => {
-    setAllCourses(data);
-  }, [allCourses, data, setAllCourses]);
+    allData && setAllCourses(allData.courses);
+    setIsLoading(false);
+  }, [allCourses, allData, setAllCourses]);
 
   const handleSaveCourses = () => {
     setOpenSubmitDialog(true);

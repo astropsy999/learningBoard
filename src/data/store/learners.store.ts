@@ -1,5 +1,3 @@
-// store.ts
-
 import { create } from 'zustand';
 import {
   CurrentUserData,
@@ -12,6 +10,7 @@ import { devtools } from 'zustand/middleware';
 export const useLearners = create<UserState & UserActions>()(
   devtools((set) => ({
     users: [],
+    allData: null,
     CURRENT_USER_DATA: null,
     currentUserName: null,
     allUsers: null,
@@ -22,6 +21,7 @@ export const useLearners = create<UserState & UserActions>()(
     filteredLearners: null,
     turnOffDivisionFilter: false,
     onlyLearnerName: '',
+    setAllData: (data: any) => set({ allData: data }, false, 'setAllData'),
     setOnlyLearnerName: (name: string) => set({ onlyLearnerName: name }),
     setTurnOffDivisionFilter: (filterToggle: boolean): void =>
       set(

@@ -19,4 +19,6 @@ export const url = {
     GetExcelforCalc: '/index.php/RepCalcController/GetExcelforCalc',
     BuildWindowForm: '/index.php/UIController/BuildWindowForm',
     calcsController: '/index.php/CalcsController/CalcContextValuesBTN',
+    learnController: '/index.php/learncontroller/getdata',
+    updateDataEndpoint: '/index.php/learncontroller/updatedata'
 }

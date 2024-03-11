@@ -3,7 +3,7 @@ import { Box, Button } from '@mui/material';
 import React, { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useSWR from 'swr';
-import { getCurrentUserData } from '../services/api.service';
+import { fetchAllData, getCurrentUserData } from '../services/api.service';
 import { useLearners } from '../data/store/learners.store';
 import { CurrentUserData } from '../data/types.store';
 import { RenderAssignAllButton } from './AssignAllBtn';
@@ -17,7 +17,7 @@ const Topbar: FC<TopbarProps> = () => {
   // const theme = useTheme();
   // const colorMode = useContext(ColorModeContext);
 
-  const { SELECTED_ROWS_DATA, setCurrentUserData, setCurrenUserName } =
+  const { SELECTED_ROWS_DATA, setCurrentUserData, setCurrenUserName, setAllData } =
     useLearners();
 
   const isAssignAllButton = SELECTED_ROWS_DATA.length > 0;
@@ -29,7 +29,7 @@ const Topbar: FC<TopbarProps> = () => {
   } = useSWR<CurrentUserData | undefined>(
     'currentUserData',
     getCurrentUserData,
-  );
+);
 
   useEffect(() => {
     if (!isLoading && !isError && data) {
@@ -37,6 +37,14 @@ const Topbar: FC<TopbarProps> = () => {
       setCurrenUserName(data.Name);
     }
   }, [data, isLoading, isError, setCurrentUserData, setCurrenUserName]);
+
+  const {data: allData, isLoading: isLoadingAllData, error} = useSWR('allData', fetchAllData)
+
+  useEffect(() => {
+    if (!isLoadingAllData && !error && allData) {
+        setAllData(allData)
+    }
+  }, [isLoadingAllData, error, allData, setAllData])
 
   return (
     <Box

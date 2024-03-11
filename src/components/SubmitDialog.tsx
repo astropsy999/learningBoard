@@ -13,6 +13,8 @@ import { Box, Chip } from '@mui/material';
 import { useLearners } from '../data/store/learners.store';
 import CheckIcon from '@mui/icons-material/Check';
 import { Bounce, toast } from 'react-toastify';
+import {  useSWRConfig } from 'swr';
+import { updateAllData } from '../services/api.service';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -47,6 +49,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
     onClose();
   };
 
+
   const handleDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (selectedCoursesToSave.length === 1) {
       toast.warn('Необходимо выбрать хотя бы один курс!', {
@@ -69,6 +72,27 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
     );
     setSelectedCoursesToSave(newSelectedCourses);
   };
+
+  const handleSaveAssignedCourses = () => {
+
+  console.log('SELECTED_ROWS_DATA: ', SELECTED_ROWS_DATA);
+  console.log('selectedCoursesToSave: ', selectedCoursesToSave);
+
+  const selectedCoursesIds = selectedCoursesToSave.map(course => course.id);
+  console.log('selectedCoursesIds: ', selectedCoursesIds);
+
+
+    const dataToUpdate = SELECTED_ROWS_DATA.map(user => ({
+      id: user.id,
+      courses: selectedCoursesIds
+  }));
+
+  console.log('dataToUpdate: ', dataToUpdate);
+
+
+    
+    updateAllData(dataToUpdate)
+  }
 
   return (
     <React.Fragment>
@@ -155,7 +179,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
           </Button>
           <Button
             autoFocus
-            onClick={handleClose}
+            onClick={handleSaveAssignedCourses}
             color="secondary"
             variant="contained"
             startIcon={<CheckIcon />}

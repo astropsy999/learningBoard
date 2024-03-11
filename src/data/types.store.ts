@@ -3,7 +3,20 @@
 export type User = {
   id: number;
   name: string;
-  email: string;
+  position?: string;
+  division?: number;
+  courses: number[];
+};
+
+export type Course = {
+  id: number;
+  title: string;
+  description: string;
+  type: string;
+}
+
+export type Divisions = {
+  [key: number]: string;
 };
 export interface AllUserData {
   ID: number;
@@ -34,6 +47,12 @@ export type AllUsersData = {
   users: AllUserData[];
 };
 
+export interface AllData {
+  users: User[];
+  courses: Course[];
+  divisions: Divisions
+}
+
 export type UserState = {
   users: User[];
   allUsers: AllUserData[] | null;
@@ -46,6 +65,7 @@ export type UserState = {
   COURSES_TO_LEARNERS_DIALOG: boolean;
   SELECTED_ROWS_DATA: ILearner[];
   onlyLearnerName: string;
+  allData: AllData | null;
 };
 
 export type UserActions = {
@@ -59,6 +79,7 @@ export type UserActions = {
   setTurnOffDivisionFilter: Function;
   setOnlyLearnerName: Function;
   deSelectAll: () => void;
+  setAllData: (data: any) => void
 };
 
 export interface ILearner {
