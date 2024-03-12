@@ -1,16 +1,12 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
-import { Box, Button, Chip, Typography, useTheme } from '@mui/material';
+import { Box, Button, Chip, useTheme } from '@mui/material';
 import { DataGrid, GridColDef, useGridApiRef } from '@mui/x-data-grid';
-import useSWR from 'swr';
+import React, { useEffect, useMemo, useState } from 'react';
 import Header from '../components/Header';
-import { mockDataTeam } from '../data/mockData';
 import { useCourses } from '../data/store/courses.store';
 import { useLearners } from '../data/store/learners.store';
-import { fetchAllData, fetchAllLearners, getCurrentUserDivision } from '../services/api.service';
 import { tokens } from '../theme';
 import { CoursesToLearner } from './CoursesToLearner';
-import { Course, Divisions } from '../data/types.store';
 
 export type SelectedRowData = {
   id: number;
@@ -18,26 +14,30 @@ export type SelectedRowData = {
   position?: string;
   division?: string;
   access?: string;
-  courses: string[];
+  courses: {
+    id: number;
+    title: string;
+  }[];
 };
 
 const MyLearners = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const {
-    COURSES_TO_LEARNERS_DIALOG,
+    coursesToLearnersDialog,
     openCoursesDialog,
     turnOffDivisionFilter,
-    setOnlyLearnerName, setSelectedRowsDataOnMyLearners, deSelectAll,
-    allData, currentUserName 
+    setOnlyLearnerName,
+    setSelectedRowsDataOnMyLearners,
+    deSelectAll,
+    allData,
+    allLearners,
+    divisions,
+    currentUserDivisionName,
   } = useLearners();
+  const { allCourses } = useCourses();
 
   const [isLoading, setIsLoading] = useState(true);
-  const [allLearners, setAllLearners] = useState<any[]>([]);
-  const [divisions, setDivisions] = useState<Divisions>();
-  const [courses, setCourses] = useState<Course[]>([]);
-  const [currentUserDivision, setCurrentUserDivision] = useState<string>();
-
   const { setSelectedCoursesToSave } = useCourses();
   const [selectedRows, setSelectedRows] = useState<
     SelectedRowData[] | undefined
@@ -45,40 +45,23 @@ const MyLearners = () => {
 
   const apiRef = useGridApiRef();
 
-  const getCurrentUserDivision = useCallback(() => {
-    const currentLearner = allLearners?.filter(
-      (learner) => learner?.name === currentUserName
-    );
-
-    return String(currentLearner[0]?.division);
-  }, [allLearners, currentUserName]);
-
-
-
   useEffect(() => {
-    if (allData) {
-      setIsLoading(false)
-      setAllLearners(allData.users)
-      setDivisions(allData.divisions)
-      setCourses(allData.courses)
-      setCurrentUserDivision(getCurrentUserDivision())
+    if (allLearners && divisions && allCourses && currentUserDivisionName) {
+      setIsLoading(false);
     }
-  }, [allData, allLearners, currentUserDivision, divisions, getCurrentUserDivision])
+  }, [allCourses, allData, allLearners, currentUserDivisionName, divisions]);
 
-
-
-
-const filteredDivision = useMemo(() => {
+  const filteredDivision = useMemo(() => {
     return {
       items: [
         {
           field: 'division',
           operator: 'contains',
-          value: currentUserDivision,
+          value: currentUserDivisionName,
         },
       ],
     };
-  }, [currentUserDivision]);
+  }, [currentUserDivisionName]);
 
   const unsetDivisionFilter = useMemo(() => {
     return {
@@ -86,11 +69,11 @@ const filteredDivision = useMemo(() => {
         {
           field: 'division',
           operator: '',
-          value: currentUserDivision,
+          value: currentUserDivisionName,
         },
       ],
     };
-  }, [currentUserDivision]);
+  }, [currentUserDivisionName]);
 
   const handleCoursesDialogOpen = (learnerName: string) => {
     openCoursesDialog(true);
@@ -100,7 +83,6 @@ const filteredDivision = useMemo(() => {
   const isSelectedUser = selectedRows!.length > 0;
 
   useEffect(() => {
-    
     if (turnOffDivisionFilter) {
       apiRef.current.setFilterModel(unsetDivisionFilter);
     } else {
@@ -117,7 +99,7 @@ const filteredDivision = useMemo(() => {
 
   const handleSelectionModelChange = (newSelection: Object[]) => {
     const selectedRowData: SelectedRowData[] = newSelection
-      .map((rowId) => allLearners.find((row) => row.id === rowId))
+      .map((rowId) => allLearners?.find((row) => row.id === rowId))
       .filter((row) => !!row) as SelectedRowData[];
 
     setSelectedRows(selectedRowData);
@@ -125,54 +107,52 @@ const filteredDivision = useMemo(() => {
   };
 
   const columns: GridColDef[] = [
-    {
-      field: 'id',
-      headerName: 'ID',
-      flex: 0.1,
-      headerClassName: 'name-column--cell',
-    },
+    // {
+    //   field: 'id',
+    //   headerName: 'ID',
+    //   flex: 0.1,
+    //   headerClassName: 'name-column--cell',
+    // },
     {
       field: 'name',
       headerName: 'ФИО',
-      flex: 1.2,
+      flex: 0.5,
       headerClassName: 'name-column--cell',
+      cellClassName: 'name-cell',
     },
     {
       field: 'position',
       headerName: 'Должность',
       type: 'string',
       headerAlign: 'left',
-      flex: 0.8,
+      flex: 0.3,
       align: 'left',
       headerClassName: 'name-column--cell',
     },
     {
       field: 'division',
       headerName: 'Подразделение',
-      flex: 1,
+      flex: 0.5,
       headerClassName: 'name-column--cell',
-      renderCell: ({row}) => {
-        return divisions![row?.division]
-      },
     },
     {
       field: 'courses',
       headerName: 'Обучающие материалы',
       flex: 1.5,
       renderCell: ({ row }) => {
-        return row.courses.map((course: number) => {
-          const courseTitle = courses.find((c) => c.id === course)?.title;
+        return row.courses.map((course: { [id: number]: string }) => {
+          const courseTitle = Object.values(course)[0];
           if (courseTitle) {
             return (
               <Chip
-                key={course}
+                key={courseTitle}
                 label={courseTitle}
                 variant="outlined"
                 sx={{ margin: '2px' }}
               />
             );
           } else {
-            return null; 
+            return null;
           }
         });
       },
@@ -214,6 +194,10 @@ const filteredDivision = useMemo(() => {
           '& .MuiDataGrid-root': {
             border: 'none',
           },
+          '& .name-cell': {
+            fontWeight: 'bold',
+            fontSize: '0.9rem',
+          },
 
           '& .MuiDataGrid-cell': {
             borderBottom: 'none',
@@ -241,26 +225,24 @@ const filteredDivision = useMemo(() => {
           },
         }}
       >
-       
-         <DataGrid
-            autoHeight={true}
-            apiRef={apiRef}
-            checkboxSelection
-            disableRowSelectionOnClick
-            rows={isLoading ? [] : allLearners!}
-            columns={columns}
-            loading={isLoading}
-            onRowSelectionModelChange={handleSelectionModelChange}
-            initialState={{
-              filter: {
-                filterModel: filteredDivision,
-              },
-            }}
-          />
-      
+        <DataGrid
+          autoHeight={true}
+          apiRef={apiRef}
+          checkboxSelection
+          disableRowSelectionOnClick
+          rows={isLoading ? [] : allLearners!}
+          columns={columns}
+          loading={isLoading}
+          onRowSelectionModelChange={handleSelectionModelChange}
+          initialState={{
+            filter: {
+              filterModel: filteredDivision,
+            },
+          }}
+        />
       </Box>
       <CoursesToLearner
-        onOpen={COURSES_TO_LEARNERS_DIALOG}
+        onOpen={coursesToLearnersDialog}
         onClose={handleCoursesDialogClose}
       />
     </Box>

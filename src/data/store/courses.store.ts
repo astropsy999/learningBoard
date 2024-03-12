@@ -11,7 +11,7 @@ export type CourseData = {
 };
 
 interface CoursesState {
-  allCourses: CourseData[];
+  allCourses: CourseData[] | null;
   setAllCourses: Function;
   selectedCoursesToSave: CourseData[];
   setSelectedCoursesToSave: Function;
@@ -19,7 +19,7 @@ interface CoursesState {
 
 export const useCourses = create<CoursesState>()(
   devtools((set) => ({
-    allCourses: [],
+    allCourses: null,
     selectedCoursesToSave: [],
     setSelectedCoursesToSave: (newSelectedCoursesToSave: CourseData[]) =>
       set(

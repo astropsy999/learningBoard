@@ -11,14 +11,12 @@ import Typography from '@mui/material/Typography';
 import { TransitionProps } from '@mui/material/transitions';
 import * as React from 'react';
 import { FC } from 'react';
+import { Bounce, toast } from 'react-toastify';
 import { CourseCard } from '../components/CourseCard';
 import { SubmitDialog } from '../components/SubmitDialog';
 import { useCourses } from '../data/store/courses.store';
 import { useLearners } from '../data/store/learners.store';
 import { SelectedRowData } from './MyLearners';
-import { Bounce, toast } from 'react-toastify';
-import useSWR from 'swr';
-import { fetchAllCourses } from '../services/api.service';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -45,12 +43,10 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
   // const [atLeastOneLearner, setAtleastOneLearner] = React.useState(false);
   const {
     onlyLearnerName,
-    SELECTED_ROWS_DATA,
+    selectedRowsData,
     setSelectedRowsDataOnMyLearners,
-    allData
+    allData,
   } = useLearners();
-
-  
 
   React.useEffect(() => {
     allData && setAllCourses(allData.courses);
@@ -64,7 +60,7 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
   const handleDeleteLearnerFromGroup = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
   ) => {
-    if (SELECTED_ROWS_DATA.length === 1) {
+    if (selectedRowsData.length === 1) {
       toast.warn('Необходимо выбрать хотя бы одного ученика!', {
         position: 'top-center',
         autoClose: 1500,
@@ -82,7 +78,7 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
 
     const itemId = chipElement.getAttribute('data-item-id');
     setSelectedRowsDataOnMyLearners([
-      ...SELECTED_ROWS_DATA.filter((item) => item.id !== Number(itemId)),
+      ...selectedRowsData.filter((item) => item.id !== Number(itemId)),
     ]);
   };
 
@@ -126,7 +122,7 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
                       size="medium"
                     />
                   ) : (
-                    SELECTED_ROWS_DATA?.map((item) => (
+                    selectedRowsData?.map((item) => (
                       <Chip
                         label={item.name}
                         color="primary"

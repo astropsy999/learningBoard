@@ -1,6 +1,8 @@
 import { create } from 'zustand';
 import {
+  Course,
   CurrentUserData,
+  Divisions,
   ILearner,
   UserActions,
   UserState,
@@ -11,16 +13,27 @@ export const useLearners = create<UserState & UserActions>()(
   devtools((set) => ({
     users: [],
     allData: null,
-    CURRENT_USER_DATA: null,
+    currentUserData: null,
+    currentUserDivisionName: null,
     currentUserName: null,
     allUsers: null,
-    ALL_LEARNERS: [],
+    allLearners: null,
     allUsersData: null,
-    SELECTED_ROWS_DATA: [],
-    COURSES_TO_LEARNERS_DIALOG: false,
+    selectedRowsData: [],
+    coursesToLearnersDialog: false,
     filteredLearners: null,
     turnOffDivisionFilter: false,
     onlyLearnerName: '',
+    divisions: null,
+
+    setDivisions: (newDivisions: Divisions) =>
+      set({ divisions: newDivisions }, false, 'setDivisions'),
+    setCurrentUserDivisionName: (name: string) =>
+      set(
+        { currentUserDivisionName: name },
+        false,
+        'setCurrentUserDivisionName',
+      ),
     setAllData: (data: any) => set({ allData: data }, false, 'setAllData'),
     setOnlyLearnerName: (name: string) => set({ onlyLearnerName: name }),
     setTurnOffDivisionFilter: (filterToggle: boolean): void =>
@@ -35,13 +48,10 @@ export const useLearners = create<UserState & UserActions>()(
         false,
         'setFilteredLearners',
       ),
-    setCurrenUserName: (userName: string) => set({ currentUserName: userName }),
+    setCurrentUserName: (userName: string) =>
+      set({ currentUserName: userName }),
     setCurrentUserData: (newCurrentUserData: CurrentUserData): void =>
-      set(
-        { CURRENT_USER_DATA: newCurrentUserData },
-        false,
-        'setCurrentUserData',
-      ),
+      set({ currentUserData: newCurrentUserData }, false, 'setCurrentUserData'),
     setAllUsers: (newAllUsers: any) =>
       set(
         {
@@ -53,17 +63,17 @@ export const useLearners = create<UserState & UserActions>()(
     setAllLearners: (newAllLearners: ILearner[]) =>
       set(
         {
-          ALL_LEARNERS: newAllLearners,
+          allLearners: newAllLearners,
         },
         false,
         'setAllLearners',
       ),
     setSelectedRowsDataOnMyLearners: (newSelectedRowsData: []) =>
-      set({ SELECTED_ROWS_DATA: newSelectedRowsData }),
+      set({ selectedRowsData: newSelectedRowsData }),
     openCoursesDialog: (newDialogData: boolean) =>
       set(
         {
-          COURSES_TO_LEARNERS_DIALOG: newDialogData,
+          coursesToLearnersDialog: newDialogData,
         },
         false,
         'openCoursesDialog',

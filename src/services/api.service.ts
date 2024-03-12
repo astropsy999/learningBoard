@@ -1,7 +1,8 @@
+import { Bounce, toast } from 'react-toastify';
 import configApi from '../api/config.api';
 import { url } from '../api/url.api';
 import { mockDataCourses, mockDataTeam } from '../data/mockData';
-import { ILearner } from '../data/types.store';
+import { AllData, ILearner } from '../data/types.store';
 
 export const getCurrentUserData = async () => {
   let userData;
@@ -21,49 +22,58 @@ export const getCurrentUserData = async () => {
   }
 };
 
-export const fetchAllData = async () => {
-  let allData
-  try{
+export const fetchAllData = async (): Promise<AllData | undefined> => {
+  let allData;
+  try {
     await fetch(configApi.srv + url.learnController, {
-      credentials: 'include'
+      credentials: 'include',
     })
-    .then((response) => response.json())
-    .then((data: any) => {
-      allData = data[0].data
-    })
+      .then((response) => response.json())
+      .then((data: any) => {
+        allData = data[0].data;
+      });
 
-    return allData
-  } catch (e: Error| any) {
-      throw new Error(e.message);
+    return allData;
+  } catch (e: Error | any) {
+    throw new Error(e.message);
   }
-}
+};
 
-export const updateAllData = async (dataToUpdate: any) => {
-  const formData = new FormData();
+export type ToUpdateUser = {
+  id: number;
+  courses: number[];
+};
 
-// Добавляем данные в formData
-formData.append('updatedUsers', JSON.stringify(dataToUpdate));
+export const updateAllData = async (dataToUpdate: ToUpdateUser[]) => {
+  // Добавляем данные в formData
+
   try {
     const response = await fetch(configApi.srv + url.updateDataEndpoint, {
-      method: 'POST', 
+      method: 'POST',
+      cache: 'no-cache',
       credentials: 'include',
-      body: formData,
+      body: JSON.stringify(dataToUpdate),
     });
-
-    if (!response.ok) {
-      throw new Error('Failed to update data');
-    }
 
     // Получение обновленных данных с сервера после обновления
     const updatedData = await response.json();
 
     // Возвращаем обновленные данные
     return updatedData;
-  } catch (error: Error| any) {
-    throw new Error('Failed to update data: ' + error.message);
+  } catch (error: Error | any) {
+    toast.error('Ошибка при сохранении данных', {
+      position: 'top-right',
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: 'colored',
+      transition: Bounce,
+    });
   }
 };
-
 
 export const fetchAllLearners = async () => {
   // Имитируем асинхронный запрос с задержкой

@@ -13,7 +13,7 @@ export type Course = {
   title: string;
   description: string;
   type: string;
-}
+};
 
 export type Divisions = {
   [key: number]: string;
@@ -50,22 +50,25 @@ export type AllUsersData = {
 export interface AllData {
   users: User[];
   courses: Course[];
-  divisions: Divisions
+  divisions: Divisions;
 }
 
 export type UserState = {
   users: User[];
   allUsers: AllUserData[] | null;
   allUsersData: AllUsersData | null;
-  ALL_LEARNERS: ILearner[];
-  CURRENT_USER_DATA: CurrentUserData | null;
+  allLearners: ILearner[] | null;
+  currentUserData: CurrentUserData | null;
   currentUserName?: string | null;
   filteredLearners: ILearner[] | null;
   turnOffDivisionFilter: boolean | null;
-  COURSES_TO_LEARNERS_DIALOG: boolean;
-  SELECTED_ROWS_DATA: ILearner[];
+  coursesToLearnersDialog: boolean;
+  selectedRowsData: ILearner[];
   onlyLearnerName: string;
   allData: AllData | null;
+  currentUserDivisionName: string | null;
+  divisions: Divisions | null;
+  // allCourses: Course[] | null;
 };
 
 export type UserActions = {
@@ -75,22 +78,25 @@ export type UserActions = {
   setAllLearners: Function;
   setCurrentUserData: Function;
   setFilteredLearners: Function;
-  setCurrenUserName: Function;
+  setCurrentUserName: Function;
   setTurnOffDivisionFilter: Function;
   setOnlyLearnerName: Function;
   deSelectAll: () => void;
-  setAllData: (data: any) => void
+  setAllData: (data: any) => void;
+  setCurrentUserDivisionName: (name: string) => void;
+  setDivisions: (newDivisions: Divisions) => void;
+  // setAllCourses: (newAllCourses: Course[]) => void;
 };
 
 export interface ILearner {
   id: number;
   name: string;
-  email?: string;
-  age?: number;
-  phone?: string;
   position: string;
   division: string;
-  courses: string[];
+  courses: {
+    id: number;
+    title: string;
+  }[];
 }
 
 export interface CurrentUserData {

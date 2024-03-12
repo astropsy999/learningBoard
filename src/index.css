@@ -1,22 +1,26 @@
 @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap');
 
+/* Уберите height и width из этого селектора */
 html,
 body,
-#root,
-.app,
+#root {
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+/* Удалите height из этого селектора */
+.app {
+  display: flex;
+  position: relative;
+}
+
+/* Добавьте высоту и ширину для .content */
 .content {
   height: 100%;
   width: 100%;
-  font-family: 'Source Sans Pro', sans-serif;
 }
 
 main {
   margin-top: 50px; /* чтобы основное содержимое не перекрывалось топбаром */
-}
-
-.app {
-  display: flex;
-  position: relative;
 }
 
 ::-webkit-scrollbar {

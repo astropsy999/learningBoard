@@ -19,7 +19,7 @@ export default function SplitButton() {
   const anchorRef = React.useRef<HTMLDivElement>(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [buttonColor, setButtonColor] = React.useState('warning');
-  const { CURRENT_USER_DATA, setTurnOffDivisionFilter, deSelectAll } =
+  const { currentUserData, setTurnOffDivisionFilter, deSelectAll } =
     useLearners();
 
   const handleClick = () => {
@@ -67,7 +67,7 @@ export default function SplitButton() {
         ref={anchorRef}
         aria-label="Button group with a nested menu"
         color={buttonColor as 'warning' | 'primary'}
-        disabled={!CURRENT_USER_DATA}
+        disabled={!currentUserData}
       >
         <Button onClick={handleClick}>{options[selectedIndex]}</Button>
         <Button
@@ -79,7 +79,7 @@ export default function SplitButton() {
           onClick={handleToggle}
           startIcon={<Groups2Icon />}
         >
-          {CURRENT_USER_DATA ? (
+          {currentUserData ? (
             <ArrowDropDownIcon />
           ) : (
             <CircularProgress size={20} />

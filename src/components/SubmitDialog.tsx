@@ -1,20 +1,18 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import { styled } from '@mui/material/styles';
-import Dialog from '@mui/material/Dialog';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import Typography from '@mui/material/Typography';
-import { useCourses } from '../data/store/courses.store';
-import { Box, Chip } from '@mui/material';
-import { useLearners } from '../data/store/learners.store';
 import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
+import { Box, Chip, CircularProgress } from '@mui/material';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogTitle from '@mui/material/DialogTitle';
+import IconButton from '@mui/material/IconButton';
+import { styled } from '@mui/material/styles';
+import * as React from 'react';
 import { Bounce, toast } from 'react-toastify';
-import {  useSWRConfig } from 'swr';
-import { updateAllData } from '../services/api.service';
+import { useCourses } from '../data/store/courses.store';
+import { useLearners } from '../data/store/learners.store';
+import { ToUpdateUser, updateAllData } from '../services/api.service';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -38,7 +36,9 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
 }) => {
   const [open, setOpen] = React.useState(isOpen);
   const { selectedCoursesToSave, setSelectedCoursesToSave } = useCourses();
-  const { SELECTED_ROWS_DATA, onlyLearnerName } = useLearners();
+  const { selectedRowsData, onlyLearnerName, allLearners, openCoursesDialog } =
+    useLearners();
+  const [isLoading, setIsLoading] = React.useState(false);
 
   React.useEffect(() => {
     setOpen(isOpen);
@@ -48,7 +48,6 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
     setOpen(false);
     onClose();
   };
-
 
   const handleDelete = (event: React.MouseEvent<HTMLButtonElement>) => {
     if (selectedCoursesToSave.length === 1) {
@@ -73,26 +72,62 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
     setSelectedCoursesToSave(newSelectedCourses);
   };
 
-  const handleSaveAssignedCourses = () => {
+  const handleSaveAssignedCourses = async () => {
+    setIsLoading(true);
+    let dataToUpdate;
+    const selectedCoursesIds = selectedCoursesToSave.map((course) => course.id);
 
-  console.log('SELECTED_ROWS_DATA: ', SELECTED_ROWS_DATA);
-  console.log('selectedCoursesToSave: ', selectedCoursesToSave);
+    if (selectedRowsData.length > 0) {
+      dataToUpdate = selectedRowsData
+        .map((user) => {
+          if (!user) return null; // Проверка на существование user
+          const oldCourses = user?.courses!
+            ? user?.courses?.map((c) => c.id)!
+            : [];
+          if (oldCourses.length) {
+            console.log(
+              '🚀 ~ dataToUpdate=selectedRowsData.map ~ oldCourses:',
+              oldCourses,
+            );
+          }
+          return {
+            id: user.id,
+            courses: [...oldCourses, ...selectedCoursesIds],
+          };
+        })
+        .filter(Boolean);
+    } else {
+      dataToUpdate = [];
+      dataToUpdate.push(
+        allLearners?.find((learner) => learner.name === onlyLearnerName),
+      );
+      dataToUpdate = dataToUpdate.map((user) => ({
+        id: user?.id || 0,
+        courses: selectedCoursesIds,
+      }));
+    }
 
-  const selectedCoursesIds = selectedCoursesToSave.map(course => course.id);
-  console.log('selectedCoursesIds: ', selectedCoursesIds);
-
-
-    const dataToUpdate = SELECTED_ROWS_DATA.map(user => ({
-      id: user.id,
-      courses: selectedCoursesIds
-  }));
-
-  console.log('dataToUpdate: ', dataToUpdate);
-
-
-    
-    updateAllData(dataToUpdate)
-  }
+    const filteredDataToUpdate = dataToUpdate.filter(
+      (user) => user !== null,
+    ) as ToUpdateUser[];
+    const result = await updateAllData(filteredDataToUpdate);
+    if (result) {
+      setIsLoading(false);
+      handleClose();
+      openCoursesDialog(false);
+      toast.success(result[0].data.message, {
+        position: 'top-right',
+        autoClose: 1500,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+        transition: Bounce,
+      });
+    }
+  };
 
   return (
     <React.Fragment>
@@ -131,7 +166,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
           </IconButton>
         </Box>
         <DialogContent dividers>
-          <Typography gutterBottom>
+          <div>
             <b>Вы выбрали следующие курсы:</b>
             <br />{' '}
             {selectedCoursesToSave.map((course) => (
@@ -144,14 +179,14 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
                 data-item-id={course.id}
               />
             ))}
-          </Typography>
-          <Typography gutterBottom>
+          </div>
+          <div>
             <b>Они будут назначены сотрудникам:</b>
             <br />
-          </Typography>
-          <Typography gutterBottom>
-            {SELECTED_ROWS_DATA.length > 0 ? (
-              SELECTED_ROWS_DATA.map((row) => (
+          </div>
+          <div>
+            {selectedRowsData.length > 0 ? (
+              selectedRowsData.map((row) => (
                 <Chip
                   key={row.id}
                   label={row.name}
@@ -166,7 +201,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
                 sx={{ margin: '2px' }}
               />
             )}
-          </Typography>
+          </div>
         </DialogContent>
         <DialogActions>
           <Button
@@ -174,6 +209,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
             color="warning"
             startIcon={<CloseIcon />}
             variant="outlined"
+            disabled={isLoading}
           >
             Отменить
           </Button>
@@ -182,7 +218,10 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
             onClick={handleSaveAssignedCourses}
             color="secondary"
             variant="contained"
-            startIcon={<CheckIcon />}
+            startIcon={
+              isLoading ? <CircularProgress size={18} /> : <CheckIcon />
+            }
+            disabled={isLoading}
           >
             Подтвердить
           </Button>
