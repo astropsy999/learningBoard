@@ -274,6 +274,7 @@ const MyLearners = () => {
         }}
       >
         <DataGrid
+          key={Date.now()}
           autoHeight={true}
           apiRef={apiRef}
           checkboxSelection

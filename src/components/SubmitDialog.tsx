@@ -14,6 +14,7 @@ import { useCourses } from '../data/store/courses.store';
 import { useLearners } from '../data/store/learners.store';
 import { ToUpdateUser, updateAllData } from '../services/api.service';
 import { useSWRConfig } from 'swr';
+import { SelectedRowData } from '../scenes/MyLearners';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -48,10 +49,9 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
     openCoursesDialog,
     setOnlyLearnerName,
     deSelectAll,
+    setAllLearners,
   } = useLearners();
   const [isLoading, setIsLoading] = React.useState(false);
-
-  const { mutate } = useSWRConfig();
 
   React.useEffect(() => {
     setOpen(isOpen);
@@ -87,7 +87,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
 
   const handleSaveAssignedCourses = async () => {
     setIsLoading(true);
-    let dataToUpdate;
+    let dataToUpdate: ToUpdateUser[] | null;
     const selectedCoursesIds = selectedCoursesToSave.map((course) => course.id);
 
     if (selectedRowsData.length > 0) {
@@ -108,8 +108,15 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
         .filter(Boolean);
     } else {
       dataToUpdate = [];
+      let foundLearner;
+      if (allLearners) {
+        foundLearner = allLearners.find(
+          (learner) => learner.name === onlyLearnerName,
+        );
+      }
       dataToUpdate.push(
-        allLearners?.find((learner) => learner.name === onlyLearnerName),
+        // allLearners?.find((learner) => learner.name === onlyLearnerName),
+        foundLearner as ToUpdateUser,
       );
       dataToUpdate = dataToUpdate.map((user) => {
         const oldCourses = user?.courses
@@ -123,13 +130,31 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
       });
     }
 
-    const filteredDataToUpdate = dataToUpdate.filter(
+    const filteredDataToUpdate = dataToUpdate!.filter(
       (user) => user !== null,
     ) as ToUpdateUser[];
+    console.log(
+      '🚀 ~ handleSaveAssignedCourses ~ filteredDataToUpdate:',
+      filteredDataToUpdate,
+    );
 
     const result = await updateAllData(filteredDataToUpdate);
     if (result) {
-      mutate('AllData');
+      // Обновление данных в сторе
+      const updatedLearners = allLearners!.map((learner) => {
+        const updatedData = dataToUpdate!.find(
+          (data: ToUpdateUser) => data.id === learner.id,
+        );
+        if (updatedData) {
+          // Обновление курсов у пользователя
+          return { ...learner, courses: updatedData.courses };
+        }
+        return learner; // Если пользователь не найден в обновленных данных
+      });
+
+      // Обновление стора с новыми данными
+      setAllLearners(updatedLearners);
+
       setIsLoading(false);
       handleClose();
       openCoursesDialog(false);
@@ -148,6 +173,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
         transition: Bounce,
       });
     }
+    console.log('🚀 ~ handleSaveAssignedCourses ~ allLearners:', allLearners);
   };
 
   return (
@@ -251,3 +277,9 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
     </React.Fragment>
   );
 };
+function useSWRMutation(
+  arg0: string,
+  updateAllData: (dataToUpdate: ToUpdateUser[]) => Promise<any>,
+): { trigger: any } {
+  throw new Error('Function not implemented.');
+}

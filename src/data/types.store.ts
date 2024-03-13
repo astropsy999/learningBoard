@@ -103,13 +103,15 @@ export type UserActions = {
 
 export interface ILearner {
   id: number;
-  name: string;
-  position: string;
-  division: string;
-  courses: {
-    id: number;
-    title: string;
-  }[];
+  name?: string;
+  position?: string;
+  division?: string;
+  courses:
+    | {
+        id: number;
+        title: string;
+      }[]
+    | number[];
 }
 
 export interface CurrentUserData {
