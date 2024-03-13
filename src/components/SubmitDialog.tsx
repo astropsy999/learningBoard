@@ -80,15 +80,12 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
     if (selectedRowsData.length > 0) {
       dataToUpdate = selectedRowsData
         .map((user) => {
-          if (!user) return null; // Проверка на существование user
-          const oldCourses = user?.courses!
-            ? user?.courses?.map((c) => c.id)!
-            : [];
+          if (!user) return null; 
+          const oldCourses = user?.courses ? user?.courses.map((c) => Object.keys(c)[0]) : [];
+          console.log('oldCourses: ', oldCourses);
+
           if (oldCourses.length) {
-            console.log(
-              '🚀 ~ dataToUpdate=selectedRowsData.map ~ oldCourses:',
-              oldCourses,
-            );
+            console.log('🚀 ~ dataToUpdate=selectedRowsData.map ~ oldCourses:', oldCourses);
           }
           return {
             id: user.id,
@@ -101,10 +98,13 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
       dataToUpdate.push(
         allLearners?.find((learner) => learner.name === onlyLearnerName),
       );
-      dataToUpdate = dataToUpdate.map((user) => ({
+      dataToUpdate = dataToUpdate.map((user) => {
+        const oldCourses = user?.courses ? user?.courses.map((c) => Object.keys(c)[0]) : [];
+
+        return {
         id: user?.id || 0,
-        courses: selectedCoursesIds,
-      }));
+        courses:  [...oldCourses, ...selectedCoursesIds],
+      }});
     }
 
     const filteredDataToUpdate = dataToUpdate.filter(

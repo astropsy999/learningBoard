@@ -1,7 +1,7 @@
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
 import { Box, Button, Chip, useTheme } from '@mui/material';
 import { DataGrid, GridColDef, useGridApiRef } from '@mui/x-data-grid';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { MouseEvent, useEffect, useMemo, useState } from 'react';
 import Header from '../components/Header';
 import { useCourses } from '../data/store/courses.store';
 import { useLearners } from '../data/store/learners.store';
@@ -106,6 +106,18 @@ const MyLearners = () => {
     setSelectedRowsDataOnMyLearners(selectedRowData);
   };
 
+  const deleteSingleCourseFromLearner = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, row: SelectedRowData, ) => {
+    // const deleteCourse = event?.target;
+    const itemId = event?.currentTarget.parentElement?.getAttribute('data-item-id');
+    console.log('itemId: ', itemId);
+    // console.log('deleteCourse: ', deleteCourse);
+    console.log('event: ', event);
+    console.log('row: ', row);
+
+
+
+  };
+
   const columns: GridColDef[] = [
     // {
     //   field: 'id',
@@ -142,6 +154,7 @@ const MyLearners = () => {
       renderCell: ({ row }) => {
         return row.courses.map((course: { [id: number]: string }) => {
           const courseTitle = Object.values(course)[0];
+          const courseId = Object.keys(course)[0];
           if (courseTitle) {
             return (
               <Chip
@@ -149,6 +162,8 @@ const MyLearners = () => {
                 label={courseTitle}
                 variant="outlined"
                 sx={{ margin: '2px' }}
+                onDelete={(event) => deleteSingleCourseFromLearner(event,row)}
+                data-item-id={courseId}
               />
             );
           } else {
