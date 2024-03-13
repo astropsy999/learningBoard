@@ -9,23 +9,23 @@ export type ToUpdateUser = {
   courses: number[];
 };
 
-export const getCurrentUserData = async () => {
-  let userData;
+// export const getCurrentUserData = async () => {
+//   let userData;
 
-  try {
-    await fetch(configApi.srv + url.getUserProfileData, {
-      method: 'POST',
-      credentials: 'include',
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        userData = data[0].data;
-      });
-    return userData;
-  } catch (e: Error | any) {
-    throw new Error(e.message);
-  }
-};
+//   try {
+//     await fetch(configApi.srv + url.getUserProfileData, {
+//       method: 'POST',
+//       credentials: 'include',
+//     })
+//       .then((response) => response.json())
+//       .then((data) => {
+//         userData = data[0].data;
+//       });
+//     return userData;
+//   } catch (e: Error | any) {
+//     throw new Error(e.message);
+//   }
+// };
 
 export const fetchAllData = async (): Promise<AllData | undefined> => {
   let allData;
@@ -74,8 +74,6 @@ export const updateAllData = async (dataToUpdate: ToUpdateUser[]) => {
     });
   }
 };
-
-
 
 export const fetchAllLearners = async () => {
   // Имитируем асинхронный запрос с задержкой

@@ -1,6 +1,5 @@
 import { create } from 'zustand';
 import {
-  Course,
   CurrentUserData,
   Divisions,
   ILearner,

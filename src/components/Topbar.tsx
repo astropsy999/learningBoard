@@ -3,12 +3,12 @@ import { Box, Button } from '@mui/material';
 import React, { FC, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import useSWR from 'swr';
+import { useCourses } from '../data/store/courses.store';
 import { useLearners } from '../data/store/learners.store';
-import { AllData, CurrentUserData, Divisions, User } from '../data/types.store';
-import { fetchAllData, getCurrentUserData } from '../services/api.service';
+import { AllData } from '../data/types.store';
+import { fetchAllData } from '../services/api.service';
 import { RenderAssignAllButton } from './AssignAllBtn';
 import SplitButton from './SplitButton';
-import { useCourses } from '../data/store/courses.store';
 
 interface TopbarProps {
   setIsSidebar?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -32,47 +32,22 @@ const Topbar: FC<TopbarProps> = () => {
   const isAssignAllButton = selectedRowsData.length > 0;
 
   const {
-    data,
-    isLoading,
-    error: isError,
-  } = useSWR<CurrentUserData | undefined>(
-    'currentUserData',
-    getCurrentUserData,
-  );
-
-  // const getCurrentUserDivisionName = (
-  //   userName: string,
-  //   usersDataTable: User[],
-  //   divisionsData: Divisions,
-  // ) => {
-  //   const userDivisionId = usersDataTable?.find(
-  //     (user) => user?.name === userName,
-  //   )?.division;
-  //   return divisionsData[userDivisionId!];
-  // };
-
-  useEffect(() => {
-    if (!isLoading && !isError && data) {
-      setCurrentUserData(data);
-      setCurrentUserName(data.Name);
-    }
-  }, [data, isLoading, isError, setCurrentUserData, setCurrentUserName]);
-
-  const {
     data: allData,
     isLoading: isLoadingAllData,
     error,
-    
   } = useSWR<AllData | undefined>('allData', fetchAllData);
 
   useEffect(() => {
     if (!isLoadingAllData && !error && allData) {
-      const { users, divisions, courses } = allData;
+      const { users, divisions, courses, currentUserInfo } = allData;
 
       const courseTitlesById: { [key: number]: string } = {};
-      courses.forEach((course) => {
+      courses?.forEach((course) => {
         courseTitlesById[course.id] = course.title;
       });
+
+      setCurrentUserData(currentUserInfo);
+      setCurrentUserName(currentUserInfo.name);
 
       // Заполняем поля position, division и courses у каждого пользователя
       const learnersWithData = users.map((user) => ({
@@ -89,13 +64,9 @@ const Topbar: FC<TopbarProps> = () => {
       setAllCourses(allData?.courses);
       setAllData(allData);
       if (allDataFromStore) {
-        const userDivisionId = allDataFromStore?.users.find(
-          (user) => user?.name === currentUserName || '',
-        )?.division;
+        const userDivisionId = currentUserInfo.division;
 
-        setCurrentUserDivisionName(
-          allDataFromStore?.divisions[+userDivisionId!],
-        );
+        setCurrentUserDivisionName(allDataFromStore?.divisions[userDivisionId]);
       }
     }
   }, [
@@ -109,6 +80,8 @@ const Topbar: FC<TopbarProps> = () => {
     setAllLearners,
     setDivisions,
     setAllCourses,
+    setCurrentUserData,
+    setCurrentUserName,
   ]);
 
   return (

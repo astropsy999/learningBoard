@@ -13,6 +13,7 @@ import { Bounce, toast } from 'react-toastify';
 import { useCourses } from '../data/store/courses.store';
 import { useLearners } from '../data/store/learners.store';
 import { ToUpdateUser, updateAllData } from '../services/api.service';
+import { useSWRConfig } from 'swr';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -35,10 +36,22 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
   dialogTitle,
 }) => {
   const [open, setOpen] = React.useState(isOpen);
-  const { selectedCoursesToSave, setSelectedCoursesToSave, singleSelectedUserCourses } = useCourses();
-  const { selectedRowsData, onlyLearnerName, allLearners, openCoursesDialog } =
-    useLearners();
+  const {
+    selectedCoursesToSave,
+    setSelectedCoursesToSave,
+    singleSelectedUserCourses,
+  } = useCourses();
+  const {
+    selectedRowsData,
+    onlyLearnerName,
+    allLearners,
+    openCoursesDialog,
+    setOnlyLearnerName,
+    deSelectAll,
+  } = useLearners();
   const [isLoading, setIsLoading] = React.useState(false);
+
+  const { mutate } = useSWRConfig();
 
   React.useEffect(() => {
     setOpen(isOpen);
@@ -80,16 +93,16 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
     if (selectedRowsData.length > 0) {
       dataToUpdate = selectedRowsData
         .map((user) => {
-          if (!user) return null; 
-          const oldCourses = user?.courses ? user?.courses.map((c) => Object.keys(c)[0]) : [];
-          console.log('oldCourses: ', oldCourses);
+          if (!user) return null;
+          const oldCourses = user?.courses
+            ? user?.courses.map((c) => +Object.keys(c)[0])
+            : [];
 
-          if (oldCourses.length) {
-            console.log('🚀 ~ dataToUpdate=selectedRowsData.map ~ oldCourses:', oldCourses);
-          }
           return {
             id: user.id,
-            courses: Array.from(new Set([...oldCourses, ...selectedCoursesIds])),
+            courses: Array.from(
+              new Set([...oldCourses, ...selectedCoursesIds]),
+            ),
           };
         })
         .filter(Boolean);
@@ -99,22 +112,30 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
         allLearners?.find((learner) => learner.name === onlyLearnerName),
       );
       dataToUpdate = dataToUpdate.map((user) => {
-        const oldCourses = user?.courses ? user?.courses.map((c) => Object.keys(c)[0]) : [];
+        const oldCourses = user?.courses
+          ? user?.courses.map((c) => +Object.keys(c)[0])
+          : [];
 
         return {
-        id: user?.id || 0,
-        courses:  Array.from(new Set([...oldCourses, ...selectedCoursesIds])),
-      }});
+          id: user?.id || 0,
+          courses: Array.from(new Set([...oldCourses, ...selectedCoursesIds])),
+        };
+      });
     }
 
     const filteredDataToUpdate = dataToUpdate.filter(
       (user) => user !== null,
     ) as ToUpdateUser[];
+
     const result = await updateAllData(filteredDataToUpdate);
     if (result) {
+      mutate('AllData');
       setIsLoading(false);
       handleClose();
       openCoursesDialog(false);
+      setOnlyLearnerName('');
+      setSelectedCoursesToSave([]);
+      deSelectAll();
       toast.success(result[0].data.message, {
         position: 'top-right',
         autoClose: 1500,

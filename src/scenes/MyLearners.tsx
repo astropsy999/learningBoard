@@ -10,7 +10,7 @@ import { CoursesToLearner } from './CoursesDialog';
 import { updateAllData } from '../services/api.service';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { toast } from 'react-toastify';
-import {  mutate } from 'swr';
+import { useSWRConfig } from 'swr';
 
 export type SelectedRowData = {
   id: number;
@@ -42,12 +42,16 @@ const MyLearners = () => {
   } = useLearners();
   const { allCourses } = useCourses();
 
+  const { mutate } = useSWRConfig();
+
   const [isLoading, setIsLoading] = useState(true);
   const { setSelectedCoursesToSave } = useCourses();
   const [selectedRows, setSelectedRows] = useState<
     SelectedRowData[] | undefined
   >([]);
-  const [rowDelLoading, setRowDelLoading] = useState<{ [id: number]: boolean }>({});
+  const [rowDelLoading, setRowDelLoading] = useState<{ [id: number]: boolean }>(
+    {},
+  );
 
   const apiRef = useGridApiRef();
 
@@ -112,38 +116,32 @@ const MyLearners = () => {
     setSelectedRowsDataOnMyLearners(selectedRowData);
   };
 
-  const deleteSingleCourseFromLearner = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, row: SelectedRowData, ) => {
+  const deleteSingleCourseFromLearner = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+    row: SelectedRowData,
+  ) => {
     setRowDelLoading((prevState) => ({ ...prevState, [row.id]: true }));
-    const itemId = event?.currentTarget.parentElement?.getAttribute('data-item-id');
+    const itemId =
+      event?.currentTarget.parentElement?.getAttribute('data-item-id');
 
-    let updatedData =[]
-      updatedData.push( {
-      id:row.id, 
-      courses:(row.courses.filter((course) => Object.keys(course)[0] !== itemId)).map((course) => +Object.keys(course)[0])
+    let updatedData = [];
+    updatedData.push({
+      id: row.id,
+      courses: row.courses
+        .filter((course) => Object.keys(course)[0] !== itemId)
+        .map((course) => +Object.keys(course)[0]),
     });
 
-      updateAllData(updatedData).then(response => {
-        if(response) { 
-          mutate('allData').then(() => {
-            toast.success('Материал успешно удален',{
-              autoClose: 1000,
-      
-            });
-            setRowDelLoading((prevState) => ({ ...prevState, [row.id]: false }));
-          })
-        } 
-       
-      })
-      
-
-  
-
-       
-    
-
-         
-        
-    
+    updateAllData(updatedData).then((response) => {
+      if (response) {
+        mutate('allData').then(() => {
+          toast.success('Материал успешно удален', {
+            autoClose: 1000,
+          });
+          setRowDelLoading((prevState) => ({ ...prevState, [row.id]: false }));
+        });
+      }
+    });
   };
 
   const columns: GridColDef[] = [
@@ -186,14 +184,20 @@ const MyLearners = () => {
           if (courseTitle) {
             return (
               <Chip
-              key={`${row.id}+${courseId}`}
-              label={courseTitle}
-              variant="outlined"
-              sx={{ margin: '2px' }}
-              onDelete={(event) => deleteSingleCourseFromLearner(event, row)}
-              deleteIcon={rowDelLoading[row.id] ? <CircularProgress size={20} /> : <CancelIcon />}
-              data-item-id={courseId}
-          />
+                key={`${row.id}+${courseId}`}
+                label={courseTitle}
+                variant="outlined"
+                sx={{ margin: '2px' }}
+                onDelete={(event) => deleteSingleCourseFromLearner(event, row)}
+                deleteIcon={
+                  rowDelLoading[row.id] ? (
+                    <CircularProgress size={20} />
+                  ) : (
+                    <CancelIcon />
+                  )
+                }
+                data-item-id={courseId}
+              />
             );
           } else {
             return null;

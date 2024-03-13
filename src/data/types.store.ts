@@ -47,10 +47,23 @@ export type AllUsersData = {
   users: AllUserData[];
 };
 
+export type ManagerData = {
+  state: boolean;
+  level: number;
+};
+
+export type CurrentUserInfo = {
+  id: number;
+  division: number;
+  manager: ManagerData;
+  name: string;
+};
+
 export interface AllData {
   users: User[];
   courses: Course[];
   divisions: Divisions;
+  currentUserInfo: CurrentUserInfo;
 }
 
 export type UserState = {
