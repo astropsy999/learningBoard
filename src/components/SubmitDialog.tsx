@@ -35,7 +35,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
   dialogTitle,
 }) => {
   const [open, setOpen] = React.useState(isOpen);
-  const { selectedCoursesToSave, setSelectedCoursesToSave } = useCourses();
+  const { selectedCoursesToSave, setSelectedCoursesToSave, singleSelectedUserCourses } = useCourses();
   const { selectedRowsData, onlyLearnerName, allLearners, openCoursesDialog } =
     useLearners();
   const [isLoading, setIsLoading] = React.useState(false);
@@ -89,7 +89,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
           }
           return {
             id: user.id,
-            courses: [...oldCourses, ...selectedCoursesIds],
+            courses: Array.from(new Set([...oldCourses, ...selectedCoursesIds])),
           };
         })
         .filter(Boolean);
@@ -103,7 +103,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
 
         return {
         id: user?.id || 0,
-        courses:  [...oldCourses, ...selectedCoursesIds],
+        courses:  Array.from(new Set([...oldCourses, ...selectedCoursesIds])),
       }});
     }
 

@@ -1,12 +1,16 @@
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
-import { Box, Button, Chip, useTheme } from '@mui/material';
+import { Box, Button, Chip, CircularProgress, useTheme } from '@mui/material';
 import { DataGrid, GridColDef, useGridApiRef } from '@mui/x-data-grid';
 import React, { MouseEvent, useEffect, useMemo, useState } from 'react';
 import Header from '../components/Header';
 import { useCourses } from '../data/store/courses.store';
 import { useLearners } from '../data/store/learners.store';
 import { tokens } from '../theme';
-import { CoursesToLearner } from './CoursesToLearner';
+import { CoursesToLearner } from './CoursesDialog';
+import { updateAllData } from '../services/api.service';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { toast } from 'react-toastify';
+import {  mutate } from 'swr';
 
 export type SelectedRowData = {
   id: number;
@@ -18,6 +22,7 @@ export type SelectedRowData = {
     id: number;
     title: string;
   }[];
+  isDelLoading: boolean;
 };
 
 const MyLearners = () => {
@@ -42,6 +47,7 @@ const MyLearners = () => {
   const [selectedRows, setSelectedRows] = useState<
     SelectedRowData[] | undefined
   >([]);
+  const [rowDelLoading, setRowDelLoading] = useState<{ [id: number]: boolean }>({});
 
   const apiRef = useGridApiRef();
 
@@ -75,9 +81,9 @@ const MyLearners = () => {
     };
   }, [currentUserDivisionName]);
 
-  const handleCoursesDialogOpen = (learnerName: string) => {
+  const handleCoursesDialogOpen = (row: SelectedRowData) => {
     openCoursesDialog(true);
-    setOnlyLearnerName(learnerName);
+    setOnlyLearnerName(row.name);
   };
 
   const isSelectedUser = selectedRows!.length > 0;
@@ -107,15 +113,37 @@ const MyLearners = () => {
   };
 
   const deleteSingleCourseFromLearner = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>, row: SelectedRowData, ) => {
-    // const deleteCourse = event?.target;
+    setRowDelLoading((prevState) => ({ ...prevState, [row.id]: true }));
     const itemId = event?.currentTarget.parentElement?.getAttribute('data-item-id');
-    console.log('itemId: ', itemId);
-    // console.log('deleteCourse: ', deleteCourse);
-    console.log('event: ', event);
-    console.log('row: ', row);
 
+    let updatedData =[]
+      updatedData.push( {
+      id:row.id, 
+      courses:(row.courses.filter((course) => Object.keys(course)[0] !== itemId)).map((course) => +Object.keys(course)[0])
+    });
 
+      updateAllData(updatedData).then(response => {
+        if(response) { 
+          mutate('allData').then(() => {
+            toast.success('Материал успешно удален',{
+              autoClose: 1000,
+      
+            });
+            setRowDelLoading((prevState) => ({ ...prevState, [row.id]: false }));
+          })
+        } 
+       
+      })
+      
 
+  
+
+       
+    
+
+         
+        
+    
   };
 
   const columns: GridColDef[] = [
@@ -158,13 +186,14 @@ const MyLearners = () => {
           if (courseTitle) {
             return (
               <Chip
-                key={courseTitle}
-                label={courseTitle}
-                variant="outlined"
-                sx={{ margin: '2px' }}
-                onDelete={(event) => deleteSingleCourseFromLearner(event,row)}
-                data-item-id={courseId}
-              />
+              key={`${row.id}+${courseId}`}
+              label={courseTitle}
+              variant="outlined"
+              sx={{ margin: '2px' }}
+              onDelete={(event) => deleteSingleCourseFromLearner(event, row)}
+              deleteIcon={rowDelLoading[row.id] ? <CircularProgress size={20} /> : <CancelIcon />}
+              data-item-id={courseId}
+          />
             );
           } else {
             return null;
@@ -186,7 +215,7 @@ const MyLearners = () => {
               variant="contained"
               color={!hasCourses ? 'info' : 'secondary'}
               startIcon={<AddToQueueIcon />}
-              onClick={() => handleCoursesDialogOpen(row.name)}
+              onClick={() => handleCoursesDialogOpen(row)}
               disabled={isSelectedUser}
             >
               {!hasCourses ? 'Назначить' : 'Добавить'}

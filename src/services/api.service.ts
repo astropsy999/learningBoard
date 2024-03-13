@@ -4,6 +4,11 @@ import { url } from '../api/url.api';
 import { mockDataCourses, mockDataTeam } from '../data/mockData';
 import { AllData, ILearner } from '../data/types.store';
 
+export type ToUpdateUser = {
+  id: number;
+  courses: number[];
+};
+
 export const getCurrentUserData = async () => {
   let userData;
 
@@ -39,11 +44,6 @@ export const fetchAllData = async (): Promise<AllData | undefined> => {
   }
 };
 
-export type ToUpdateUser = {
-  id: number;
-  courses: number[];
-};
-
 export const updateAllData = async (dataToUpdate: ToUpdateUser[]) => {
   // Добавляем данные в formData
 
@@ -74,6 +74,8 @@ export const updateAllData = async (dataToUpdate: ToUpdateUser[]) => {
     });
   }
 };
+
+
 
 export const fetchAllLearners = async () => {
   // Имитируем асинхронный запрос с задержкой

@@ -62,6 +62,7 @@ const Topbar: FC<TopbarProps> = () => {
     data: allData,
     isLoading: isLoadingAllData,
     error,
+    
   } = useSWR<AllData | undefined>('allData', fetchAllData);
 
   useEffect(() => {
