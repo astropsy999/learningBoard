@@ -10,10 +10,10 @@ import IconButton from '@mui/material/IconButton';
 import { styled } from '@mui/material/styles';
 import * as React from 'react';
 import { Bounce, toast } from 'react-toastify';
+import { mutate } from 'swr';
 import { useCourses } from '../data/store/courses.store';
 import { useLearners } from '../data/store/learners.store';
 import { ToUpdateUser, updateAllData } from '../services/api.service';
-import { useSWRConfig } from 'swr';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -39,7 +39,6 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
   const {
     selectedCoursesToSave,
     setSelectedCoursesToSave,
-    singleSelectedUserCourses,
   } = useCourses();
   const {
     selectedRowsData,
@@ -51,8 +50,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
   } = useLearners();
   const [isLoading, setIsLoading] = React.useState(false);
 
-  const { mutate } = useSWRConfig();
-
+ 
   React.useEffect(() => {
     setOpen(isOpen);
   }, [isOpen]);
@@ -126,19 +124,15 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
     const filteredDataToUpdate = dataToUpdate.filter(
       (user) => user !== null,
     ) as ToUpdateUser[];
-
+    
     const result = await updateAllData(filteredDataToUpdate);
-    if (result) {
-      mutate('AllData');
-      setIsLoading(false);
+    mutate('allData').then(() => {
       handleClose();
-      openCoursesDialog(false);
-      setOnlyLearnerName('');
-      setSelectedCoursesToSave([]);
-      deSelectAll();
+      openCoursesDialog(false); 
+      setIsLoading(false);
       toast.success(result[0].data.message, {
         position: 'top-right',
-        autoClose: 1500,
+        autoClose: 1000,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
@@ -147,7 +141,12 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
         theme: 'colored',
         transition: Bounce,
       });
-    }
+      setOnlyLearnerName('');
+      setSelectedCoursesToSave([]);
+      deSelectAll();
+
+    });
+  
   };
 
   return (

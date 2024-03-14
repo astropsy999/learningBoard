@@ -49,7 +49,7 @@ const MyLearners = () => {
   const [selectedRows, setSelectedRows] = useState<
     SelectedRowData[] | undefined
   >([]);
-  const [rowDelLoading, setRowDelLoading] = useState<{ [id: number]: boolean }>(
+  const [rowDelLoading, setRowDelLoading] = useState<{ [key: string]: boolean }>(
     {},
   );
 
@@ -119,8 +119,9 @@ const MyLearners = () => {
   const deleteSingleCourseFromLearner = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     row: SelectedRowData,
+    courseId: number,
   ) => {
-    setRowDelLoading((prevState) => ({ ...prevState, [row.id]: true }));
+    setRowDelLoading((prevState) => ({ ...prevState, [`${row.id}-${courseId}`]: true }));
     const itemId =
       event?.currentTarget.parentElement?.getAttribute('data-item-id');
 
@@ -138,7 +139,7 @@ const MyLearners = () => {
           toast.success('Материал успешно удален', {
             autoClose: 1000,
           });
-          setRowDelLoading((prevState) => ({ ...prevState, [row.id]: false }));
+          setRowDelLoading((prevState) => ({ ...prevState,  [`${row.id}-${courseId}`]: false }));
         });
       }
     });
@@ -183,14 +184,19 @@ const MyLearners = () => {
           const courseId = Object.keys(course)[0];
           if (courseTitle) {
             return (
+           
               <Chip
                 key={`${row.id}+${courseId}`}
                 label={courseTitle}
                 variant="outlined"
-                sx={{ margin: '2px' }}
-                onDelete={(event) => deleteSingleCourseFromLearner(event, row)}
+                sx={{
+                  margin: '2px',
+                  transition: 'opacity 3s ease-in-out', 
+                  opacity: rowDelLoading[`${row.id}-${courseId}`] ? 0 : 1, 
+                }}
+                onDelete={(event) => deleteSingleCourseFromLearner(event, row, +courseId)}
                 deleteIcon={
-                  rowDelLoading[row.id] ? (
+                  rowDelLoading[`${row.id}-${courseId}`] ? (
                     <CircularProgress size={20} />
                   ) : (
                     <CancelIcon />
@@ -198,6 +204,7 @@ const MyLearners = () => {
                 }
                 data-item-id={courseId}
               />
+            
             );
           } else {
             return null;
