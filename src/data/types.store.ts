@@ -104,6 +104,7 @@ export interface ILearner {
     id: number;
     title: string;
   }[];
+  courses_exclude: number[]
 }
 
 export interface CurrentUserData {

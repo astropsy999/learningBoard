@@ -1,17 +1,16 @@
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
-import { Box, Button, Chip, CircularProgress, useTheme } from '@mui/material';
+import CancelIcon from '@mui/icons-material/Cancel';
+import { Box, Button, Chip, CircularProgress } from '@mui/material';
 import { DataGrid, GridColDef, useGridApiRef } from '@mui/x-data-grid';
 import React, { MouseEvent, useEffect, useMemo, useState } from 'react';
+import { toast } from 'react-toastify';
+import { useSWRConfig } from 'swr';
 import Header from '../components/Header';
 import { useCourses } from '../data/store/courses.store';
 import { useLearners } from '../data/store/learners.store';
-import { tokens } from '../theme';
-import { CoursesToLearner } from './CoursesDialog';
 import { updateAllData } from '../services/api.service';
-import CancelIcon from '@mui/icons-material/Cancel';
-import { toast } from 'react-toastify';
-import { useSWRConfig } from 'swr';
-import { useStore } from 'zustand';
+import { dataGridStyles } from '../styles/DataGrid.styles';
+import { CoursesToLearner } from './CoursesDialog';
 
 export type SelectedRowData = {
   id: number;
@@ -23,12 +22,11 @@ export type SelectedRowData = {
     id: number;
     title: string;
   }[];
+  courses_exclude: number[];
   isDelLoading: boolean;
 };
 
 const MyLearners = () => {
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
   const {
     coursesToLearnersDialog,
     openCoursesDialog,
@@ -151,12 +149,7 @@ const MyLearners = () => {
   };
 
   const columns: GridColDef[] = [
-    // {
-    //   field: 'id',
-    //   headerName: 'ID',
-    //   flex: 0.1,
-    //   headerClassName: 'name-column--cell',
-    // },
+
     {
       field: 'name',
       headerName: 'ФИО',
@@ -184,7 +177,6 @@ const MyLearners = () => {
       headerName: 'Обучающие материалы',
       flex: 1.5,
       renderCell: ({ row }) => {
-        console.log('row: ', row);
         return row.courses.map((course: { [id: number]: string }) => {
           const courseTitle = Object.values(course)[0];
           const courseId = Object.keys(course)[0];
@@ -267,45 +259,12 @@ const MyLearners = () => {
 
   return (
     <Box m="20px" pt={2}>
-      <Header title="" subtitle="" />
+      <Header title="Ученики" subtitle="" />
 
       <Box
         m="10px 0 0 0"
         height="75vh"
-        sx={{
-          '& .MuiDataGrid-root': {
-            border: 'none',
-          },
-          '& .name-cell': {
-            fontWeight: 'bold',
-            fontSize: '0.9rem',
-          },
-
-          '& .MuiDataGrid-cell': {
-            borderBottom: 'none',
-          },
-          '& .name-column--cell': {
-            backgroundColor: colors.blueAccent[800],
-            fontWeight: 'bold',
-          },
-          '& .MuiDataGrid-columnHeaders': {
-            backgroundColor: colors.blueAccent[800],
-            borderBottom: 'none',
-          },
-          '& .MuiDataGrid-virtualScroller': {
-            backgroundColor: colors.primary[400],
-          },
-          '& .MuiDataGrid-footerContainer': {
-            borderTop: 'none',
-            backgroundColor: colors.blueAccent[800],
-          },
-          '& .MuiCheckbox-root': {
-            color: `${colors.greenAccent[200]} !important`,
-          },
-          '& .MuiDataGrid-columnHeaderCheckbox': {
-            backgroundColor: colors.blueAccent[800],
-          },
-        }}
+        sx={dataGridStyles.root}
       >
         <DataGrid
           autoHeight={true}

@@ -9,6 +9,7 @@ import { AllData } from '../data/types.store';
 import { fetchAllData } from '../services/api.service';
 import { RenderAssignAllButton } from './AssignAllBtn';
 import SplitButton from './SplitButton';
+import QueryStatsIcon from '@mui/icons-material/QueryStats';
 
 interface TopbarProps {
   setIsSidebar?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -103,14 +104,19 @@ const Topbar: FC<TopbarProps> = () => {
         <Link to={'/'}>
           <SplitButton />
         </Link>
+        <Link to='/courses'>
+          <Button variant="outlined" startIcon={<SchoolIcon />}>
+            Курсы
+          </Button>
+        </Link>
         {!isAssignAllButton ? (
           <Link to={'/stat'}>
-            <Button variant="outlined" startIcon={<SchoolIcon />}>
+            <Button variant="outlined" startIcon={<QueryStatsIcon />}>
               Статистика
             </Button>
           </Link>
         ) : (
-          <Button variant="outlined" startIcon={<SchoolIcon />} disabled>
+          <Button variant="outlined" startIcon={<QueryStatsIcon />} disabled>
             Статистика
           </Button>
         )}

@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Topbar from './components/Topbar';
-import Courses from './components/unused/courses';
+import CoursesList from './scenes/CoursesList';
 import Dashboard from './scenes/LearningBoard';
 import Team from './scenes/MyLearners';
 import { ColorModeContext, useMode } from './theme';
@@ -22,7 +22,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Team />} />
               <Route path="/stat" element={<Dashboard />} />
-              <Route path="/courses" element={<Courses />} />
+              <Route path="/courses" element={<CoursesList />} />
             </Routes>
           </main>
         </div>

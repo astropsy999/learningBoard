@@ -21,7 +21,7 @@ const Dashboard = () => {
     <Box m="20px">
       {/* HEADER */}
       <Box display="flex" justifyContent="space-between" alignItems="center">
-        <Header title="" subtitle="Общая статистика" />
+        <Header title="Статистика" subtitle="Общая статистика" />
 
         <Box>
           <Button
