@@ -18,11 +18,17 @@ interface CoursesState {
   singleSelectedUserCourses: CourseData[];
 }
 
+
+
 export const useCourses = create<CoursesState>()(
   devtools((set) => ({
     allCourses: null,
+    // lockedCourses: [],
     selectedCoursesToSave: [],
     singleSelectedUserCourses: [],
+    // setLockedCourses: (newLockedCourses: CourseData[]) => set({
+    //   lockedCourses: newLockedCourses
+    // }),
     setSingleSelectedUserCourses: (newSingleSelectedUserCourses: CourseData[]) => set({
       singleSelectedUserCourses: newSingleSelectedUserCourses
     }),

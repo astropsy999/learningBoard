@@ -11,6 +11,7 @@ import { updateAllData } from '../services/api.service';
 import CancelIcon from '@mui/icons-material/Cancel';
 import { toast } from 'react-toastify';
 import { useSWRConfig } from 'swr';
+import { useStore } from 'zustand';
 
 export type SelectedRowData = {
   id: number;
@@ -39,7 +40,9 @@ const MyLearners = () => {
     allLearners,
     divisions,
     currentUserDivisionName,
+    
   } = useLearners();
+  
   const { allCourses } = useCourses();
 
   const { mutate } = useSWRConfig();
@@ -60,6 +63,8 @@ const MyLearners = () => {
       setIsLoading(false);
     }
   }, [allCourses, allData, allLearners, currentUserDivisionName, divisions]);
+
+
 
   const filteredDivision = useMemo(() => {
     return {
@@ -179,10 +184,13 @@ const MyLearners = () => {
       headerName: 'Обучающие материалы',
       flex: 1.5,
       renderCell: ({ row }) => {
+        console.log('row: ', row);
         return row.courses.map((course: { [id: number]: string }) => {
           const courseTitle = Object.values(course)[0];
           const courseId = Object.keys(course)[0];
-          if (courseTitle) {
+          const isLocked = row.courses_exclude.includes(+courseId);
+
+          if (courseTitle && !isLocked) {
             return (
            
               <Chip
@@ -192,7 +200,8 @@ const MyLearners = () => {
                 sx={{
                   margin: '2px',
                   transition: 'opacity 3s ease-in-out', 
-                  opacity: rowDelLoading[`${row.id}-${courseId}`] ? 0 : 1, 
+                  opacity: rowDelLoading[`${row.id}-${courseId}`] ? 0 : 1,
+                  background: 'white', 
                 }}
                 onDelete={(event) => deleteSingleCourseFromLearner(event, row, +courseId)}
                 deleteIcon={
@@ -206,7 +215,25 @@ const MyLearners = () => {
               />
             
             );
-          } else {
+          } else if ( courseTitle && isLocked)  {
+            return (
+              <Chip
+                key={`${row.id}+${courseId}`}
+                label={courseTitle}
+                variant="outlined"
+                color="error"
+                sx={{
+                  margin: '2px',
+                  transition: 'opacity 3s ease-in-out',
+                  opacity: 0.5,
+                  background: 'lightred',
+                }}
+                data-item-id={courseId}
+              />
+            );
+          }
+          
+          else {
             return null;
           }
         });

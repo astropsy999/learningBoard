@@ -6,6 +6,7 @@ export type User = {
   position?: string;
   division?: number;
   courses: number[];
+  courses_exclude: number[]
 };
 
 export type Course = {
@@ -40,12 +41,7 @@ export interface AllUserData {
   isUserRight: boolean;
 }
 
-export type AllUsersData = {
-  isDel: boolean;
-  isEdit: boolean;
-  isSU: boolean;
-  users: AllUserData[];
-};
+
 
 export type ManagerData = {
   state: boolean;
@@ -69,7 +65,6 @@ export interface AllData {
 export type UserState = {
   users: User[];
   allUsers: AllUserData[] | null;
-  allUsersData: AllUsersData | null;
   allLearners: ILearner[] | null;
   currentUserData: CurrentUserData | null;
   currentUserName?: string | null;
@@ -98,7 +93,6 @@ export type UserActions = {
   setAllData: (data: any) => void;
   setCurrentUserDivisionName: (name: string) => void;
   setDivisions: (newDivisions: Divisions) => void;
-  // setAllCourses: (newAllCourses: Course[]) => void;
 };
 
 export interface ILearner {
