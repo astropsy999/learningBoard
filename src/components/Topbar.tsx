@@ -48,7 +48,7 @@ const Topbar: FC<TopbarProps> = () => {
       });
 
       setCurrentUserData(currentUserInfo);
-      setCurrentUserName(currentUserInfo.name);
+      setCurrentUserName(currentUserInfo?.name);
 
       // Заполняем поля position, division и courses у каждого пользователя
       const learnersWithData = users.map((user) => ({
@@ -104,7 +104,7 @@ const Topbar: FC<TopbarProps> = () => {
         <Link to={'/'}>
           <SplitButton />
         </Link>
-        <Link to='/courses'>
+        <Link to="/courses">
           <Button variant="outlined" startIcon={<SchoolIcon />}>
             Курсы
           </Button>

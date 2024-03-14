@@ -1,4 +1,4 @@
-import { Bounce, toast } from 'react-toastify';
+import { Bounce, ToastContent, toast } from 'react-toastify';
 import configApi from '../api/config.api';
 import { url } from '../api/url.api';
 import { mockDataCourses, mockDataTeam } from '../data/mockData';
@@ -9,24 +9,6 @@ export type ToUpdateUser = {
   courses: number[];
 };
 
-// export const getCurrentUserData = async () => {
-//   let userData;
-
-//   try {
-//     await fetch(configApi.srv + url.getUserProfileData, {
-//       method: 'POST',
-//       credentials: 'include',
-//     })
-//       .then((response) => response.json())
-//       .then((data) => {
-//         userData = data[0].data;
-//       });
-//     return userData;
-//   } catch (e: Error | any) {
-//     throw new Error(e.message);
-//   }
-// };
-
 export const fetchAllData = async (): Promise<AllData | undefined> => {
   let allData;
   try {
@@ -35,11 +17,35 @@ export const fetchAllData = async (): Promise<AllData | undefined> => {
     })
       .then((response) => response.json())
       .then((data: any) => {
+        if (data[0].data.type === 'error') {
+          toast.error(data[0].data.message, {
+            position: 'top-center',
+            autoClose: 15000,
+            hideProgressBar: true,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: 'colored',
+            transition: Bounce,
+          });
+        }
         allData = data[0].data;
       });
 
     return allData;
   } catch (e: Error | any) {
+    toast.error(e.message, {
+      position: 'top-center',
+      autoClose: 15000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: 'colored',
+      transition: Bounce,
+    });
     throw new Error(e.message);
   }
 };
