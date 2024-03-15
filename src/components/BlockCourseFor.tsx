@@ -21,8 +21,8 @@ export const BlockCourseFor: React.FC<BlockCourseForProps> = ({
   const defaultSelectedNames = lockedUsers;
 
   // Фильтруем массив всех пользователей, оставляя только тех, кто заблокирован
-  const defaultSelectedUsers = allLearners!.filter((user) =>
-    defaultSelectedNames.includes(user.name),
+  const defaultSelectedUsers = allLearners!.filter(
+    (user) => user.name && defaultSelectedNames.includes(user.name),
   );
 
   return (
@@ -31,7 +31,7 @@ export const BlockCourseFor: React.FC<BlockCourseForProps> = ({
       id="checkboxes-tags-demo"
       options={allLearners!}
       disableCloseOnSelect
-      getOptionLabel={(option) => option.name}
+      getOptionLabel={(option) => option.name || ''}
       renderOption={(props, option, { selected }) => (
         <li {...props}>
           <Checkbox

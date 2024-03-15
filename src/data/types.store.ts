@@ -6,7 +6,7 @@ export type User = {
   position?: string;
   division?: number;
   courses: number[];
-  courses_exclude: number[]
+  courses_exclude: number[];
 };
 
 export type Course = {
@@ -41,8 +41,6 @@ export interface AllUserData {
   isUserRight: boolean;
 }
 
-
-
 export type ManagerData = {
   state: boolean;
   level: number;
@@ -76,6 +74,7 @@ export type UserState = {
   allData: AllData | null;
   currentUserDivisionName: string | null;
   divisions: Divisions | null;
+  selectedLearnersToLockCourse: string[] | ILearner[];
   // allCourses: Course[] | null;
 };
 
@@ -93,18 +92,21 @@ export type UserActions = {
   setAllData: (data: any) => void;
   setCurrentUserDivisionName: (name: string) => void;
   setDivisions: (newDivisions: Divisions) => void;
+  setSelectedLearnersToLockCourse: (
+    newSelectedLearnersToLockCourse: string[],
+  ) => void;
 };
 
 export interface ILearner {
-  id: number;
-  name: string;
-  position: string;
-  division: string;
-  courses: {
+  id?: number;
+  name?: string;
+  position?: string;
+  division?: string;
+  courses?: {
     id: number;
     title: string;
   }[];
-  courses_exclude: number[]
+  courses_exclude?: number[];
 }
 
 export interface CurrentUserData {

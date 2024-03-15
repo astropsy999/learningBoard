@@ -38,9 +38,8 @@ const MyLearners = () => {
     allLearners,
     divisions,
     currentUserDivisionName,
-    
   } = useLearners();
-  
+
   const { allCourses } = useCourses();
 
   const { mutate } = useSWRConfig();
@@ -50,9 +49,9 @@ const MyLearners = () => {
   const [selectedRows, setSelectedRows] = useState<
     SelectedRowData[] | undefined
   >([]);
-  const [rowDelLoading, setRowDelLoading] = useState<{ [key: string]: boolean }>(
-    {},
-  );
+  const [rowDelLoading, setRowDelLoading] = useState<{
+    [key: string]: boolean;
+  }>({});
 
   const apiRef = useGridApiRef();
 
@@ -61,8 +60,6 @@ const MyLearners = () => {
       setIsLoading(false);
     }
   }, [allCourses, allData, allLearners, currentUserDivisionName, divisions]);
-
-
 
   const filteredDivision = useMemo(() => {
     return {
@@ -124,7 +121,10 @@ const MyLearners = () => {
     row: SelectedRowData,
     courseId: number,
   ) => {
-    setRowDelLoading((prevState) => ({ ...prevState, [`${row.id}-${courseId}`]: true }));
+    setRowDelLoading((prevState) => ({
+      ...prevState,
+      [`${row.id}-${courseId}`]: true,
+    }));
     const itemId =
       event?.currentTarget.parentElement?.getAttribute('data-item-id');
 
@@ -142,14 +142,16 @@ const MyLearners = () => {
           toast.success('Материал успешно удален', {
             autoClose: 1000,
           });
-          setRowDelLoading((prevState) => ({ ...prevState,  [`${row.id}-${courseId}`]: false }));
+          setRowDelLoading((prevState) => ({
+            ...prevState,
+            [`${row.id}-${courseId}`]: false,
+          }));
         });
       }
     });
   };
 
   const columns: GridColDef[] = [
-
     {
       field: 'name',
       headerName: 'ФИО',
@@ -184,18 +186,19 @@ const MyLearners = () => {
 
           if (courseTitle && !isLocked) {
             return (
-           
               <Chip
                 key={`${row.id}+${courseId}`}
                 label={courseTitle}
                 variant="outlined"
                 sx={{
                   margin: '2px',
-                  transition: 'opacity 3s ease-in-out', 
+                  transition: 'opacity 3s ease-in-out',
                   opacity: rowDelLoading[`${row.id}-${courseId}`] ? 0 : 1,
-                  background: 'white', 
+                  background: 'white',
                 }}
-                onDelete={(event) => deleteSingleCourseFromLearner(event, row, +courseId)}
+                onDelete={(event) =>
+                  deleteSingleCourseFromLearner(event, row, +courseId)
+                }
                 deleteIcon={
                   rowDelLoading[`${row.id}-${courseId}`] ? (
                     <CircularProgress size={20} />
@@ -205,9 +208,8 @@ const MyLearners = () => {
                 }
                 data-item-id={courseId}
               />
-            
             );
-          } else if ( courseTitle && isLocked)  {
+          } else if (courseTitle && isLocked) {
             return (
               <Chip
                 key={`${row.id}+${courseId}`}
@@ -223,9 +225,7 @@ const MyLearners = () => {
                 data-item-id={courseId}
               />
             );
-          }
-          
-          else {
+          } else {
             return null;
           }
         });
@@ -261,11 +261,7 @@ const MyLearners = () => {
     <Box m="20px" pt={2}>
       <Header title="Ученики" subtitle="" />
 
-      <Box
-        m="10px 0 0 0"
-        height="75vh"
-        sx={dataGridStyles.root}
-      >
+      <Box m="10px 0 0 0" height="75vh" sx={dataGridStyles.root}>
         <DataGrid
           autoHeight={true}
           apiRef={apiRef}

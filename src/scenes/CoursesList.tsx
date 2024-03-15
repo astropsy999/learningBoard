@@ -9,6 +9,8 @@ import { useLearners } from '../data/store/learners.store';
 import { dataGridStyles } from '../styles/DataGrid.styles';
 import { BlockCourseFor } from '../components/BlockCourseFor';
 import { Course } from '../data/types.store';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 
 interface LockedData {
   [key: number]: string[];
@@ -33,11 +35,11 @@ const CoursesList = () => {
   useEffect(() => {
     const getLearnersWithLockedCourses = () => {
       const learnersWithLocked = allLearners?.filter(
-        (learner) => learner?.courses_exclude.length !== 0,
+        (learner) => learner?.courses_exclude?.length !== 0,
       );
       const transformedDataOfLocked = learnersWithLocked!.reduce(
         (acc: any[], curr) => {
-          curr.courses_exclude.forEach((courseId) => {
+          curr?.courses_exclude?.forEach((courseId) => {
             if (acc.some((item) => item[courseId])) {
               const existingItem = acc.find((item) => item[courseId]);
               existingItem && existingItem[courseId].push(curr.name);
@@ -80,6 +82,11 @@ const CoursesList = () => {
     if (lockedUsers) {
       setLockedUsers(lockedUsers);
     }
+  };
+
+  const saveLockedUsers = (id: number) => {
+    console.log('🚀 ~ saveLockedUsers ~ id:', id);
+    // setLockedUsers([]);
   };
 
   const columns: GridColDef[] = [
@@ -155,17 +162,38 @@ const CoursesList = () => {
       headerName: 'Блокировка',
       flex: 0.2,
       headerClassName: 'name-column--cell',
-      cellClassName: 'center--cell',
+      cellClassName: 'center--cell flex-column',
 
       renderCell: ({ row }) => {
+        const isAnyButtonLocked = Object.keys(onBlockLearnersMode).some(
+          (id) => onBlockLearnersMode[id] && id !== row.id,
+        );
         return (
           <>
-            <Button
-              variant="contained"
-              color={'error'}
-              startIcon={<LockPersonIcon />}
-              onClick={(event) => chooseLearnersToLockCourse(event, row)}
-            ></Button>
+            {!onBlockLearnersMode[row.id] ? (
+              <Button
+                variant="contained"
+                color={'warning'}
+                disabled={isAnyButtonLocked}
+                startIcon={<LockPersonIcon />}
+                onClick={(event) => chooseLearnersToLockCourse(event, row)}
+              ></Button>
+            ) : (
+              <Button
+                variant="contained"
+                color={'warning'}
+                startIcon={<CloseIcon />}
+                onClick={() => {}}
+              ></Button>
+            )}
+            {onBlockLearnersMode[row.id] && (
+              <Button
+                variant="contained"
+                color={'secondary'}
+                startIcon={<CheckIcon />}
+                onClick={() => saveLockedUsers(row.id)}
+              ></Button>
+            )}
           </>
         );
       },

@@ -8,6 +8,15 @@ const colors = tokens(palette.mode);
 
 export const dataGridStyles = {
   root: {
+    '& .flex-column': {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    '& .cell-margins': {
+      margin: '10px 5px',
+    },
     '& .MuiDataGrid-root': {
       border: 'none',
     },
