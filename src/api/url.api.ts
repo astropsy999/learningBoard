@@ -23,4 +23,5 @@ export const url = {
   calcsController: '/index.php/CalcsController/CalcContextValuesBTN',
   learnController: '/index.php/learncontroller/getdata',
   updateDataEndpoint: '/index.php/learncontroller/includecourses',
+  lockCoursesEndpoint: '/index.php/learncontroller/excludecourses',
 };

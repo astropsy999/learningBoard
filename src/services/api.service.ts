@@ -9,6 +9,11 @@ export type ToUpdateUser = {
   courses: number[];
 };
 
+export type CourseToLock = {
+  id: number;
+  users: number[];
+};
+
 export const fetchAllData = async (): Promise<AllData | undefined> => {
   let allData;
   try {
@@ -50,9 +55,36 @@ export const fetchAllData = async (): Promise<AllData | undefined> => {
   }
 };
 
-export const updateAllData = async (dataToUpdate: ToUpdateUser[]) => {
-  // Добавляем данные в formData
+export const lockCourses = async (dataToLock: CourseToLock[]) => {
+  try {
+    const response = await fetch(configApi.srv + url.lockCoursesEndpoint, {
+      method: 'POST',
+      cache: 'no-cache',
+      credentials: 'include',
+      body: JSON.stringify(dataToLock),
+    });
 
+    // Получение обновленных данных с сервера после обновления
+    const lockedData = await response.json();
+
+    // Возвращаем обновленные данные
+    return lockedData;
+  } catch (error: Error | any) {
+    toast.error('Ошибка при сохранении данных', {
+      position: 'top-right',
+      autoClose: 1500,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: 'colored',
+      transition: Bounce,
+    });
+  }
+};
+
+export const updateAllData = async (dataToUpdate: ToUpdateUser[]) => {
   try {
     const response = await fetch(configApi.srv + url.updateDataEndpoint, {
       method: 'POST',

@@ -1,16 +1,18 @@
-import { Box, Button, Chip, useTheme } from '@mui/material';
-import React, { useEffect, useState } from 'react';
-import { tokens } from '../theme';
-import Header from '../components/Header';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
-import { useCourses } from '../data/store/courses.store';
-import LockPersonIcon from '@mui/icons-material/LockPerson';
-import { useLearners } from '../data/store/learners.store';
-import { dataGridStyles } from '../styles/DataGrid.styles';
-import { BlockCourseFor } from '../components/BlockCourseFor';
-import { Course, ILearner } from '../data/types.store';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
+import LockPersonIcon from '@mui/icons-material/LockPerson';
+import { Box, Button, Chip } from '@mui/material';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import React, { useEffect, useState } from 'react';
+import { Bounce, toast } from 'react-toastify';
+import { mutate } from 'swr';
+import { BlockCourseFor } from '../components/BlockCourseFor';
+import Header from '../components/Header';
+import { useCourses } from '../data/store/courses.store';
+import { useLearners } from '../data/store/learners.store';
+import { Course } from '../data/types.store';
+import { lockCourses } from '../services/api.service';
+import { dataGridStyles } from '../styles/DataGrid.styles';
 
 interface LockedData {
   [key: number]: string[];
@@ -18,7 +20,11 @@ interface LockedData {
 
 const CoursesList = () => {
   const { allCourses } = useCourses();
-  const { allLearners, selectedLearnersToLockCourse } = useLearners();
+  const {
+    allLearners,
+    selectedLearnersToLockCourse,
+    setSelectedLearnersToLockCourse,
+  } = useLearners();
   const [isLoading, setIsLoading] = useState(true);
   const [lockedData, setLockedData] = useState<LockedData[]>([]);
   const [lockedUsers, setLockedUsers] = useState<string[]>([]);
@@ -54,7 +60,6 @@ const CoursesList = () => {
       );
 
       setLockedData(transformedDataOfLocked);
-      // return transformedDataOfLocked
     };
     if (!isLoading) getLearnersWithLockedCourses();
   }, [allCourses, allLearners, isLoading]);
@@ -62,9 +67,9 @@ const CoursesList = () => {
   useEffect(() => {
     // Проверяем, включен ли режим блокировки, если нет, то очищаем массив lockedUsers
     if (!Object.values(onBlockLearnersMode).some((value) => value)) {
-      setLockedUsers([]);
+      setSelectedLearnersToLockCourse([]);
     }
-  }, [onBlockLearnersMode]);
+  }, [onBlockLearnersMode, setSelectedLearnersToLockCourse]);
 
   const handleSelectionCoursesChange = () => {};
   const chooseLearnersToLockCourse = (
@@ -84,13 +89,11 @@ const CoursesList = () => {
     }
   };
 
-  const saveLockedUsers = (id: number) => {
-    console.log('🚀 ~ saveLockedUsers ~ id:', id);
-    console.log('Selected Users:', selectedLearnersToLockCourse);
+  const saveLockedUsers = async (id: number) => {
     const learnersToLockIDs: number[] = [];
 
     selectedLearnersToLockCourse?.forEach((learner) => {
-      if (typeof learner! === 'object' && learner !== null) {
+      if (typeof learner === 'object' && learner !== null) {
         learnersToLockIDs.push(learner.id!);
       }
       return null; // return a value, in this case null
@@ -98,13 +101,25 @@ const CoursesList = () => {
 
     const lockedLearnersToSend = [
       {
-        [id]: learnersToLockIDs,
+        id,
+        users: learnersToLockIDs,
       },
     ];
-    console.log(
-      '🚀 ~ saveLockedUsers ~ lockedLearnersToSend:',
-      lockedLearnersToSend,
-    );
+
+    const result = await lockCourses(lockedLearnersToSend);
+    mutate('allData').then(() => {
+      toast.success(result[0].data.message, {
+        position: 'top-right',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+        transition: Bounce,
+      });
+    });
 
     return lockedLearnersToSend;
   };
