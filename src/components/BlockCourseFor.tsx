@@ -5,6 +5,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { useLearners } from '../data/store/learners.store';
+import { ILearner } from '../data/types.store';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -16,20 +17,27 @@ interface BlockCourseForProps {
 export const BlockCourseFor: React.FC<BlockCourseForProps> = ({
   lockedUsers,
 }) => {
-  const { allLearners } = useLearners();
-  // Формируем массив имен заблокированных пользователей
+  const { allLearners, setSelectedLearnersToLockCourse } = useLearners();
+
   const defaultSelectedNames = lockedUsers;
 
-  // Фильтруем массив всех пользователей, оставляя только тех, кто заблокирован
   const defaultSelectedUsers = allLearners!.filter(
     (user) => user.name && defaultSelectedNames.includes(user.name),
   );
+
+  const handleSelectedLearnersChange = (
+    event: React.ChangeEvent<{}>,
+    value: string[] | ILearner[],
+  ) => {
+    setSelectedLearnersToLockCourse(value);
+  };
 
   return (
     <Autocomplete
       multiple
       id="checkboxes-tags-demo"
       options={allLearners!}
+      onChange={handleSelectedLearnersChange}
       disableCloseOnSelect
       getOptionLabel={(option) => option.name || ''}
       renderOption={(props, option, { selected }) => (

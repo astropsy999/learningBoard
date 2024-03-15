@@ -8,7 +8,7 @@ import LockPersonIcon from '@mui/icons-material/LockPerson';
 import { useLearners } from '../data/store/learners.store';
 import { dataGridStyles } from '../styles/DataGrid.styles';
 import { BlockCourseFor } from '../components/BlockCourseFor';
-import { Course } from '../data/types.store';
+import { Course, ILearner } from '../data/types.store';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 
@@ -18,7 +18,7 @@ interface LockedData {
 
 const CoursesList = () => {
   const { allCourses } = useCourses();
-  const { allLearners } = useLearners();
+  const { allLearners, selectedLearnersToLockCourse } = useLearners();
   const [isLoading, setIsLoading] = useState(true);
   const [lockedData, setLockedData] = useState<LockedData[]>([]);
   const [lockedUsers, setLockedUsers] = useState<string[]>([]);
@@ -86,7 +86,27 @@ const CoursesList = () => {
 
   const saveLockedUsers = (id: number) => {
     console.log('🚀 ~ saveLockedUsers ~ id:', id);
-    // setLockedUsers([]);
+    console.log('Selected Users:', selectedLearnersToLockCourse);
+    const learnersToLockIDs: number[] = [];
+
+    selectedLearnersToLockCourse?.forEach((learner) => {
+      if (typeof learner! === 'object' && learner !== null) {
+        learnersToLockIDs.push(learner.id!);
+      }
+      return null; // return a value, in this case null
+    });
+
+    const lockedLearnersToSend = [
+      {
+        [id]: learnersToLockIDs,
+      },
+    ];
+    console.log(
+      '🚀 ~ saveLockedUsers ~ lockedLearnersToSend:',
+      lockedLearnersToSend,
+    );
+
+    return lockedLearnersToSend;
   };
 
   const columns: GridColDef[] = [
@@ -138,14 +158,6 @@ const CoursesList = () => {
                     background: 'white',
                   }}
                   onDelete={() => {}}
-                  // deleteIcon={
-                  //   rowDelLoading[`${row.id}-${courseId}`] ? (
-                  //     <CircularProgress size={20} />
-                  //   ) : (
-                  //     <CancelIcon />
-                  //   )
-                  // }
-                  // data-item-id={courseId}
                 />,
               );
             });
@@ -156,20 +168,27 @@ const CoursesList = () => {
         return chips.length > 0 ? chips : '';
       },
     },
-
     {
       field: 'lockCourses',
       headerName: 'Блокировка',
       flex: 0.2,
       headerClassName: 'name-column--cell',
-      cellClassName: 'center--cell flex-column',
+      cellClassName: 'center--cell',
 
       renderCell: ({ row }) => {
         const isAnyButtonLocked = Object.keys(onBlockLearnersMode).some(
-          (id) => onBlockLearnersMode[id] && id !== row.id,
+          (id) => onBlockLearnersMode[+id] && id !== row.id,
         );
         return (
-          <>
+          <Box
+            sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '3px',
+            }}
+          >
             {!onBlockLearnersMode[row.id] ? (
               <Button
                 variant="contained"
@@ -183,7 +202,12 @@ const CoursesList = () => {
                 variant="contained"
                 color={'warning'}
                 startIcon={<CloseIcon />}
-                onClick={() => {}}
+                onClick={() => {
+                  setOnBlockLearnersMode((prev) => ({
+                    ...prev,
+                    [row.id]: !prev[row.id],
+                  }));
+                }}
               ></Button>
             )}
             {onBlockLearnersMode[row.id] && (
@@ -191,10 +215,12 @@ const CoursesList = () => {
                 variant="contained"
                 color={'secondary'}
                 startIcon={<CheckIcon />}
-                onClick={() => saveLockedUsers(row.id)}
+                onClick={() => {
+                  saveLockedUsers(row.id);
+                }}
               ></Button>
             )}
-          </>
+          </Box>
         );
       },
       disableColumnMenu: true,

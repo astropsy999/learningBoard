@@ -93,7 +93,7 @@ export type UserActions = {
   setCurrentUserDivisionName: (name: string) => void;
   setDivisions: (newDivisions: Divisions) => void;
   setSelectedLearnersToLockCourse: (
-    newSelectedLearnersToLockCourse: string[],
+    newSelectedLearnersToLockCourse: string[] | ILearner[],
   ) => void;
 };
 
