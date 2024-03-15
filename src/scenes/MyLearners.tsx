@@ -52,6 +52,7 @@ const MyLearners = () => {
   const [rowDelLoading, setRowDelLoading] = useState<{
     [key: string]: boolean;
   }>({});
+  const [assignedCourses, setAssignedCourses] = useState<string[]>([]);
 
   const apiRef = useGridApiRef();
 
@@ -86,8 +87,11 @@ const MyLearners = () => {
   }, [currentUserDivisionName]);
 
   const handleCoursesDialogOpen = (row: SelectedRowData) => {
+    console.log('🚀 ~ handleCoursesDialogOpen ~ row:', row.courses);
     openCoursesDialog(true);
     setOnlyLearnerName(row.name);
+    const assignedArr = row?.courses?.map((course) => Object.keys(course)[0]);
+    setAssignedCourses(assignedArr);
   };
 
   const isSelectedUser = selectedRows!.length > 0;
@@ -196,16 +200,16 @@ const MyLearners = () => {
                   opacity: rowDelLoading[`${row.id}-${courseId}`] ? 0 : 1,
                   background: 'white',
                 }}
-                onDelete={(event) =>
-                  deleteSingleCourseFromLearner(event, row, +courseId)
-                }
-                deleteIcon={
-                  rowDelLoading[`${row.id}-${courseId}`] ? (
-                    <CircularProgress size={20} />
-                  ) : (
-                    <CancelIcon />
-                  )
-                }
+                // onDelete={(event) =>
+                //   deleteSingleCourseFromLearner(event, row, +courseId)
+                // }
+                // deleteIcon={
+                //   rowDelLoading[`${row.id}-${courseId}`] ? (
+                //     <CircularProgress size={20} />
+                //   ) : (
+                //     <CancelIcon />
+                //   )
+                // }
                 data-item-id={courseId}
               />
             );
@@ -281,6 +285,7 @@ const MyLearners = () => {
       <CoursesToLearner
         onOpen={coursesToLearnersDialog}
         onClose={handleCoursesDialogClose}
+        assignedCourses={assignedCourses}
       />
     </Box>
   );

@@ -32,14 +32,19 @@ type CoursesToLearnerProps = {
   onClose: () => void;
   name?: string;
   lernersData?: SelectedRowData[] | undefined;
+  assignedCourses: string[];
 };
 export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
   onOpen,
   onClose,
+  assignedCourses,
 }) => {
   const { allCourses, setAllCourses, selectedCoursesToSave } = useCourses();
   const [openSubmitDialog, setOpenSubmitDialog] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
+  const [selectedCourseIds, setSelectedCourseIds] = React.useState<string[]>(
+    [],
+  );
   // const [atLeastOneLearner, setAtleastOneLearner] = React.useState(false);
   const {
     onlyLearnerName,
@@ -56,6 +61,22 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
   const handleSaveCourses = () => {
     setOpenSubmitDialog(true);
   };
+
+  React.useEffect(() => {
+    // Поставить галочки на тех курсах id которых есть в массиве assignedCourses
+    setSelectedCourseIds(assignedCourses);
+  }, [assignedCourses]);
+
+  // Функция для обновления выбранных курсов
+  // const handleToggleCourse = (courseId: number) => {
+  //   if (selectedCourseIds.includes(String(courseId))) {
+  //     // Если курс уже выбран, убрать его из списка выбранных
+  //     setSelectedCourseIds(selectedCourseIds.filter((id) => id !== courseId));
+  //   } else {
+  //     // Если курс не выбран, добавить его в список выбранных
+  //     setSelectedCourseIds([...selectedCourseIds, courseId]);
+  //   }
+  // };
 
   const handleDeleteLearnerFromGroup = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,

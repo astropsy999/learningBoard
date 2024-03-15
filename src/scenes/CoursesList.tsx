@@ -172,7 +172,7 @@ const CoursesList = () => {
                     transition: 'opacity 3s ease-in-out',
                     background: 'white',
                   }}
-                  onDelete={() => {}}
+                  // onDelete={() => {}}
                 />,
               );
             });
@@ -249,12 +249,12 @@ const CoursesList = () => {
         <DataGrid
           autoHeight={true}
           //   apiRef={apiRef}
-          checkboxSelection
-          disableRowSelectionOnClick
+          // checkboxSelection
+          // disableRowSelectionOnClick
           rows={isLoading ? [] : allCourses!}
           columns={columns}
           loading={isLoading}
-          onRowSelectionModelChange={handleSelectionCoursesChange}
+          // onRowSelectionModelChange={handleSelectionCoursesChange}
           getRowHeight={() => 'auto'}
         />
       </Box>
