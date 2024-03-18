@@ -40,6 +40,8 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
     selectedCoursesToSave,
     setSelectedCoursesToSave,
   } = useCourses();
+
+
   const {
     selectedRowsData,
     onlyLearnerName,
@@ -99,7 +101,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
           return {
             id: user.id,
             courses: Array.from(
-              new Set([...oldCourses, ...selectedCoursesIds]),
+              new Set([...selectedCoursesIds]),
             ),
           };
         })
@@ -110,13 +112,12 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
         allLearners?.find((learner) => learner.name === onlyLearnerName),
       );
       dataToUpdate = dataToUpdate.map((user) => {
-        const oldCourses = user?.courses
-          ? user?.courses.map((c) => +Object.keys(c)[0])
-          : [];
-
+        // const oldCourses = user?.courses
+        //   ? user?.courses.map((c) => +Object.keys(c)[0])
+        //   : [];
         return {
           id: user?.id || 0,
-          courses: Array.from(new Set([...oldCourses, ...selectedCoursesIds])),
+          courses: Array.from(new Set([...selectedCoursesIds])),
         };
       });
     }
@@ -124,8 +125,12 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
     const filteredDataToUpdate = dataToUpdate.filter(
       (user) => user !== null,
     ) as ToUpdateUser[];
+
+    console.log('filteredDataToUpdate: ', filteredDataToUpdate);
+
     
     const result = await updateAllData(filteredDataToUpdate);
+
     mutate('allData').then(() => {
       handleClose();
       openCoursesDialog(false); 
@@ -142,7 +147,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
         transition: Bounce,
       });
       setOnlyLearnerName('');
-      setSelectedCoursesToSave([]);
+      // setSelectedCoursesToSave([]);
       deSelectAll();
 
     });
@@ -187,7 +192,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
         </Box>
         <DialogContent dividers>
           <div>
-            <b>Вы выбрали следующие курсы:</b>
+            {selectedCoursesToSave.length > 0 ? <b>Вы выбрали следующие курсы:</b>: null}
             <br />{' '}
             {selectedCoursesToSave.map((course) => (
               <Chip
@@ -201,7 +206,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
             ))}
           </div>
           <div>
-            <b>Они будут назначены сотрудникам:</b>
+            {selectedCoursesToSave.length > 0 ? <b>Они будут назначены сотрудникам:</b>: <b>Все назначенные ранее курсы будут удалены у сотрудников:</b>}
             <br />
           </div>
           <div>

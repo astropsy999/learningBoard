@@ -1,6 +1,5 @@
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
-import CancelIcon from '@mui/icons-material/Cancel';
-import { Box, Button, Chip, CircularProgress } from '@mui/material';
+import { Box, Button, Chip } from '@mui/material';
 import { DataGrid, GridColDef, useGridApiRef } from '@mui/x-data-grid';
 import React, { MouseEvent, useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
@@ -52,7 +51,7 @@ const MyLearners = () => {
   const [rowDelLoading, setRowDelLoading] = useState<{
     [key: string]: boolean;
   }>({});
-  const [assignedCourses, setAssignedCourses] = useState<string[]>([]);
+  const [assignedCourses, setAssignedCourses] = useState<number[]>([]);
 
   const apiRef = useGridApiRef();
 
@@ -86,15 +85,15 @@ const MyLearners = () => {
     };
   }, [currentUserDivisionName]);
 
+  const isSelectedUser = selectedRows!.length > 0;
+
   const handleCoursesDialogOpen = (row: SelectedRowData) => {
-    console.log('🚀 ~ handleCoursesDialogOpen ~ row:', row.courses);
     openCoursesDialog(true);
     setOnlyLearnerName(row.name);
-    const assignedArr = row?.courses?.map((course) => Object.keys(course)[0]);
+    const assignedArr = row?.courses?.map((course) => +Object.keys(course)[0]);
     setAssignedCourses(assignedArr);
   };
 
-  const isSelectedUser = selectedRows!.length > 0;
 
   useEffect(() => {
     if (turnOffDivisionFilter) {
@@ -109,6 +108,7 @@ const MyLearners = () => {
     setOnlyLearnerName('');
     setSelectedCoursesToSave([]);
     deSelectAll();
+    setAssignedCourses([])
   };
 
   const handleSelectionModelChange = (newSelection: Object[]) => {

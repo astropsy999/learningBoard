@@ -9,9 +9,10 @@ import { tokens } from '../theme';
 
 interface CourseCardProps {
   courseItem: CourseData;
+  assigned: number[]
 }
 
-export const CourseCard: React.FC<CourseCardProps> = ({ courseItem }) => {
+export const CourseCard: React.FC<CourseCardProps> = ({ courseItem, assigned }) => {
   const [checked, setChecked] = React.useState(false);
   const { selectedCoursesToSave, setSelectedCoursesToSave } = useCourses();
 
@@ -20,14 +21,17 @@ export const CourseCard: React.FC<CourseCardProps> = ({ courseItem }) => {
   const colors = tokens(theme.palette.mode);
 
   React.useEffect(() => {
-    const isChecked = selectedCoursesToSave.some(
-      (selectedCourse) => selectedCourse === courseItem,
-    );
-    setChecked(isChecked);
-  }, [selectedCoursesToSave, courseItem]);
+    // Проверяем, содержится ли ID курса в массиве assigned
+    if (assigned.includes(courseItem.id)) {
+      setChecked(true); // Если содержится, устанавливаем checked в true
+    }
+  }, [assigned, courseItem.id]);
 
   const handleCardClick = () => {
-    setChecked(!checked);
+    const newChecked = !checked; // Получаем новое значение checked
+    setChecked(newChecked); // Устанавливаем новое значение checked
+  
+    // Ваша логика обновления состояния selectedCoursesToSave
     if (!checked) {
       setSelectedCoursesToSave([...selectedCoursesToSave, courseItem]);
     } else {

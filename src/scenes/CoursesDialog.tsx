@@ -32,17 +32,17 @@ type CoursesToLearnerProps = {
   onClose: () => void;
   name?: string;
   lernersData?: SelectedRowData[] | undefined;
-  assignedCourses: string[];
+  assignedCourses: number[];
 };
 export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
   onOpen,
   onClose,
   assignedCourses,
 }) => {
-  const { allCourses, setAllCourses, selectedCoursesToSave } = useCourses();
+  const { allCourses, setAllCourses, selectedCoursesToSave, setSelectedCoursesToSave } = useCourses();
   const [openSubmitDialog, setOpenSubmitDialog] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [selectedCourseIds, setSelectedCourseIds] = React.useState<string[]>(
+  const [selectedCourseIds, setSelectedCourseIds] = React.useState<number[]>(
     [],
   );
   // const [atLeastOneLearner, setAtleastOneLearner] = React.useState(false);
@@ -65,18 +65,13 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
   React.useEffect(() => {
     // Поставить галочки на тех курсах id которых есть в массиве assignedCourses
     setSelectedCourseIds(assignedCourses);
-  }, [assignedCourses]);
+  
+    // Отфильтровать курсы по их ID и обновить состояние selectedCoursesToSave
+    const filteredCourses = allData?.courses.filter(course => assignedCourses.includes(course.id)) || [];
+    setSelectedCoursesToSave(filteredCourses);
+  }, [assignedCourses, allData?.courses, setSelectedCoursesToSave]);
+  
 
-  // Функция для обновления выбранных курсов
-  // const handleToggleCourse = (courseId: number) => {
-  //   if (selectedCourseIds.includes(String(courseId))) {
-  //     // Если курс уже выбран, убрать его из списка выбранных
-  //     setSelectedCourseIds(selectedCourseIds.filter((id) => id !== courseId));
-  //   } else {
-  //     // Если курс не выбран, добавить его в список выбранных
-  //     setSelectedCourseIds([...selectedCourseIds, courseId]);
-  //   }
-  // };
 
   const handleDeleteLearnerFromGroup = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -166,7 +161,7 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
                 variant="contained"
                 startIcon={<SaveAltIcon />}
                 sx={{ height: '40px' }}
-                disabled={selectedCoursesToSave.length === 0}
+                // disabled={selectedCoursesToSave.length === 0}
               >
                 Сохранить
               </Button>
@@ -184,7 +179,7 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
             {allCourses &&
               allCourses.map((course) => (
                 <Grid item key={course.id}>
-                  <CourseCard courseItem={course} />
+                  <CourseCard courseItem={course} assigned={selectedCourseIds} />
                 </Grid>
               ))}
           </Grid>
