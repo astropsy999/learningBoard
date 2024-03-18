@@ -26,6 +26,7 @@ const CoursesList = () => {
     setSelectedLearnersToLockCourse,
   } = useLearners();
   const [isLoading, setIsLoading] = useState(true);
+  const [isLockLoading, setIsLockLoading] = useState(false);
   const [lockedData, setLockedData] = useState<LockedData[]>([]);
   const [lockedUsers, setLockedUsers] = useState<string[]>([]);
   const [onBlockLearnersMode, setOnBlockLearnersMode] = useState<{
@@ -90,6 +91,8 @@ const CoursesList = () => {
   };
 
   const saveLockedUsers = async (id: number) => {
+    setIsLockLoading(true)
+  
     const learnersToLockIDs: number[] = [];
 
     selectedLearnersToLockCourse?.forEach((learner) => {
@@ -119,7 +122,15 @@ const CoursesList = () => {
         theme: 'colored',
         transition: Bounce,
       });
+      setIsLockLoading(false)
+      setOnBlockLearnersMode((prev) => ({
+        ...prev,
+        [id]: !prev[id],
+      }));
+    
     });
+
+
 
     return lockedLearnersToSend;
   };
@@ -155,7 +166,7 @@ const CoursesList = () => {
       cellClassName: 'center--cell',
 
       renderCell: ({ row }) => {
-        if (lockedData.length === 0) return;
+        // if (lockedData.length === 0) return;
 
         const chips: JSX.Element[] = [];
         lockedData.forEach((element) => {
@@ -179,7 +190,7 @@ const CoursesList = () => {
           }
         });
         if (onBlockLearnersMode[row.id])
-          return <BlockCourseFor lockedUsers={lockedUsers} />;
+          return <BlockCourseFor lockedUsers={lockedUsers} isLoading={isLockLoading} />;
         return chips.length > 0 ? chips : '';
       },
     },
@@ -222,6 +233,7 @@ const CoursesList = () => {
                     ...prev,
                     [row.id]: !prev[row.id],
                   }));
+                  setLockedUsers([]);
                 }}
               ></Button>
             )}
@@ -248,13 +260,9 @@ const CoursesList = () => {
       <Box m="40px 0 0 0" height="75vh" sx={dataGridStyles.root}>
         <DataGrid
           autoHeight={true}
-          //   apiRef={apiRef}
-          // checkboxSelection
-          // disableRowSelectionOnClick
           rows={isLoading ? [] : allCourses!}
           columns={columns}
           loading={isLoading}
-          // onRowSelectionModelChange={handleSelectionCoursesChange}
           getRowHeight={() => 'auto'}
         />
       </Box>

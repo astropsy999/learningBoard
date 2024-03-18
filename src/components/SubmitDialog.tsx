@@ -147,7 +147,6 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
         transition: Bounce,
       });
       setOnlyLearnerName('');
-      // setSelectedCoursesToSave([]);
       deSelectAll();
 
     });
