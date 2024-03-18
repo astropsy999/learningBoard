@@ -33,7 +33,13 @@ export const BlockCourseFor: React.FC<BlockCourseForProps> = ({
     value: string[] | ILearner[],
   ) => {
     setSelectedLearnersToLockCourse(value);
+    console.log('value: ', value);
   };
+
+  const optionsWithSelectAll = [
+    { id: 999, name: 'Блокировать всем', position:'', division:'', courses: [], courses_exclude: [] },
+    ...allLearners!,
+  ];
 
   return (
     // Добавляем условный рендеринг для Autocomplete и Skeleton
@@ -42,22 +48,23 @@ export const BlockCourseFor: React.FC<BlockCourseForProps> = ({
         <Skeleton animation='wave' height='130%' width='70%' sx={{opacity: 0.8}} />
       ) : (
         <Autocomplete
+          isOptionEqualToValue={() => true}
           multiple
           id="checkboxes-tags-demo"
-          options={allLearners!}
+          options={optionsWithSelectAll}
           onChange={handleSelectedLearnersChange}
           disableCloseOnSelect
           getOptionLabel={(option) => option.name || ''}
           renderOption={(props, option, { selected }) => (
-            <li {...props}>
-              <Checkbox
-                icon={icon}
-                checkedIcon={checkedIcon}
-                style={{ marginRight: 8 }}
-                checked={selected}
-              />
-              {option.name}
-            </li>
+              <li {...props}>
+                <Checkbox
+                  icon={icon}
+                  checkedIcon={checkedIcon}
+                  style={{ marginRight: 8 }}
+                  checked={selected}
+                />
+                {option.name}
+              </li>
           )}
           defaultValue={defaultSelectedUsers}
           style={{ width: 500 }}
