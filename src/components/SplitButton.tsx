@@ -11,6 +11,7 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import * as React from 'react';
 import { useLearners } from '../data/store/learners.store';
+import { useLocation } from 'react-router-dom';
 
 const options = ['Все сотрудники', 'Мое подразделение'];
 
@@ -21,6 +22,8 @@ export default function SplitButton() {
   const [buttonColor, setButtonColor] = React.useState('warning');
   const { currentUserData, setTurnOffDivisionFilter, deSelectAll } =
     useLearners();
+
+  const location = useLocation();
 
   const handleClick = () => {
     console.info(`You clicked ${options[selectedIndex]}`);
@@ -63,7 +66,7 @@ export default function SplitButton() {
   return (
     <React.Fragment>
       <ButtonGroup
-        variant="contained"
+        variant={location.pathname === '/' ? 'contained' : 'outlined'}
         ref={anchorRef}
         aria-label="Button group with a nested menu"
         color={buttonColor as 'warning' | 'primary'}

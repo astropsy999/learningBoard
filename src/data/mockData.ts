@@ -1,5 +1,3756 @@
 import { tokens } from '../theme';
 
+export const courseData = {
+  tables: [
+    {
+      courseid: 10,
+      userid: 47,
+      userfullname: ' ',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_47',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=47">Охрана труда</a></div></div>',
+            id: 'row_21_47',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '0,00 %<br>( Пусто )',
+            headers: 'cat_9_47 row_21_47 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_47 row_21_47 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_47 row_21_47 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_47 row_21_47 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_47 row_21_47 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_47 row_21_47 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_47',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_47 row_20_47 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_47 row_20_47 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_47 row_20_47 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_47 row_20_47 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_47 row_20_47 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_47 row_20_47 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 38,
+      userfullname: 'Цагана Admin',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_38',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=38">Охрана труда</a></div></div>',
+            id: 'row_21_38',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '0,00 %<br>( Пусто )',
+            headers: 'cat_9_38 row_21_38 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_38 row_21_38 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_38 row_21_38 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_38 row_21_38 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_38 row_21_38 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_38 row_21_38 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_38',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_38 row_20_38 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_38 row_20_38 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_38 row_20_38 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_38 row_20_38 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_38 row_20_38 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_38 row_20_38 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 14,
+      userfullname: 'superadmin superadmin',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_14',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=14">Охрана труда</a></div></div>',
+            id: 'row_21_14',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '100,00 %',
+            headers: 'cat_9_14 row_21_14 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '0,00',
+            headers: 'cat_9_14 row_21_14 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_14 row_21_14 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '0,00 %',
+            headers: 'cat_9_14 row_21_14 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_14 row_21_14 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_14 row_21_14 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_14',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_14 row_20_14 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '0,00',
+            headers: 'cat_9_14 row_20_14 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_14 row_20_14 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '0,00 %',
+            headers: 'cat_9_14 row_20_14 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_14 row_20_14 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_14 row_20_14 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 2,
+      userfullname: 'Admin User',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_2',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=2">Охрана труда</a></div></div>',
+            id: 'row_21_2',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '0,00 %<br>( Пусто )',
+            headers: 'cat_9_2 row_21_2 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_2 row_21_2 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_2 row_21_2 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_2 row_21_2 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_2 row_21_2 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_2 row_21_2 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_2',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_2 row_20_2 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_2 row_20_2 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_2 row_20_2 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_2 row_20_2 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_2 row_20_2 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_2 row_20_2 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 78,
+      userfullname: 'Кристина Артёменко',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_78',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=78">Охрана труда</a></div></div>',
+            id: 'row_21_78',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '100,00 %',
+            headers: 'cat_9_78 row_21_78 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '10,26',
+            headers: 'cat_9_78 row_21_78 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_78 row_21_78 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '93,27 %',
+            headers: 'cat_9_78 row_21_78 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_78 row_21_78 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '93,27 %',
+            headers: 'cat_9_78 row_21_78 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_78',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_78 row_20_78 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '10,26',
+            headers: 'cat_9_78 row_20_78 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_78 row_20_78 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '93,27 %',
+            headers: 'cat_9_78 row_20_78 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_78 row_20_78 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_78 row_20_78 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 61,
+      userfullname: 'Амуланга Басангова',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_61',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=61">Охрана труда</a></div></div>',
+            id: 'row_21_61',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '0,00 %<br>( Пусто )',
+            headers: 'cat_9_61 row_21_61 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_61 row_21_61 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_61 row_21_61 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_61 row_21_61 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_61 row_21_61 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_61 row_21_61 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_61',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_61 row_20_61 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_61 row_20_61 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_61 row_20_61 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_61 row_20_61 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_61 row_20_61 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_61 row_20_61 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 88,
+      userfullname: 'Дарья Божик',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_88',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=88">Охрана труда</a></div></div>',
+            id: 'row_21_88',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '0,00 %<br>( Пусто )',
+            headers: 'cat_9_88 row_21_88 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_88 row_21_88 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_88 row_21_88 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_88 row_21_88 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_88 row_21_88 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_88 row_21_88 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_88',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_88 row_20_88 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_88 row_20_88 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_88 row_20_88 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_88 row_20_88 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_88 row_20_88 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_88 row_20_88 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 60,
+      userfullname: 'Павел Божик',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_60',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=60">Охрана труда</a></div></div>',
+            id: 'row_21_60',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '100,00 %',
+            headers: 'cat_9_60 row_21_60 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '0,00',
+            headers: 'cat_9_60 row_21_60 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_60 row_21_60 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '0,00 %',
+            headers: 'cat_9_60 row_21_60 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_60 row_21_60 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_60 row_21_60 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_60',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_60 row_20_60 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '0,00',
+            headers: 'cat_9_60 row_20_60 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_60 row_20_60 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '0,00 %',
+            headers: 'cat_9_60 row_20_60 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_60 row_20_60 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_60 row_20_60 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 86,
+      userfullname: 'Ольга Василькова',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_86',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=86">Охрана труда</a></div></div>',
+            id: 'row_21_86',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '0,00 %<br>( Пусто )',
+            headers: 'cat_9_86 row_21_86 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_86 row_21_86 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_86 row_21_86 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_86 row_21_86 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_86 row_21_86 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_86 row_21_86 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_86',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_86 row_20_86 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_86 row_20_86 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_86 row_20_86 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_86 row_20_86 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_86 row_20_86 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_86 row_20_86 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 85,
+      userfullname: 'Мария Водорезова',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_85',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=85">Охрана труда</a></div></div>',
+            id: 'row_21_85',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '100,00 %',
+            headers: 'cat_9_85 row_21_85 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '5,34',
+            headers: 'cat_9_85 row_21_85 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_85 row_21_85 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '48,55 %',
+            headers: 'cat_9_85 row_21_85 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_85 row_21_85 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '48,55 %',
+            headers: 'cat_9_85 row_21_85 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_85',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_85 row_20_85 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '5,34',
+            headers: 'cat_9_85 row_20_85 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_85 row_20_85 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '48,55 %',
+            headers: 'cat_9_85 row_20_85 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_85 row_20_85 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_85 row_20_85 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 89,
+      userfullname: 'Элина Галиуллина',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_89',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=89">Охрана труда</a></div></div>',
+            id: 'row_21_89',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '100,00 %',
+            headers: 'cat_9_89 row_21_89 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '10,50',
+            headers: 'cat_9_89 row_21_89 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_89 row_21_89 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '95,45 %',
+            headers: 'cat_9_89 row_21_89 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_89 row_21_89 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '95,45 %',
+            headers: 'cat_9_89 row_21_89 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_89',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_89 row_20_89 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '10,50',
+            headers: 'cat_9_89 row_20_89 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_89 row_20_89 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '95,45 %',
+            headers: 'cat_9_89 row_20_89 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_89 row_20_89 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_89 row_20_89 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 87,
+      userfullname: 'Ирина Годлевская',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_87',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=87">Охрана труда</a></div></div>',
+            id: 'row_21_87',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '100,00 %',
+            headers: 'cat_9_87 row_21_87 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '10,50',
+            headers: 'cat_9_87 row_21_87 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_87 row_21_87 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '95,45 %',
+            headers: 'cat_9_87 row_21_87 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_87 row_21_87 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '95,45 %',
+            headers: 'cat_9_87 row_21_87 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_87',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_87 row_20_87 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '10,50',
+            headers: 'cat_9_87 row_20_87 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_87 row_20_87 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '95,45 %',
+            headers: 'cat_9_87 row_20_87 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_87 row_20_87 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_87 row_20_87 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 70,
+      userfullname: 'Ольга Голованова',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_70',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=70">Охрана труда</a></div></div>',
+            id: 'row_21_70',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '100,00 %',
+            headers: 'cat_9_70 row_21_70 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '2,83',
+            headers: 'cat_9_70 row_21_70 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_70 row_21_70 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '25,73 %',
+            headers: 'cat_9_70 row_21_70 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_70 row_21_70 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '25,73 %',
+            headers: 'cat_9_70 row_21_70 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_70',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_70 row_20_70 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '2,83',
+            headers: 'cat_9_70 row_20_70 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_70 row_20_70 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '25,73 %',
+            headers: 'cat_9_70 row_20_70 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_70 row_20_70 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_70 row_20_70 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 66,
+      userfullname: 'Денис Гоман',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_66',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=66">Охрана труда</a></div></div>',
+            id: 'row_21_66',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '100,00 %',
+            headers: 'cat_9_66 row_21_66 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '2,83',
+            headers: 'cat_9_66 row_21_66 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_66 row_21_66 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '25,73 %',
+            headers: 'cat_9_66 row_21_66 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_66 row_21_66 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '25,73 %',
+            headers: 'cat_9_66 row_21_66 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_66',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_66 row_20_66 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '2,83',
+            headers: 'cat_9_66 row_20_66 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_66 row_20_66 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '25,73 %',
+            headers: 'cat_9_66 row_20_66 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_66 row_20_66 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_66 row_20_66 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 82,
+      userfullname: 'Иван Горбатенко',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_82',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=82">Охрана труда</a></div></div>',
+            id: 'row_21_82',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '100,00 %',
+            headers: 'cat_9_82 row_21_82 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '10,50',
+            headers: 'cat_9_82 row_21_82 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_82 row_21_82 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '95,45 %',
+            headers: 'cat_9_82 row_21_82 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_82 row_21_82 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '95,45 %',
+            headers: 'cat_9_82 row_21_82 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_82',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_82 row_20_82 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '10,50',
+            headers: 'cat_9_82 row_20_82 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_82 row_20_82 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '95,45 %',
+            headers: 'cat_9_82 row_20_82 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_82 row_20_82 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_82 row_20_82 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 90,
+      userfullname: 'Софья Егорова',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_90',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=90">Охрана труда</a></div></div>',
+            id: 'row_21_90',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '0,00 %<br>( Пусто )',
+            headers: 'cat_9_90 row_21_90 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_90 row_21_90 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_90 row_21_90 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_90 row_21_90 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_90 row_21_90 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_90 row_21_90 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_90',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_90 row_20_90 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_90 row_20_90 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_90 row_20_90 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_90 row_20_90 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_90 row_20_90 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_90 row_20_90 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 68,
+      userfullname: 'Ксения Зузлова',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_68',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=68">Охрана труда</a></div></div>',
+            id: 'row_21_68',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '0,00 %<br>( Пусто )',
+            headers: 'cat_9_68 row_21_68 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_68 row_21_68 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_68 row_21_68 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_68 row_21_68 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_68 row_21_68 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_68 row_21_68 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_68',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_68 row_20_68 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_68 row_20_68 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_68 row_20_68 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_68 row_20_68 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_68 row_20_68 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_68 row_20_68 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 71,
+      userfullname: 'Алеся Икрина',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_71',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=71">Охрана труда</a></div></div>',
+            id: 'row_21_71',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '0,00 %<br>( Пусто )',
+            headers: 'cat_9_71 row_21_71 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_71 row_21_71 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_71 row_21_71 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_71 row_21_71 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_71 row_21_71 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_71 row_21_71 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_71',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_71 row_20_71 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_71 row_20_71 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_71 row_20_71 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_71 row_20_71 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_71 row_20_71 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_71 row_20_71 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 72,
+      userfullname: 'Артем Лисков',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_72',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=72">Охрана труда</a></div></div>',
+            id: 'row_21_72',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '0,00 %<br>( Пусто )',
+            headers: 'cat_9_72 row_21_72 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_72 row_21_72 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_72 row_21_72 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_72 row_21_72 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_72 row_21_72 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_72 row_21_72 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_72',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_72 row_20_72 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_72 row_20_72 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_72 row_20_72 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_72 row_20_72 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_72 row_20_72 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_72 row_20_72 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 80,
+      userfullname: 'Игорь Мельников',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_80',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=80">Охрана труда</a></div></div>',
+            id: 'row_21_80',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '100,00 %',
+            headers: 'cat_9_80 row_21_80 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '2,83',
+            headers: 'cat_9_80 row_21_80 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_80 row_21_80 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '25,73 %',
+            headers: 'cat_9_80 row_21_80 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_80 row_21_80 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '25,73 %',
+            headers: 'cat_9_80 row_21_80 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_80',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_80 row_20_80 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '2,83',
+            headers: 'cat_9_80 row_20_80 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_80 row_20_80 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '25,73 %',
+            headers: 'cat_9_80 row_20_80 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_80 row_20_80 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_80 row_20_80 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 53,
+      userfullname: 'Виктор Мусатов',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_53',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=53">Охрана труда</a></div></div>',
+            id: 'row_21_53',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '100,00 %',
+            headers: 'cat_9_53 row_21_53 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '0,00',
+            headers: 'cat_9_53 row_21_53 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_53 row_21_53 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '0,00 %',
+            headers: 'cat_9_53 row_21_53 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_53 row_21_53 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_53 row_21_53 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_53',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_53 row_20_53 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '0,00',
+            headers: 'cat_9_53 row_20_53 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_53 row_20_53 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '0,00 %',
+            headers: 'cat_9_53 row_20_53 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_53 row_20_53 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_53 row_20_53 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 84,
+      userfullname: 'Александр Новиков',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_84',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=84">Охрана труда</a></div></div>',
+            id: 'row_21_84',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '0,00 %<br>( Пусто )',
+            headers: 'cat_9_84 row_21_84 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_84 row_21_84 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_84 row_21_84 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_84 row_21_84 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_84 row_21_84 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_84 row_21_84 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_84',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_84 row_20_84 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_84 row_20_84 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_84 row_20_84 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_84 row_20_84 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_84 row_20_84 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_84 row_20_84 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 83,
+      userfullname: 'Александр Остапенко',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_83',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=83">Охрана труда</a></div></div>',
+            id: 'row_21_83',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '0,00 %<br>( Пусто )',
+            headers: 'cat_9_83 row_21_83 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_83 row_21_83 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_83 row_21_83 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_83 row_21_83 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_83 row_21_83 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_83 row_21_83 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_83',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_83 row_20_83 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_83 row_20_83 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_83 row_20_83 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_83 row_20_83 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_83 row_20_83 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_83 row_20_83 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 74,
+      userfullname: 'Самир Пыжиков',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_74',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=74">Охрана труда</a></div></div>',
+            id: 'row_21_74',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '0,00 %<br>( Пусто )',
+            headers: 'cat_9_74 row_21_74 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_74 row_21_74 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_74 row_21_74 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_74 row_21_74 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_74 row_21_74 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_74 row_21_74 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_74',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_74 row_20_74 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_74 row_20_74 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_74 row_20_74 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_74 row_20_74 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_74 row_20_74 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_74 row_20_74 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 79,
+      userfullname: 'Елизавета Ручкина',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_79',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=79">Охрана труда</a></div></div>',
+            id: 'row_21_79',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '100,00 %',
+            headers: 'cat_9_79 row_21_79 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '10,01',
+            headers: 'cat_9_79 row_21_79 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_79 row_21_79 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '91,00 %',
+            headers: 'cat_9_79 row_21_79 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_79 row_21_79 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '91,00 %',
+            headers: 'cat_9_79 row_21_79 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_79',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_79 row_20_79 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '10,01',
+            headers: 'cat_9_79 row_20_79 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_79 row_20_79 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '91,00 %',
+            headers: 'cat_9_79 row_20_79 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_79 row_20_79 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_79 row_20_79 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 81,
+      userfullname: 'Наталья Сакунова',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_81',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=81">Охрана труда</a></div></div>',
+            id: 'row_21_81',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '0,00 %<br>( Пусто )',
+            headers: 'cat_9_81 row_21_81 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_81 row_21_81 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_81 row_21_81 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_81 row_21_81 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_81 row_21_81 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_81 row_21_81 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_81',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_81 row_20_81 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_81 row_20_81 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_81 row_20_81 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_81 row_20_81 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_81 row_20_81 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_81 row_20_81 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 73,
+      userfullname: 'Светлана Сивакова',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_73',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=73">Охрана труда</a></div></div>',
+            id: 'row_21_73',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '0,00 %<br>( Пусто )',
+            headers: 'cat_9_73 row_21_73 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_73 row_21_73 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_73 row_21_73 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_73 row_21_73 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_73 row_21_73 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_73 row_21_73 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_73',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_73 row_20_73 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_73 row_20_73 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_73 row_20_73 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_73 row_20_73 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_73 row_20_73 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_73 row_20_73 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 62,
+      userfullname: 'Марина Сидоренко',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_62',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=62">Охрана труда</a></div></div>',
+            id: 'row_21_62',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '100,00 %',
+            headers: 'cat_9_62 row_21_62 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '0,00',
+            headers: 'cat_9_62 row_21_62 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_62 row_21_62 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '0,00 %',
+            headers: 'cat_9_62 row_21_62 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_62 row_21_62 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_62 row_21_62 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_62',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_62 row_20_62 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '0,00',
+            headers: 'cat_9_62 row_20_62 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_62 row_20_62 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '0,00 %',
+            headers: 'cat_9_62 row_20_62 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_62 row_20_62 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_62 row_20_62 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 52,
+      userfullname: 'Александр Смирнов',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_52',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=52">Охрана труда</a></div></div>',
+            id: 'row_21_52',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '0,00 %<br>( Пусто )',
+            headers: 'cat_9_52 row_21_52 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_52 row_21_52 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_52 row_21_52 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_52 row_21_52 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_52 row_21_52 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_52 row_21_52 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_52',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_52 row_20_52 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_52 row_20_52 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_52 row_20_52 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_52 row_20_52 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_52 row_20_52 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_52 row_20_52 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 69,
+      userfullname: 'Екатерина Старовойтова',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_69',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=69">Охрана труда</a></div></div>',
+            id: 'row_21_69',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '100,00 %',
+            headers: 'cat_9_69 row_21_69 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '10,26',
+            headers: 'cat_9_69 row_21_69 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_69 row_21_69 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '93,27 %',
+            headers: 'cat_9_69 row_21_69 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_69 row_21_69 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '93,27 %',
+            headers: 'cat_9_69 row_21_69 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_69',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_69 row_20_69 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '10,26',
+            headers: 'cat_9_69 row_20_69 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_69 row_20_69 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '93,27 %',
+            headers: 'cat_9_69 row_20_69 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_69 row_20_69 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_69 row_20_69 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 48,
+      userfullname: 'Евгений Стужук',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_48',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=48">Охрана труда</a></div></div>',
+            id: 'row_21_48',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '100,00 %',
+            headers: 'cat_9_48 row_21_48 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '0,00',
+            headers: 'cat_9_48 row_21_48 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_48 row_21_48 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '0,00 %',
+            headers: 'cat_9_48 row_21_48 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_48 row_21_48 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_48 row_21_48 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_48',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_48 row_20_48 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '0,00',
+            headers: 'cat_9_48 row_20_48 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_48 row_20_48 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '0,00 %',
+            headers: 'cat_9_48 row_20_48 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_48 row_20_48 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_48 row_20_48 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 77,
+      userfullname: 'Анжела Топоркова',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_77',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=77">Охрана труда</a></div></div>',
+            id: 'row_21_77',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '100,00 %',
+            headers: 'cat_9_77 row_21_77 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '10,50',
+            headers: 'cat_9_77 row_21_77 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_77 row_21_77 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '95,45 %',
+            headers: 'cat_9_77 row_21_77 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_77 row_21_77 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '95,45 %',
+            headers: 'cat_9_77 row_21_77 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_77',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_77 row_20_77 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '10,50',
+            headers: 'cat_9_77 row_20_77 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_77 row_20_77 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '95,45 %',
+            headers: 'cat_9_77 row_20_77 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_77 row_20_77 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_77 row_20_77 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 75,
+      userfullname: 'Елена Филимоненко',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_75',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=75">Охрана труда</a></div></div>',
+            id: 'row_21_75',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '0,00 %<br>( Пусто )',
+            headers: 'cat_9_75 row_21_75 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_75 row_21_75 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_75 row_21_75 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_75 row_21_75 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_75 row_21_75 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_75 row_21_75 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_75',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_75 row_20_75 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_75 row_20_75 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_75 row_20_75 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_75 row_20_75 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_75 row_20_75 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_75 row_20_75 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 76,
+      userfullname: 'Ирина Филимонова',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_76',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=76">Охрана труда</a></div></div>',
+            id: 'row_21_76',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '0,00 %<br>( Пусто )',
+            headers: 'cat_9_76 row_21_76 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_76 row_21_76 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_76 row_21_76 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_76 row_21_76 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_76 row_21_76 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '0,00 %',
+            headers: 'cat_9_76 row_21_76 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_76',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_76 row_20_76 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '-',
+            headers: 'cat_9_76 row_20_76 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_76 row_20_76 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '-',
+            headers: 'cat_9_76 row_20_76 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_76 row_20_76 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_76 row_20_76 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+    {
+      courseid: 10,
+      userid: 67,
+      userfullname: 'Цаган Чугунова',
+      maxdepth: 2,
+      tabledata: [
+        {
+          itemname: {
+            class: 'level1 d1 b1b b1t category column-itemname',
+            colspan: 8,
+            content:
+              '<div class="d-flex category-content">\n    <a aria-expanded="true" role="button" data-categoryid=9 data-target=".cat_9[data-hidden=\'false\']" class="btn btn-icon mr-1 toggle-category" href="#">\n        <span class="collapsed text-nowrap" title="Свернуть">\n            <i class="icon fa fa-chevron-down fa-fw" title="Свернуть" role="img" aria-label="Свернуть"></i>\n        </span>\n        <span class="expanded text-nowrap" title="Развернуть">\n            <i class="icon fa fa-chevron-right fa-fw" title="Развернуть" role="img" aria-label="Развернуть"></i>\n        </span>\n    </a>\n    <span>Охрана труда. Первая помощь</span>\n</div>',
+            id: 'cat_9_67',
+          },
+          parentcategories: [],
+        },
+        {
+          leader: {
+            class: 'level1 d1 b1t b2b b1l',
+            rowspan: 3,
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level2 item b1b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="item d-flex align-items-center"><div class="mr-1"><img class="icon itemicon" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/scorm/1706263280/monologo?filtericon=1" alt="Пакет SCORM" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Пакет SCORM">Пакет SCORM</span><a title="Ссылка на элемент курса «Пакет SCORM» Охрана труда" class="gradeitemheader " href="https://chmz.giapdc.ru:10005/moodle/mod/scorm/grade.php?id=14&amp;itemnumber=0&amp;userid=67">Охрана труда</a></div></div>',
+            id: 'row_21_67',
+          },
+          weight: {
+            class: 'level2 item b1b itemcenter  column-weight',
+            content: '100,00 %',
+            headers: 'cat_9_67 row_21_67 weight',
+          },
+          grade: {
+            class: 'level2 item b1b itemcenter   column-grade',
+            content: '2,99',
+            headers: 'cat_9_67 row_21_67 grade',
+          },
+          range: {
+            class: 'level2 item b1b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_67 row_21_67 range',
+          },
+          percentage: {
+            class: 'level2 item b1b itemcenter  column-percentage',
+            content: '27,18 %',
+            headers: 'cat_9_67 row_21_67 percentage',
+          },
+          feedback: {
+            class: 'level2 item b1b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_67 row_21_67 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level2 item b1b itemcenter  column-contributiontocoursetotal',
+            content: '27,18 %',
+            headers: 'cat_9_67 row_21_67 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+        {
+          itemname: {
+            class: 'level1 d1 baggt b2b column-itemname',
+            colspan: 1,
+            content:
+              '<div class="courseitem d-flex align-items-center"><div class="mr-1"><img class="icon icon itemicon" alt="Сумма оценок" title="Сумма оценок" src="https://chmz.giapdc.ru:10005/moodle/theme/image.php/_s/boost/core/1706263280/i/agg_sum" /></div><div><span class="d-block text-uppercase small dimmed_text" title="Итоговая оценка">Итоговая оценка</span><span class="gradeitemheader " title="Итоговая оценка за курс" tabindex="0">Итоговая оценка за курс</span></div></div>',
+            id: 'row_20_67',
+          },
+          weight: {
+            class: 'level1 d1 baggt b2b itemcenter  column-weight',
+            content: '-',
+            headers: 'cat_9_67 row_20_67 weight',
+          },
+          grade: {
+            class: 'level1 d1 baggt b2b itemcenter   column-grade',
+            content: '2,99',
+            headers: 'cat_9_67 row_20_67 grade',
+          },
+          range: {
+            class: 'level1 d1 baggt b2b itemcenter  column-range',
+            content: '0&ndash;11',
+            headers: 'cat_9_67 row_20_67 range',
+          },
+          percentage: {
+            class: 'level1 d1 baggt b2b itemcenter  column-percentage',
+            content: '27,18 %',
+            headers: 'cat_9_67 row_20_67 percentage',
+          },
+          feedback: {
+            class: 'level1 d1 baggt b2b feedbacktext column-feedback',
+            content: '&nbsp;',
+            headers: 'cat_9_67 row_20_67 feedback',
+          },
+          contributiontocoursetotal: {
+            class:
+              'level1 d1 baggt b2b itemcenter  column-contributiontocoursetotal',
+            content: '-',
+            headers: 'cat_9_67 row_20_67 contributiontocoursetotal',
+          },
+          parentcategories: [9],
+        },
+      ],
+    },
+  ],
+  warnings: [],
+};
+
 export const mockDataTeam = [
   {
     id: 1,

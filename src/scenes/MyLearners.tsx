@@ -1,6 +1,11 @@
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
 import { Box, Button, Chip } from '@mui/material';
-import { DataGrid, GridColDef, useGridApiRef } from '@mui/x-data-grid';
+import {
+  DataGrid,
+  GridColDef,
+  GridFilterOperator,
+  useGridApiRef,
+} from '@mui/x-data-grid';
 import React, { MouseEvent, useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 import { useSWRConfig } from 'swr';
@@ -94,6 +99,11 @@ const MyLearners = () => {
     setAssignedCourses(assignedArr);
   };
 
+  // const [filterModel, setFilterModel] = useState(null);
+
+  // const handleFilterModelChange = (model: any) => {
+  //   setFilterModel(model);
+  // };
 
   useEffect(() => {
     if (turnOffDivisionFilter) {
@@ -108,7 +118,7 @@ const MyLearners = () => {
     setOnlyLearnerName('');
     setSelectedCoursesToSave([]);
     deSelectAll();
-    setAssignedCourses([])
+    setAssignedCourses([]);
   };
 
   const handleSelectionModelChange = (newSelection: Object[]) => {
@@ -155,6 +165,22 @@ const MyLearners = () => {
     });
   };
 
+  // const customDivisionFilterOperator: GridFilterOperator<any, number> = {
+  //   label: 'From',
+  //   value: 'from',
+  //   getApplyFilterFn: (filterItem, column) => {
+  //     if (!filterItem.field || !filterItem.value || !filterItem.operator) {
+  //       return null;
+  //     }
+
+  //     return (value, row, column, apiRef) => {
+  //       return Number(value) >= Number(filterItem.value);
+  //     };
+  //   },
+  //   // InputComponent: RatingInputValue,
+  //   // InputComponentProps: { type: 'number' },
+  // };
+
   const columns: GridColDef[] = [
     {
       field: 'name',
@@ -177,6 +203,7 @@ const MyLearners = () => {
       headerName: 'Подразделение',
       flex: 0.5,
       headerClassName: 'name-column--cell',
+      // filterOperators: [],
     },
     {
       field: 'courses',
@@ -280,6 +307,8 @@ const MyLearners = () => {
               filterModel: filteredDivision,
             },
           }}
+          // filterModel={filterModel!}
+          // onFilterModelChange={handleFilterModelChange}
         />
       </Box>
       <CoursesToLearner

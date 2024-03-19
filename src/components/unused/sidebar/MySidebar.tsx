@@ -1,23 +1,12 @@
-import CalendarTodayOutlinedIcon from '@mui/icons-material/CalendarTodayOutlined';
-import ContactsOutlinedIcon from '@mui/icons-material/ContactsOutlined';
-import HelpOutlineOutlinedIcon from '@mui/icons-material/HelpOutlineOutlined';
-import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import MenuOutlinedIcon from '@mui/icons-material/MenuOutlined';
-import PeopleOutlinedIcon from '@mui/icons-material/PeopleOutlined';
-import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
-import ReceiptOutlinedIcon from '@mui/icons-material/ReceiptOutlined';
 import { Box, IconButton, Typography, useTheme } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { Menu, MenuItem, Sidebar } from 'react-pro-sidebar';
-
-import { Base } from '../../../api/Request';
 import configApi from '../../../api/config.api';
 import { url } from '../../../api/url.api';
 import { tokens } from '../../../theme';
-import { MenuSeparator } from './MenuSeparator';
-import { SidebarMenuItem } from './SidebarMenuItem';
 import { SidebarUserAvatar } from './SidebarUserAvatar';
 import { CurrentUserData } from './types';
 
@@ -32,17 +21,6 @@ export const MySidebar = () => {
 
   const avatarSrc =
     configApi.srv + configApi.avatarUrl + currentUserData?.PhotoName;
-
-  useEffect(() => {
-    setLoading(true);
-    Base.Request.send(
-      configApi.srv + url.getUserProfileData,
-      (data: CurrentUserData) => {
-        setCurrentUserData(data);
-        setLoading(false);
-      },
-    );
-  }, []);
 
   return (
     <Box

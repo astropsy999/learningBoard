@@ -1,7 +1,7 @@
 import SchoolIcon from '@mui/icons-material/School';
 import { Box, Button } from '@mui/material';
 import React, { FC, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import useSWR from 'swr';
 import { useCourses } from '../data/store/courses.store';
 import { useLearners } from '../data/store/learners.store';
@@ -85,6 +85,8 @@ const Topbar: FC<TopbarProps> = () => {
     setCurrentUserName,
   ]);
 
+  const location = useLocation();
+
   return (
     <Box
       display="flex"
@@ -105,18 +107,28 @@ const Topbar: FC<TopbarProps> = () => {
           <SplitButton />
         </Link>
         <Link to="/courses">
-          <Button variant="outlined" startIcon={<SchoolIcon />}>
+          <Button
+            variant={
+              location.pathname === '/courses' ? 'contained' : 'outlined'
+            }
+            color="info"
+            startIcon={<SchoolIcon />}
+          >
             Курсы
           </Button>
         </Link>
         {!isAssignAllButton ? (
           <Link to={'/stat'}>
-            <Button variant="outlined" startIcon={<QueryStatsIcon />}>
+            <Button
+              variant={location.pathname === '/stat' ? 'contained' : 'outlined'}
+              startIcon={<QueryStatsIcon />}
+              color="info"
+            >
               Статистика
             </Button>
           </Link>
         ) : (
-          <Button variant="outlined" startIcon={<QueryStatsIcon />} disabled>
+          <Button startIcon={<QueryStatsIcon />} color="info" disabled>
             Статистика
           </Button>
         )}

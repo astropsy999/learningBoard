@@ -39,7 +39,12 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
   onClose,
   assignedCourses,
 }) => {
-  const { allCourses, setAllCourses, selectedCoursesToSave, setSelectedCoursesToSave } = useCourses();
+  const {
+    allCourses,
+    setAllCourses,
+    selectedCoursesToSave,
+    setSelectedCoursesToSave,
+  } = useCourses();
   const [openSubmitDialog, setOpenSubmitDialog] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
   const [selectedCourseIds, setSelectedCourseIds] = React.useState<number[]>(
@@ -65,13 +70,14 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
   React.useEffect(() => {
     // Поставить галочки на тех курсах id которых есть в массиве assignedCourses
     setSelectedCourseIds(assignedCourses);
-  
+
     // Отфильтровать курсы по их ID и обновить состояние selectedCoursesToSave
-    const filteredCourses = allData?.courses.filter(course => assignedCourses.includes(course.id)) || [];
+    const filteredCourses =
+      allData?.courses.filter((course) =>
+        assignedCourses.includes(course.id),
+      ) || [];
     setSelectedCoursesToSave(filteredCourses);
   }, [assignedCourses, allData?.courses, setSelectedCoursesToSave]);
-  
-
 
   const handleDeleteLearnerFromGroup = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -179,7 +185,10 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
             {allCourses &&
               allCourses.map((course) => (
                 <Grid item key={course.id}>
-                  <CourseCard courseItem={course} assigned={selectedCourseIds} />
+                  <CourseCard
+                    courseItem={course}
+                    assigned={selectedCourseIds}
+                  />
                 </Grid>
               ))}
           </Grid>

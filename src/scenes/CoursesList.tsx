@@ -91,8 +91,8 @@ const CoursesList = () => {
   };
 
   const saveLockedUsers = async (id: number) => {
-    setIsLockLoading(true)
-  
+    setIsLockLoading(true);
+
     const learnersToLockIDs: number[] = [];
 
     selectedLearnersToLockCourse?.forEach((learner) => {
@@ -122,15 +122,12 @@ const CoursesList = () => {
         theme: 'colored',
         transition: Bounce,
       });
-      setIsLockLoading(false)
+      setIsLockLoading(false);
       setOnBlockLearnersMode((prev) => ({
         ...prev,
         [id]: !prev[id],
       }));
-    
     });
-
-
 
     return lockedLearnersToSend;
   };
@@ -157,6 +154,7 @@ const CoursesList = () => {
       align: 'left',
       flex: 0.5,
       headerClassName: 'name-column--cell',
+      cellClassName: 'cell-margins',
     },
     {
       field: 'locked',
@@ -190,7 +188,12 @@ const CoursesList = () => {
           }
         });
         if (onBlockLearnersMode[row.id])
-          return <BlockCourseFor lockedUsers={lockedUsers} isLoading={isLockLoading} />;
+          return (
+            <BlockCourseFor
+              lockedUsers={lockedUsers}
+              isLoading={isLockLoading}
+            />
+          );
         return chips.length > 0 ? chips : '';
       },
     },
