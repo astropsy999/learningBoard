@@ -1,8 +1,9 @@
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
-import { Box, Button, Chip } from '@mui/material';
+import { Box, Button, Chip, Menu } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
+  GridColumnHeaderParams,
   GridFilterOperator,
   useGridApiRef,
 } from '@mui/x-data-grid';
@@ -188,6 +189,9 @@ const MyLearners = () => {
       flex: 0.5,
       headerClassName: 'name-column--cell',
       cellClassName: 'name-cell',
+      renderHeader: (params: GridColumnHeaderParams) => (<> {params.colDef.headerName}</>)
+       
+
     },
     {
       field: 'position',

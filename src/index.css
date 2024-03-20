@@ -41,3 +41,27 @@ main {
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+.MuiDataGrid-menuIcon, .MuiDataGrid-iconButtonContainer {
+  visibility: visible !important;
+  opacity: 1 !important;
+  margin-right: 22px !important;
+}
+
+.MuiDataGrid-columnHeaderTitleContainer:hover .MuiDataGrid-menuIcon {
+  transform: none !important;
+  margin: 0 !important;
+}
+
+.MuiDataGrid-columnHeaderTitleContainer .MuiDataGrid-menuIcon {
+  margin-left: 8px !important;
+}
+
+.MuiDataGrid-columnHeader:hover .MuiButtonBase-root {
+  transform: none !important;
+  margin-right: -28px !important;
+} 
+
+/* .MuiDataGrid-menuIcon:hover {
+  margin-right: -8px !important;
+} */
