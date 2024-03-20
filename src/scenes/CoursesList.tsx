@@ -2,7 +2,7 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import LockPersonIcon from '@mui/icons-material/LockPerson';
 import { Box, Button, Chip } from '@mui/material';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { DataGrid, GridColDef, GridRowSpacingParams } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
 import { Bounce, toast } from 'react-toastify';
 import { mutate } from 'swr';
@@ -132,6 +132,8 @@ const CoursesList = () => {
     return lockedLearnersToSend;
   };
 
+
+
   const columns: GridColDef[] = [
     {
       field: 'id',
@@ -154,7 +156,6 @@ const CoursesList = () => {
       align: 'left',
       flex: 0.5,
       headerClassName: 'name-column--cell',
-      cellClassName: 'cell-margins',
     },
     {
       field: 'locked',
@@ -262,12 +263,20 @@ const CoursesList = () => {
       <Header title="Курсы" subtitle="Список обучающих материалов" />
       <Box m="40px 0 0 0" height="75vh" sx={dataGridStyles.root}>
         <DataGrid
+          
           autoHeight={true}
           rows={isLoading ? [] : allCourses!}
           columns={columns}
           loading={isLoading}
           getRowHeight={() => 'auto'}
-        />
+          sx={{
+            '&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell': { py: '8px' },
+            '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': { py: '15px' },
+            '&.MuiDataGrid-root--densityComfortable .MuiDataGrid-cell': { py: '22px' },
+          }}
+    />
+
+  
       </Box>
     </Box>
   );

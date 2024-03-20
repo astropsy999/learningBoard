@@ -36,7 +36,7 @@ export const dataGridStyles = {
       borderBottom: 'none',
     },
     '& .MuiDataGrid-virtualScroller': {
-      backgroundColor: colors.primary[400],
+      backgroundColor: colors.primary[100],
     },
     '& .MuiDataGrid-footerContainer': {
       borderTop: 'none',

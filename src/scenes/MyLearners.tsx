@@ -131,56 +131,42 @@ const MyLearners = () => {
     setSelectedRowsDataOnMyLearners(selectedRowData);
   };
 
-  const deleteSingleCourseFromLearner = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    row: SelectedRowData,
-    courseId: number,
-  ) => {
-    setRowDelLoading((prevState) => ({
-      ...prevState,
-      [`${row.id}-${courseId}`]: true,
-    }));
-    const itemId =
-      event?.currentTarget.parentElement?.getAttribute('data-item-id');
+  // const deleteSingleCourseFromLearner = (
+  //   event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
+  //   row: SelectedRowData,
+  //   courseId: number,
+  // ) => {
+  //   setRowDelLoading((prevState) => ({
+  //     ...prevState,
+  //     [`${row.id}-${courseId}`]: true,
+  //   }));
+  //   const itemId =
+  //     event?.currentTarget.parentElement?.getAttribute('data-item-id');
 
-    let updatedData = [];
-    updatedData.push({
-      id: row.id,
-      courses: row.courses
-        .filter((course) => Object.keys(course)[0] !== itemId)
-        .map((course) => +Object.keys(course)[0]),
-    });
+  //   let updatedData = [];
+  //   updatedData.push({
+  //     id: row.id,
+  //     courses: row.courses
+  //       .filter((course) => Object.keys(course)[0] !== itemId)
+  //       .map((course) => +Object.keys(course)[0]),
+  //   });
 
-    updateAllData(updatedData).then((response) => {
-      if (response) {
-        mutate('allData').then(() => {
-          toast.success('Материал успешно удален', {
-            autoClose: 1000,
-          });
-          setRowDelLoading((prevState) => ({
-            ...prevState,
-            [`${row.id}-${courseId}`]: false,
-          }));
-        });
-      }
-    });
-  };
-
-  // const customDivisionFilterOperator: GridFilterOperator<any, number> = {
-  //   label: 'From',
-  //   value: 'from',
-  //   getApplyFilterFn: (filterItem, column) => {
-  //     if (!filterItem.field || !filterItem.value || !filterItem.operator) {
-  //       return null;
+  //   updateAllData(updatedData).then((response) => {
+  //     if (response) {
+  //       mutate('allData').then(() => {
+  //         toast.success('Материал успешно удален', {
+  //           autoClose: 1000,
+  //         });
+  //         setRowDelLoading((prevState) => ({
+  //           ...prevState,
+  //           [`${row.id}-${courseId}`]: false,
+  //         }));
+  //       });
   //     }
-
-  //     return (value, row, column, apiRef) => {
-  //       return Number(value) >= Number(filterItem.value);
-  //     };
-  //   },
-  //   // InputComponent: RatingInputValue,
-  //   // InputComponentProps: { type: 'number' },
+  //   });
   // };
+
+
 
   const columns: GridColDef[] = [
     {
@@ -189,8 +175,7 @@ const MyLearners = () => {
       flex: 0.5,
       headerClassName: 'name-column--cell',
       cellClassName: 'name-cell',
-      renderHeader: (params: GridColumnHeaderParams) => (<> {params.colDef.headerName}</>)
-       
+ 
 
     },
     {
@@ -201,6 +186,7 @@ const MyLearners = () => {
       flex: 0.3,
       align: 'left',
       headerClassName: 'name-column--cell',
+      
     },
     {
       field: 'division',
@@ -309,6 +295,9 @@ const MyLearners = () => {
           initialState={{
             filter: {
               filterModel: filteredDivision,
+            },
+            sorting: {
+              sortModel: [{ field: 'name', sort: 'asc' }],
             },
           }}
           // filterModel={filterModel!}
