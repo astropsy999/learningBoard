@@ -13,6 +13,7 @@ import { useLearners } from '../data/store/learners.store';
 import { Course } from '../data/types.store';
 import { lockCourses } from '../services/api.service';
 import { dataGridStyles } from '../styles/DataGrid.styles';
+import { truncateDescription } from '../helpers/truncateDescriptions';
 
 interface LockedData {
   [key: number]: string[];
@@ -132,8 +133,6 @@ const CoursesList = () => {
     return lockedLearnersToSend;
   };
 
-
-
   const columns: GridColDef[] = [
     {
       field: 'id',
@@ -156,6 +155,9 @@ const CoursesList = () => {
       align: 'left',
       flex: 0.5,
       headerClassName: 'name-column--cell',
+      renderCell: ({ row }) => {
+        return truncateDescription(row.description);
+      },
     },
     {
       field: 'locked',
@@ -263,20 +265,23 @@ const CoursesList = () => {
       <Header title="Курсы" subtitle="Список обучающих материалов" />
       <Box m="40px 0 0 0" height="75vh" sx={dataGridStyles.root}>
         <DataGrid
-          
           autoHeight={true}
           rows={isLoading ? [] : allCourses!}
           columns={columns}
           loading={isLoading}
           getRowHeight={() => 'auto'}
           sx={{
-            '&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell': { py: '8px' },
-            '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': { py: '15px' },
-            '&.MuiDataGrid-root--densityComfortable .MuiDataGrid-cell': { py: '22px' },
+            '&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell': {
+              py: '8px',
+            },
+            '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': {
+              py: '15px',
+            },
+            '&.MuiDataGrid-root--densityComfortable .MuiDataGrid-cell': {
+              py: '22px',
+            },
           }}
-    />
-
-  
+        />
       </Box>
     </Box>
   );

@@ -4,10 +4,8 @@ import {
   DataGrid,
   GridColDef,
   GridSingleSelectColDef,
-  useGridApiRef
+  useGridApiRef,
 } from '@mui/x-data-grid';
-import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
-import "ag-grid-community/styles/ag-theme-quartz.css";
 import React, { useEffect, useMemo, useState } from 'react';
 import { useSWRConfig } from 'swr';
 import Header from '../components/Header';
@@ -74,7 +72,6 @@ const MyLearners = () => {
           operator: 'isAnyOf',
           value: [currentUserDivisionName],
         },
-      
       ],
     };
   }, [currentUserDivisionName]);
@@ -131,7 +128,6 @@ const MyLearners = () => {
     setSelectedRowsDataOnMyLearners(selectedRowData);
   };
 
-
   const columns: GridColDef[] = [
     {
       field: 'name',
@@ -139,7 +135,6 @@ const MyLearners = () => {
       flex: 0.3,
       headerClassName: 'name-column--cell',
       cellClassName: 'name-cell',
-
     },
     {
       field: 'position',
@@ -149,7 +144,6 @@ const MyLearners = () => {
       flex: 0.3,
       align: 'left',
       headerClassName: 'name-column--cell',
-      
     },
     {
       field: 'division',
@@ -158,19 +152,35 @@ const MyLearners = () => {
       headerClassName: 'name-column--cell',
       // filterOperators: [],
     },
-    ...(allCourses ? allCourses!.map(course => ({
-      field: course.title,
-      headerName: course.title,
-      flex: 1.5,
-      renderCell: ({ row }) => {
-        const isLocked = row.courses_exclude.includes(course.id);
-        const deadline = row.courses.find((c: { hasOwnProperty: (arg0: number) => any; }) => c.hasOwnProperty(course.id))?.deadline;
-        const formattedDeadline = deadline ? new Date(deadline * 1000).toLocaleDateString('ru-RU') : '';
-        return formattedDeadline && (!isLocked ? <Chip label={formattedDeadline} color='success'/> : <Chip label={formattedDeadline} color='error'/>);
-      },
-      headerClassName: 'name-column--cell',
-      type: 'singleSelect'
-    })) : [])  as GridSingleSelectColDef<any, any, any>[],
+    ...((allCourses
+      ? allCourses!.map((course) => ({
+          field: course.title,
+          headerName: course.title,
+          flex: 0.3,
+          renderCell: ({ row }) => {
+            const isLocked = row.courses_exclude.includes(course.id);
+            const deadline = row.courses.find(
+              (c: { hasOwnProperty: (arg0: number) => any }) =>
+                c.hasOwnProperty(course.id),
+            )?.deadline;
+            const formattedDeadline = deadline
+              ? new Date(deadline * 1000).toLocaleDateString('ru-RU')
+              : '';
+            return (
+              formattedDeadline &&
+              (!isLocked ? (
+                <Chip label={formattedDeadline} color="success" />
+              ) : (
+                <Chip label={formattedDeadline} color="error" />
+              ))
+
+              // deadline === null && <Chip label="Без срока" color="info" />
+            );
+          },
+          headerClassName: 'name-column--cell',
+          type: 'singleSelect',
+        }))
+      : []) as GridSingleSelectColDef<any, any, any>[]),
     // {
     //   field: 'courses',
     //   headerName: 'Обучающие материалы',
@@ -244,7 +254,6 @@ const MyLearners = () => {
     },
   ];
 
-
   return (
     <Box m="20px" pt={2}>
       <Header title="Ученики" subtitle="" />
@@ -266,7 +275,6 @@ const MyLearners = () => {
             sorting: {
               sortModel: [{ field: 'name', sort: 'asc' }],
             },
-            
           }}
         />
       </Box>
@@ -280,7 +288,10 @@ const MyLearners = () => {
 };
 
 export default MyLearners;
-  function useDemoData(arg0: { dataSet: string; visibleFields: string[]; rowLength: number; }): { data: any; } {
-    throw new Error('Function not implemented.');
-  }
-
+function useDemoData(arg0: {
+  dataSet: string;
+  visibleFields: string[];
+  rowLength: number;
+}): { data: any } {
+  throw new Error('Function not implemented.');
+}

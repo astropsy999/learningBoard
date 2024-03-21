@@ -6,13 +6,17 @@ import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { CourseData, useCourses } from '../data/store/courses.store';
 import { tokens } from '../theme';
+import { truncateDescription } from '../helpers/truncateDescriptions';
 
 interface CourseCardProps {
   courseItem: CourseData;
-  assigned: number[]
+  assigned: number[];
 }
 
-export const CourseCard: React.FC<CourseCardProps> = ({ courseItem, assigned }) => {
+export const CourseCard: React.FC<CourseCardProps> = ({
+  courseItem,
+  assigned,
+}) => {
   const [checked, setChecked] = React.useState(false);
   const { selectedCoursesToSave, setSelectedCoursesToSave } = useCourses();
 
@@ -30,7 +34,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({ courseItem, assigned }) 
   const handleCardClick = () => {
     const newChecked = !checked; // Получаем новое значение checked
     setChecked(newChecked); // Устанавливаем новое значение checked
-  
+
     // Ваша логика обновления состояния selectedCoursesToSave
     if (!checked) {
       setSelectedCoursesToSave([...selectedCoursesToSave, courseItem]);
@@ -45,7 +49,9 @@ export const CourseCard: React.FC<CourseCardProps> = ({ courseItem, assigned }) 
     <Card
       sx={{
         maxWidth: 345,
+        minWidth: 345,
         minHeight: 170,
+        maxHeight: 170,
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
@@ -54,12 +60,13 @@ export const CourseCard: React.FC<CourseCardProps> = ({ courseItem, assigned }) 
       }}
       onClick={handleCardClick}
     >
-      <CardContent>
+      <CardContent sx={{ maxHeight: 100 }}>
         <Typography gutterBottom variant="h5" component="div">
           {courseItem.title}
         </Typography>
+
         <Typography variant="body2" color="text.secondary">
-          {courseItem.description}
+          {truncateDescription(courseItem.description!)}
         </Typography>
       </CardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>

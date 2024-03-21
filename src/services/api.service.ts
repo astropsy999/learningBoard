@@ -4,9 +4,14 @@ import { url } from '../api/url.api';
 import { mockDataCourses, mockDataTeam } from '../data/mockData';
 import { AllData, ILearner } from '../data/types.store';
 
+export type CourseWithDeadline = {
+  id: number;
+  deadline: number;
+};
+
 export type ToUpdateUser = {
   id: number;
-  courses: number[];
+  courses: CourseWithDeadline[];
 };
 
 export type CourseToLock = {

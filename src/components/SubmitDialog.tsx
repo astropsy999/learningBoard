@@ -1,6 +1,6 @@
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import { Box, Chip, CircularProgress } from '@mui/material';
+import { Box, Chip, CircularProgress, Typography } from '@mui/material';
 import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
@@ -14,6 +14,8 @@ import { mutate } from 'swr';
 import { useCourses } from '../data/store/courses.store';
 import { useLearners } from '../data/store/learners.store';
 import { ToUpdateUser, updateAllData } from '../services/api.service';
+import AssignDatePicker from './DatePicker';
+import { DateBuilderReturnType } from '@mui/x-date-pickers';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -36,11 +38,8 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
   dialogTitle,
 }) => {
   const [open, setOpen] = React.useState(isOpen);
-  const {
-    selectedCoursesToSave,
-    setSelectedCoursesToSave,
-  } = useCourses();
-
+  const { selectedCoursesToSave, setSelectedCoursesToSave } = useCourses();
+  const [deadline, setDeadline] = React.useState<number | null>(null);
 
   const {
     selectedRowsData,
@@ -52,10 +51,16 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
   } = useLearners();
   const [isLoading, setIsLoading] = React.useState(false);
 
- 
   React.useEffect(() => {
     setOpen(isOpen);
   }, [isOpen]);
+
+  const handleDateChange = (newDate: Object | null) => {
+    // @ts-ignore
+    const dateString = newDate!.$d;
+    const unixTime = new Date(dateString).getTime() / 1000;
+    setDeadline(unixTime);
+  };
 
   const handleClose = () => {
     setOpen(false);
@@ -88,21 +93,22 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
   const handleSaveAssignedCourses = async () => {
     setIsLoading(true);
     let dataToUpdate;
-    const selectedCoursesIds = selectedCoursesToSave.map((course) => course.id);
+    const selectedCoursesIds = selectedCoursesToSave.map((course) => ({
+      id: course.id,
+      deadline: deadline,
+    }));
 
     if (selectedRowsData.length > 0) {
       dataToUpdate = selectedRowsData
         .map((user) => {
           if (!user) return null;
-          const oldCourses = user?.courses
-            ? user?.courses.map((c) => +Object.keys(c)[0])
-            : [];
+          // const oldCourses = user?.courses
+          //   ? user?.courses.map((c) => +Object.keys(c)[0])
+          //   : [];
 
           return {
             id: user.id,
-            courses: Array.from(
-              new Set([...selectedCoursesIds]),
-            ),
+            courses: Array.from(new Set([...selectedCoursesIds])),
           };
         })
         .filter(Boolean);
@@ -128,14 +134,13 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
 
     console.log('filteredDataToUpdate: ', filteredDataToUpdate);
 
-    
     const result = await updateAllData(filteredDataToUpdate);
 
     mutate('allData').then(() => {
       handleClose();
-      openCoursesDialog(false); 
+      openCoursesDialog(false);
       setIsLoading(false);
-      toast.success(result[0].data.message, {
+      toast.success(result[0]?.data?.message, {
         position: 'top-right',
         autoClose: 1000,
         hideProgressBar: false,
@@ -148,9 +153,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
       });
       setOnlyLearnerName('');
       deSelectAll();
-
     });
-  
   };
 
   return (
@@ -165,14 +168,15 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
           alignItems="center"
           gap={4}
           justifyContent={'space-between'}
-          minWidth={450}
+          minWidth={550}
         >
           <DialogTitle
             sx={{ m: 0, p: 2 }}
             id="customized-dialog-title"
-            fontSize={16}
-            fontWeight={'bold'}
+            // fontSize={16}
+            // fontWeight={'bold'}
             color={'steelblue'}
+            variant="h4"
           >
             {dialogTitle}
           </DialogTitle>
@@ -190,9 +194,13 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
           </IconButton>
         </Box>
         <DialogContent dividers>
-          <div>
-            {selectedCoursesToSave.length > 0 ? <b>Вы выбрали следующие курсы:</b>: null}
-            <br />{' '}
+          <Box m={1}>
+            {selectedCoursesToSave.length > 0 ? (
+              <Typography variant="h5" fontWeight={'600'}>
+                Вы выбрали следующие курсы:
+              </Typography>
+            ) : null}
+
             {selectedCoursesToSave.map((course) => (
               <Chip
                 key={course.id}
@@ -203,12 +211,18 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
                 data-item-id={course.id}
               />
             ))}
-          </div>
-          <div>
-            {selectedCoursesToSave.length > 0 ? <b>Они будут назначены сотрудникам:</b>: <b>Все назначенные ранее курсы будут удалены у сотрудников:</b>}
-            <br />
-          </div>
-          <div>
+          </Box>
+          <Box m={1}>
+            {selectedCoursesToSave.length > 0 ? (
+              <Typography variant="h5" fontWeight={'600'}>
+                Они будут назначены сотрудникам:
+              </Typography>
+            ) : (
+              <Typography variant="h5" fontWeight={'600'} color={'orange'}>
+                Все назначенные ранее курсы будут удалены у сотрудников:
+              </Typography>
+            )}
+
             {selectedRowsData.length > 0 ? (
               selectedRowsData.map((row) => (
                 <Chip
@@ -225,7 +239,13 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
                 sx={{ margin: '2px' }}
               />
             )}
-          </div>
+          </Box>
+          <Box m={1}>
+            <Typography variant="h5" fontWeight={'600'} m={1}>
+              Дата окончания курса:
+            </Typography>
+            <AssignDatePicker onDateChange={handleDateChange} />
+          </Box>
         </DialogContent>
         <DialogActions>
           <Button
