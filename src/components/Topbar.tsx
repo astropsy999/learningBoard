@@ -55,7 +55,8 @@ const Topbar: FC<TopbarProps> = () => {
         ...user,
         division: user.division ? divisions[user.division] : undefined,
         courses: user.courses.map((courseId) => ({
-          [courseId]: courseTitlesById[courseId],
+          [courseId.id]: courseTitlesById[courseId.id],
+          deadline: courseId.deadline,
         })),
       }));
 

@@ -1,19 +1,18 @@
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
-import { Box, Button, Chip, Menu } from '@mui/material';
+import { Box, Button, Chip } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
-  GridColumnHeaderParams,
-  GridFilterOperator,
-  useGridApiRef,
+  GridSingleSelectColDef,
+  useGridApiRef
 } from '@mui/x-data-grid';
-import React, { MouseEvent, useEffect, useMemo, useState } from 'react';
-import { toast } from 'react-toastify';
+import "ag-grid-community/styles/ag-grid.css"; // Mandatory CSS required by the grid
+import "ag-grid-community/styles/ag-theme-quartz.css";
+import React, { useEffect, useMemo, useState } from 'react';
 import { useSWRConfig } from 'swr';
 import Header from '../components/Header';
 import { useCourses } from '../data/store/courses.store';
 import { useLearners } from '../data/store/learners.store';
-import { updateAllData } from '../services/api.service';
 import { dataGridStyles } from '../styles/DataGrid.styles';
 import { CoursesToLearner } from './CoursesDialog';
 
@@ -72,9 +71,10 @@ const MyLearners = () => {
       items: [
         {
           field: 'division',
-          operator: 'contains',
-          value: currentUserDivisionName,
+          operator: 'isAnyOf',
+          value: [currentUserDivisionName],
         },
+      
       ],
     };
   }, [currentUserDivisionName]);
@@ -131,51 +131,14 @@ const MyLearners = () => {
     setSelectedRowsDataOnMyLearners(selectedRowData);
   };
 
-  // const deleteSingleCourseFromLearner = (
-  //   event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-  //   row: SelectedRowData,
-  //   courseId: number,
-  // ) => {
-  //   setRowDelLoading((prevState) => ({
-  //     ...prevState,
-  //     [`${row.id}-${courseId}`]: true,
-  //   }));
-  //   const itemId =
-  //     event?.currentTarget.parentElement?.getAttribute('data-item-id');
-
-  //   let updatedData = [];
-  //   updatedData.push({
-  //     id: row.id,
-  //     courses: row.courses
-  //       .filter((course) => Object.keys(course)[0] !== itemId)
-  //       .map((course) => +Object.keys(course)[0]),
-  //   });
-
-  //   updateAllData(updatedData).then((response) => {
-  //     if (response) {
-  //       mutate('allData').then(() => {
-  //         toast.success('Материал успешно удален', {
-  //           autoClose: 1000,
-  //         });
-  //         setRowDelLoading((prevState) => ({
-  //           ...prevState,
-  //           [`${row.id}-${courseId}`]: false,
-  //         }));
-  //       });
-  //     }
-  //   });
-  // };
-
-
 
   const columns: GridColDef[] = [
     {
       field: 'name',
       headerName: 'ФИО',
-      flex: 0.5,
+      flex: 0.3,
       headerClassName: 'name-column--cell',
       cellClassName: 'name-cell',
- 
 
     },
     {
@@ -195,68 +158,71 @@ const MyLearners = () => {
       headerClassName: 'name-column--cell',
       // filterOperators: [],
     },
-    {
-      field: 'courses',
-      headerName: 'Обучающие материалы',
+    ...(allCourses ? allCourses!.map(course => ({
+      field: course.title,
+      headerName: course.title,
       flex: 1.5,
       renderCell: ({ row }) => {
-        return row.courses.map((course: { [id: number]: string }) => {
-          const courseTitle = Object.values(course)[0];
-          const courseId = Object.keys(course)[0];
-          const isLocked = row.courses_exclude.includes(+courseId);
-
-          if (courseTitle && !isLocked) {
-            return (
-              <Chip
-                key={`${row.id}+${courseId}`}
-                label={courseTitle}
-                variant="outlined"
-                sx={{
-                  margin: '2px',
-                  transition: 'opacity 3s ease-in-out',
-                  opacity: rowDelLoading[`${row.id}-${courseId}`] ? 0 : 1,
-                  background: 'white',
-                }}
-                // onDelete={(event) =>
-                //   deleteSingleCourseFromLearner(event, row, +courseId)
-                // }
-                // deleteIcon={
-                //   rowDelLoading[`${row.id}-${courseId}`] ? (
-                //     <CircularProgress size={20} />
-                //   ) : (
-                //     <CancelIcon />
-                //   )
-                // }
-                data-item-id={courseId}
-              />
-            );
-          } else if (courseTitle && isLocked) {
-            return (
-              <Chip
-                key={`${row.id}+${courseId}`}
-                label={courseTitle}
-                variant="outlined"
-                color="error"
-                sx={{
-                  margin: '2px',
-                  transition: 'opacity 3s ease-in-out',
-                  opacity: 0.5,
-                  background: 'lightred',
-                }}
-                data-item-id={courseId}
-              />
-            );
-          } else {
-            return null;
-          }
-        });
+        const isLocked = row.courses_exclude.includes(course.id);
+        const deadline = row.courses.find((c: { hasOwnProperty: (arg0: number) => any; }) => c.hasOwnProperty(course.id))?.deadline;
+        const formattedDeadline = deadline ? new Date(deadline * 1000).toLocaleDateString('ru-RU') : '';
+        return formattedDeadline && (!isLocked ? <Chip label={formattedDeadline} color='success'/> : <Chip label={formattedDeadline} color='error'/>);
       },
       headerClassName: 'name-column--cell',
-    },
+      type: 'singleSelect'
+    })) : [])  as GridSingleSelectColDef<any, any, any>[],
+    // {
+    //   field: 'courses',
+    //   headerName: 'Обучающие материалы',
+    //   flex: 1.5,
+    //   renderCell: ({ row }) => {
+    //     return row.courses.map((course: { [id: number]: string }) => {
+    //       const courseTitle = Object.values(course)[0];
+    //       const courseId = Object.keys(course)[0];
+    //       const isLocked = row.courses_exclude.includes(+courseId);
+
+    //       if (courseTitle && !isLocked) {
+    //         return (
+    //           <Chip
+    //             key={`${row.id}+${courseId}`}
+    //             label={courseTitle}
+    //             variant="outlined"
+    //             sx={{
+    //               margin: '2px',
+    //               transition: 'opacity 3s ease-in-out',
+    //               opacity: rowDelLoading[`${row.id}-${courseId}`] ? 0 : 1,
+    //               background: 'white',
+    //             }}
+    //             data-item-id={courseId}
+    //           />
+    //         );
+    //       } else if (courseTitle && isLocked) {
+    //         return (
+    //           <Chip
+    //             key={`${row.id}+${courseId}`}
+    //             label={courseTitle}
+    //             variant="outlined"
+    //             color="error"
+    //             sx={{
+    //               margin: '2px',
+    //               transition: 'opacity 3s ease-in-out',
+    //               opacity: 0.5,
+    //               background: 'lightred',
+    //             }}
+    //             data-item-id={courseId}
+    //           />
+    //         );
+    //       } else {
+    //         return null;
+    //       }
+    //     });
+    //   },
+    //   headerClassName: 'name-column--cell',
+    // },
     {
       field: 'addCourses',
       headerName: 'Назначение',
-      flex: 0.6,
+      flex: 0.3,
       headerClassName: 'name-column--cell',
       renderCell: ({ row }) => {
         const hasCourses = row.courses.length;
@@ -278,6 +244,7 @@ const MyLearners = () => {
     },
   ];
 
+
   return (
     <Box m="20px" pt={2}>
       <Header title="Ученики" subtitle="" />
@@ -289,7 +256,7 @@ const MyLearners = () => {
           checkboxSelection
           disableRowSelectionOnClick
           rows={isLoading ? [] : allLearners!}
-          columns={columns}
+          columns={isLoading ? [] : columns}
           loading={isLoading}
           onRowSelectionModelChange={handleSelectionModelChange}
           initialState={{
@@ -299,9 +266,8 @@ const MyLearners = () => {
             sorting: {
               sortModel: [{ field: 'name', sort: 'asc' }],
             },
+            
           }}
-          // filterModel={filterModel!}
-          // onFilterModelChange={handleFilterModelChange}
         />
       </Box>
       <CoursesToLearner
@@ -314,3 +280,7 @@ const MyLearners = () => {
 };
 
 export default MyLearners;
+  function useDemoData(arg0: { dataSet: string; visibleFields: string[]; rowLength: number; }): { data: any; } {
+    throw new Error('Function not implemented.');
+  }
+

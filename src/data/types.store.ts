@@ -5,8 +5,13 @@ export type User = {
   name: string;
   position?: string;
   division?: number;
-  courses: number[];
+  courses: CoursesWithDedline[];
   courses_exclude: number[];
+};
+
+export type CoursesWithDedline = {
+  id: number;
+  deadline: number | null;
 };
 
 export type Course = {
