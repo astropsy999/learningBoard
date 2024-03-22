@@ -159,76 +159,36 @@ const MyLearners = () => {
           flex: 0.3,
           renderCell: ({ row }) => {
             const isLocked = row.courses_exclude.includes(course.id);
+
             const deadline = row.courses.find(
               (c: { hasOwnProperty: (arg0: number) => any }) =>
                 c.hasOwnProperty(course.id),
             )?.deadline;
-            const formattedDeadline = deadline
-              ? new Date(deadline * 1000).toLocaleDateString('ru-RU')
-              : '';
-            return (
-              formattedDeadline &&
-              (!isLocked ? (
-                <Chip label={formattedDeadline} color="success" />
-              ) : (
-                <Chip label={formattedDeadline} color="error" />
-              ))
 
-              // deadline === null && <Chip label="Без срока" color="info" />
-            );
+            let chipColor: 'error' | 'success';
+            chipColor = isLocked ? 'error' : 'success';
+
+            let chipLabel;
+            switch (deadline) {
+              case undefined:
+                return null;
+              case null:
+                chipLabel = 'Без срока';
+                break;
+              default:
+                chipLabel = new Date(deadline * 1000).toLocaleDateString(
+                  'ru-RU',
+                );
+                break;
+            }
+
+            return <Chip label={chipLabel} color={chipColor} />;
           },
           headerClassName: 'name-column--cell',
           type: 'singleSelect',
         }))
       : []) as GridSingleSelectColDef<any, any, any>[]),
-    // {
-    //   field: 'courses',
-    //   headerName: 'Обучающие материалы',
-    //   flex: 1.5,
-    //   renderCell: ({ row }) => {
-    //     return row.courses.map((course: { [id: number]: string }) => {
-    //       const courseTitle = Object.values(course)[0];
-    //       const courseId = Object.keys(course)[0];
-    //       const isLocked = row.courses_exclude.includes(+courseId);
 
-    //       if (courseTitle && !isLocked) {
-    //         return (
-    //           <Chip
-    //             key={`${row.id}+${courseId}`}
-    //             label={courseTitle}
-    //             variant="outlined"
-    //             sx={{
-    //               margin: '2px',
-    //               transition: 'opacity 3s ease-in-out',
-    //               opacity: rowDelLoading[`${row.id}-${courseId}`] ? 0 : 1,
-    //               background: 'white',
-    //             }}
-    //             data-item-id={courseId}
-    //           />
-    //         );
-    //       } else if (courseTitle && isLocked) {
-    //         return (
-    //           <Chip
-    //             key={`${row.id}+${courseId}`}
-    //             label={courseTitle}
-    //             variant="outlined"
-    //             color="error"
-    //             sx={{
-    //               margin: '2px',
-    //               transition: 'opacity 3s ease-in-out',
-    //               opacity: 0.5,
-    //               background: 'lightred',
-    //             }}
-    //             data-item-id={courseId}
-    //           />
-    //         );
-    //       } else {
-    //         return null;
-    //       }
-    //     });
-    //   },
-    //   headerClassName: 'name-column--cell',
-    // },
     {
       field: 'addCourses',
       headerName: 'Назначение',
