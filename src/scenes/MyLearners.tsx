@@ -44,16 +44,12 @@ const MyLearners = () => {
 
   const { allCourses } = useCourses();
 
-  const { mutate } = useSWRConfig();
-
   const [isLoading, setIsLoading] = useState(true);
   const { setSelectedCoursesToSave } = useCourses();
   const [selectedRows, setSelectedRows] = useState<
     SelectedRowData[] | undefined
   >([]);
-  const [rowDelLoading, setRowDelLoading] = useState<{
-    [key: string]: boolean;
-  }>({});
+
   const [assignedCourses, setAssignedCourses] = useState<number[]>([]);
 
   const apiRef = useGridApiRef();
@@ -97,17 +93,14 @@ const MyLearners = () => {
     setAssignedCourses(assignedArr);
   };
 
-  // const [filterModel, setFilterModel] = useState(null);
-
-  // const handleFilterModelChange = (model: any) => {
-  //   setFilterModel(model);
-  // };
-
   useEffect(() => {
-    if (turnOffDivisionFilter) {
-      apiRef.current.setFilterModel(unsetDivisionFilter);
-    } else {
-      apiRef.current.setFilterModel(filteredDivision);
+    switch (turnOffDivisionFilter) {
+      case true:
+        apiRef.current.setFilterModel(unsetDivisionFilter);
+        break;
+      default:
+        apiRef.current.setFilterModel(filteredDivision);
+        break;
     }
   }, [apiRef, filteredDivision, turnOffDivisionFilter, unsetDivisionFilter]);
 

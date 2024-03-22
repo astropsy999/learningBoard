@@ -27,6 +27,15 @@ export default function SplitButton() {
 
   const handleClick = () => {
     console.info(`You clicked ${options[selectedIndex]}`);
+    switch (options[selectedIndex]) {
+      case 'Все сотрудники':
+        setTurnOffDivisionFilter(true);
+        break;
+      case 'Мое подразделение':
+        console.log('Case Мое подразделение');
+        setTurnOffDivisionFilter(false);
+        break;
+    }
   };
 
   // const apiRef = useGridApiRef();
@@ -37,14 +46,17 @@ export default function SplitButton() {
   ) => {
     setSelectedIndex(index);
     setOpen(false);
-    if (index === 0) {
-      setButtonColor('info');
-      setTurnOffDivisionFilter(true);
-      deSelectAll();
-    } else {
-      setButtonColor('warning');
-      setTurnOffDivisionFilter(false);
-      deSelectAll();
+    switch (index) {
+      case 0:
+        setButtonColor('info');
+        setTurnOffDivisionFilter(true);
+        deSelectAll();
+        break;
+      default:
+        setButtonColor('warning');
+        setTurnOffDivisionFilter(false);
+        deSelectAll();
+        break;
     }
   };
 
