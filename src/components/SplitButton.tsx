@@ -26,13 +26,17 @@ export default function SplitButton() {
   const location = useLocation();
 
   const handleClick = () => {
-    console.info(`You clicked ${options[selectedIndex]}`);
-    switch (options[selectedIndex]) {
+    const selectedOption = options[selectedIndex];
+    console.log('🚀 ~ handleClick ~ selectedOption:', selectedOption);
+    switch (selectedOption) {
       case 'Все сотрудники':
+        console.info(`You clicked ${options[selectedIndex]}`);
+
         setTurnOffDivisionFilter(true);
         break;
       case 'Мое подразделение':
-        console.log('Case Мое подразделение');
+        console.info(`You clicked ${options[selectedIndex]}`);
+
         setTurnOffDivisionFilter(false);
         break;
     }

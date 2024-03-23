@@ -231,7 +231,9 @@ const MyLearners = () => {
             onRowSelectionModelChange={handleSelectionModelChange}
             initialState={{
               filter: {
-                filterModel: filteredDivision,
+                filterModel: !turnOffDivisionFilter
+                  ? filteredDivision
+                  : undefined,
               },
               sorting: {
                 sortModel: [{ field: 'name', sort: 'asc' }],
