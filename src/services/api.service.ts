@@ -6,7 +6,7 @@ import { AllData, ILearner } from '../data/types.store';
 
 export type CourseWithDeadline = {
   id: number;
-  deadline: number;
+  deadline: number | null;
 };
 
 export type ToUpdateUser = {

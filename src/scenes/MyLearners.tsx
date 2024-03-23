@@ -1,4 +1,5 @@
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
+import EditCalendarIcon from '@mui/icons-material/EditCalendar';
 import { Box, Button, Chip } from '@mui/material';
 import {
   DataGrid,
@@ -7,10 +8,10 @@ import {
   useGridApiRef,
 } from '@mui/x-data-grid';
 import React, { useEffect, useMemo, useState } from 'react';
-import { useSWRConfig } from 'swr';
 import Header from '../components/Header';
 import { useCourses } from '../data/store/courses.store';
 import { useLearners } from '../data/store/learners.store';
+import { CoursesWithDeadline } from '../data/types.store';
 import { dataGridStyles } from '../styles/DataGrid.styles';
 import { CoursesToLearner } from './CoursesDialog';
 
@@ -20,10 +21,7 @@ export type SelectedRowData = {
   position?: string;
   division?: string;
   access?: string;
-  courses: {
-    id: number;
-    title: string;
-  }[];
+  courses: CoursesWithDeadline[];
   courses_exclude: number[];
   isDelLoading: boolean;
 };
@@ -50,7 +48,9 @@ const MyLearners = () => {
     SelectedRowData[] | undefined
   >([]);
 
-  const [assignedCourses, setAssignedCourses] = useState<number[]>([]);
+  const [assignedCourses, setAssignedCourses] = useState<CoursesWithDeadline[]>(
+    [],
+  );
 
   const apiRef = useGridApiRef();
 
@@ -89,7 +89,11 @@ const MyLearners = () => {
   const handleCoursesDialogOpen = (row: SelectedRowData) => {
     openCoursesDialog(true);
     setOnlyLearnerName(row.name);
-    const assignedArr = row?.courses?.map((course) => +Object.keys(course)[0]);
+    const assignedArr = row?.courses?.map((course) => ({
+      id: +Object.keys(course)[0],
+      deadline: course.deadline,
+    }));
+
     setAssignedCourses(assignedArr);
   };
 
@@ -194,11 +198,13 @@ const MyLearners = () => {
             <Button
               variant="contained"
               color={!hasCourses ? 'info' : 'secondary'}
-              startIcon={<AddToQueueIcon />}
+              startIcon={
+                !hasCourses ? <AddToQueueIcon /> : <EditCalendarIcon />
+              }
               onClick={() => handleCoursesDialogOpen(row)}
               disabled={isSelectedUser}
             >
-              {!hasCourses ? 'Назначить' : 'Добавить'}
+              {!hasCourses ? 'Назначить' : 'Редактировать'}
             </Button>
           </>
         );

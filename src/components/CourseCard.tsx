@@ -7,10 +7,11 @@ import * as React from 'react';
 import { CourseData, useCourses } from '../data/store/courses.store';
 import { tokens } from '../theme';
 import { truncateDescription } from '../helpers/truncateDescriptions';
+import { CourseWithDeadline } from '../services/api.service';
 
 interface CourseCardProps {
   courseItem: CourseData;
-  assigned: number[];
+  assigned: CourseWithDeadline[];
 }
 
 export const CourseCard: React.FC<CourseCardProps> = ({
@@ -25,9 +26,10 @@ export const CourseCard: React.FC<CourseCardProps> = ({
   const colors = tokens(theme.palette.mode);
 
   React.useEffect(() => {
-    // Проверяем, содержится ли ID курса в массиве assigned
-    if (assigned.includes(courseItem.id)) {
-      setChecked(true); // Если содержится, устанавливаем checked в true
+    const assignedIds = assigned.map((item) => item.id);
+
+    if (assignedIds.includes(courseItem.id)) {
+      setChecked(true);
     }
   }, [assigned, courseItem.id]);
 
@@ -35,7 +37,6 @@ export const CourseCard: React.FC<CourseCardProps> = ({
     const newChecked = !checked; // Получаем новое значение checked
     setChecked(newChecked); // Устанавливаем новое значение checked
 
-    // Ваша логика обновления состояния selectedCoursesToSave
     if (!checked) {
       setSelectedCoursesToSave([...selectedCoursesToSave, courseItem]);
     } else {

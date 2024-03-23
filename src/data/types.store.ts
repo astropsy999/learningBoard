@@ -5,11 +5,11 @@ export type User = {
   name: string;
   position?: string;
   division?: number;
-  courses: CoursesWithDedline[];
+  courses: CoursesWithDeadline[];
   courses_exclude: number[];
 };
 
-export type CoursesWithDedline = {
+export type CoursesWithDeadline = {
   id: number;
   deadline: number | null;
 };
@@ -107,10 +107,7 @@ export interface ILearner {
   name?: string;
   position?: string;
   division?: string;
-  courses?: {
-    id: number;
-    title: string;
-  }[];
+  courses?: CoursesWithDeadline[];
   courses_exclude?: number[];
 }
 

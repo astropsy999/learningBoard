@@ -17,6 +17,7 @@ import { SubmitDialog } from '../components/SubmitDialog';
 import { useCourses } from '../data/store/courses.store';
 import { useLearners } from '../data/store/learners.store';
 import { SelectedRowData } from './MyLearners';
+import { CoursesWithDeadline } from '../data/types.store';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -32,24 +33,19 @@ type CoursesToLearnerProps = {
   onClose: () => void;
   name?: string;
   lernersData?: SelectedRowData[] | undefined;
-  assignedCourses: number[];
+  assignedCourses: CoursesWithDeadline[];
 };
 export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
   onOpen,
   onClose,
   assignedCourses,
 }) => {
-  const {
-    allCourses,
-    setAllCourses,
-    selectedCoursesToSave,
-    setSelectedCoursesToSave,
-  } = useCourses();
+  const { allCourses, setAllCourses, setSelectedCoursesToSave } = useCourses();
   const [openSubmitDialog, setOpenSubmitDialog] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
-  const [selectedCourseIds, setSelectedCourseIds] = React.useState<number[]>(
-    [],
-  );
+  const [selectedCourseIds, setSelectedCourseIds] = React.useState<
+    CoursesWithDeadline[]
+  >([]);
   // const [atLeastOneLearner, setAtleastOneLearner] = React.useState(false);
   const {
     onlyLearnerName,
@@ -73,9 +69,12 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
 
     // Отфильтровать курсы по их ID и обновить состояние selectedCoursesToSave
     const filteredCourses =
-      allData?.courses.filter((course) =>
-        assignedCourses.includes(course.id),
-      ) || [];
+      allData?.courses.filter((course) => {
+        const assignedCoursesIds = assignedCourses.map(
+          (assignedCourse) => assignedCourse.id,
+        );
+        assignedCoursesIds.includes(course.id);
+      }) || [];
     setSelectedCoursesToSave(filteredCourses);
   }, [assignedCourses, allData?.courses, setSelectedCoursesToSave]);
 

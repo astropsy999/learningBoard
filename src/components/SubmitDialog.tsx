@@ -103,7 +103,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
         .map((user) => {
           if (!user) return null;
           // const oldCourses = user?.courses
-          //   ? user?.courses.map((c) => +Object.keys(c)[0])
+          //   ? user?.courses.map((c) => console.log(c))
           //   : [];
 
           return {
