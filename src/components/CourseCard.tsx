@@ -20,6 +20,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
 }) => {
   const [checked, setChecked] = React.useState(false);
   const { selectedCoursesToSave, setSelectedCoursesToSave } = useCourses();
+  console.log('🚀 ~ selectedCoursesToSave:', selectedCoursesToSave);
 
   const theme = useTheme();
 

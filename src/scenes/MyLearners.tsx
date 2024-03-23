@@ -1,6 +1,6 @@
 import AddToQueueIcon from '@mui/icons-material/AddToQueue';
 import EditCalendarIcon from '@mui/icons-material/EditCalendar';
-import { Box, Button, Chip } from '@mui/material';
+import { Box, Button, Chip, LinearProgress, Skeleton } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
@@ -14,6 +14,7 @@ import { useLearners } from '../data/store/learners.store';
 import { CoursesWithDeadline } from '../data/types.store';
 import { dataGridStyles } from '../styles/DataGrid.styles';
 import { CoursesToLearner } from './CoursesDialog';
+import ProgressLine from '../components/ProgressLine';
 
 export type SelectedRowData = {
   id: number;
@@ -100,10 +101,10 @@ const MyLearners = () => {
   useEffect(() => {
     switch (turnOffDivisionFilter) {
       case true:
-        apiRef.current.setFilterModel(unsetDivisionFilter);
+        !isLoading && apiRef.current.setFilterModel(unsetDivisionFilter);
         break;
       default:
-        apiRef.current.setFilterModel(filteredDivision);
+        !isLoading && apiRef.current.setFilterModel(filteredDivision);
         break;
     }
   }, [apiRef, filteredDivision, turnOffDivisionFilter, unsetDivisionFilter]);
@@ -217,25 +218,29 @@ const MyLearners = () => {
     <Box m="20px" pt={2}>
       <Header title="Ученики" subtitle="" />
 
-      <Box m="10px 0 0 0" height="75vh" sx={dataGridStyles.root}>
-        <DataGrid
-          autoHeight={true}
-          apiRef={apiRef}
-          checkboxSelection
-          disableRowSelectionOnClick
-          rows={isLoading ? [] : allLearners!}
-          columns={isLoading ? [] : columns}
-          loading={isLoading}
-          onRowSelectionModelChange={handleSelectionModelChange}
-          initialState={{
-            filter: {
-              filterModel: filteredDivision,
-            },
-            sorting: {
-              sortModel: [{ field: 'name', sort: 'asc' }],
-            },
-          }}
-        />
+      <Box m="10px 0 0 0" sx={dataGridStyles.root}>
+        {!isLoading ? (
+          <DataGrid
+            autoHeight={true}
+            apiRef={apiRef}
+            checkboxSelection
+            disableRowSelectionOnClick
+            rows={isLoading ? [] : allLearners!}
+            columns={isLoading ? [] : columns}
+            loading={isLoading}
+            onRowSelectionModelChange={handleSelectionModelChange}
+            initialState={{
+              filter: {
+                filterModel: filteredDivision,
+              },
+              sorting: {
+                sortModel: [{ field: 'name', sort: 'asc' }],
+              },
+            }}
+          />
+        ) : (
+          <ProgressLine />
+        )}
       </Box>
       <CoursesToLearner
         onOpen={coursesToLearnersDialog}

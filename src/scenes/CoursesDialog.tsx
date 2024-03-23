@@ -75,6 +75,7 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
         );
         assignedCoursesIds.includes(course.id);
       }) || [];
+
     setSelectedCoursesToSave(filteredCourses);
   }, [assignedCourses, allData?.courses, setSelectedCoursesToSave]);
 
