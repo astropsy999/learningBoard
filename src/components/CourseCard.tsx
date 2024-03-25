@@ -60,10 +60,10 @@ export const CourseCard: React.FC<CourseCardProps> = ({
     setChecked(newChecked); 
 
     if (!checked) {
-      setSelectedCoursesToSave([...selectedCoursesToSave, courseItem]);
+      setSelectedCoursesToSave([...selectedCoursesToSave, {...courseItem, deadline: null}]);
     } else {
       setSelectedCoursesToSave(
-        selectedCoursesToSave.filter((item) => item !== courseItem),
+        selectedCoursesToSave.filter((item) => item.id !== courseItem.id),
       );
     }
   };

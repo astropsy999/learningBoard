@@ -38,7 +38,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
   dialogTitle,
 }) => {
   const [open, setOpen] = React.useState(isOpen);
-  const { selectedCoursesToSave, setSelectedCoursesToSave } = useCourses();
+  const { selectedCoursesToSave, setSelectedCoursesToSave, setAssignedCourses } = useCourses();
   const [deadline, setDeadline] = React.useState<number | null>(null);
 
   const {
@@ -95,16 +95,13 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
     let dataToUpdate;
     const selectedCoursesIds = selectedCoursesToSave.map((course) => ({
       id: course.id,
-      deadline: deadline,
+      deadline: course.deadline,
     }));
 
     if (selectedRowsData.length > 0) {
       dataToUpdate = selectedRowsData
         .map((user) => {
           if (!user) return null;
-          // const oldCourses = user?.courses
-          //   ? user?.courses.map((c) => console.log(c))
-          //   : [];
 
           return {
             id: user.id,
@@ -118,9 +115,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
         allLearners?.find((learner) => learner.name === onlyLearnerName),
       );
       dataToUpdate = dataToUpdate.map((user) => {
-        // const oldCourses = user?.courses
-        //   ? user?.courses.map((c) => +Object.keys(c)[0])
-        //   : [];
+  ;
         return {
           id: user?.id || 0,
           courses: Array.from(new Set([...selectedCoursesIds])),
@@ -139,7 +134,6 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
     mutate('allData').then(() => {
       handleClose();
       openCoursesDialog(false);
-      setIsLoading(false);
       toast.success(result[0]?.data?.message, {
         position: 'top-right',
         autoClose: 1000,
@@ -152,7 +146,10 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
         transition: Bounce,
       });
       setOnlyLearnerName('');
-      deSelectAll();
+      deSelectAll()
+      setIsLoading(false);
+      setAssignedCourses([]);
+
     });
   };
 
@@ -194,14 +191,14 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
           </IconButton>
         </Box>
         <DialogContent dividers>
-          {/* <Box m={1}>
-            {selectedCoursesToSave && selectedCoursesToSave?.length > 0 ? (
+          <Box m={1}>
+            {selectedCoursesToSave?.length > 0 ? (
               <Typography variant="h5" fontWeight={'600'}>
                 Вы выбрали следующие курсы:
               </Typography>
             ) : null}
 
-            {selectedCoursesToSave && selectedCoursesToSave.map((course) => (
+            {selectedCoursesToSave.map((course) => (
               <Chip
                 key={course.id}
                 label={course.title}
@@ -211,7 +208,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
                 data-item-id={course.id}
               />
             ))}
-          </Box> */}
+          </Box>
           <Box m={1}>
             {selectedCoursesToSave.length > 0 ? (
               <Typography variant="h5" fontWeight={'600'}>

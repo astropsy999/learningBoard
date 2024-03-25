@@ -64,6 +64,7 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
 
   const handleSaveCourses = () => {
     setOpenSubmitDialog(true);
+    
   };
 
   React.useEffect(() => {

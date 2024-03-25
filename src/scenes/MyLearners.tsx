@@ -44,14 +44,14 @@ const MyLearners = () => {
   const { allCourses } = useCourses();
 
   const [isLoading, setIsLoading] = useState(true);
-  const { setSelectedCoursesToSave } = useCourses();
+  const { setSelectedCoursesToSave, assignedCourses, setAssignedCourses } = useCourses();
   const [selectedRows, setSelectedRows] = useState<
     SelectedRowData[] | undefined
   >([]);
 
-  const [assignedCourses, setAssignedCourses] = useState<CoursesWithDeadline[]>(
-    [],
-  );
+  // const [assignedCourses, setAssignedCourses] = useState<CoursesWithDeadline[]>(
+  //   [],
+  // );
 
   const apiRef = useGridApiRef();
 
@@ -124,6 +124,10 @@ const MyLearners = () => {
 
     setSelectedRows(selectedRowData);
     setSelectedRowsDataOnMyLearners(selectedRowData);
+  };
+
+  const handleClearAssignedCourses = () => {
+    setAssignedCourses([]);
   };
 
   const columns: GridColDef[] = [
