@@ -21,9 +21,11 @@ export const CourseCard: React.FC<CourseCardProps> = ({
   assigned,
 }) => {
   const [checked, setChecked] = React.useState(false);
-  const { selectedCoursesToSave, setSelectedCoursesToSave } = useCourses();
+  const { selectedCoursesToSave, 
+          setSelectedCoursesToSave, 
+       
+        } = useCourses();
   const [deadlineCourseDate, setDeadlineCourseDate] = React.useState<number>()
-  
 
   const theme = useTheme();
 
@@ -31,15 +33,13 @@ export const CourseCard: React.FC<CourseCardProps> = ({
 
   React.useEffect(() => {
     const assignedIds = assigned.map((item) => item.id);
-    // const assinnedDeadlines = assigned.map((item) => item.deadline);
-   
 
     if (assignedIds.includes(courseItem.id)) {
       setChecked(true);
     }
   }, [assigned, courseItem.id]);
 
-  const getDeadlineDate = (courseId: number) => {
+  const getDeadlineDate = (courseId: number, isUnixTime = false) => {
     const deadline = assigned.find((course) => course.id === courseId)?.deadline;
     switch (deadline) {
       case null:
@@ -48,16 +48,16 @@ export const CourseCard: React.FC<CourseCardProps> = ({
         return '' ;
       default: 
       const date = new Date(deadline! * 1000);
-      return date.toLocaleDateString('ru-RU') ;
+      return !isUnixTime ?  date.toLocaleDateString('ru-RU'):  deadline;
     }
     
   };
 
-  const deadlineDate = getDeadlineDate(courseItem.id)
+  const deadlineDate = getDeadlineDate(courseItem.id) as string;
 
   const handleCardClick = () => {
-    const newChecked = !checked; // Получаем новое значение checked
-    setChecked(newChecked); // Устанавливаем новое значение checked
+    const newChecked = !checked; 
+    setChecked(newChecked); 
 
     if (!checked) {
       setSelectedCoursesToSave([...selectedCoursesToSave, courseItem]);
@@ -68,11 +68,15 @@ export const CourseCard: React.FC<CourseCardProps> = ({
     }
   };
 
-  const handleDateChange = (newDate: Object | null) => {
+  const handleDateChange = (newDate: Object | null, itemId: number) => {
     // @ts-ignore
     const dateString = newDate!.$d;
     const unixTime = new Date(dateString).getTime() / 1000;
-    setDeadlineCourseDate(unixTime);
+
+    const findedItem = selectedCoursesToSave.find((item) => item.id === itemId)
+    findedItem!['deadline'] = unixTime
+
+    setSelectedCoursesToSave([...selectedCoursesToSave])    
   };
 
   return (
@@ -105,7 +109,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
         {deadlineDate.length !== 0 
           ? <Chip label={deadlineDate} /> 
           : <AssignDatePicker 
-              onDateChange={handleDateChange} 
+              onDateChange={(newDate) => handleDateChange(newDate, courseItem.id)} 
               disabled={!checked} />}
       </CardActions>
     </Card>

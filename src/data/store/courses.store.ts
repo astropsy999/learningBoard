@@ -8,7 +8,16 @@ export type CourseData = {
   title: string;
   description?: string;
   type?: string;
+  deadline?: number;
 };
+
+export type CourseToSaveWithDeadline = {
+  id: number;
+  title: string;
+  description?: string;
+  type?: string;
+  deadline?: number;
+}
 
 interface CoursesState {
   allCourses: CourseData[] | null;
@@ -16,6 +25,8 @@ interface CoursesState {
   selectedCoursesToSave: CourseData[];
   setSelectedCoursesToSave: Function;
   singleSelectedUserCourses: CourseData[];
+  selectedCoursesWithDeadlineToSave: CourseToSaveWithDeadline[];
+  setSelectedCoursesWithDeadlineToSave: Function;
 }
 
 
@@ -23,12 +34,9 @@ interface CoursesState {
 export const useCourses = create<CoursesState>()(
   devtools((set) => ({
     allCourses: null,
-    // lockedCourses: [],
     selectedCoursesToSave: [],
     singleSelectedUserCourses: [],
-    // setLockedCourses: (newLockedCourses: CourseData[]) => set({
-    //   lockedCourses: newLockedCourses
-    // }),
+    selectedCoursesWithDeadlineToSave: [],
     setSingleSelectedUserCourses: (newSingleSelectedUserCourses: CourseData[]) => set({
       singleSelectedUserCourses: newSingleSelectedUserCourses
     }),
@@ -48,5 +56,11 @@ export const useCourses = create<CoursesState>()(
         false,
         'setAllCourses',
       ),
+    setSelectedCoursesWithDeadlineToSave: (newSelectedCoursesWithDeadlineToSave: CourseToSaveWithDeadline[]) => 
+      set({ selectedCoursesWithDeadlineToSave: newSelectedCoursesWithDeadlineToSave }, 
+        false, 
+        'setSelectedCoursesWithDeadlineToSave'
+      ),
   })),
+    
 );

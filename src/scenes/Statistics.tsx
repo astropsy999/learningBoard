@@ -67,12 +67,12 @@ const Statistics = () => {
     },
  
   ];
+
+ const rowData = []
   
   const rows = [
     { id: 1, name: 'Стужук Е.В.', '10_1': 5, '10_2': 8, '10_3':10, '12_1': 7, '12_2': 9, '12_3':11 },
     { id: 2, name: 'Гоман Д.А.', '10_1': 5, '10_2': 8, '10_3':10,'12_1': 7, '12_2': 9, '12_3':11 },
-
-    
   ];
   
   const columnGroupingModel: GridColumnGroupingModel = [

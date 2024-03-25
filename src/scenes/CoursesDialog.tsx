@@ -54,9 +54,12 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
     allData,
   } = useLearners();
 
+  
+
   React.useEffect(() => {
     allData && setAllCourses(allData.courses);
     setIsLoading(false);
+
   }, [allCourses, allData, setAllCourses]);
 
   const handleSaveCourses = () => {
@@ -67,16 +70,17 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
     // Поставить галочки на тех курсах id которых уже выбраны ранее
     setSelectedCourseIds(assignedCourses);
 
-    const filteredCourses =
-      allData?.courses.filter((course) => {
-        const assignedCoursesIds = assignedCourses.map(
-          (assignedCourse) => assignedCourse.id,
-        );
-        return assignedCoursesIds.includes(course.id);
-      }) || [];
+    const filteredWithDeadline = assignedCourses
+      .filter((assignedCourse) =>
+        allData?.courses.some((course) => course.id === assignedCourse.id)
+      )
+      .map((assignedCourse) => {
+        const course = allData?.courses.find((course) => course.id === assignedCourse.id);
+        return { ...course, deadline: assignedCourse.deadline };
+      });
 
-    setSelectedCoursesToSave(filteredCourses);
-  }, [assignedCourses, allData?.courses, setSelectedCoursesToSave]);
+    setSelectedCoursesToSave(filteredWithDeadline);
+}, [assignedCourses, allData?.courses, setSelectedCoursesToSave]);
 
   const handleDeleteLearnerFromGroup = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -102,6 +106,7 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
       ...selectedRowsData.filter((item) => item.id !== Number(itemId)),
     ]);
   };
+
 
   return (
     <React.Fragment>
@@ -187,7 +192,6 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
                   <CourseCard
                     courseItem={course}
                     assigned={selectedCourseIds}
-                    
                   />
                 </Grid>
               ))}

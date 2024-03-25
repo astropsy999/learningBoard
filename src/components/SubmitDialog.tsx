@@ -39,7 +39,6 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
 }) => {
   const [open, setOpen] = React.useState(isOpen);
   const { selectedCoursesToSave, setSelectedCoursesToSave } = useCourses();
-  console.log('selectedCoursesToSave: ', selectedCoursesToSave);
   const [deadline, setDeadline] = React.useState<number | null>(null);
 
   const {
@@ -195,14 +194,14 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
           </IconButton>
         </Box>
         <DialogContent dividers>
-          <Box m={1}>
-            {selectedCoursesToSave.length > 0 ? (
+          {/* <Box m={1}>
+            {selectedCoursesToSave && selectedCoursesToSave?.length > 0 ? (
               <Typography variant="h5" fontWeight={'600'}>
                 Вы выбрали следующие курсы:
               </Typography>
             ) : null}
 
-            {selectedCoursesToSave.map((course) => (
+            {selectedCoursesToSave && selectedCoursesToSave.map((course) => (
               <Chip
                 key={course.id}
                 label={course.title}
@@ -212,7 +211,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
                 data-item-id={course.id}
               />
             ))}
-          </Box>
+          </Box> */}
           <Box m={1}>
             {selectedCoursesToSave.length > 0 ? (
               <Typography variant="h5" fontWeight={'600'}>
@@ -242,9 +241,9 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
             )}
           </Box>
           <Box m={1}>
-            <Typography variant="h5" fontWeight={'600'} m={1}>
+            {/* <Typography variant="h5" fontWeight={'600'} m={1}>
               Дата окончания курса:
-            </Typography>
+            </Typography> */}
             {/* <AssignDatePicker onDateChange={handleDateChange} /> */}
           </Box>
         </DialogContent>
