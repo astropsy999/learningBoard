@@ -1,3 +1,4 @@
+import { IconButton, TextField } from '@mui/material';
 import { DateBuilderReturnType, DatePicker } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -6,10 +7,12 @@ import * as React from 'react';
 
 interface AssignDatePickerProps {
   onDateChange: (date: Object | null) => void;
+  disabled: boolean;
 }
 
 export default function AssignDatePicker({
   onDateChange,
+  disabled
 }: AssignDatePickerProps) {
   const [value, setValue] = React.useState<Object | null>(null);
   const handleDateChange = (newValue: Object | null) => {
@@ -21,12 +24,16 @@ export default function AssignDatePicker({
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
-      <DatePicker
-        label="Пройти до..."
-        format="DD.MM.YYYY"
-        value={value}
-        onChange={handleDateChange}
-      />
+      <div onClick={(e)=> e.stopPropagation()}>
+        <DatePicker
+          label="Пройти до..."
+          format="DD.MM.YYYY"
+          value={value}
+          onChange={handleDateChange}
+          slotProps={{ textField: { size: 'small' } }}
+          disabled ={disabled}
+        />
+      </div>
     </LocalizationProvider>
   );
 }

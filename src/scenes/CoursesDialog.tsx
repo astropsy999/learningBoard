@@ -64,16 +64,15 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
   };
 
   React.useEffect(() => {
-    // Поставить галочки на тех курсах id которых есть в массиве assignedCourses
+    // Поставить галочки на тех курсах id которых уже выбраны ранее
     setSelectedCourseIds(assignedCourses);
 
-    // Отфильтровать курсы по их ID и обновить состояние selectedCoursesToSave
     const filteredCourses =
       allData?.courses.filter((course) => {
         const assignedCoursesIds = assignedCourses.map(
           (assignedCourse) => assignedCourse.id,
         );
-        assignedCoursesIds.includes(course.id);
+        return assignedCoursesIds.includes(course.id);
       }) || [];
 
     setSelectedCoursesToSave(filteredCourses);
@@ -188,6 +187,7 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
                   <CourseCard
                     courseItem={course}
                     assigned={selectedCourseIds}
+                    
                   />
                 </Grid>
               ))}

@@ -39,6 +39,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
 }) => {
   const [open, setOpen] = React.useState(isOpen);
   const { selectedCoursesToSave, setSelectedCoursesToSave } = useCourses();
+  console.log('selectedCoursesToSave: ', selectedCoursesToSave);
   const [deadline, setDeadline] = React.useState<number | null>(null);
 
   const {
@@ -244,7 +245,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
             <Typography variant="h5" fontWeight={'600'} m={1}>
               Дата окончания курса:
             </Typography>
-            <AssignDatePicker onDateChange={handleDateChange} />
+            {/* <AssignDatePicker onDateChange={handleDateChange} /> */}
           </Box>
         </DialogContent>
         <DialogActions>
