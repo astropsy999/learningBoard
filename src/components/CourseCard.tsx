@@ -37,7 +37,8 @@ export const CourseCard: React.FC<CourseCardProps> = ({
 }) => {
   const [checked, setChecked] = React.useState(false);
   const { selectedCoursesToSave, setSelectedCoursesToSave } = useCourses();
-  const { onlyLearnerName, allLearners, currentUserData } = useLearners();
+  const { onlyLearnerName, allLearners, currentUserData, selectedRowsData } =
+    useLearners();
   const [deadlineCourseDate, setDeadlineCourseDate] = React.useState<
     string | null
   >(null);
@@ -111,12 +112,22 @@ export const CourseCard: React.FC<CourseCardProps> = ({
 
     const learnerId = getLearnerIdByName(onlyLearnerName, allLearners!);
     const allLockedLearners = getLockedUsersByCourseId(courseId, allLearners!);
+    console.log('🚀 ~ courseLocked:', courseLocked);
+
+    console.log('🚀 ~ allLockedLearners:', allLockedLearners);
 
     const learnersToLockIDs = onlyLearnerName
       ? courseLocked
         ? allLockedLearners.filter((learner) => learner !== learnerId)
         : [...allLockedLearners, learnerId!]
-      : [];
+      : courseLocked
+      ? []
+      : Array.from(
+          new Set([
+            ...allLockedLearners,
+            ...selectedRowsData.map((row) => +row.id!),
+          ]),
+        );
 
     const lockedLearnersToSend = [
       {
@@ -124,6 +135,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
         users: learnersToLockIDs as number[],
       },
     ];
+    console.log('🚀 ~ learnersToLockIDs:', learnersToLockIDs);
 
     try {
       const result = await lockCourses(lockedLearnersToSend);

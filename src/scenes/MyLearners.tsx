@@ -120,6 +120,7 @@ const MyLearners = () => {
     setSelectedCoursesToSave([]);
     deSelectAll();
     setAssignedCourses([]);
+    setLockedArr([]);
   };
 
   const handleSelectionModelChange = (newSelection: Object[]) => {
