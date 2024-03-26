@@ -37,7 +37,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
 }) => {
   const [checked, setChecked] = React.useState(false);
   const { selectedCoursesToSave, setSelectedCoursesToSave } = useCourses();
-  const { onlyLearnerName, allLearners } = useLearners();
+  const { onlyLearnerName, allLearners, currentUserData } = useLearners();
   const [deadlineCourseDate, setDeadlineCourseDate] = React.useState<
     string | null
   >(null);
@@ -178,19 +178,25 @@ export const CourseCard: React.FC<CourseCardProps> = ({
       </CardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Checkbox color="info" checked={checked} />
-        {isLoading ? (
-          <CircularProgress size={24} color="primary" />
-        ) : (
-          <FormControlLabel
-            control={
-              <Switch
-                checked={courseLocked}
-                color={courseLocked ? 'warning' : 'secondary'}
+        {currentUserData?.manager.level === 1 && (
+          <>
+            {isLoading ? (
+              <CircularProgress size={24} color="primary" />
+            ) : (
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={courseLocked}
+                    color={courseLocked ? 'warning' : 'secondary'}
+                  />
+                }
+                label={courseLocked ? 'Разблокировать' : 'Блокировать'}
+                onClick={(e) =>
+                  handleLockUnlock(e, courseItem.id, courseLocked)
+                }
               />
-            }
-            label={courseLocked ? 'Разблокировать' : 'Блокировать'}
-            onClick={(e) => handleLockUnlock(e, courseItem.id, courseLocked)}
-          />
+            )}
+          </>
         )}
         <AssignDatePicker
           onDateChange={(newDate) => handleDateChange(newDate, courseItem.id)}
