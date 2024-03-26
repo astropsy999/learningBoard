@@ -38,7 +38,11 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
   dialogTitle,
 }) => {
   const [open, setOpen] = React.useState(isOpen);
-  const { selectedCoursesToSave, setSelectedCoursesToSave, setAssignedCourses } = useCourses();
+  const {
+    selectedCoursesToSave,
+    setSelectedCoursesToSave,
+    setAssignedCourses,
+  } = useCourses();
   const [deadline, setDeadline] = React.useState<number | null>(null);
 
   const {
@@ -103,9 +107,30 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
         .map((user) => {
           if (!user) return null;
 
+          const oldCourses = user?.courses
+            ? user?.courses.map((c) => {
+                return {
+                  id: +Object.keys(c)[0],
+                  deadline: c.deadline,
+                };
+              })
+            : [];
+          console.log('oldCourses: ', oldCourses);
+
+          const uniqueIds = new Set([
+            ...oldCourses.map((course) => course.id),
+            ...selectedCoursesIds.map((course) => course.id),
+          ]);
+          const uniqueCourses = Array.from(uniqueIds).map((id) => {
+            const foundCourse = [...oldCourses, ...selectedCoursesIds].find(
+              (course) => course.id === id,
+            );
+            return foundCourse;
+          });
+
           return {
             id: user.id,
-            courses: Array.from(new Set([...selectedCoursesIds])),
+            courses: uniqueCourses,
           };
         })
         .filter(Boolean);
@@ -115,7 +140,6 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
         allLearners?.find((learner) => learner.name === onlyLearnerName),
       );
       dataToUpdate = dataToUpdate.map((user) => {
-  ;
         return {
           id: user?.id || 0,
           courses: Array.from(new Set([...selectedCoursesIds])),
@@ -146,10 +170,9 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
         transition: Bounce,
       });
       setOnlyLearnerName('');
-      deSelectAll()
+      deSelectAll();
       setIsLoading(false);
       setAssignedCourses([]);
-
     });
   };
 

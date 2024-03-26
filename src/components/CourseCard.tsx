@@ -13,11 +13,13 @@ import AssignDatePicker from './DatePicker';
 interface CourseCardProps {
   courseItem: CourseData;
   assigned: CourseWithDeadline[];
+  isLocked: boolean;
 }
 
 export const CourseCard: React.FC<CourseCardProps> = ({
   courseItem,
   assigned,
+  isLocked,
 }) => {
   const [checked, setChecked] = React.useState(false);
   const { selectedCoursesToSave, setSelectedCoursesToSave } = useCourses();
@@ -93,7 +95,11 @@ export const CourseCard: React.FC<CourseCardProps> = ({
         flexDirection: 'column',
         justifyContent: 'space-between',
         cursor: 'pointer',
-        backgroundColor: checked ? colors.blueAccent[900] : 'inherit',
+        backgroundColor: checked
+          ? isLocked
+            ? colors.redAccent[900]
+            : colors.blueAccent[900]
+          : 'inherit',
       }}
       onClick={handleCardClick}
     >

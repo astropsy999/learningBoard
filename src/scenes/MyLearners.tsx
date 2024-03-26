@@ -44,10 +44,13 @@ const MyLearners = () => {
   const { allCourses } = useCourses();
 
   const [isLoading, setIsLoading] = useState(true);
-  const { setSelectedCoursesToSave, assignedCourses, setAssignedCourses } = useCourses();
+  const { setSelectedCoursesToSave, assignedCourses, setAssignedCourses } =
+    useCourses();
   const [selectedRows, setSelectedRows] = useState<
     SelectedRowData[] | undefined
   >([]);
+
+  const [lockedArr, setLockedArr] = useState<number[]>();
 
   // const [assignedCourses, setAssignedCourses] = useState<CoursesWithDeadline[]>(
   //   [],
@@ -94,6 +97,8 @@ const MyLearners = () => {
       id: +Object.keys(course)[0],
       deadline: course.deadline,
     }));
+
+    setLockedArr(row?.courses_exclude);
 
     setAssignedCourses(assignedArr);
   };
@@ -252,6 +257,7 @@ const MyLearners = () => {
         onOpen={coursesToLearnersDialog}
         onClose={handleCoursesDialogClose}
         assignedCourses={assignedCourses}
+        lockedCourses={lockedArr}
       />
     </Box>
   );

@@ -34,11 +34,13 @@ type CoursesToLearnerProps = {
   name?: string;
   lernersData?: SelectedRowData[] | undefined;
   assignedCourses: CoursesWithDeadline[];
+  lockedCourses?: number[];
 };
 export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
   onOpen,
   onClose,
   assignedCourses,
+  lockedCourses,
 }) => {
   const { allCourses, setAllCourses, setSelectedCoursesToSave } = useCourses();
   const [openSubmitDialog, setOpenSubmitDialog] = React.useState(false);
@@ -46,7 +48,7 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
   const [selectedCourseIds, setSelectedCourseIds] = React.useState<
     CoursesWithDeadline[]
   >([]);
-  // const [atLeastOneLearner, setAtleastOneLearner] = React.useState(false);
+
   const {
     onlyLearnerName,
     selectedRowsData,
@@ -54,17 +56,13 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
     allData,
   } = useLearners();
 
-  
-
   React.useEffect(() => {
     allData && setAllCourses(allData.courses);
     setIsLoading(false);
-
   }, [allCourses, allData, setAllCourses]);
 
   const handleSaveCourses = () => {
     setOpenSubmitDialog(true);
-    
   };
 
   React.useEffect(() => {
@@ -73,15 +71,17 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
 
     const filteredWithDeadline = assignedCourses
       .filter((assignedCourse) =>
-        allData?.courses.some((course) => course.id === assignedCourse.id)
+        allData?.courses.some((course) => course.id === assignedCourse.id),
       )
       .map((assignedCourse) => {
-        const course = allData?.courses.find((course) => course.id === assignedCourse.id);
+        const course = allData?.courses.find(
+          (course) => course.id === assignedCourse.id,
+        );
         return { ...course, deadline: assignedCourse.deadline };
       });
 
     setSelectedCoursesToSave(filteredWithDeadline);
-}, [assignedCourses, allData?.courses, setSelectedCoursesToSave]);
+  }, [assignedCourses, allData?.courses, setSelectedCoursesToSave]);
 
   const handleDeleteLearnerFromGroup = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -107,7 +107,6 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
       ...selectedRowsData.filter((item) => item.id !== Number(itemId)),
     ]);
   };
-
 
   return (
     <React.Fragment>
@@ -193,6 +192,9 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
                   <CourseCard
                     courseItem={course}
                     assigned={selectedCourseIds}
+                    isLocked={
+                      lockedCourses! && lockedCourses.includes(course.id)
+                    }
                   />
                 </Grid>
               ))}
