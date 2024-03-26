@@ -8,11 +8,13 @@ import * as React from 'react';
 interface AssignDatePickerProps {
   onDateChange: (date: Object | null) => void;
   disabled: boolean;
+  defaultValue?: string;
 }
 
 export default function AssignDatePicker({
   onDateChange,
-  disabled
+  disabled,
+  defaultValue,
 }: AssignDatePickerProps) {
   const [value, setValue] = React.useState<Object | null>(null);
   const handleDateChange = (newValue: Object | null) => {
@@ -24,14 +26,14 @@ export default function AssignDatePicker({
 
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="ru">
-      <div onClick={(e)=> e.stopPropagation()}>
+      <div onClick={(e) => e.stopPropagation()}>
         <DatePicker
-          label="Пройти до..."
+          label={defaultValue || 'Без срока'}
           format="DD.MM.YYYY"
           value={value}
           onChange={handleDateChange}
           slotProps={{ textField: { size: 'small' } }}
-          disabled ={disabled}
+          disabled={disabled}
         />
       </div>
     </LocalizationProvider>
