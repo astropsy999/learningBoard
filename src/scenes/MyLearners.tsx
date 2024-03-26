@@ -214,7 +214,7 @@ const MyLearners = () => {
               onClick={() => handleCoursesDialogOpen(row)}
               disabled={isSelectedUser}
             >
-              {!hasCourses ? 'Назначить' : 'Редактировать'}
+              {/* {!hasCourses ? 'Назначить' : 'Редактировать'} */}
             </Button>
           </>
         );

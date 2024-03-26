@@ -195,6 +195,7 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
                     isLocked={
                       lockedCourses! && lockedCourses.includes(course.id)
                     }
+                    allLockedCourses={lockedCourses!}
                   />
                 </Grid>
               ))}

@@ -1,4 +1,11 @@
-import { Checkbox, Chip, useTheme } from '@mui/material';
+import {
+  Checkbox,
+  Chip,
+  CircularProgress,
+  FormControlLabel,
+  Switch,
+  useTheme,
+} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -7,26 +14,36 @@ import * as React from 'react';
 import { CourseData, useCourses } from '../data/store/courses.store';
 import { tokens } from '../theme';
 import { truncateDescription } from '../helpers/truncateDescriptions';
-import { CourseWithDeadline } from '../services/api.service';
+import { CourseWithDeadline, lockCourses } from '../services/api.service';
 import AssignDatePicker from './DatePicker';
+import { useLearners } from '../data/store/learners.store';
+import { getLearnerIdByName } from '../helpers/getLearnerIdByName';
+import { mutate } from 'swr';
+import { Bounce, toast } from 'react-toastify';
+import { getLockedUsersByCourseId } from '../helpers/getlockedUsersByCourseId';
 
 interface CourseCardProps {
   courseItem: CourseData;
   assigned: CourseWithDeadline[];
   isLocked: boolean;
+  allLockedCourses: number[];
 }
 
 export const CourseCard: React.FC<CourseCardProps> = ({
   courseItem,
   assigned,
   isLocked,
+  allLockedCourses,
 }) => {
   const [checked, setChecked] = React.useState(false);
   const { selectedCoursesToSave, setSelectedCoursesToSave } = useCourses();
+  const { onlyLearnerName, allLearners } = useLearners();
   const [deadlineCourseDate, setDeadlineCourseDate] = React.useState<
     string | null
   >(null);
   const [deadlineDate, setDeadlineDate] = React.useState<string | number>();
+  const [courseLocked, setCourseLocked] = React.useState<boolean>(isLocked);
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
 
   const theme = useTheme();
 
@@ -84,6 +101,53 @@ export const CourseCard: React.FC<CourseCardProps> = ({
     setSelectedCoursesToSave([...selectedCoursesToSave]);
   };
 
+  const handleLockUnlock = async (
+    e: React.MouseEvent<HTMLLabelElement, MouseEvent>,
+    courseId: number,
+    courseLocked: boolean,
+  ) => {
+    e.stopPropagation();
+    setIsLoading(true);
+
+    const learnerId = getLearnerIdByName(onlyLearnerName, allLearners!);
+    const allLockedLearners = getLockedUsersByCourseId(courseId, allLearners!);
+
+    const learnersToLockIDs = onlyLearnerName
+      ? courseLocked
+        ? allLockedLearners.filter((learner) => learner !== learnerId)
+        : [...allLockedLearners, learnerId!]
+      : [];
+
+    const lockedLearnersToSend = [
+      {
+        id: courseId,
+        users: learnersToLockIDs as number[],
+      },
+    ];
+
+    try {
+      const result = await lockCourses(lockedLearnersToSend);
+      mutate('allData').then(() => {
+        toast.success(result[0].data.message, {
+          position: 'top-right',
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: false,
+          draggable: true,
+          progress: undefined,
+          theme: 'colored',
+          transition: Bounce,
+        });
+        setIsLoading(false);
+        setCourseLocked(!courseLocked);
+      });
+    } catch (error) {
+      // Handle error
+      setIsLoading(false);
+    }
+  };
+
   return (
     <Card
       sx={{
@@ -96,7 +160,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
         justifyContent: 'space-between',
         cursor: 'pointer',
         backgroundColor: checked
-          ? isLocked
+          ? courseLocked
             ? colors.redAccent[900]
             : colors.blueAccent[900]
           : 'inherit',
@@ -114,7 +178,20 @@ export const CourseCard: React.FC<CourseCardProps> = ({
       </CardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
         <Checkbox color="info" checked={checked} />
-
+        {isLoading ? (
+          <CircularProgress size={24} color="primary" />
+        ) : (
+          <FormControlLabel
+            control={
+              <Switch
+                checked={courseLocked}
+                color={courseLocked ? 'warning' : 'secondary'}
+              />
+            }
+            label={courseLocked ? 'Разблокировать' : 'Блокировать'}
+            onClick={(e) => handleLockUnlock(e, courseItem.id, courseLocked)}
+          />
+        )}
         <AssignDatePicker
           onDateChange={(newDate) => handleDateChange(newDate, courseItem.id)}
           disabled={!checked}

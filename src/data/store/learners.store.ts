@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import {
   CurrentUserData,
+  CurrentUserInfo,
   Divisions,
   ILearner,
   UserActions,
@@ -12,7 +13,7 @@ export const useLearners = create<UserState & UserActions>()(
   devtools((set) => ({
     users: [],
     allData: null,
-    currentUserData: null,
+    currentUserData: undefined,
     currentUserDivisionName: null,
     currentUserName: null,
     allUsers: null,
@@ -57,7 +58,7 @@ export const useLearners = create<UserState & UserActions>()(
       ),
     setCurrentUserName: (userName: string) =>
       set({ currentUserName: userName }),
-    setCurrentUserData: (newCurrentUserData: CurrentUserData): void =>
+    setCurrentUserData: (newCurrentUserData: CurrentUserInfo): void =>
       set({ currentUserData: newCurrentUserData }, false, 'setCurrentUserData'),
     setAllUsers: (newAllUsers: any) =>
       set(

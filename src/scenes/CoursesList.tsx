@@ -14,6 +14,7 @@ import { Course } from '../data/types.store';
 import { lockCourses } from '../services/api.service';
 import { dataGridStyles } from '../styles/DataGrid.styles';
 import { truncateDescription } from '../helpers/truncateDescriptions';
+import { SelectedRowData } from './MyLearners';
 
 interface LockedData {
   [key: number]: string[];
@@ -25,6 +26,7 @@ const CoursesList = () => {
     allLearners,
     selectedLearnersToLockCourse,
     setSelectedLearnersToLockCourse,
+    currentUserData,
   } = useLearners();
   const [isLoading, setIsLoading] = useState(true);
   const [isLockLoading, setIsLockLoading] = useState(false);
@@ -33,12 +35,14 @@ const CoursesList = () => {
   const [onBlockLearnersMode, setOnBlockLearnersMode] = useState<{
     [id: number]: boolean;
   }>({});
+  const [managerLevel, setManagerLevel] = useState<number>(0);
 
   useEffect(() => {
-    if (allCourses && allLearners) {
+    if (allCourses && allLearners && currentUserData) {
+      setManagerLevel(currentUserData.manager.level);
       setIsLoading(false);
     }
-  }, [allCourses, allLearners]);
+  }, [allCourses, allLearners, currentUserData]);
 
   useEffect(() => {
     const getLearnersWithLockedCourses = () => {
@@ -100,7 +104,7 @@ const CoursesList = () => {
       if (typeof learner === 'object' && learner !== null) {
         learnersToLockIDs.push(learner.id!);
       }
-      return null; // return a value, in this case null
+      return null;
     });
 
     const lockedLearnersToSend = [
@@ -155,7 +159,7 @@ const CoursesList = () => {
       align: 'left',
       flex: 0.5,
       headerClassName: 'name-column--cell',
-      renderCell: ({ row }) => {
+      renderCell: ({ row }: any) => {
         return truncateDescription(row.description);
       },
     },
@@ -166,9 +170,7 @@ const CoursesList = () => {
       headerClassName: 'name-column--cell',
       cellClassName: 'center--cell',
 
-      renderCell: ({ row }) => {
-        // if (lockedData.length === 0) return;
-
+      renderCell: ({ row }: any) => {
         const chips: JSX.Element[] = [];
         lockedData.forEach((element) => {
           const courseId = +Object.keys(element)[0];
@@ -184,7 +186,6 @@ const CoursesList = () => {
                     transition: 'opacity 3s ease-in-out',
                     background: 'white',
                   }}
-                  // onDelete={() => {}}
                 />,
               );
             });
@@ -200,65 +201,67 @@ const CoursesList = () => {
         return chips.length > 0 ? chips : '';
       },
     },
-    {
-      field: 'lockCourses',
-      headerName: 'Блокировка',
-      flex: 0.2,
-      headerClassName: 'name-column--cell',
-      cellClassName: 'center--cell',
+    managerLevel === 1
+      ? {
+          field: 'lockCourses',
+          headerName: 'Блокировка',
+          flex: 0.2,
+          headerClassName: 'name-column--cell',
+          cellClassName: 'center--cell',
 
-      renderCell: ({ row }) => {
-        const isAnyButtonLocked = Object.keys(onBlockLearnersMode).some(
-          (id) => onBlockLearnersMode[+id] && id !== row.id,
-        );
-        return (
-          <Box
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              gap: '3px',
-            }}
-          >
-            {!onBlockLearnersMode[row.id] ? (
-              <Button
-                variant="contained"
-                color={'warning'}
-                disabled={isAnyButtonLocked}
-                startIcon={<LockPersonIcon />}
-                onClick={(event) => chooseLearnersToLockCourse(event, row)}
-              ></Button>
-            ) : (
-              <Button
-                variant="contained"
-                color={'warning'}
-                startIcon={<CloseIcon />}
-                onClick={() => {
-                  setOnBlockLearnersMode((prev) => ({
-                    ...prev,
-                    [row.id]: !prev[row.id],
-                  }));
-                  setLockedUsers([]);
+          renderCell: ({ row }: any) => {
+            const isAnyButtonLocked = Object.keys(onBlockLearnersMode).some(
+              (id) => onBlockLearnersMode[+id] && id !== row.id,
+            );
+            return (
+              <Box
+                sx={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  gap: '3px',
                 }}
-              ></Button>
-            )}
-            {onBlockLearnersMode[row.id] && (
-              <Button
-                variant="contained"
-                color={'secondary'}
-                startIcon={<CheckIcon />}
-                onClick={() => {
-                  saveLockedUsers(row.id);
-                }}
-              ></Button>
-            )}
-          </Box>
-        );
-      },
-      disableColumnMenu: true,
-    },
-  ];
+              >
+                {!onBlockLearnersMode[row.id] ? (
+                  <Button
+                    variant="contained"
+                    color={'warning'}
+                    disabled={isAnyButtonLocked}
+                    startIcon={<LockPersonIcon />}
+                    onClick={(event) => chooseLearnersToLockCourse(event, row)}
+                  ></Button>
+                ) : (
+                  <Button
+                    variant="contained"
+                    color={'warning'}
+                    startIcon={<CloseIcon />}
+                    onClick={() => {
+                      setOnBlockLearnersMode((prev) => ({
+                        ...prev,
+                        [row.id]: !prev[row.id],
+                      }));
+                      setLockedUsers([]);
+                    }}
+                  ></Button>
+                )}
+                {onBlockLearnersMode[row.id] && (
+                  <Button
+                    variant="contained"
+                    color={'secondary'}
+                    startIcon={<CheckIcon />}
+                    onClick={() => {
+                      saveLockedUsers(row.id);
+                    }}
+                  ></Button>
+                )}
+              </Box>
+            );
+          },
+          disableColumnMenu: true,
+        }
+      : null,
+  ].filter(Boolean) as GridColDef[];
 
   return (
     <Box m="20px">

@@ -69,7 +69,7 @@ export type UserState = {
   users: User[];
   allUsers: AllUserData[] | null;
   allLearners: ILearner[] | null;
-  currentUserData: CurrentUserData | null;
+  currentUserData?: CurrentUserInfo;
   currentUserName?: string | null;
   filteredLearners: ILearner[] | null;
   turnOffDivisionFilter: boolean | null;
@@ -112,10 +112,10 @@ export interface ILearner {
 }
 
 export interface CurrentUserData {
-  ID: number;
-  Login: string;
-  Name?: string;
-  first_name?: string;
+  id: number;
+  name: string;
+  division: number;
+  manager: ManagerData;
   last_name?: string;
   father_name?: string;
   Email?: string;

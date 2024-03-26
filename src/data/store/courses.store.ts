@@ -12,13 +12,27 @@ export type CourseData = {
   deadline?: number;
 };
 
+export type CourseCategoryData = {
+  id: number;
+  title: string;
+};
+
+export type CourseRowData = {
+  category: CourseCategoryData;
+  id: number;
+  title: string;
+  description?: string;
+  type?: string;
+  deadline?: number;
+};
+
 export type CourseToSaveWithDeadline = {
   id: number;
   title: string;
   description?: string;
   type?: string;
   deadline?: number;
-}
+};
 
 interface CoursesState {
   allCourses: CourseData[] | null;
@@ -32,8 +46,6 @@ interface CoursesState {
   setAssignedCourses: Function;
 }
 
-
-
 export const useCourses = create<CoursesState>()(
   devtools((set) => ({
     allCourses: null,
@@ -41,9 +53,12 @@ export const useCourses = create<CoursesState>()(
     singleSelectedUserCourses: [],
     selectedCoursesWithDeadlineToSave: [],
     assignedCourses: [],
-    setSingleSelectedUserCourses: (newSingleSelectedUserCourses: CourseData[]) => set({
-      singleSelectedUserCourses: newSingleSelectedUserCourses
-    }),
+    setSingleSelectedUserCourses: (
+      newSingleSelectedUserCourses: CourseData[],
+    ) =>
+      set({
+        singleSelectedUserCourses: newSingleSelectedUserCourses,
+      }),
     setSelectedCoursesToSave: (newSelectedCoursesToSave: CourseData[]) =>
       set(
         {
@@ -60,15 +75,24 @@ export const useCourses = create<CoursesState>()(
         false,
         'setAllCourses',
       ),
-    setSelectedCoursesWithDeadlineToSave: (newSelectedCoursesWithDeadlineToSave: CourseToSaveWithDeadline[]) => 
-      set({ selectedCoursesWithDeadlineToSave: newSelectedCoursesWithDeadlineToSave }, 
-        false, 
-        'setSelectedCoursesWithDeadlineToSave'
+    setSelectedCoursesWithDeadlineToSave: (
+      newSelectedCoursesWithDeadlineToSave: CourseToSaveWithDeadline[],
+    ) =>
+      set(
+        {
+          selectedCoursesWithDeadlineToSave:
+            newSelectedCoursesWithDeadlineToSave,
+        },
+        false,
+        'setSelectedCoursesWithDeadlineToSave',
       ),
-      setAssignedCourses: (newAssignedCourses: CoursesWithDeadline[]) => set({
-        assignedCourses: newAssignedCourses
-      }, false, 'setAssignedCourses'
+    setAssignedCourses: (newAssignedCourses: CoursesWithDeadline[]) =>
+      set(
+        {
+          assignedCourses: newAssignedCourses,
+        },
+        false,
+        'setAssignedCourses',
       ),
   })),
-    
 );
