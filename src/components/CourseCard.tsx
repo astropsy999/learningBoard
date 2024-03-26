@@ -158,12 +158,15 @@ export const CourseCard: React.FC<CourseCardProps> = ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        cursor: 'pointer',
+        cursor: isLoading ? 'wait' : 'pointer',
         backgroundColor: checked
           ? courseLocked
             ? colors.redAccent[900]
             : colors.blueAccent[900]
           : 'inherit',
+        pointerEvents: isLoading ? 'none' : 'auto',
+        opacity: isLoading ? 0.5 : 1,
+        position: 'relative',
       }}
       onClick={handleCardClick}
     >
@@ -181,7 +184,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
         {currentUserData?.manager.level === 1 && (
           <>
             {isLoading ? (
-              <CircularProgress size={24} color="primary" />
+              <CircularProgress size={24} color="info" />
             ) : (
               <FormControlLabel
                 control={
