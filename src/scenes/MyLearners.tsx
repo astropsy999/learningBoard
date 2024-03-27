@@ -8,6 +8,9 @@ import {
   GridFilterOperator,
   GridFilterPanel,
   GridSingleSelectColDef,
+  GridSlots,
+  GridToolbarContainer,
+  GridToolbarFilterButton,
   getGridNumericOperators,
   useGridApiRef,
 } from '@mui/x-data-grid';
@@ -32,6 +35,21 @@ export type SelectedRowData = {
   courses_exclude: number[];
   isDelLoading: boolean;
 };
+
+interface CustomToolbarProps {
+  setFilterButtonEl: React.Dispatch<React.SetStateAction<HTMLButtonElement | null>>;
+}
+
+function CustomToolbar({ setFilterButtonEl }: CustomToolbarProps) {
+  return (
+    <GridToolbarContainer>
+      <GridToolbarFilterButton ref={setFilterButtonEl} />
+    </GridToolbarContainer>
+  );
+}
+
+
+
 
 const MyLearners = () => {
   const {
@@ -62,6 +80,15 @@ const MyLearners = () => {
   // const [assignedCourses, setAssignedCourses] = useState<CoursesWithDeadline[]>(
   //   [],
   // );
+
+
+  
+  const [filterButtonEl, setFilterButtonEl] =
+  React.useState<HTMLButtonElement | null>(null);
+
+  console.log('filterButtonEl: ', filterButtonEl);
+
+  
 
   const apiRef = useGridApiRef();
 
@@ -156,9 +183,6 @@ const MyLearners = () => {
     setSelectedRowsDataOnMyLearners(selectedRowData);
   };
 
-  const handleClearAssignedCourses = () => {
-    setAssignedCourses([]);
-  };
 
   const filterPositionOperators = useMemo(() => {
     return getGridNumericOperators()
@@ -306,9 +330,17 @@ const MyLearners = () => {
                 sortModel: [{ field: 'name', sort: 'asc' }],
               },
             }}
-            
-           
-            
+            slots={{
+              toolbar: CustomToolbar as GridSlots['toolbar'],
+            }}
+            slotProps={{
+              panel: {
+                anchorEl: filterButtonEl,
+              },
+              toolbar: {
+                setFilterButtonEl,
+              },
+            }}
           />
         ) : (
           <ProgressLine />
