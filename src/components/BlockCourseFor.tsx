@@ -8,7 +8,7 @@ import { useLearners } from '../data/store/learners.store';
 import { ILearner } from '../data/types.store';
 import { Skeleton } from '@mui/material';
 
-const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
+const icon = <CheckBoxOutlineBlankIcon fontSize="small"  />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
 interface BlockCourseForProps {
@@ -58,7 +58,7 @@ export const BlockCourseFor: React.FC<BlockCourseForProps> = ({
               <Checkbox
                 icon={icon}
                 checkedIcon={checkedIcon}
-                style={{ marginRight: 8 }}
+                style={{ marginRight: 8, color: 'black' }}
                 checked={selected}
               />
               {option.name}

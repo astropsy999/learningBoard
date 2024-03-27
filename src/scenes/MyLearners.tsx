@@ -4,10 +4,14 @@ import { Box, Button, Chip, LinearProgress, Skeleton } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
+  GridFilterItem,
+  GridFilterOperator,
+  GridFilterPanel,
   GridSingleSelectColDef,
+  getGridNumericOperators,
   useGridApiRef,
 } from '@mui/x-data-grid';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import Header from '../components/Header';
 import { useCourses } from '../data/store/courses.store';
 import { useLearners } from '../data/store/learners.store';
@@ -15,6 +19,8 @@ import { CoursesWithDeadline } from '../data/types.store';
 import { dataGridStyles } from '../styles/DataGrid.styles';
 import { CoursesToLearner } from './CoursesDialog';
 import ProgressLine from '../components/ProgressLine';
+import CustomFilterPanel from '../components/CustomFilterPanel';
+import RatingInputValue from '../components/CustomFilterPanel';
 
 export type SelectedRowData = {
   id: number;
@@ -51,6 +57,7 @@ const MyLearners = () => {
   >([]);
 
   const [lockedArr, setLockedArr] = useState<number[]>();
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
   // const [assignedCourses, setAssignedCourses] = useState<CoursesWithDeadline[]>(
   //   [],
@@ -73,8 +80,21 @@ const MyLearners = () => {
           value: [currentUserDivisionName],
         },
       ],
+      
     };
   }, [currentUserDivisionName]);
+
+  const filterPosition = useMemo(()=>{
+    return {
+      items: [
+        {
+          field: 'position',
+          operator: 'isAnyOf',
+          value: selectedValues
+        }
+      ]
+    }
+  },[selectedValues])
 
   const unsetDivisionFilter = useMemo(() => {
     return {
@@ -114,6 +134,10 @@ const MyLearners = () => {
     }
   }, [apiRef, filteredDivision, turnOffDivisionFilter, unsetDivisionFilter]);
 
+  useEffect(() => {
+    !isLoading && apiRef.current.setFilterModel(filterPosition);
+  }, [selectedValues]);
+
   const handleCoursesDialogClose = () => {
     openCoursesDialog(false);
     setOnlyLearnerName('');
@@ -136,6 +160,34 @@ const MyLearners = () => {
     setAssignedCourses([]);
   };
 
+  const filterPositionOperators = useMemo(() => {
+    return getGridNumericOperators()
+      // .filter((operator) => operator.value === 'isAnyOf')
+      .map((operator) => ({
+        ...operator,
+        getApplyFilterFn: (filterItem: GridFilterItem) => {
+          if (!filterItem.field  || !filterItem.operator) {
+            return null;
+          }
+  
+          if (selectedValues.length === 0) {
+            return (value: string) => true;
+          }
+  
+          return (value: string) => {
+            console.log('value: ', value);
+            return selectedValues.includes(value);
+          };
+        },
+        InputComponent: operator.InputComponent ? CustomFilterPanel : undefined,
+        InputComponentProps: {
+          onChange: (selectedValue: React.SetStateAction<string[]>) => {
+            setSelectedValues(selectedValue);
+          },
+        },
+      }));
+  }, [selectedValues]);
+
   const columns: GridColDef[] = [
     {
       field: 'name',
@@ -143,6 +195,7 @@ const MyLearners = () => {
       flex: 0.3,
       headerClassName: 'name-column--cell',
       cellClassName: 'name-cell',
+    
     },
     {
       field: 'position',
@@ -152,13 +205,17 @@ const MyLearners = () => {
       flex: 0.3,
       align: 'left',
       headerClassName: 'name-column--cell',
+      filterOperators: filterPositionOperators,
+      
     },
     {
       field: 'division',
       headerName: 'Подразделение',
       flex: 0.5,
       headerClassName: 'name-column--cell',
-      // filterOperators: [],
+      
+      
+   
     },
     ...((allCourses
       ? allCourses!.map((course) => ({
@@ -249,6 +306,9 @@ const MyLearners = () => {
                 sortModel: [{ field: 'name', sort: 'asc' }],
               },
             }}
+            
+           
+            
           />
         ) : (
           <ProgressLine />
@@ -265,10 +325,3 @@ const MyLearners = () => {
 };
 
 export default MyLearners;
-function useDemoData(arg0: {
-  dataSet: string;
-  visibleFields: string[];
-  rowLength: number;
-}): { data: any } {
-  throw new Error('Function not implemented.');
-}
