@@ -57,6 +57,8 @@ const Statistics = () => {
           disableColumnMenu: true,
           headerClassName: 'name-column--cell',
           cellClassName: 'name-cell',
+          flex: 0.1,
+        
           renderCell: ({row}) => {
             const attempts = row?.courses?.filter((c: AllStatisticsData) => c.id === course.id)[0]?.attempts
             const status = attempts && attempts[attempt - 1]?.status
@@ -71,7 +73,6 @@ const Statistics = () => {
       coursesList?.map((course) => ({
         groupId: getCourseTitleById(course.id, allCourses!)!,
         children: [{ field: `${course.id}_1` }, { field: `${course.id}_2` }, {field:`${course.id}_3`}],
-        
       })) : [];
 
   
@@ -98,6 +99,13 @@ return  (
                   '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': {
                     py: '3px',
                   },
+                  '& .MuiDataGrid-colCell, & .MuiDataGrid-cell': {
+                    borderRight: `1px solid ${theme.palette.divider}`, // Добавление вертикальной черты
+                    display: 'flex',
+                    alignItems: 'center', // Центрирование содержимого по вертикали
+                    justifyContent: 'center', // Центрирование содержимого по горизонтали
+                  },
+               
                  
                 }}
         />):
