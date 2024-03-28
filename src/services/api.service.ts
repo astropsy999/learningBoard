@@ -19,6 +19,14 @@ export type CourseToLock = {
   users: number[];
 };
 
+export const fetchStatisctics = async () => {
+  const response = await fetch(configApi.srv + url.getUsersStatistics, {
+    credentials: 'include',
+  });
+  const data = await response.json();
+  return data[0].data;
+};
+
 export const fetchAllData = async (): Promise<AllData | undefined> => {
   let allData;
   try {

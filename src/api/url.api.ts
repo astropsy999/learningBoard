@@ -24,4 +24,5 @@ export const url = {
   learnController: '/index.php/learncontroller/getdata',
   updateDataEndpoint: '/index.php/learncontroller/includecourses',
   lockCoursesEndpoint: '/index.php/learncontroller/excludecourses',
+  getUsersStatistics: '/index.php/Learncontroller/getUsersStatistics'
 };

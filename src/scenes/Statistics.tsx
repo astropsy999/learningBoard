@@ -1,101 +1,112 @@
-import DownloadOutlinedIcon from '@mui/icons-material/DownloadOutlined';
-import EmailIcon from '@mui/icons-material/Email';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
-import TrafficIcon from '@mui/icons-material/Traffic';
-import { Box, Button, IconButton, Typography, useTheme } from '@mui/material';
-import React from 'react';
-import BarChart from '../components/BarChart';
-import Header from '../components/Header';
-import LineChart from '../components/LineChart';
-import ProgressCircle from '../components/ProgressCircle';
-import StatBox from '../components/StatBox';
-import { mockTransactions } from '../data/mockData';
+import { Box, Typography, useTheme } from '@mui/material';
+import { DataGrid, GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
+import React, { useEffect, useState } from 'react';
 import { tokens } from '../theme';
-import { DataGrid, GridColDef, GridColumnGroup, GridColumnGroupingModel } from '@mui/x-data-grid';
+import useSWR from 'swr';
+import { fetchStatisctics } from '../services/api.service';
+import ProgressLine from '../components/ProgressLine';
+import { dataGridStyles } from '../styles/DataGrid.styles';
+import Header from '../components/Header';
+import { AllStatisticsData, CourseAttempt, findMaxCourses } from '../helpers/findMaxCoursesArrayInStat';
+import { useCourses } from '../data/store/courses.store';
+import { getCourseTitleById } from '../helpers/getCourseTitleById';
 
 const Statistics = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [coursesList, setCoursesList] = useState<CourseAttempt[]>([]);
+  const {allCourses} = useCourses()
+  const [statLoading, setStatLoading] = useState(true)
 
-  // const generateColumns = (categories) => {
-  //   let columns = [
-  //     { field: 'id', headerName: 'ID', width: 90 },
-  //     { field: 'name', headerName: 'ФИО', width: 180 },
-  //   ];
+  const {data: rawStatistics, isLoading, error} = useSWR('stat', fetchStatisctics);
+
+  const ATTEMPTS = 3
+
   
-  //   categories.forEach((category) => {
-  //     for (let i = 1; i <= 3; i++) {
-  //       columns.push({
-  //         field: `${category}_${i}`,
-  //         headerName: `${i}`,
-  //       });
-  //     }
-  //   });
-  
-  //   return columns;
-  // };
+  useEffect(() => {
+
+   const courses = findMaxCourses(rawStatistics)
+   setCoursesList(courses!)
+
+
+  }, [rawStatistics])
+
+  useEffect(() => {
+    setStatLoading(isLoading)
+    allCourses && allCourses.length > 0 && setStatLoading(false)
+
+  }, [statLoading])
 
   const columns: GridColDef[] = [
-    { field: 'id', headerName: 'ID', width: 90 },
-    { field: 'name', headerName: 'ФИО', width: 180 },
+    // { field: 'id', headerName: 'ID', width: 90 },
+    { 
+      field: 'name',
+      headerName: 'ФИО',
+      headerClassName: 'name-column--cell',
+      cellClassName: 'name-cell',
+      flex: 0.3,
+      
+    }]
+
     
-    {
-      field: '10_1',
-      headerName: '1',
-    },
-    {
-      field: '10_2',
-      headerName: '2',
-    },
-    {
-      field: '10_3',
-      headerName: '3',
-    },
-
-    {
-      field: '12_1',
-      headerName: '1',
-    },
-    {
-      field: '12_2',
-      headerName: '2',
-    },
-    {
-      field: '12_3',
-      headerName: '3',
-    },
- 
-  ];
-
- const rowData = []
+      !isLoading && !statLoading && coursesList?.forEach((course) => {
+        for (let attempt = 1; attempt <= ATTEMPTS; attempt++) {
+        columns.push({
+          field: `${course.id}_${attempt}`,
+          headerName: `${attempt}`,
+          disableColumnMenu: true,
+          headerClassName: 'name-column--cell',
+          cellClassName: 'name-cell',
+          renderCell: ({row}) => {
+            const attempts = row?.courses?.filter((c: AllStatisticsData) => c.id === course.id)[0]?.attempts
+            const status = attempts && attempts[attempt - 1]?.status
+            return <Typography color={status === 'passed' ? 'green' : 'red'}>{attempts && attempts[attempt - 1] ? attempts[attempt - 1].points : '-'}</Typography>;
+          }
+          ,
+        });
+      }
+      });
   
-  const rows = [
-    { id: 1, name: 'Стужук Е.В.', '10_1': 5, '10_2': 8, '10_3':10, '12_1': 7, '12_2': 9, '12_3':11 },
-    { id: 2, name: 'Гоман Д.А.', '10_1': 5, '10_2': 8, '10_3':10,'12_1': 7, '12_2': 9, '12_3':11 },
-  ];
+      const columnGroupingModel: GridColumnGroupingModel | undefined = !isLoading && !statLoading ? 
+      coursesList?.map((course) => ({
+        groupId: getCourseTitleById(course.id, allCourses!)!,
+        children: [{ field: `${course.id}_1` }, { field: `${course.id}_2` }, {field:`${course.id}_3`}],
+        
+      })) : [];
+
   
-  const columnGroupingModel: GridColumnGroupingModel = [
-  
-        {
-          groupId: 'Охрана труда. Первая помощь',
-          children: [{ field: '10_1' }, { field: '10_2' }, {field:'10_3'}],
-        },
+return  (
+  <Box m="20px" pt={2}>
+    <Header title="Статистика" subtitle="" />
+      <Box m="10px 0 0 0" sx={dataGridStyles.root}>
+        {!isLoading || !statLoading ? (
+          
+          <DataGrid
+                rows={!isLoading ? rawStatistics || [] : []}
+                columns={columns}
+                disableRowSelectionOnClick
+                columnGroupingModel={columnGroupingModel}
+                autoHeight={true}
+                getRowHeight={() => 'auto'}
+                initialState={{ 
+                  sorting: {
+                    sortModel: [{ field: 'name', sort: 'asc' }]
+                  }
+                }}
+                sx={{
+                 
+                  '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': {
+                    py: '3px',
+                  },
+                 
+                }}
+        />):
+        ( <ProgressLine/>)
+        }
+      </Box>
+  </Box>
 
-        {
-          groupId: 'Охрана труда. Нормативная база',
-          children: [{ field: '12_1' }, { field: '12_2' }, {field:'12_3'}],
-        },
-
-  ];
-
- return  (
-  <DataGrid
-        rows={rows}
-        columns={columns}
-        disableRowSelectionOnClick
-        columnGroupingModel={columnGroupingModel}
-/>)
+);
 };
 
 export default Statistics;

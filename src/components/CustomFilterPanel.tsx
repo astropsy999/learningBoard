@@ -55,7 +55,7 @@ function CustomFilterPanel(props: GridFilterInputValueProps & CustomFilterPanelP
             {...params}
             label="Выбрать"
             placeholder="Выбрать для фильтрации" />
-        )} options={['Инженер', 'Программист']} 
+        )} options={['Бухгалтер', 'Программист', 'Менеджер']} 
       />
     </Box>
   );

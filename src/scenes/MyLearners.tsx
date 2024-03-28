@@ -23,7 +23,6 @@ import { dataGridStyles } from '../styles/DataGrid.styles';
 import { CoursesToLearner } from './CoursesDialog';
 import ProgressLine from '../components/ProgressLine';
 import CustomFilterPanel from '../components/CustomFilterPanel';
-import RatingInputValue from '../components/CustomFilterPanel';
 
 export type SelectedRowData = {
   id: number;
@@ -35,21 +34,6 @@ export type SelectedRowData = {
   courses_exclude: number[];
   isDelLoading: boolean;
 };
-
-interface CustomToolbarProps {
-  setFilterButtonEl: React.Dispatch<React.SetStateAction<HTMLButtonElement | null>>;
-}
-
-function CustomToolbar({ setFilterButtonEl }: CustomToolbarProps) {
-  return (
-    <GridToolbarContainer>
-      <GridToolbarFilterButton ref={setFilterButtonEl} />
-    </GridToolbarContainer>
-  );
-}
-
-
-
 
 const MyLearners = () => {
   const {
@@ -76,20 +60,9 @@ const MyLearners = () => {
 
   const [lockedArr, setLockedArr] = useState<number[]>();
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
-
-  // const [assignedCourses, setAssignedCourses] = useState<CoursesWithDeadline[]>(
-  //   [],
-  // );
-
+  const [filteredDivisionValue, setFilteredDivisionValue] = useState<string[]>([]);
 
   
-  const [filterButtonEl, setFilterButtonEl] =
-  React.useState<HTMLButtonElement | null>(null);
-
-  console.log('filterButtonEl: ', filterButtonEl);
-
-  
-
   const apiRef = useGridApiRef();
 
   useEffect(() => {
@@ -199,7 +172,6 @@ const MyLearners = () => {
           }
   
           return (value: string) => {
-            console.log('value: ', value);
             return selectedValues.includes(value);
           };
         },
@@ -211,6 +183,33 @@ const MyLearners = () => {
         },
       }));
   }, [selectedValues]);
+
+  const filterDivisionView = useMemo(() => {
+      return getGridNumericOperators()
+      .map(operator => ({
+        ...operator,
+        getApplyFilterFn: (filterItem: GridFilterItem) => {
+          if (!filterItem.field  || !filterItem.operator) {
+            return null;
+          }
+  
+          if (selectedValues.length === 0) {
+            return (value: string) => true;
+          }
+  
+          return (value: string) => {
+            return filteredDivisionValue.includes(value);
+          };
+        },
+        InputComponent: operator.InputComponent ? CustomFilterPanel : undefined,
+        InputComponentProps: {
+          onChange: (selectedValue: React.SetStateAction<string[]>) => {
+            console.log('selectedValue: ', selectedValue);
+            setFilteredDivisionValue(selectedValue);
+          },
+        },
+      }))
+  },[filteredDivisionValue])
 
   const columns: GridColDef[] = [
     {
@@ -237,7 +236,6 @@ const MyLearners = () => {
       headerName: 'Подразделение',
       flex: 0.5,
       headerClassName: 'name-column--cell',
-      
       
    
     },
@@ -305,6 +303,29 @@ const MyLearners = () => {
     },
   ];
 
+  // Обработчик события клика на элементе "Фильтр"
+  const handleFilterBtnClick = (event: MouseEvent) => {
+    const target = event.target as HTMLElement; // Приведение типа для event.target
+    // Получение координат элемента, на котором произошел клик
+    const rect = target.getBoundingClientRect();
+    console.log('rect: ', rect);
+    const x = rect.left + window.scrollX;
+    const y = rect.top + window.scrollY;
+  
+    const filterClickEvent = new CustomEvent('filterClick', {
+      detail: { x, y }, 
+    });
+  
+    document.dispatchEvent(filterClickEvent);
+  };
+  
+  const filterElement = document.querySelector('.MuiListItemText-primary') as HTMLElement;
+  console.log('filterElement: ', filterElement);
+  
+  // Добавление обработчика события клика на элемент "Фильтр"
+  filterElement?.addEventListener('click', handleFilterBtnClick);
+
+
   return (
     <Box m="20px" pt={2}>
       <Header title="Ученики" subtitle="" />
@@ -330,17 +351,7 @@ const MyLearners = () => {
                 sortModel: [{ field: 'name', sort: 'asc' }],
               },
             }}
-            slots={{
-              toolbar: CustomToolbar as GridSlots['toolbar'],
-            }}
-            slotProps={{
-              panel: {
-                anchorEl: filterButtonEl,
-              },
-              toolbar: {
-                setFilterButtonEl,
-              },
-            }}
+         
           />
         ) : (
           <ProgressLine />
