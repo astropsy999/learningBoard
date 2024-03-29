@@ -42,7 +42,8 @@ main {
   background: #555;
 }
 
-.MuiDataGrid-menuIcon, .MuiDataGrid-iconButtonContainer {
+.MuiDataGrid-menuIcon,
+.MuiDataGrid-iconButtonContainer {
   visibility: visible !important;
   opacity: 1 !important;
   margin-right: 22px !important;
@@ -60,12 +61,8 @@ main {
 .MuiDataGrid-columnHeader:hover .MuiButtonBase-root {
   transform: none !important;
   margin-right: -28px !important;
-} 
-
-.MuiDataGrid-filterFormOperatorInput, .MuiDataGrid-filterFormColumnInput {
-  display: none !important;
 }
 
-.MuiPaper-root {
-  height: fit-content !important;
+.MuiDataGrid-filterFormOperatorInput {
+  display: none !important;
 }

@@ -24,6 +24,7 @@ export type Course = {
 export type Divisions = {
   [key: number]: string;
 };
+
 export interface AllUserData {
   ID: number;
   Login: string;

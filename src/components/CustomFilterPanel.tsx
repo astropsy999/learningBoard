@@ -1,26 +1,41 @@
-import { Autocomplete, Box, Checkbox, Rating, RatingProps, TextField } from "@mui/material";
-import { GridColDef, GridFilterInputValueProps, GridFilterPanel, GridLogicOperator } from "@mui/x-data-grid";
-import React from "react";
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import { Divisions } from "../data/types.store";
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import { Autocomplete, Box, Checkbox, TextField } from '@mui/material';
+import { GridFilterInputValueProps } from '@mui/x-data-grid';
+import React, { useEffect, useState } from 'react';
+import { useCourses } from '../data/store/courses.store';
+import { useLearners } from '../data/store/learners.store';
+import { getAllPositions } from '../helpers/getAllPositions';
 
-export interface CustomFilterPanelProps {
+export interface CustomFilterInputProps {
   selectedOptions: string[];
   onChange: (selectedOptions: string[]) => void;
+  // values: string[];
 }
 
-function CustomFilterPanel(props: GridFilterInputValueProps & CustomFilterPanelProps) {
+function CustomFilterInput(
+  props: GridFilterInputValueProps & CustomFilterInputProps,
+) {
+  const { onChange, selectedOptions } = props;
+  const [options, setOptions] = useState<string[]>([]);
 
-  const { onChange } = props;
-
-  
+  const { allLearners } = useLearners();
+  useEffect(() => {
+    if (allLearners!.length > 0) {
+      const allOptions = getAllPositions(allLearners!).filter(
+        (option) => option !== undefined,
+      ) as string[];
+      setOptions(allOptions);
+    }
+  }, [allLearners]);
 
   const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
   const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-
-  const handleFilterChange = (event: React.ChangeEvent<{}>, selectedOptions: string[]) => {
+  const handleFilterChange = (
+    event: React.ChangeEvent<{}>,
+    selectedOptions: string[],
+  ) => {
     onChange(selectedOptions); // Передаем выбранные значения в родительский компонент
   };
 
@@ -34,7 +49,7 @@ function CustomFilterPanel(props: GridFilterInputValueProps & CustomFilterPanelP
         pl: '20px',
       }}
     >
-   <Autocomplete
+      <Autocomplete
         multiple
         id="checkboxes-tags-demo"
         onChange={handleFilterChange}
@@ -45,7 +60,8 @@ function CustomFilterPanel(props: GridFilterInputValueProps & CustomFilterPanelP
               icon={icon}
               checkedIcon={checkedIcon}
               style={{ marginRight: 8, color: 'black' }}
-              checked={selected} />
+              checked={selected}
+            />
             {option}
           </li>
         )}
@@ -54,11 +70,16 @@ function CustomFilterPanel(props: GridFilterInputValueProps & CustomFilterPanelP
           <TextField
             {...params}
             label="Выбрать"
-            placeholder="Выбрать для фильтрации" />
-        )} options={['Бухгалтер', 'Программист', 'Менеджер']} 
+            placeholder="Выбрать для фильтрации"
+          />
+        )}
+        options={options!}
       />
     </Box>
   );
 }
 
-export default CustomFilterPanel;
+export default CustomFilterInput;
+function useUsers() {
+  throw new Error('Function not implemented.');
+}

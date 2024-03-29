@@ -26,6 +26,7 @@ export const useLearners = create<UserState & UserActions>()(
     onlyLearnerName: '',
     divisions: null,
     selectedLearnersToLockCourse: [],
+
     setSelectedLearnersToLockCourse: (
       newSelectedLearnersToLockCourse: string[] | ILearner[],
     ) =>
@@ -34,6 +35,7 @@ export const useLearners = create<UserState & UserActions>()(
         false,
         'setSelectedLearnersToLockCourse',
       ),
+
     setDivisions: (newDivisions: Divisions) =>
       set({ divisions: newDivisions }, false, 'setDivisions'),
     setCurrentUserDivisionName: (name: string) =>
