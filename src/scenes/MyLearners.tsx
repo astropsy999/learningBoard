@@ -24,6 +24,7 @@ import { CoursesToLearner } from './CoursesDialog';
 import ProgressLine from '../components/ProgressLine';
 import CustomFilterPanel from '../components/CustomFilterPanel';
 import AssignEditButton from '../components/AssignEditBtn';
+import { AssignedCourseChip } from '../components/AssignedCourseChip';
 
 export type SelectedRowData = {
   id: number;
@@ -243,33 +244,9 @@ const MyLearners = () => {
           field: course.title,
           headerName: course.title,
           flex: 0.3,
-          renderCell: ({ row }) => {
-            const isLocked = row.courses_exclude.includes(course.id);
-
-            const deadline = row.courses.find(
-              (c: { hasOwnProperty: (arg0: number) => any }) =>
-                c.hasOwnProperty(course.id),
-            )?.deadline;
-
-            let chipColor: 'error' | 'success';
-            chipColor = isLocked ? 'error' : 'success';
-
-            let chipLabel;
-            switch (deadline) {
-              case undefined:
-                return null;
-              case null:
-                chipLabel = 'Без срока';
-                break;
-              default:
-                chipLabel = new Date(deadline * 1000).toLocaleDateString(
-                  'ru-RU',
-                );
-                break;
-            }
-
-            return <Chip label={chipLabel} color={chipColor} />;
-          },
+          renderCell: ({ row }) => (
+            <AssignedCourseChip row={row} course={course} />
+          ),
           headerClassName: 'name-column--cell',
           type: 'singleSelect',
         }))
