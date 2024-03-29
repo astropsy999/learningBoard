@@ -23,6 +23,7 @@ import { dataGridStyles } from '../styles/DataGrid.styles';
 import { CoursesToLearner } from './CoursesDialog';
 import ProgressLine from '../components/ProgressLine';
 import CustomFilterPanel from '../components/CustomFilterPanel';
+import AssignEditButton from '../components/AssignEditBtn';
 
 export type SelectedRowData = {
   id: number;
@@ -60,9 +61,10 @@ const MyLearners = () => {
 
   const [lockedArr, setLockedArr] = useState<number[]>();
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
-  const [filteredDivisionValue, setFilteredDivisionValue] = useState<string[]>([]);
+  const [filteredDivisionValue, setFilteredDivisionValue] = useState<string[]>(
+    [],
+  );
 
-  
   const apiRef = useGridApiRef();
 
   useEffect(() => {
@@ -80,21 +82,20 @@ const MyLearners = () => {
           value: [currentUserDivisionName],
         },
       ],
-      
     };
   }, [currentUserDivisionName]);
 
-  const filterPosition = useMemo(()=>{
+  const filterPosition = useMemo(() => {
     return {
       items: [
         {
           field: 'position',
           operator: 'isAnyOf',
-          value: selectedValues
-        }
-      ]
-    }
-  },[selectedValues])
+          value: selectedValues,
+        },
+      ],
+    };
+  }, [selectedValues]);
 
   const unsetDivisionFilter = useMemo(() => {
     return {
@@ -156,60 +157,62 @@ const MyLearners = () => {
     setSelectedRowsDataOnMyLearners(selectedRowData);
   };
 
-
   const filterPositionOperators = useMemo(() => {
-    return getGridNumericOperators()
-      // .filter((operator) => operator.value === 'isAnyOf')
-      .map((operator) => ({
-        ...operator,
-        getApplyFilterFn: (filterItem: GridFilterItem) => {
-          if (!filterItem.field  || !filterItem.operator) {
-            return null;
-          }
-  
-          if (selectedValues.length === 0) {
-            return (value: string) => true;
-          }
-  
-          return (value: string) => {
-            return selectedValues.includes(value);
-          };
-        },
-        InputComponent: operator.InputComponent ? CustomFilterPanel : undefined,
-        InputComponentProps: {
-          onChange: (selectedValue: React.SetStateAction<string[]>) => {
-            setSelectedValues(selectedValue);
+    return (
+      getGridNumericOperators()
+        // .filter((operator) => operator.value === 'isAnyOf')
+        .map((operator) => ({
+          ...operator,
+          getApplyFilterFn: (filterItem: GridFilterItem) => {
+            if (!filterItem.field || !filterItem.operator) {
+              return null;
+            }
+
+            if (selectedValues.length === 0) {
+              return (value: string) => true;
+            }
+
+            return (value: string) => {
+              return selectedValues.includes(value);
+            };
           },
-        },
-      }));
+          InputComponent: operator.InputComponent
+            ? CustomFilterPanel
+            : undefined,
+          InputComponentProps: {
+            onChange: (selectedValue: React.SetStateAction<string[]>) => {
+              setSelectedValues(selectedValue);
+            },
+          },
+        }))
+    );
   }, [selectedValues]);
 
   const filterDivisionView = useMemo(() => {
-      return getGridNumericOperators()
-      .map(operator => ({
-        ...operator,
-        getApplyFilterFn: (filterItem: GridFilterItem) => {
-          if (!filterItem.field  || !filterItem.operator) {
-            return null;
-          }
-  
-          if (selectedValues.length === 0) {
-            return (value: string) => true;
-          }
-  
-          return (value: string) => {
-            return filteredDivisionValue.includes(value);
-          };
+    return getGridNumericOperators().map((operator) => ({
+      ...operator,
+      getApplyFilterFn: (filterItem: GridFilterItem) => {
+        if (!filterItem.field || !filterItem.operator) {
+          return null;
+        }
+
+        if (selectedValues.length === 0) {
+          return (value: string) => true;
+        }
+
+        return (value: string) => {
+          return filteredDivisionValue.includes(value);
+        };
+      },
+      InputComponent: operator.InputComponent ? CustomFilterPanel : undefined,
+      InputComponentProps: {
+        onChange: (selectedValue: React.SetStateAction<string[]>) => {
+          console.log('selectedValue: ', selectedValue);
+          setFilteredDivisionValue(selectedValue);
         },
-        InputComponent: operator.InputComponent ? CustomFilterPanel : undefined,
-        InputComponentProps: {
-          onChange: (selectedValue: React.SetStateAction<string[]>) => {
-            console.log('selectedValue: ', selectedValue);
-            setFilteredDivisionValue(selectedValue);
-          },
-        },
-      }))
-  },[filteredDivisionValue])
+      },
+    }));
+  }, [filteredDivisionValue]);
 
   const columns: GridColDef[] = [
     {
@@ -218,7 +221,6 @@ const MyLearners = () => {
       flex: 0.3,
       headerClassName: 'name-column--cell',
       cellClassName: 'name-cell',
-    
     },
     {
       field: 'position',
@@ -229,15 +231,12 @@ const MyLearners = () => {
       align: 'left',
       headerClassName: 'name-column--cell',
       filterOperators: filterPositionOperators,
-      
     },
     {
       field: 'division',
       headerName: 'Подразделение',
       flex: 0.5,
       headerClassName: 'name-column--cell',
-      
-   
     },
     ...((allCourses
       ? allCourses!.map((course) => ({
@@ -284,19 +283,11 @@ const MyLearners = () => {
       renderCell: ({ row }) => {
         const hasCourses = row.courses.length;
         return (
-          <>
-            <Button
-              variant="contained"
-              color={!hasCourses ? 'info' : 'secondary'}
-              startIcon={
-                !hasCourses ? <AddToQueueIcon /> : <EditCalendarIcon />
-              }
-              onClick={() => handleCoursesDialogOpen(row)}
-              disabled={isSelectedUser}
-            >
-              {/* {!hasCourses ? 'Назначить' : 'Редактировать'} */}
-            </Button>
-          </>
+          <AssignEditButton
+            hasCourses={hasCourses}
+            handleCoursesDialogOpen={() => handleCoursesDialogOpen(row)}
+            isSelectedUser={isSelectedUser}
+          />
         );
       },
       disableColumnMenu: true,
@@ -311,20 +302,20 @@ const MyLearners = () => {
     console.log('rect: ', rect);
     const x = rect.left + window.scrollX;
     const y = rect.top + window.scrollY;
-  
+
     const filterClickEvent = new CustomEvent('filterClick', {
-      detail: { x, y }, 
+      detail: { x, y },
     });
-  
+
     document.dispatchEvent(filterClickEvent);
   };
-  
-  const filterElement = document.querySelector('.MuiListItemText-primary') as HTMLElement;
-  console.log('filterElement: ', filterElement);
-  
+
+  const filterElement = document.querySelector(
+    '.MuiListItemText-primary',
+  ) as HTMLElement;
+
   // Добавление обработчика события клика на элемент "Фильтр"
   filterElement?.addEventListener('click', handleFilterBtnClick);
-
 
   return (
     <Box m="20px" pt={2}>
@@ -351,7 +342,6 @@ const MyLearners = () => {
                 sortModel: [{ field: 'name', sort: 'asc' }],
               },
             }}
-         
           />
         ) : (
           <ProgressLine />
