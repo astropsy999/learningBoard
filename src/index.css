@@ -63,6 +63,17 @@ main {
   margin-right: -28px !important;
 }
 
-.MuiDataGrid-filterFormOperatorInput {
+.MuiDataGrid-filterFormOperatorInput,
+.MuiDataGrid-filterFormColumnInput {
   display: none !important;
+}
+
+.MuiDataGrid-panelWrapper {
+  width: 100%;
+  height: 600px;
+  /* position: absolute; */
+}
+
+.MuiPaper-root {
+  max-height: 600px;
 }
