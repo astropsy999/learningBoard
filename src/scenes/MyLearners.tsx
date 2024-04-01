@@ -64,6 +64,7 @@ const MyLearners = () => {
 
   const [filterModel, setFilterModel] = useState<GridFilterModel>();
   const [filterLabel, setFilterLabel] = useState<string>('');
+  const [selectedField, setSelectedField] = useState<string>('division');
 
   useEffect(() => {
     // Обновляем filterModel при изменении selectedValues
@@ -82,51 +83,22 @@ const MyLearners = () => {
     }
   }, [allCourses, allData, allLearners, currentUserDivisionName, divisions]);
 
-  const filteredDivision = useMemo(() => {
+
+ const unsetDivisionFilter = useMemo(() => {
     return {
       items: [
         {
           field: 'division',
-          operator: 'isAnyOf',
-          value: [currentUserDivisionName],
+          operator: '',
+          value: currentUserDivisionName,
         },
       ],
     };
   }, [currentUserDivisionName]);
 
-  // const filteredPosition = () => {
-  //   return {
-  //     items: [
-  //       {
-  //         field: 'position',
-  //         operator: 'isAnyOf',
-  //         value: selectedValues,
-  //       },
-  //     ],
-  //   };
-  // };
-
-//  const unsetDivisionFilter = useMemo(() => {
-//     return {
-//       items: [
-//         {
-//           field: 'division',
-//           operator: '',
-//           value: currentUserDivisionName,
-//         },
-//       ],
-//     };
-//   }, [currentUserDivisionName]);
-
   const isSelectedUser = selectedRows!.length > 0;
 
-  // const handleFilterModelChange = () => {
-  //   !isLoading && apiRef.current.setFilterModel(filterModel);
-  // };
 
-  // useEffect(() => {
-  //   handleFilterModelChange();
-  // }, [filterModel]);
 
   const handleCoursesDialogOpen = (row: SelectedRowData) => {
     openCoursesDialog(true);
@@ -141,20 +113,18 @@ const MyLearners = () => {
     setAssignedCourses(assignedArr);
   };
 
-  // useEffect(() => {
-  //   !isLoading && apiRef.current.setFilterModel(filteredPosition());
-  // }, [selectedValues]);
+  useEffect(() => {
 
-  // useEffect(() => {
-  //   switch (turnOffDivisionFilter) {
-  //     case true:
-  //       !isLoading && apiRef.current.setFilterModel(unsetDivisionFilter);
-  //       break;
-  //     default:
-  //       !isLoading && apiRef.current.setFilterModel(filteredDivision);
-  //       break;
-  //   }
-  // }, [apiRef, filteredDivision, turnOffDivisionFilter, unsetDivisionFilter]);
+    if(!turnOffDivisionFilter && currentUserDivisionName){
+      setSelectedValues([currentUserDivisionName]);
+    }
+
+    if(turnOffDivisionFilter){
+      setSelectedValues([]);
+    }
+
+
+  }, [ turnOffDivisionFilter, currentUserDivisionName, apiRef, isLoading, unsetDivisionFilter]);
 
   const handleCoursesDialogClose = () => {
     openCoursesDialog(false);
@@ -174,7 +144,7 @@ const MyLearners = () => {
     setSelectedRowsDataOnMyLearners(selectedRowData);
   };
 
-  const filterPositionOperators: GridFilterOperator<any, string, string>[] = [{
+  const filterOperators: GridFilterOperator<any, string, string>[] = [{
         value: 'isAnyOf',
         getApplyFilterFn: (filterItem: GridFilterItem) => {
           if (!filterItem.field || !filterItem.value || !filterItem.operator) {
@@ -195,7 +165,9 @@ const MyLearners = () => {
             console.log('selectedValue: ', selectedValue);
             setSelectedValues(selectedValue);
           },
-          filterLabel
+          filterLabel,
+          field: selectedField,
+          selectedOptions: selectedValues,
         },
       }
 ];
@@ -208,7 +180,7 @@ const MyLearners = () => {
       flex: 0.3,
       headerClassName: 'name-column--cell',
       cellClassName: 'name-cell',
-      filterOperators: filterPositionOperators,
+      filterOperators: filterOperators,
 
     },
     {
@@ -219,13 +191,14 @@ const MyLearners = () => {
       flex: 0.3,
       align: 'left',
       headerClassName: 'name-column--cell',
-      filterOperators: filterPositionOperators,
+      filterOperators: filterOperators,
     },
     {
       field: 'division',
       headerName: 'Подразделение',
       flex: 0.5,
       headerClassName: 'name-column--cell',
+      filterOperators
     },
     ...((allCourses
       ? allCourses!.map((course) => ({
@@ -237,6 +210,8 @@ const MyLearners = () => {
           ),
           headerClassName: 'name-column--cell',
           type: 'singleSelect',
+          filterable: false,
+          sortable: false,
         }))
       : []) as GridSingleSelectColDef<any, any, any>[]),
 
@@ -266,6 +241,11 @@ const MyLearners = () => {
 
     if (newModel.items) {
      setFilterLabel(getHeaderNameByField(newModel.items[0].field!, columns)!);
+     setSelectedField(newModel.items[0].field!);
+    }
+
+    if (!newModel.items[0].value) {
+      setSelectedValues([]);
     }
   };
 
@@ -285,17 +265,13 @@ const MyLearners = () => {
             loading={isLoading}
             onRowSelectionModelChange={handleSelectionModelChange}
             initialState={{
-              filter: {
-                filterModel: !turnOffDivisionFilter
-                ? filteredDivision
-                : undefined,
-              },
+
               sorting: {
                 sortModel: [{ field: 'name', sort: 'asc' }],
               },
             }}
             filterModel={{ items: [
-              { field: 'position', operator: 'isAnyOf', value: selectedValues }
+              { field: selectedField, operator: 'isAnyOf', value: selectedValues }
             ] }}
             onFilterModelChange={(newModel) =>
               onChangeFilterModel(newModel)

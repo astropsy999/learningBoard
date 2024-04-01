@@ -17,11 +17,14 @@ import { useLearners } from '../data/store/learners.store';
 import { getAllPositions } from '../helpers/getAllPositions';
 import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
+import { getAllOptions } from '../helpers/getAllOptions';
+import { ILearner } from '../data/types.store';
 
 export interface CustomFilterInputProps {
   selectedOptions: string[];
   onChange: (selectedOptions: string[]) => void;
   filterLabel?: string;
+  field?: keyof ILearner;
 }
 
 const Root = styled('div')(
@@ -178,21 +181,23 @@ const Listbox = styled('ul')(
 function CustomFilterInput(
   props: GridFilterInputValueProps & CustomFilterInputProps,
 ) {
-  const { onChange, selectedOptions, filterLabel } = props;
+  const { onChange, selectedOptions, filterLabel, field } = props;
   const [options, setOptions] = useState<string[]>([]);
+
+
 
 
   const { allLearners } = useLearners();
   useEffect(() => {
     if (allLearners!.length > 0) {
-      const allOptions = getAllPositions(allLearners!).filter(
+      const allOptions = getAllOptions(allLearners!, field! ).filter(
         (option) => option !== undefined,
       ) as string[];
       setOptions(allOptions);
     }
-  }, [allLearners]);
+  }, [allLearners, field]);
 
-  const label = filterLabel ||'Должность';
+  const label = filterLabel
 
   const {
     getRootProps,
@@ -211,6 +216,7 @@ function CustomFilterInput(
     options: options,
     getOptionLabel: (option) => option,
     onChange: (event, selectedOptions) => handleFilterChange(event, selectedOptions),
+    value: selectedOptions,
   });
 
   const handleFilterChange = (
