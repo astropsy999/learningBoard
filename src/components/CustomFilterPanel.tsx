@@ -1,24 +1,16 @@
-import CheckBoxIcon from '@mui/icons-material/CheckBox';
-import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+import CheckIcon from '@mui/icons-material/Check';
+import CloseIcon from '@mui/icons-material/Close';
 import {
-  Autocomplete,
   AutocompleteGetTagProps,
-  Box,
-  Checkbox,
-  TextField,
   autocompleteClasses,
   styled,
-  useAutocomplete,
+  useAutocomplete
 } from '@mui/material';
 import { GridFilterInputValueProps } from '@mui/x-data-grid';
 import React, { SyntheticEvent, useEffect, useState } from 'react';
-import { useCourses } from '../data/store/courses.store';
 import { useLearners } from '../data/store/learners.store';
-import { getAllPositions } from '../helpers/getAllPositions';
-import CloseIcon from '@mui/icons-material/Close';
-import CheckIcon from '@mui/icons-material/Check';
-import { getAllOptions } from '../helpers/getAllOptions';
 import { ILearner } from '../data/types.store';
+import { getAllOptions } from '../helpers/getAllOptions';
 
 export interface CustomFilterInputProps {
   selectedOptions: string[];
@@ -140,9 +132,8 @@ const Listbox = styled('ul')(
   list-style: none;
   background-color: ${theme.palette.mode === 'dark' ? '#141414' : '#fff'};
   overflow: visible;
-  max-height: 600px;
   border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
   z-index: 10000;
 
   & li {

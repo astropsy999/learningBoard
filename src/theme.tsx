@@ -11,6 +11,8 @@ interface ThemeColors {
   };
 }
 
+
+
 // color design tokens export
 export const tokens = (mode: ThemeMode): ThemeColors => ({
   ...(mode === 'dark'
@@ -84,15 +86,15 @@ export const tokens = (mode: ThemeMode): ThemeColors => ({
           900: '#e0e0e0',
         },
         primary: {
-          100: '#fafafa', // Самый светлый серый
-          200: '#f2f2f2', // Слегка темнее предыдущего
+          100: '#fafafa', 
+          200: '#f2f2f2', 
           300: '#ebebeb',
           400: '#e3e3e3',
           500: '#dbdbdb',
           600: '#d4d4d4',
           700: '#cccccc',
           800: '#c5c5c5',
-          900: '#bdbdbd', // Самый темный серый
+          900: '#bdbdbd', 
         },
         greenAccent: {
           100: '#0f2922',
@@ -157,10 +159,13 @@ export const themeSettings = (mode: ThemeMode) => {
         : {
             // palette values for light mode
             primary: {
-              main: colors.primary[100],
+              main: '#003C6C',
             },
             secondary: {
-              main: colors.greenAccent[500],
+              main: '#359078',
+            },
+            warning:{
+              main: '#F29F05',
             },
             neutral: {
               dark: colors.grey[700],

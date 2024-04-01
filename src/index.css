@@ -11,6 +11,7 @@ body,
 .app {
   display: flex;
   position: relative;
+  z-index: 10;
 }
 
 /* Добавьте высоту и ширину для .content */
@@ -58,7 +59,7 @@ main {
   margin-left: 8px !important;
 }
 
-.MuiDataGrid-columnHeader:hover .MuiButtonBase-root {
+.MuiDataGrid-columnHeader:hover .MuiButtonBase-root:not(.MuiCheckbox-root) {
   transform: none !important;
   margin-right: -28px !important;
 }
@@ -68,18 +69,17 @@ main {
   display: none !important;
 }
 
-.MuiPaper-root {
-}
 
 .MuiDataGrid-panelWrapper {
   width: 100%;
-}
-
-.customized-hook-demo {
 }
 
 #customized-hook-demo-listbox {
   z-index: 1000; 
   position: relative; 
   overflow: visible; 
+}
+
+.MuiCheckbox-root:hover {
+  background-color: transparent !important;
 }

@@ -19,8 +19,8 @@ export const AssignedCourseChip: React.FC<AssignedCourseChipProps> = ({
       c.hasOwnProperty(course.id),
   )?.deadline;
 
-  let chipColor: 'error' | 'success';
-  chipColor = isLocked ? 'error' : 'success';
+  let chipColor: 'error' | 'primary';
+  chipColor = isLocked ? 'error' : 'primary';
 
   let chipLabel;
   switch (deadline) {
@@ -34,5 +34,5 @@ export const AssignedCourseChip: React.FC<AssignedCourseChipProps> = ({
       break;
   }
 
-  return <Chip label={chipLabel} color={chipColor} />;
+  return <Chip label={chipLabel} color={chipColor} variant='outlined' sx={{ fontSize: '14px', fontWeight: 'bold' }} />;
 };

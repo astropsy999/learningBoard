@@ -26,6 +26,7 @@ export const dataGridStyles = {
     },
     '& .MuiDataGrid-cell': {
       borderBottom: 'none',
+      color:'#014040'
     },
     '& .name-column--cell': {
       backgroundColor: colors.blueAccent[900],
@@ -34,6 +35,10 @@ export const dataGridStyles = {
     '& .MuiDataGrid-columnHeaders': {
       backgroundColor: colors.blueAccent[900],
       borderBottom: 'none',
+      color: '#014040',
+      fontSize: '0.9rem',
+      fontWeight: 'bold',
+      borderRight: `1px solid black`
     },
     '& .MuiDataGrid-virtualScroller': {
       backgroundColor: colors.primary[100],

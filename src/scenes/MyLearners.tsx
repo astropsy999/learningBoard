@@ -1,16 +1,12 @@
-import { Autocomplete, Box, TextField } from '@mui/material';
+import { Box, useTheme } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
-  GridFilterInputValueProps,
   GridFilterItem,
   GridFilterModel,
   GridFilterOperator,
-  GridLogicOperator,
   GridSingleSelectColDef,
-  getGridNumericOperators,
-  getGridStringOperators,
-  useGridApiRef,
+  useGridApiRef
 } from '@mui/x-data-grid';
 import React, { useEffect, useMemo, useState } from 'react';
 import AssignEditButton from '../components/AssignEditBtn';
@@ -21,9 +17,9 @@ import ProgressLine from '../components/ProgressLine';
 import { useCourses } from '../data/store/courses.store';
 import { useLearners } from '../data/store/learners.store';
 import { CoursesWithDeadline } from '../data/types.store';
+import { getHeaderNameByField } from '../helpers/getHeaderNameByField';
 import { dataGridStyles } from '../styles/DataGrid.styles';
 import { CoursesToLearner } from './CoursesDialog';
-import { getHeaderNameByField } from '../helpers/getHeaderNameByField';
 
 export type SelectedRowData = {
   id: number;
@@ -49,6 +45,7 @@ const MyLearners = () => {
     divisions,
     currentUserDivisionName,
   } = useLearners();
+  const theme = useTheme();
 
   const { allCourses } = useCourses();
 
@@ -162,7 +159,6 @@ const MyLearners = () => {
         InputComponent: CustomFilterInput,
         InputComponentProps: {
           onChange: (selectedValue: string[]) => {
-            console.log('selectedValue: ', selectedValue);
             setSelectedValues(selectedValue);
           },
           filterLabel,
@@ -276,6 +272,17 @@ const MyLearners = () => {
             onFilterModelChange={(newModel) =>
               onChangeFilterModel(newModel)
             }
+            sx={{
+              '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': {
+                py: '3px',
+              },
+              '& .MuiDataGrid-colCell, & .MuiDataGrid-cell': {
+                borderRight: `1px solid ${theme.palette.divider}`, // Добавление вертикальной черты
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              },
+            }}
           />
         ) : (
           <ProgressLine />

@@ -19,7 +19,7 @@ export default function SplitButton() {
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef<HTMLDivElement>(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
-  const [buttonColor, setButtonColor] = React.useState('warning');
+  // const [buttonColor, setButtonColor] = React.useState('primary');
   const { currentUserData, setTurnOffDivisionFilter, deSelectAll } =
     useLearners();
 
@@ -48,12 +48,12 @@ export default function SplitButton() {
     setOpen(false);
     switch (index) {
       case 0:
-        setButtonColor('info');
+        // setButtonColor('primary');
         setTurnOffDivisionFilter(true);
         deSelectAll();
         break;
       default:
-        setButtonColor('warning');
+        // setButtonColor('warning');
         setTurnOffDivisionFilter(false);
         deSelectAll();
         break;
@@ -81,7 +81,7 @@ export default function SplitButton() {
         variant={location.pathname === '/' ? 'contained' : 'outlined'}
         ref={anchorRef}
         aria-label="Button group with a nested menu"
-        color={buttonColor as 'warning' | 'primary'}
+        color={ 'primary'}
         disabled={!currentUserData}
       >
         <Button onClick={handleClick}>{options[selectedIndex]}</Button>
@@ -103,7 +103,7 @@ export default function SplitButton() {
       </ButtonGroup>
       <Popper
         sx={{
-          zIndex: 1,
+          zIndex: 11,
         }}
         open={open}
         anchorEl={anchorRef.current}

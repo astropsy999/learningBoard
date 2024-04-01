@@ -100,6 +100,9 @@ const Topbar: FC<TopbarProps> = () => {
       boxShadow={
         '0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)'
       }
+      sx={{
+        backgroundColor: '#C0D2E6',
+      }}
     >
       <Box ml={4} sx={{ display: 'flex', gap: '16px', marginLeft: '20px' }}>
         {isAssignAllButton && <RenderAssignAllButton />}
@@ -112,7 +115,7 @@ const Topbar: FC<TopbarProps> = () => {
             variant={
               location.pathname === '/courses' ? 'contained' : 'outlined'
             }
-            color="info"
+            color="primary"
             startIcon={<SchoolIcon />}
           >
             Курсы
@@ -123,13 +126,13 @@ const Topbar: FC<TopbarProps> = () => {
             <Button
               variant={location.pathname === '/stat' ? 'contained' : 'outlined'}
               startIcon={<QueryStatsIcon />}
-              color="info"
+              color="primary"
             >
               Статистика
             </Button>
           </Link>
         ) : (
-          <Button startIcon={<QueryStatsIcon />} color="info" disabled>
+          <Button startIcon={<QueryStatsIcon />} color="primary" disabled>
             Статистика
           </Button>
         )}

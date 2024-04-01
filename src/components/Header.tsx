@@ -15,7 +15,7 @@ const Header: FC<HeaderProps> = ({ title, subtitle }) => {
     <Box mb="30px">
       <Typography
         variant="h2"
-        color={colors.grey[100]}
+        color={'#1C666D'}
         fontWeight="bold"
         sx={{ m: '0 0 5px 0' }}
       >

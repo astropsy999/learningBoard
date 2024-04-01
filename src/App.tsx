@@ -18,7 +18,7 @@ function App() {
         <CssBaseline />
         <div className="app">
           <Topbar />
-
+          </div>
           <main className="content">
             <Routes>
               <Route path="/" element={<Team />} />
@@ -26,7 +26,7 @@ function App() {
               <Route path="/courses" element={<CoursesList />} />
             </Routes>
           </main>
-        </div>
+        
         <ToastContainer />
       </ThemeProvider>
     </ColorModeContext.Provider>
