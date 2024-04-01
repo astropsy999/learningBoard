@@ -21,6 +21,7 @@ import CheckIcon from '@mui/icons-material/Check';
 export interface CustomFilterInputProps {
   selectedOptions: string[];
   onChange: (selectedOptions: string[]) => void;
+  filterLabel?: string;
 }
 
 const Root = styled('div')(
@@ -177,7 +178,7 @@ const Listbox = styled('ul')(
 function CustomFilterInput(
   props: GridFilterInputValueProps & CustomFilterInputProps,
 ) {
-  const { onChange, selectedOptions } = props;
+  const { onChange, selectedOptions, filterLabel } = props;
   const [options, setOptions] = useState<string[]>([]);
 
 
@@ -191,7 +192,7 @@ function CustomFilterInput(
     }
   }, [allLearners]);
 
-  const label = 'Должность';
+  const label = filterLabel ||'Должность';
 
   const {
     getRootProps,

@@ -23,6 +23,7 @@ import { useLearners } from '../data/store/learners.store';
 import { CoursesWithDeadline } from '../data/types.store';
 import { dataGridStyles } from '../styles/DataGrid.styles';
 import { CoursesToLearner } from './CoursesDialog';
+import { getHeaderNameByField } from '../helpers/getHeaderNameByField';
 
 export type SelectedRowData = {
   id: number;
@@ -61,10 +62,8 @@ const MyLearners = () => {
   const [lockedArr, setLockedArr] = useState<number[]>();
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
-  const [filterModel, setFilterModel] = useState<GridFilterModel>({
-   items: [],
-   quickFilterValues: [],
-  });
+  const [filterModel, setFilterModel] = useState<GridFilterModel>();
+  const [filterLabel, setFilterLabel] = useState<string>('');
 
   useEffect(() => {
     // Обновляем filterModel при изменении selectedValues
@@ -83,17 +82,17 @@ const MyLearners = () => {
     }
   }, [allCourses, allData, allLearners, currentUserDivisionName, divisions]);
 
-  // const filteredDivision = useMemo(() => {
-  //   return {
-  //     items: [
-  //       {
-  //         field: 'division',
-  //         operator: 'isAnyOf',
-  //         value: [currentUserDivisionName],
-  //       },
-  //     ],
-  //   };
-  // }, [currentUserDivisionName]);
+  const filteredDivision = useMemo(() => {
+    return {
+      items: [
+        {
+          field: 'division',
+          operator: 'isAnyOf',
+          value: [currentUserDivisionName],
+        },
+      ],
+    };
+  }, [currentUserDivisionName]);
 
   // const filteredPosition = () => {
   //   return {
@@ -176,7 +175,6 @@ const MyLearners = () => {
   };
 
   const filterPositionOperators: GridFilterOperator<any, string, string>[] = [{
-        label: 'Должность',
         value: 'isAnyOf',
         getApplyFilterFn: (filterItem: GridFilterItem) => {
           if (!filterItem.field || !filterItem.value || !filterItem.operator) {
@@ -191,13 +189,13 @@ const MyLearners = () => {
             return selectedValues?.includes(value);
           };
         },
-        InputComponent:  CustomFilterInput,
+        InputComponent: CustomFilterInput,
         InputComponentProps: {
           onChange: (selectedValue: string[]) => {
             console.log('selectedValue: ', selectedValue);
             setSelectedValues(selectedValue);
-            // setFilterModel({ items: [{ field: 'position', operator: 'isAnyOf', value: selectedValues }] });
           },
+          filterLabel
         },
       }
 ];
@@ -210,6 +208,8 @@ const MyLearners = () => {
       flex: 0.3,
       headerClassName: 'name-column--cell',
       cellClassName: 'name-cell',
+      filterOperators: filterPositionOperators,
+
     },
     {
       field: 'position',
@@ -259,15 +259,15 @@ const MyLearners = () => {
     },
   ];
 
-  // const onChangeFilterModel = (
-  //   newModel: GridFilterModel,
-  // ) => {
-  //   console.log('🚀 ~ onChangeFilterModel ~ newModel:', newModel);
+  const onChangeFilterModel = (
+    newModel: GridFilterModel,
+  ) => {
+    console.log('🚀 ~ onChangeFilterModel ~ newModel:', newModel);
 
-  //   if (newModel.items) {
-  //     setFilterModel(newModel);
-  //   }
-  // };
+    if (newModel.items) {
+     setFilterLabel(getHeaderNameByField(newModel.items[0].field!, columns)!);
+    }
+  };
 
   return (
     <Box m="20px" pt={2}>
@@ -286,16 +286,20 @@ const MyLearners = () => {
             onRowSelectionModelChange={handleSelectionModelChange}
             initialState={{
               filter: {
-                filterModel: filterModel
+                filterModel: !turnOffDivisionFilter
+                ? filteredDivision
+                : undefined,
               },
               sorting: {
                 sortModel: [{ field: 'name', sort: 'asc' }],
               },
             }}
-            // filterModel={filterModel}
-            // onFilterModelChange={(newModel) =>
-            //   onChangeFilterModel(newModel)
-            // }
+            filterModel={{ items: [
+              { field: 'position', operator: 'isAnyOf', value: selectedValues }
+            ] }}
+            onFilterModelChange={(newModel) =>
+              onChangeFilterModel(newModel)
+            }
           />
         ) : (
           <ProgressLine />
