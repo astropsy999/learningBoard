@@ -5,6 +5,7 @@ import {
   GridFilterInputValueProps,
   GridFilterItem,
   GridFilterModel,
+  GridFilterOperator,
   GridLogicOperator,
   GridSingleSelectColDef,
   getGridNumericOperators,
@@ -59,11 +60,20 @@ const MyLearners = () => {
 
   const [lockedArr, setLockedArr] = useState<number[]>();
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
-  const [filteredDivisionValue, setFilteredDivisionValue] = useState<string[]>(
-    [],
-  );
 
-  const [filterModel, setFilterModel] = useState<any>(undefined);
+  const [filterModel, setFilterModel] = useState<GridFilterModel>({
+   items: [],
+   quickFilterValues: [],
+  });
+
+  useEffect(() => {
+    // Обновляем filterModel при изменении selectedValues
+    if (currentUserDivisionName) setFilterModel({
+      items: [],
+      quickFilterValues: [...currentUserDivisionName!, ...selectedValues],
+    });
+  }, [selectedValues, currentUserDivisionName]);
+
 
   const apiRef = useGridApiRef();
 
@@ -73,50 +83,51 @@ const MyLearners = () => {
     }
   }, [allCourses, allData, allLearners, currentUserDivisionName, divisions]);
 
-  const filteredDivision = useMemo(() => {
-    return {
-      items: [
-        {
-          field: 'division',
-          operator: 'isAnyOf',
-          value: [currentUserDivisionName],
-        },
-      ],
-    };
-  }, [currentUserDivisionName]);
+  // const filteredDivision = useMemo(() => {
+  //   return {
+  //     items: [
+  //       {
+  //         field: 'division',
+  //         operator: 'isAnyOf',
+  //         value: [currentUserDivisionName],
+  //       },
+  //     ],
+  //   };
+  // }, [currentUserDivisionName]);
 
-  const filteredPosition = useMemo(() => {
-    return {
-      items: [
-        {
-          field: 'position',
-          operator: 'isAnyOf',
-          value: selectedValues,
-        },
-      ],
-    };
-  }, [selectedValues]);
+  // const filteredPosition = () => {
+  //   return {
+  //     items: [
+  //       {
+  //         field: 'position',
+  //         operator: 'isAnyOf',
+  //         value: selectedValues,
+  //       },
+  //     ],
+  //   };
+  // };
 
-  // useEffect(() => {
-  //   // Обновление модели фильтра при изменении filterPosition
-  //   setFilterModel({
-  //     items: filteredPosition.items.map((item) => ({ ...item })),
-  //   });
-  // }, [filteredPosition]);
-
-  const unsetDivisionFilter = useMemo(() => {
-    return {
-      items: [
-        {
-          field: 'division',
-          operator: '',
-          value: currentUserDivisionName,
-        },
-      ],
-    };
-  }, [currentUserDivisionName]);
+//  const unsetDivisionFilter = useMemo(() => {
+//     return {
+//       items: [
+//         {
+//           field: 'division',
+//           operator: '',
+//           value: currentUserDivisionName,
+//         },
+//       ],
+//     };
+//   }, [currentUserDivisionName]);
 
   const isSelectedUser = selectedRows!.length > 0;
+
+  // const handleFilterModelChange = () => {
+  //   !isLoading && apiRef.current.setFilterModel(filterModel);
+  // };
+
+  // useEffect(() => {
+  //   handleFilterModelChange();
+  // }, [filterModel]);
 
   const handleCoursesDialogOpen = (row: SelectedRowData) => {
     openCoursesDialog(true);
@@ -131,20 +142,20 @@ const MyLearners = () => {
     setAssignedCourses(assignedArr);
   };
 
-  useEffect(() => {
-    !isLoading && apiRef.current.setFilterModel(filteredPosition);
-  }, [selectedValues]);
+  // useEffect(() => {
+  //   !isLoading && apiRef.current.setFilterModel(filteredPosition());
+  // }, [selectedValues]);
 
-  useEffect(() => {
-    switch (turnOffDivisionFilter) {
-      case true:
-        !isLoading && apiRef.current.setFilterModel(unsetDivisionFilter);
-        break;
-      default:
-        !isLoading && apiRef.current.setFilterModel(filteredDivision);
-        break;
-    }
-  }, [apiRef, filteredDivision, turnOffDivisionFilter, unsetDivisionFilter]);
+  // useEffect(() => {
+  //   switch (turnOffDivisionFilter) {
+  //     case true:
+  //       !isLoading && apiRef.current.setFilterModel(unsetDivisionFilter);
+  //       break;
+  //     default:
+  //       !isLoading && apiRef.current.setFilterModel(filteredDivision);
+  //       break;
+  //   }
+  // }, [apiRef, filteredDivision, turnOffDivisionFilter, unsetDivisionFilter]);
 
   const handleCoursesDialogClose = () => {
     openCoursesDialog(false);
@@ -164,14 +175,11 @@ const MyLearners = () => {
     setSelectedRowsDataOnMyLearners(selectedRowData);
   };
 
-  const filterPositionOperators = useMemo(() => {
-    return getGridNumericOperators()
-      .filter((operator) => operator.value === 'isAnyOf')
-      .map((operator) => ({
-        ...operator,
+  const filterPositionOperators: GridFilterOperator<any, string, string>[] = [{
+        label: 'Должность',
+        value: 'isAnyOf',
         getApplyFilterFn: (filterItem: GridFilterItem) => {
-          // values.push(filterItem.value as string);
-          if (!filterItem.field || !filterItem.operator) {
+          if (!filterItem.field || !filterItem.value || !filterItem.operator) {
             return null;
           }
 
@@ -180,44 +188,21 @@ const MyLearners = () => {
           }
 
           return (value: string) => {
-            return selectedValues.includes(value);
+            return selectedValues?.includes(value);
           };
         },
-        InputComponent: operator.InputComponent ? CustomFilterInput : undefined,
+        InputComponent:  CustomFilterInput,
         InputComponentProps: {
-          onChange: (selectedValue: React.SetStateAction<string[]>) => {
+          onChange: (selectedValue: string[]) => {
+            console.log('selectedValue: ', selectedValue);
             setSelectedValues(selectedValue);
+            // setFilterModel({ items: [{ field: 'position', operator: 'isAnyOf', value: selectedValues }] });
           },
         },
-      }));
-  }, [selectedValues]);
+      }
+];
 
-  // const filterDivisionView = useMemo(() => {
-  //   return getGridNumericOperators().map((operator) => ({
-  //     ...operator,
-  //     getApplyFilterFn: (filterItem: GridFilterItem) => {
-  //       if (!filterItem.field || !filterItem.operator) {
-  //         return null;
-  //       }
-
-  //       if (selectedValues.length === 0) {
-  //         return (value: string) => true;
-  //       }
-
-  //       return (value: string) => {
-  //         return filteredDivisionValue.includes(value);
-  //       };
-  //     },
-  //     InputComponent: operator.InputComponent ? CustomFilterPanel : undefined,
-  //     InputComponentProps: {
-  //       onChange: (selectedValue: React.SetStateAction<string[]>) => {
-  //         console.log('selectedValue: ', selectedValue);
-  //         setFilteredDivisionValue(selectedValue);
-  //       },
-  //     },
-  //   }));
-  // }, [filteredDivisionValue]);
-
+ 
   const columns: GridColDef[] = [
     {
       field: 'name',
@@ -274,15 +259,15 @@ const MyLearners = () => {
     },
   ];
 
-  const onChangeFilterModel = (
-    newModel: GridFilterModel,
-    filterValues: any,
-  ) => {
-    console.log('🚀 ~ onChangeFilterModel ~ newModel:', newModel);
-    if (newModel.items) {
-      setFilterModel(newModel);
-    }
-  };
+  // const onChangeFilterModel = (
+  //   newModel: GridFilterModel,
+  // ) => {
+  //   console.log('🚀 ~ onChangeFilterModel ~ newModel:', newModel);
+
+  //   if (newModel.items) {
+  //     setFilterModel(newModel);
+  //   }
+  // };
 
   return (
     <Box m="20px" pt={2}>
@@ -301,18 +286,16 @@ const MyLearners = () => {
             onRowSelectionModelChange={handleSelectionModelChange}
             initialState={{
               filter: {
-                filterModel: !turnOffDivisionFilter
-                  ? filteredDivision
-                  : undefined,
+                filterModel: filterModel
               },
               sorting: {
                 sortModel: [{ field: 'name', sort: 'asc' }],
               },
             }}
-            filterModel={filterModel}
-            onFilterModelChange={(newModel, filterValues) =>
-              onChangeFilterModel(newModel, filterValues)
-            }
+            // filterModel={filterModel}
+            // onFilterModelChange={(newModel) =>
+            //   onChangeFilterModel(newModel)
+            // }
           />
         ) : (
           <ProgressLine />
@@ -329,10 +312,3 @@ const MyLearners = () => {
 };
 
 export default MyLearners;
-function useDemoData(arg0: {
-  dataSet: string;
-  visibleFields: string[];
-  rowLength: number;
-}): { data: any } {
-  throw new Error('Function not implemented.');
-}
