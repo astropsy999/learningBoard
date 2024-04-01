@@ -217,7 +217,7 @@ function CustomFilterInput(
     event: React.ChangeEvent<{}>,
     selectedOptions: string[],
   ) => {
-    onChange(selectedOptions); // Передаем выбранные значения в родительский компонент
+    onChange(value); // Передаем выбранные значения в родительский компонент
   };
 
   return (
