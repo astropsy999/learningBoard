@@ -48,11 +48,16 @@ main {
   visibility: visible !important;
   opacity: 1 !important;
   margin-right: 22px !important;
+  opacity: 0.3 !important;
 }
 
 .MuiDataGrid-columnHeaderTitleContainer:hover .MuiDataGrid-menuIcon {
   transform: none !important;
   margin: 0 !important;
+}
+
+.MuiDataGrid-menuIcon:hover {
+  opacity: 1 !important;
 }
 
 .MuiDataGrid-columnHeaderTitleContainer .MuiDataGrid-menuIcon {
@@ -69,15 +74,14 @@ main {
   display: none !important;
 }
 
-
 .MuiDataGrid-panelWrapper {
   width: 100%;
 }
 
 #customized-hook-demo-listbox {
-  z-index: 1000; 
-  position: relative; 
-  overflow: visible; 
+  z-index: 1000;
+  position: relative;
+  overflow: visible;
 }
 
 .MuiCheckbox-root:hover {

@@ -6,7 +6,7 @@ import {
   GridFilterModel,
   GridFilterOperator,
   GridSingleSelectColDef,
-  useGridApiRef
+  useGridApiRef,
 } from '@mui/x-data-grid';
 import React, { useEffect, useMemo, useState } from 'react';
 import AssignEditButton from '../components/AssignEditBtn';
@@ -65,12 +65,12 @@ const MyLearners = () => {
 
   useEffect(() => {
     // Обновляем filterModel при изменении selectedValues
-    if (currentUserDivisionName) setFilterModel({
-      items: [],
-      quickFilterValues: [...currentUserDivisionName!, ...selectedValues],
-    });
+    if (currentUserDivisionName)
+      setFilterModel({
+        items: [],
+        quickFilterValues: [...currentUserDivisionName!, ...selectedValues],
+      });
   }, [selectedValues, currentUserDivisionName]);
-
 
   const apiRef = useGridApiRef();
 
@@ -80,8 +80,7 @@ const MyLearners = () => {
     }
   }, [allCourses, allData, allLearners, currentUserDivisionName, divisions]);
 
-
- const unsetDivisionFilter = useMemo(() => {
+  const unsetDivisionFilter = useMemo(() => {
     return {
       items: [
         {
@@ -94,8 +93,6 @@ const MyLearners = () => {
   }, [currentUserDivisionName]);
 
   const isSelectedUser = selectedRows!.length > 0;
-
-
 
   const handleCoursesDialogOpen = (row: SelectedRowData) => {
     openCoursesDialog(true);
@@ -111,17 +108,20 @@ const MyLearners = () => {
   };
 
   useEffect(() => {
-
-    if(!turnOffDivisionFilter && currentUserDivisionName){
+    if (!turnOffDivisionFilter && currentUserDivisionName) {
       setSelectedValues([currentUserDivisionName]);
     }
 
-    if(turnOffDivisionFilter){
+    if (turnOffDivisionFilter) {
       setSelectedValues([]);
     }
-
-
-  }, [ turnOffDivisionFilter, currentUserDivisionName, apiRef, isLoading, unsetDivisionFilter]);
+  }, [
+    turnOffDivisionFilter,
+    currentUserDivisionName,
+    apiRef,
+    isLoading,
+    unsetDivisionFilter,
+  ]);
 
   const handleCoursesDialogClose = () => {
     openCoursesDialog(false);
@@ -141,34 +141,34 @@ const MyLearners = () => {
     setSelectedRowsDataOnMyLearners(selectedRowData);
   };
 
-  const filterOperators: GridFilterOperator<any, string, string>[] = [{
-        value: 'isAnyOf',
-        getApplyFilterFn: (filterItem: GridFilterItem) => {
-          if (!filterItem.field || !filterItem.value || !filterItem.operator) {
-            return null;
-          }
+  const filterOperators: GridFilterOperator<any, string, string>[] = [
+    {
+      value: 'isAnyOf',
+      getApplyFilterFn: (filterItem: GridFilterItem) => {
+        if (!filterItem.field || !filterItem.value || !filterItem.operator) {
+          return null;
+        }
 
-          if (selectedValues.length === 0) {
-            return (value: string) => true;
-          }
+        if (selectedValues.length === 0) {
+          return (value: string) => true;
+        }
 
-          return (value: string) => {
-            return selectedValues?.includes(value);
-          };
+        return (value: string) => {
+          return selectedValues?.includes(value);
+        };
+      },
+      InputComponent: CustomFilterInput,
+      InputComponentProps: {
+        onChange: (selectedValue: string[]) => {
+          setSelectedValues(selectedValue);
         },
-        InputComponent: CustomFilterInput,
-        InputComponentProps: {
-          onChange: (selectedValue: string[]) => {
-            setSelectedValues(selectedValue);
-          },
-          filterLabel,
-          field: selectedField,
-          selectedOptions: selectedValues,
-        },
-      }
-];
+        filterLabel,
+        field: selectedField,
+        selectedOptions: selectedValues,
+      },
+    },
+  ];
 
- 
   const columns: GridColDef[] = [
     {
       field: 'name',
@@ -177,13 +177,13 @@ const MyLearners = () => {
       headerClassName: 'name-column--cell',
       cellClassName: 'name-cell',
       filterOperators: filterOperators,
-
+      headerAlign: 'center',
     },
     {
       field: 'position',
       headerName: 'Должность',
       type: 'string',
-      headerAlign: 'left',
+      headerAlign: 'center',
       flex: 0.3,
       align: 'left',
       headerClassName: 'name-column--cell',
@@ -194,7 +194,8 @@ const MyLearners = () => {
       headerName: 'Подразделение',
       flex: 0.5,
       headerClassName: 'name-column--cell',
-      filterOperators
+      filterOperators,
+      headerAlign: 'center',
     },
     ...((allCourses
       ? allCourses!.map((course) => ({
@@ -230,14 +231,12 @@ const MyLearners = () => {
     },
   ];
 
-  const onChangeFilterModel = (
-    newModel: GridFilterModel,
-  ) => {
+  const onChangeFilterModel = (newModel: GridFilterModel) => {
     console.log('🚀 ~ onChangeFilterModel ~ newModel:', newModel);
 
     if (newModel.items) {
-     setFilterLabel(getHeaderNameByField(newModel.items[0].field!, columns)!);
-     setSelectedField(newModel.items[0].field!);
+      setFilterLabel(getHeaderNameByField(newModel.items[0].field!, columns)!);
+      setSelectedField(newModel.items[0].field!);
     }
 
     if (!newModel.items[0].value) {
@@ -261,17 +260,20 @@ const MyLearners = () => {
             loading={isLoading}
             onRowSelectionModelChange={handleSelectionModelChange}
             initialState={{
-
               sorting: {
                 sortModel: [{ field: 'name', sort: 'asc' }],
               },
             }}
-            filterModel={{ items: [
-              { field: selectedField, operator: 'isAnyOf', value: selectedValues }
-            ] }}
-            onFilterModelChange={(newModel) =>
-              onChangeFilterModel(newModel)
-            }
+            filterModel={{
+              items: [
+                {
+                  field: selectedField,
+                  operator: 'isAnyOf',
+                  value: selectedValues,
+                },
+              ],
+            }}
+            onFilterModelChange={(newModel) => onChangeFilterModel(newModel)}
             sx={{
               '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': {
                 py: '3px',

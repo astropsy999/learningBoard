@@ -26,7 +26,7 @@ export const dataGridStyles = {
     },
     '& .MuiDataGrid-cell': {
       borderBottom: 'none',
-      color:'#014040'
+      color: '#014040',
     },
     '& .name-column--cell': {
       backgroundColor: colors.blueAccent[900],
@@ -38,7 +38,10 @@ export const dataGridStyles = {
       color: '#014040',
       fontSize: '0.9rem',
       fontWeight: 'bold',
-      borderRight: `1px solid black`
+    },
+    '& .MuiDataGrid-columnHeaderDraggableContainer': {},
+    '& .MuiDataGrid-columnHeader': {
+      borderRight: `1px solid lightgrey`,
     },
     '& .MuiDataGrid-virtualScroller': {
       backgroundColor: colors.primary[100],
@@ -57,6 +60,15 @@ export const dataGridStyles = {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+    },
+    '& .base-Popper-root .MuiTooltip-popper .MuiTooltip-popperInteractive': {
+      fontSize: '1em ',
+    },
+    '& .MuiDataGrid-columnHeaderTitle': {
+      overflow: 'visible',
+      lineHeight: '0.8rem',
+      whiteSpace: 'normal',
+      // padding: '20px',
     },
   },
 };
