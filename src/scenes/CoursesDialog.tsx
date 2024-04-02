@@ -143,7 +143,7 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
                   {onlyLearnerName.length ? (
                     <Chip
                       label={onlyLearnerName}
-                      color="info"
+                      color="warning"
                       variant="filled"
                       size="medium"
                     />
