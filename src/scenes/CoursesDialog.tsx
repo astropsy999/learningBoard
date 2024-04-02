@@ -143,16 +143,16 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
                   {onlyLearnerName.length ? (
                     <Chip
                       label={onlyLearnerName}
-                      color="primary"
-                      variant="outlined"
+                      color="info"
+                      variant="filled"
                       size="medium"
                     />
                   ) : (
                     selectedRowsData?.map((item) => (
                       <Chip
                         label={item.name}
-                        color="primary"
-                        variant="outlined"
+                        color="warning"
+                        variant="filled"
                         size="medium"
                         key={item.id}
                         sx={{ margin: '2px' }}

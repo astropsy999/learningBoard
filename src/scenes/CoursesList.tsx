@@ -148,7 +148,7 @@ const CoursesList = () => {
     {
       field: 'title',
       headerName: 'Название курса',
-      flex: 0.5,
+      flex: 0.4,
       headerClassName: 'name-column--cell',
       cellClassName: 'name-cell center--cell',
     },
@@ -264,7 +264,7 @@ const CoursesList = () => {
   ].filter(Boolean) as GridColDef[];
 
   return (
-    <Box m="20px">
+    <Box m="20px" pt={2}>
       <Header title="Курсы" subtitle="" />
       <Box m="40px 0 0 0" height="75vh" sx={dataGridStyles.root}>
         <DataGrid

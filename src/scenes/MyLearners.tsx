@@ -184,7 +184,7 @@ const MyLearners = () => {
       headerName: 'Должность',
       type: 'string',
       headerAlign: 'center',
-      flex: 0.3,
+      flex: 0.2,
       align: 'left',
       headerClassName: 'name-column--cell',
       filterOperators: filterOperators,
@@ -192,7 +192,7 @@ const MyLearners = () => {
     {
       field: 'division',
       headerName: 'Подразделение',
-      flex: 0.5,
+      flex: 0.3,
       headerClassName: 'name-column--cell',
       filterOperators,
       headerAlign: 'center',
@@ -215,7 +215,7 @@ const MyLearners = () => {
     {
       field: 'addCourses',
       headerName: 'Назначение',
-      flex: 0.3,
+      flex: 0.15,
       headerClassName: 'name-column--cell',
       renderCell: ({ row }) => {
         const hasCourses = row.courses.length;
@@ -246,8 +246,7 @@ const MyLearners = () => {
 
   return (
     <Box m="20px" pt={2}>
-      <Header title="Ученики" subtitle="" />
-
+      <Header title="Сотрудники" subtitle="" />
       <Box m="10px 0 0 0" sx={dataGridStyles.root}>
         {!isLoading ? (
           <DataGrid
@@ -279,10 +278,10 @@ const MyLearners = () => {
                 py: '3px',
               },
               '& .MuiDataGrid-colCell, & .MuiDataGrid-cell': {
-                borderRight: `1px solid ${theme.palette.divider}`, // Добавление вертикальной черты
+                borderRight: `1px solid lightgrey`, // Добавление вертикальной черты
                 display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+                alignItems: 'center', // Центрирование содержимого по вертикали
+                justifyContent: 'center', // Центрирование содержимого по горизонтали
               },
             }}
           />

@@ -76,6 +76,12 @@ main {
 
 .MuiDataGrid-panelWrapper {
   width: 100%;
+  /* background: black; */
+}
+
+.MuiDataGrid-panel,
+.MuiPaper-root {
+  /* background: #73b1bf !important; */
 }
 
 #customized-hook-demo-listbox {
