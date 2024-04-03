@@ -37,7 +37,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
 }) => {
   const [checked, setChecked] = React.useState(false);
   const { selectedCoursesToSave, setSelectedCoursesToSave } = useCourses();
-  const { onlyLearnerName, allLearners, currentUserData, selectedRowsData } =
+  const { onlyLearnerName, allLearners, currentUserData, selectedRowsData, isMassEditMode } =
     useLearners();
   const [deadlineCourseDate, setDeadlineCourseDate] = React.useState<
     string | null
@@ -52,7 +52,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
 
   const everySelectedUsersHaveLockedThisCourse = (courseId: number) => 
 
-    selectedRowsData.length > 0 
+    isMassEditMode 
     ? selectedRowsData?.every((item) => {
       return item?.courses_exclude?.some((course) => course === courseId);
     })
@@ -60,7 +60,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
   
 
   const everySelectedUsersHaveAssignedThisCourse = (courseId: number) =>
-    selectedRowsData.length > 0
+    isMassEditMode
       ? selectedRowsData.every((item) =>
           item?.courses?.some((course) => +Object.keys(course)[0] === courseId)
         )
@@ -70,11 +70,8 @@ export const CourseCard: React.FC<CourseCardProps> = ({
 
     const assignedIds = assigned.map((item) => item.id);
 
-
     let isEverySelected = everySelectedUsersHaveAssignedThisCourse(courseItem.id)
     let isEveryLocked = everySelectedUsersHaveLockedThisCourse(courseItem.id)
-    console.log('courseItem.id: ', courseItem.id);
-    console.log('isEveryLocked: ', isEveryLocked);
 
     if (assignedIds.includes(courseItem.id)) {
       setChecked(true);
@@ -86,17 +83,13 @@ export const CourseCard: React.FC<CourseCardProps> = ({
     }
 
     if (isEveryLocked) {
-      console.log('isEveryLocked: ', isEveryLocked);
       setCourseLocked(true);
       isEveryLocked = false;
     }
 
-
     setDeadlineDate(getDeadlineDate(courseItem.id) as string);
   }, [assigned, courseItem.id]);
 
-
- 
 
   const getDeadlineDate = (courseId: number, isUnixTime = false) => {
     const deadline = assigned.find(
@@ -113,9 +106,26 @@ export const CourseCard: React.FC<CourseCardProps> = ({
     }
   };
 
+  const massEditSelectedCourses = () => {
+    console.log('massEditSelectedCourses: ');
+    
+   
+  };
+
   const handleCardClick = () => {
+
     const newChecked = !checked;
     setChecked(newChecked);
+
+    if(isMassEditMode) {
+      if (!checked) {
+        console.log('checked: ', checked);
+        massEditSelectedCourses()
+       
+      } else {
+        massEditSelectedCourses()
+      }
+    }
 
     if (!checked) {
       setSelectedCoursesToSave([
@@ -128,6 +138,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
       );
     }
   };
+  
 
   const handleDateChange = (newDate: Object | null, itemId: number) => {
     // @ts-ignore
@@ -135,7 +146,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
     const unixTime = new Date(dateString).getTime() / 1000;
 
     const findedItem = selectedCoursesToSave.find((item) => item.id === itemId);
-    findedItem!['deadline'] = unixTime;
+    findedItem!!['deadline'] = unixTime;
 
     setSelectedCoursesToSave([...selectedCoursesToSave]);
   };

@@ -44,6 +44,7 @@ const MyLearners = () => {
     allLearners,
     divisions,
     currentUserDivisionName,
+    setIsMassEditMode
   } = useLearners();
   const theme = useTheme();
 
@@ -129,6 +130,7 @@ const MyLearners = () => {
     deSelectAll();
     setAssignedCourses([]);
     setLockedArr([]);
+    setIsMassEditMode(false)
   };
 
   const handleSelectionModelChange = (newSelection: Object[]) => {
@@ -138,6 +140,7 @@ const MyLearners = () => {
 
     setSelectedRows(selectedRowData);
     setSelectedRowsDataOnMyLearners(selectedRowData);
+    setIsMassEditMode(true)
   };
 
   const filterOperators: GridFilterOperator<any, string, string>[] = [

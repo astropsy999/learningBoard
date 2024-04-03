@@ -15,7 +15,7 @@ export const RenderAssignAllButton = () => {
       startIcon={<PlaylistAddIcon />}
       onClick={() => handleAssignAll()}
     >
-      Назначить выбранным
+      Массовое редактирование
     </Button>
   );
 };

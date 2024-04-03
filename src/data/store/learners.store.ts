@@ -26,7 +26,8 @@ export const useLearners = create<UserState & UserActions>()(
     onlyLearnerName: '',
     divisions: null,
     selectedLearnersToLockCourse: [],
-
+    isMassEditMode: false,
+    setIsMassEditMode: (value: boolean) => set({ isMassEditMode: value }, false, 'setIsMassEditMode'),
     setSelectedLearnersToLockCourse: (
       newSelectedLearnersToLockCourse: string[] | ILearner[],
     ) =>

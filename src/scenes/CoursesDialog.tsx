@@ -49,12 +49,17 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
     CoursesWithDeadline[] 
   >([]);
 
+
   const {
     onlyLearnerName,
     selectedRowsData,
     setSelectedRowsDataOnMyLearners,
     allData,
+    isMassEditMode,
+    setIsMassEditMode
   } = useLearners();
+
+
 
   React.useEffect(() => {
     allData && setAllCourses(allData.courses);
@@ -84,9 +89,6 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
     setSelectedCoursesToSave(filteredWithDeadline);
 
   }, [assignedCourses, allData?.courses, setSelectedCoursesToSave]);
-
- 
-
 
   const handleDeleteLearnerFromGroup = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -123,14 +125,14 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
       >
         <AppBar sx={{ position: 'relative' }} color="secondary">
           <Toolbar>
-            <IconButton
+            {!isMassEditMode &&<IconButton
               edge="start"
               color="inherit"
               onClick={onClose}
               aria-label="close"
             >
               <CloseIcon />
-            </IconButton>
+            </IconButton>}
             <Box
               sx={{
                 display: 'flex',
@@ -141,7 +143,7 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
               }}
             >
               <Box>
-                <b>Назначение обучения для:</b>{' '}
+              {!isMassEditMode ? <b>Назначение обучения для:</b> : <b>МАССОВОЕ РЕДАКТИРОВАНИЕ:</b>}
               </Box>
               <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                 <Box m={1}>
@@ -169,17 +171,25 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
                   )}
                 </Box>
               </Typography>
-              <Button
+              {!isMassEditMode ? (<Button
                 autoFocus
                 color="warning"
                 onClick={handleSaveCourses}
                 variant="contained"
                 startIcon={<SaveAltIcon />}
                 sx={{ height: '40px' }}
-                // disabled={selectedCoursesToSave.length === 0}
+                disabled={isMassEditMode}
               >
                 Сохранить
-              </Button>
+              </Button>) : (
+              <IconButton
+              edge="start"
+              color="inherit"
+              onClick={onClose}
+              aria-label="close"
+            >
+              <CloseIcon />
+            </IconButton>)}
             </Box>
           </Toolbar>
         </AppBar>
