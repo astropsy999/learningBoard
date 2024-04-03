@@ -34,7 +34,6 @@ export const CourseCard: React.FC<CourseCardProps> = ({
   courseItem,
   assigned,
   isLocked,
-  allLockedCourses,
 }) => {
   const [checked, setChecked] = React.useState(false);
   const { selectedCoursesToSave, setSelectedCoursesToSave } = useCourses();
@@ -51,15 +50,53 @@ export const CourseCard: React.FC<CourseCardProps> = ({
 
   const colors = tokens(theme.palette.mode);
 
+  const everySelectedUsersHaveLockedThisCourse = (courseId: number) => 
+
+    selectedRowsData.length > 0 
+    ? selectedRowsData?.every((item) => {
+      return item?.courses_exclude?.some((course) => course === courseId);
+    })
+    : false
+  
+
+  const everySelectedUsersHaveAssignedThisCourse = (courseId: number) =>
+    selectedRowsData.length > 0
+      ? selectedRowsData.every((item) =>
+          item?.courses?.some((course) => +Object.keys(course)[0] === courseId)
+        )
+      : false;
+
   React.useEffect(() => {
+
     const assignedIds = assigned.map((item) => item.id);
+
+
+    let isEverySelected = everySelectedUsersHaveAssignedThisCourse(courseItem.id)
+    let isEveryLocked = everySelectedUsersHaveLockedThisCourse(courseItem.id)
+    console.log('courseItem.id: ', courseItem.id);
+    console.log('isEveryLocked: ', isEveryLocked);
 
     if (assignedIds.includes(courseItem.id)) {
       setChecked(true);
     }
 
+    if(isEverySelected) {
+      setChecked(true);
+      isEverySelected = false;
+    }
+
+    if (isEveryLocked) {
+      console.log('isEveryLocked: ', isEveryLocked);
+      setCourseLocked(true);
+      isEveryLocked = false;
+    }
+
+
     setDeadlineDate(getDeadlineDate(courseItem.id) as string);
   }, [assigned, courseItem.id]);
+
+
+ 
 
   const getDeadlineDate = (courseId: number, isUnixTime = false) => {
     const deadline = assigned.find(
