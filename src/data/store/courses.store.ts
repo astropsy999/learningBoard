@@ -39,11 +39,13 @@ interface CoursesState {
   setAllCourses: Function;
   selectedCoursesToSave: CourseData[];
   assignedCourses: CoursesWithDeadline[];
+  massAssignedCourses: CoursesWithDeadline[];
   setSelectedCoursesToSave: Function;
   singleSelectedUserCourses: CourseData[];
   selectedCoursesWithDeadlineToSave: CourseToSaveWithDeadline[];
   setSelectedCoursesWithDeadlineToSave: Function;
   setAssignedCourses: Function;
+  setMassAssignedCourses: Function;
 }
 
 export const useCourses = create<CoursesState>()(
@@ -53,6 +55,10 @@ export const useCourses = create<CoursesState>()(
     singleSelectedUserCourses: [],
     selectedCoursesWithDeadlineToSave: [],
     assignedCourses: [],
+    massAssignedCourses: [],
+    setMassAssignedCourses: (newMassAssignedCourses: CoursesWithDeadline[]) => set({
+      massAssignedCourses: newMassAssignedCourses
+    }, false, 'setMassAssignedCourses'),
     setSingleSelectedUserCourses: (
       newSingleSelectedUserCourses: CourseData[],
     ) =>

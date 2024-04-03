@@ -51,7 +51,7 @@ const MyLearners = () => {
   const { allCourses } = useCourses();
 
   const [isLoading, setIsLoading] = useState(true);
-  const { setSelectedCoursesToSave, assignedCourses, setAssignedCourses } =
+  const { setSelectedCoursesToSave, assignedCourses, setAssignedCourses, setMassAssignedCourses } =
     useCourses();
   const [selectedRows, setSelectedRows] = useState<
     SelectedRowData[] | undefined
@@ -131,6 +131,7 @@ const MyLearners = () => {
     setAssignedCourses([]);
     setLockedArr([]);
     setIsMassEditMode(false)
+    setMassAssignedCourses([]);
   };
 
   const handleSelectionModelChange = (newSelection: Object[]) => {
