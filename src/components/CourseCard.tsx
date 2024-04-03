@@ -66,6 +66,13 @@ export const CourseCard: React.FC<CourseCardProps> = ({
         )
       : false;
 
+  const getMassAssignedDate = (courseId: number) => 
+    isMassEditMode 
+      ? selectedRowsData[0]?.courses?.find((course) => +Object.keys(course)[0] === courseId)?.deadline
+      : null
+
+
+
 
   React.useEffect(() => {
 
@@ -83,7 +90,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
       isEverySelected = false;
       const existElem = massAssignedCourses.find(item => item.id === courseItem.id);
       if (!existElem) {
-        massAssignedCourses.push({ id: courseItem.id, deadline: null });
+        massAssignedCourses.push({ id: courseItem.id, deadline: getMassAssignedDate(courseItem.id) });
       }
     }
 
@@ -93,7 +100,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
     }
 
 
-    setDeadlineDate(getDeadlineDate(courseItem.id) as string);
+    !isMassEditMode ? setDeadlineDate(getDeadlineDate(courseItem.id) as string) : setDeadlineDate(getMassAssignedDate(courseItem.id));
   }, [assigned, courseItem.id]);
 
 
