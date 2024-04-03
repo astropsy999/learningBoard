@@ -64,7 +64,6 @@ const MyLearners = () => {
   const [selectedField, setSelectedField] = useState<string>('division');
 
   useEffect(() => {
-    // Обновляем filterModel при изменении selectedValues
     if (currentUserDivisionName)
       setFilterModel({
         items: [],
@@ -232,13 +231,10 @@ const MyLearners = () => {
   ];
 
   const onChangeFilterModel = (newModel: GridFilterModel) => {
-    console.log('🚀 ~ onChangeFilterModel ~ newModel:', newModel);
-
     if (newModel.items) {
       setFilterLabel(getHeaderNameByField(newModel.items[0].field!, columns)!);
       setSelectedField(newModel.items[0].field!);
     }
-
     if (!newModel.items[0].value) {
       setSelectedValues([]);
     }
@@ -278,10 +274,10 @@ const MyLearners = () => {
                 py: '3px',
               },
               '& .MuiDataGrid-colCell, & .MuiDataGrid-cell': {
-                borderRight: `1px solid lightgrey`, // Добавление вертикальной черты
+                borderRight: `1px solid lightgrey`, 
                 display: 'flex',
-                alignItems: 'center', // Центрирование содержимого по вертикали
-                justifyContent: 'center', // Центрирование содержимого по горизонтали
+                alignItems: 'center', 
+                justifyContent: 'center',
               },
             }}
           />

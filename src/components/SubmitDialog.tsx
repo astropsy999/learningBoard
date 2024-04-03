@@ -16,6 +16,7 @@ import { useLearners } from '../data/store/learners.store';
 import { ToUpdateUser, updateAllData } from '../services/api.service';
 import AssignDatePicker from './DatePicker';
 import { DateBuilderReturnType } from '@mui/x-date-pickers';
+import { CoursesWithDeadline } from '../data/types.store';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -115,18 +116,23 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
                 };
               })
             : [];
-          console.log('oldCourses: ', oldCourses);
 
           const uniqueIds = new Set([
             ...oldCourses.map((course) => course.id),
             ...selectedCoursesIds.map((course) => course.id),
           ]);
-          const uniqueCourses = Array.from(uniqueIds).map((id) => {
-            const foundCourse = [...oldCourses, ...selectedCoursesIds].find(
-              (course) => course.id === id,
-            );
-            return foundCourse;
+
+          const courseMap: { [id: number]: CoursesWithDeadline } = {};
+
+          oldCourses.forEach((course) => {
+              courseMap[course.id] = course;
           });
+
+          selectedCoursesIds.forEach((course) => {
+              courseMap[course.id] = course;
+          });
+
+          const uniqueCourses = Object.values(courseMap);
 
           return {
             id: user.id,
@@ -150,8 +156,6 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
     const filteredDataToUpdate = dataToUpdate.filter(
       (user) => user !== null,
     ) as ToUpdateUser[];
-
-    console.log('filteredDataToUpdate: ', filteredDataToUpdate);
 
     const result = await updateAllData(filteredDataToUpdate);
 
@@ -193,8 +197,6 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
           <DialogTitle
             sx={{ m: 0, p: 2 }}
             id="customized-dialog-title"
-            // fontSize={16}
-            // fontWeight={'bold'}
             color={'steelblue'}
             variant="h4"
           >

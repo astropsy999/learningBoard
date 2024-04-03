@@ -11,7 +11,7 @@ export type User = {
 
 export type CoursesWithDeadline = {
   id: number;
-  deadline: number | null;
+  deadline?: number | null;
 };
 
 export type Course = {

@@ -46,8 +46,9 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
   const [openSubmitDialog, setOpenSubmitDialog] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(true);
   const [selectedCourseIds, setSelectedCourseIds] = React.useState<
-    CoursesWithDeadline[]
+    CoursesWithDeadline[] 
   >([]);
+  // const [allSelectedUsersHaveLockedThisCourse, setAllSelectedUsersHaveLockedThisCourse] = React.useState<boolean>(false);
 
   const {
     onlyLearnerName,
@@ -59,6 +60,7 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
   React.useEffect(() => {
     allData && setAllCourses(allData.courses);
     setIsLoading(false);
+
   }, [allCourses, allData, setAllCourses]);
 
   const handleSaveCourses = () => {
@@ -81,7 +83,15 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
       });
 
     setSelectedCoursesToSave(filteredWithDeadline);
+
   }, [assignedCourses, allData?.courses, setSelectedCoursesToSave]);
+
+ 
+  const allSelectedUsersHaveLockedThisCourse = (courseId: number) => {
+    return selectedRowsData?.every((item) => {
+      return item?.courses_exclude?.some((course) => course === courseId) ? true : false;
+    })
+  }
 
   const handleDeleteLearnerFromGroup = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
@@ -193,7 +203,7 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
                     courseItem={course}
                     assigned={selectedCourseIds}
                     isLocked={
-                      lockedCourses! && lockedCourses.includes(course.id)
+                      lockedCourses! && lockedCourses.includes(course.id) || allSelectedUsersHaveLockedThisCourse(course.id)
                     }
                     allLockedCourses={lockedCourses!}
                   />

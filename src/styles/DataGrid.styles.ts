@@ -38,23 +38,23 @@ export const dataGridStyles = {
     },
     '& .MuiDataGrid-columnHeaderDraggableContainer': {},
     '& .MuiDataGrid-columnHeader': {
-      backgroundColor: '#73B1BF',
-      borderRight: `1px solid lightgrey`,
-      color: 'white',
+      backgroundColor: '#aedbe5',
+      borderRight: `1px solid #81b8c4`,
+      color: '#002A4B',
     },
     '& .MuiDataGrid-virtualScroller': {
       backgroundColor: colors.primary[100],
     },
     '& .MuiDataGrid-footerContainer': {
       borderTop: 'none',
-      backgroundColor: '#73B1BF',
+      backgroundColor: '#aedbe5',
     },
     '& .MuiCheckbox-root': {
       color: `${colors.greenAccent[200]} !important`,
     },
     '& .MuiDataGrid-columnHeaderCheckbox': {
       // backgroundColor: colors.blueAccent[900],
-      backgroundColor: '#73B1BF',
+      backgroundColor: '#aedbe5',
     },
     // '& .center--cell': {
     //   display: 'flex',
@@ -79,7 +79,7 @@ export const dataGridStyles = {
       justifyContent: 'center',
     },
     '& .MuiDataGrid-row-selected::before': {
-      background: 'blue' /* Измените цвет фона по вашему выбору */,
+      background: 'blue',
     },
   },
 };

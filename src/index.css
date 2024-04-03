@@ -48,7 +48,7 @@ main {
   visibility: visible !important;
   opacity: 1 !important;
   margin-right: 22px !important;
-  opacity: 0.3 !important;
+  opacity: 0.6 !important;
 }
 
 .MuiDataGrid-columnHeaderTitleContainer:hover .MuiDataGrid-menuIcon {
@@ -92,4 +92,8 @@ main {
 
 .MuiCheckbox-root:hover {
   background-color: transparent !important;
+}
+
+.MuiDataGrid-columnHeaderTitleContainerContent {
+  height: 100%;
 }

@@ -21,10 +21,11 @@ import { getLearnerIdByName } from '../helpers/getLearnerIdByName';
 import { mutate } from 'swr';
 import { Bounce, toast } from 'react-toastify';
 import { getLockedUsersByCourseId } from '../helpers/getlockedUsersByCourseId';
+import { CoursesWithDeadline } from '../data/types.store';
 
 interface CourseCardProps {
   courseItem: CourseData;
-  assigned: CourseWithDeadline[];
+  assigned: CoursesWithDeadline[];
   isLocked: boolean;
   allLockedCourses: number[];
 }
@@ -175,7 +176,9 @@ export const CourseCard: React.FC<CourseCardProps> = ({
           ? courseLocked
             ? colors.redAccent[900]
             : colors.blueAccent[900]
-          : 'inherit',
+          : courseLocked
+            ? colors.redAccent[900]
+            : 'inherit',
         pointerEvents: isLoading ? 'none' : 'auto',
         opacity: isLoading ? 0.5 : 1,
         position: 'relative',
