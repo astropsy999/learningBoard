@@ -1,4 +1,5 @@
 import {
+  Box,
   Checkbox,
   Chip,
   CircularProgress,
@@ -23,6 +24,7 @@ import { Bounce, toast } from 'react-toastify';
 import { getLockedUsersByCourseId } from '../helpers/getlockedUsersByCourseId';
 import { CoursesWithDeadline } from '../data/types.store';
 import { getDeadlineDate } from '../helpers/getDeadlineDate';
+import {Skeleton} from '@mui/material';
 
 interface CourseCardProps {
   courseItem: CourseData;
@@ -47,6 +49,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
   const [courseLocked, setCourseLocked] = React.useState<boolean>(isLocked);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [isCourseCardLoading, setIsCourseCardLoading] = React.useState<boolean>(false);
+  const [isCoursedateLoading, setIsCoursedateLoading] = React.useState<boolean>(false);
 
   const theme = useTheme();
 
@@ -110,6 +113,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
 
 
   const removeCoursesMass = async (withOutRemovedCourses: CoursesWithDeadline[]) => {
+    setIsCourseCardLoading(true);
    
     let dataToUpdate
     dataToUpdate = selectedRowsData
@@ -135,6 +139,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
     const result = await updateAllData(filteredDataToUpdate);
 
     mutate('allData').then(() => {
+
       toast.success(result[0]?.data?.message, {
         position: 'top-right',
         autoClose: 1000,
@@ -196,8 +201,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
   };
 
   const handleMassDateChange = async (newTime: number, courseId: number) => {
-    console.log('courseId: ', courseId);
-    
+    setIsCoursedateLoading(true);
     // Фильтруем массив massAssignedCourses, чтобы изменить только сроки для курсов с courseId
     const updatedMassAssignedCourses = massAssignedCourses.map(course => {
       if (course.id === courseId) {
@@ -223,10 +227,13 @@ export const CourseCard: React.FC<CourseCardProps> = ({
     const filteredDataToUpdate = dataToUpdate.filter(
       (user) => user !== null,
     ) as ToUpdateUser[];
+
+    const stringDate = newTime ? new Date(newTime * 1000).toLocaleDateString() : null
     
     const result = await updateAllData(filteredDataToUpdate);
     
     mutate('allData').then(() => {
+      setIsCoursedateLoading(true);
       toast.success(result[0]?.data?.message, {
         position: 'top-right',
         autoClose: 1000,
@@ -238,7 +245,8 @@ export const CourseCard: React.FC<CourseCardProps> = ({
         theme: 'colored',
         transition: Bounce,
       });
-      setIsCourseCardLoading(false);
+      setIsCoursedateLoading(false);
+      setDeadlineDate(stringDate!);
     });
   };
 
@@ -282,8 +290,6 @@ export const CourseCard: React.FC<CourseCardProps> = ({
       findedItem!!['deadline'] = unixTime;
       setSelectedCoursesToSave([...selectedCoursesToSave]);
     }
-
-
   };
 
   const handleLockUnlock = async (
@@ -335,10 +341,11 @@ export const CourseCard: React.FC<CourseCardProps> = ({
         setCourseLocked(!courseLocked);
       });
     } catch (error) {
-      // Handle error
       setIsLoading(false);
     }
   };
+
+  const globalLoading = isLoading || isCourseCardLoading || isCoursedateLoading;
 
   return (
     <Card
@@ -350,7 +357,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        cursor: isLoading ? 'wait' : 'pointer',
+        cursor: globalLoading ? 'wait' : 'pointer',
         backgroundColor: checked
           ? courseLocked
             ? colors.redAccent[900]
@@ -358,8 +365,8 @@ export const CourseCard: React.FC<CourseCardProps> = ({
           : courseLocked
             ? colors.redAccent[900]
             : 'inherit',
-        pointerEvents: isLoading ? 'none' : 'auto',
-        opacity: isLoading ? 0.5 : 1,
+        pointerEvents: globalLoading ? 'none' : 'auto',
+        opacity: globalLoading ? 0.5 : 1,
         position: 'relative',
       }}
       onClick={handleCardClick}
@@ -374,11 +381,16 @@ export const CourseCard: React.FC<CourseCardProps> = ({
         </Typography>
       </CardContent>
       <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
-        <Checkbox color="info" checked={checked} />
+        <Box>
+          {!isCourseCardLoading 
+            ? <Checkbox color="info" checked={checked} /> 
+            : <CircularProgress size={33} color="info"  />
+          }
+        </Box>
         {currentUserData?.manager.level === 1 && (
-          <>
+          <Box>
             {isLoading ? (
-              <CircularProgress size={24} color="info" />
+              <CircularProgress size={30} color="info" />
             ) : (
               <FormControlLabel
                 control={
@@ -393,13 +405,17 @@ export const CourseCard: React.FC<CourseCardProps> = ({
                 }
               />
             )}
-          </>
+          </Box>
         )}
-        <AssignDatePicker
-          onDateChange={(newDate) => handleDateChange(newDate, courseItem.id)}
-          disabled={!checked}
-          defaultValue={deadlineDate as string}
-        />
+        <Box>
+        {!isCoursedateLoading 
+            ? <AssignDatePicker
+                onDateChange={(newDate) => handleDateChange(newDate, courseItem.id)}
+                disabled={!checked}
+                defaultValue={deadlineDate as string}
+          />
+            : <Skeleton width={130} height={60}/>}
+        </Box>
       </CardActions>
     </Card>
   );
