@@ -14,7 +14,7 @@ import * as React from 'react';
 import { CourseData, useCourses } from '../data/store/courses.store';
 import { tokens } from '../theme';
 import { truncateDescription } from '../helpers/truncateDescriptions';
-import { CourseWithDeadline, lockCourses } from '../services/api.service';
+import {  ToUpdateUser, lockCourses, updateAllData } from '../services/api.service';
 import AssignDatePicker from './DatePicker';
 import { useLearners } from '../data/store/learners.store';
 import { getLearnerIdByName } from '../helpers/getLearnerIdByName';
@@ -22,6 +22,7 @@ import { mutate } from 'swr';
 import { Bounce, toast } from 'react-toastify';
 import { getLockedUsersByCourseId } from '../helpers/getlockedUsersByCourseId';
 import { CoursesWithDeadline } from '../data/types.store';
+import { getDeadlineDate } from '../helpers/getDeadlineDate';
 
 interface CourseCardProps {
   courseItem: CourseData;
@@ -45,6 +46,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
   const [deadlineDate, setDeadlineDate] = React.useState<string | number>();
   const [courseLocked, setCourseLocked] = React.useState<boolean>(isLocked);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [isCourseCardLoading, setIsCourseCardLoading] = React.useState<boolean>(false);
 
   const theme = useTheme();
 
@@ -66,14 +68,6 @@ export const CourseCard: React.FC<CourseCardProps> = ({
         )
       : false;
 
-  const getMassAssignedDate = (courseId: number) => 
-    isMassEditMode 
-      ? selectedRowsData[0]?.courses?.find((course) => +Object.keys(course)[0] === courseId)?.deadline
-      : null
-
-
-
-
   React.useEffect(() => {
 
     const assignedIds = assigned.map((item) => item.id);
@@ -90,7 +84,11 @@ export const CourseCard: React.FC<CourseCardProps> = ({
       isEverySelected = false;
       const existElem = massAssignedCourses.find(item => item.id === courseItem.id);
       if (!existElem) {
-        massAssignedCourses.push({ id: courseItem.id, deadline: getMassAssignedDate(courseItem.id) });
+        massAssignedCourses.push(
+          { id: courseItem.id, 
+            deadline: null
+          }
+        );
       }
     }
 
@@ -98,31 +96,103 @@ export const CourseCard: React.FC<CourseCardProps> = ({
       setCourseLocked(true);
       isEveryLocked = false;
     }
-
-
-    !isMassEditMode ? setDeadlineDate(getDeadlineDate(courseItem.id) as string) : setDeadlineDate(getMassAssignedDate(courseItem.id));
+    !isMassEditMode 
+      ? setDeadlineDate(getDeadlineDate(courseItem.id, false, assigned) as string) 
+      : setDeadlineDate(getDeadlineDate(courseItem.id, false, massAssignedCourses));
   }, [assigned, courseItem.id]);
 
 
-  const getDeadlineDate = (courseId: number, isUnixTime = false) => {
-    const deadline = assigned.find(
-      (course) => course.id === courseId,
-    )?.deadline;
-    switch (deadline) {
-      case null:
-        return 'Без срока';
-      case undefined:
-        return '';
-      default:
-        const date = new Date(deadline! * 1000);
-        return !isUnixTime ? date.toLocaleDateString('ru-RU') : deadline;
-    }
+  const removeCoursesMass = async (withOutRemovedCourses: CoursesWithDeadline[]) => {
+    console.log('withOutRemovedCourses: ', withOutRemovedCourses);
+    console.log('МАССОВО УДАЛЯЕМ КУРСЫ');
+
+    let dataToUpdate
+    dataToUpdate = selectedRowsData
+        .map((user) => {
+          if (!user) return null;
+          const courseMap: { [id: number]: CoursesWithDeadline } = {};
+          withOutRemovedCourses.forEach((course) => {
+              courseMap[course.id] = course;
+          });
+          const uniqueCourses = Object.values(courseMap);
+
+          return {
+            id: user.id,
+            courses: uniqueCourses,
+          };
+        })
+        .filter(Boolean);
+
+    const filteredDataToUpdate = dataToUpdate.filter(
+      (user) => user !== null,
+    ) as ToUpdateUser[];
+
+    console.log('filteredDataToUpdate: ', filteredDataToUpdate);
+
+    const result = await updateAllData(filteredDataToUpdate);
+
+    mutate('allData').then(() => {
+      toast.success(result[0]?.data?.message, {
+        position: 'top-right',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+        transition: Bounce,
+      });
+      setIsCourseCardLoading(false);
+    });
+
   };
 
-  const massEditSelectedCourses = () => {
-    console.log('massEditSelectedCourses: ', massAssignedCourses);
-    
-   
+  const addCoursesMass = async (withAddedCourses: CoursesWithDeadline[]) => {
+    console.log('addedCourses: ', withAddedCourses);
+    setIsCourseCardLoading(true)
+    console.log('МАССОВО ДОБАВЛЯЕМ КУРСЫ');
+
+    let dataToUpdate
+
+    dataToUpdate = selectedRowsData
+        .map((user) => {
+          if (!user) return null;
+          const courseMap: { [id: number]: CoursesWithDeadline } = {};
+          withAddedCourses.forEach((course) => {
+              courseMap[course.id] = course;
+          });
+
+          const uniqueCourses = Object.values(courseMap);
+
+          return {
+            id: user.id,
+            courses: uniqueCourses,
+          };
+        })
+        .filter(Boolean);
+    console.log('dataToUpdate: ', dataToUpdate);
+
+    const filteredDataToUpdate = dataToUpdate.filter(
+      (user) => user !== null,
+    ) as ToUpdateUser[];
+
+    const result = await updateAllData(filteredDataToUpdate);
+
+    mutate('allData').then(() => {
+      toast.success(result[0]?.data?.message, {
+        position: 'top-right',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+        transition: Bounce,
+      });
+      setIsCourseCardLoading(false);
+    });
   };
 
   const handleCardClick = () => {
@@ -132,11 +202,14 @@ export const CourseCard: React.FC<CourseCardProps> = ({
 
     if(isMassEditMode) {
       if (!checked) {
-        console.log('checked: ', checked);
-        massEditSelectedCourses()
+        const withAddedCourses = [...massAssignedCourses, { id: courseItem.id, deadline: null }];
+        setMassAssignedCourses([...massAssignedCourses, { id: courseItem.id, deadline: null }])
+        addCoursesMass(withAddedCourses)
        
       } else {
-        massEditSelectedCourses()
+        const withOutRemovedCourses = massAssignedCourses.filter((item) => item.id !== courseItem.id);
+        setMassAssignedCourses([...massAssignedCourses.filter((item) => item.id !== courseItem.id)])
+        removeCoursesMass(withOutRemovedCourses)
       }
     }
 

@@ -102,10 +102,6 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
       id: course.id,
       deadline: course.deadline,
     }));
-    console.log('selectedCoursesToSave: ', selectedCoursesToSave);
-
-    console.log('selectedCoursesIds: ', selectedCoursesIds);
-
 
     if (selectedRowsData.length > 0) {
       dataToUpdate = selectedRowsData
@@ -121,10 +117,10 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
               })
             : [];
 
-          const uniqueIds = new Set([
-            ...oldCourses.map((course) => course.id),
-            ...selectedCoursesIds.map((course) => course.id),
-          ]);
+          // const uniqueIds = new Set([
+          //   ...oldCourses.map((course) => course.id),
+          //   ...selectedCoursesIds.map((course) => course.id),
+          // ]);
 
           const courseMap: { [id: number]: CoursesWithDeadline } = {};
 

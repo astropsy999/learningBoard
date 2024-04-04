@@ -2,16 +2,13 @@ import { Bounce, ToastContent, toast } from 'react-toastify';
 import configApi from '../api/config.api';
 import { url } from '../api/url.api';
 import { mockDataCourses, mockDataTeam } from '../data/mockData';
-import { AllData, ILearner } from '../data/types.store';
+import { AllData, CoursesWithDeadline, ILearner } from '../data/types.store';
 
-export type CourseWithDeadline = {
-  id: number;
-  deadline: number | null;
-};
+
 
 export type ToUpdateUser = {
   id: number;
-  courses: CourseWithDeadline[];
+  courses: CoursesWithDeadline[];
 };
 
 export type CourseToLock = {
