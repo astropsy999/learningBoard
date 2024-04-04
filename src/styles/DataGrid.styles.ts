@@ -27,7 +27,7 @@ export const dataGridStyles = {
    
     '& .MuiDataGrid-cell': {
       borderBottom: 'none',
-      color: '#014040',
+      // color: '#014040',
     },
     '& .name-column--cell': {
       backgroundColor: colors.blueAccent[900],

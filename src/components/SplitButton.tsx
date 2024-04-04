@@ -20,8 +20,7 @@ export default function SplitButton() {
   const anchorRef = React.useRef<HTMLDivElement>(null);
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   // const [buttonColor, setButtonColor] = React.useState('primary');
-  const { currentUserData, setTurnOffDivisionFilter, deSelectAll } =
-    useLearners();
+  const { currentUserData, setTurnOffDivisionFilter, deSelectAll } = useLearners();
 
   const location = useLocation();
 

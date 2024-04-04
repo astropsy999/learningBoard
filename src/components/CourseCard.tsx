@@ -346,6 +346,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
   };
 
   const globalLoading = isLoading || isCourseCardLoading || isCoursedateLoading;
+  const isHighlighted = checked ? 'bold' : 'normal'
 
   return (
     <Card
@@ -372,15 +373,14 @@ export const CourseCard: React.FC<CourseCardProps> = ({
       onClick={handleCardClick}
     >
       <CardContent sx={{ maxHeight: 100 }}>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h5" component="div" fontWeight={isHighlighted}>
           {courseItem.title}
         </Typography>
-
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2"  >
           {truncateDescription(courseItem.description!)}
         </Typography>
       </CardContent>
-      <CardActions sx={{ display: 'flex', justifyContent: 'space-between' }}>
+      <CardActions sx={{ display: 'flex', justifyContent: 'space-between', alignContent: 'center' }}>
         <Box>
           {!isCourseCardLoading 
             ? <Checkbox color="info" checked={checked} /> 
@@ -407,7 +407,12 @@ export const CourseCard: React.FC<CourseCardProps> = ({
             )}
           </Box>
         )}
-        <Box>
+        <Box 
+          sx={{
+            backgroundColor: !globalLoading ? (!courseLocked ? 'lightskyblue' : 'lightcoral') : 'inherit', 
+            display: !checked ? 'none' : 'block', 
+            borderRadius: 1,
+            }} >
         {!isCoursedateLoading 
             ? <AssignDatePicker
                 onDateChange={(newDate) => handleDateChange(newDate, courseItem.id)}

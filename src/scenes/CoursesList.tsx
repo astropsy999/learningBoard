@@ -265,7 +265,6 @@ const CoursesList = () => {
 
   return (
     <Box m="20px" pt={2}>
-      <Header title="Курсы" subtitle="" />
       <Box m="40px 0 0 0" height="75vh" sx={dataGridStyles.root}>
         <DataGrid
           autoHeight={true}

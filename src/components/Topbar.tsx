@@ -10,6 +10,7 @@ import { fetchAllData } from '../services/api.service';
 import { RenderAssignAllButton } from './AssignAllBtn';
 import SplitButton from './SplitButton';
 import QueryStatsIcon from '@mui/icons-material/QueryStats';
+import Header from './Header';
 
 interface TopbarProps {
   setIsSidebar?: React.Dispatch<React.SetStateAction<boolean>>;
@@ -37,6 +38,13 @@ const Topbar: FC<TopbarProps> = () => {
     isLoading: isLoadingAllData,
     error,
   } = useSWR<AllData | undefined>('allData', fetchAllData);
+
+
+  const locationHeaderNames: { [key: string]: string } = {
+    '/': 'Сотрудники',
+    '/courses': 'Курсы',
+    '/stat': 'Статистика',
+  }
 
   useEffect(() => {
     if (!isLoadingAllData && !error && allData) {
@@ -87,6 +95,7 @@ const Topbar: FC<TopbarProps> = () => {
   ]);
 
   const location = useLocation();
+ 
 
   return (
     <Box
@@ -139,6 +148,7 @@ const Topbar: FC<TopbarProps> = () => {
           </Button>
         )}
       </Box>
+      <Box mr={10}><Header title={locationHeaderNames[location.pathname]} subtitle={''} /></Box>
     </Box>
   );
 };

@@ -124,7 +124,6 @@ const Statistics = () => {
 
   return (
     <Box m="20px" pt={2}>
-      <Header title="Статистика" subtitle="" />
       <Box m="10px 0 0 0" sx={dataGridStyles.root}>
         {!isLoading || !statLoading ? (
           <DataGrid

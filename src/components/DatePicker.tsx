@@ -32,8 +32,13 @@ export default function AssignDatePicker({
           format="DD.MM.YYYY"
           value={value}
           onChange={handleDateChange}
-          slotProps={{ textField: { size: 'small' } }}
+          slotProps={{ 
+            textField: { size: 'small', placeholder: 'ДД.ММ.ГГГГ', color: 'secondary' },
+          }}
           disabled={disabled}
+          closeOnSelect
+          disablePast
+         
         />
       </div>
     </LocalizationProvider>

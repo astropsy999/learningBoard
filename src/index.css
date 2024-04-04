@@ -99,3 +99,11 @@ main {
   width: 100% !important;
   justify-content: center;
 }
+
+/* .MuiDataGrid-columnHeaders {
+  position: fixed !important;
+} */
+
+/* .MuiDataGrid-virtualScrollerContent {
+  margin-top: 2.2%;
+} */

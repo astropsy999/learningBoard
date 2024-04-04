@@ -144,7 +144,7 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
               }}
             >
               <Box>
-              {!isMassEditMode ? <b>Назначение обучения для:</b> : <b>МАССОВОЕ РЕДАКТИРОВАНИЕ:</b>}
+              {!isMassEditMode ? <b>Назначение обучения для:</b> : <h2 style={{opacity: 0.9}}>МАССОВОЕ РЕДАКТИРОВАНИЕ:</h2>}
               </Box>
               <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                 <Box m={1}>

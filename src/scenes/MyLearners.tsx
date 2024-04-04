@@ -13,7 +13,6 @@ import React, { useEffect, useMemo, useState } from 'react';
 import AssignEditButton from '../components/AssignEditBtn';
 import { AssignedCourseChip } from '../components/AssignedCourseChip';
 import CustomFilterInput from '../components/CustomFilterPanel';
-import Header from '../components/Header';
 import ProgressLine from '../components/ProgressLine';
 import { useCourses } from '../data/store/courses.store';
 import { useLearners } from '../data/store/learners.store';
@@ -259,7 +258,6 @@ const MyLearners = () => {
 
   return (
     <Box m="20px" pt={2}>
-      <Header title="Сотрудники" subtitle="" />
       <Box m="10px 0 0 0" sx={dataGridStyles.root}>
         {!isLoading ? (
           <DataGrid

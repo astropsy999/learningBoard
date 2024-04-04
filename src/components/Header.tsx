@@ -12,12 +12,14 @@ const Header: FC<HeaderProps> = ({ title, subtitle }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
-    <Box mb="20px">
+    <Box>
       <Typography
         variant="h3"
         color={'#1C666D'}
         fontWeight="bold"
-        sx={{ m: '0 0 5px 0' }}
+        textTransform={'uppercase'}
+      
+        sx={{ m: '0 0 5px 0', opacity: '0.7' }}
       >
         {title}
       </Typography>
