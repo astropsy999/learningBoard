@@ -1,4 +1,4 @@
-import { Box, Typography, useTheme } from '@mui/material';
+import { Box, Chip, Typography, useTheme } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
@@ -18,6 +18,8 @@ import {
 } from '../helpers/findMaxCoursesArrayInStat';
 import { useCourses } from '../data/store/courses.store';
 import { getCourseTitleById } from '../helpers/getCourseTitleById';
+import LightbulbIcon from '@mui/icons-material/Lightbulb';
+
 
 const Statistics = () => {
   const theme = useTheme();
@@ -62,6 +64,14 @@ const Statistics = () => {
         columns.push({
           field: `${course.id}_${attempt}`,
           headerName: `Попытка ${attempt}`,
+          renderHeader: () => (
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width:'100%' }}>
+              <Chip
+                label={`${attempt}`}
+                sx={{ fontSize: '0.9rem', margin: '0 5px' }}
+              />
+            </div>
+          ),
           disableColumnMenu: true,
           headerClassName: 'name-column--cell',
           cellClassName: 'name-cell',
@@ -73,7 +83,12 @@ const Statistics = () => {
             )[0]?.attempts;
             const status = attempts && attempts[attempt - 1]?.status;
             return (
-              <Typography color={status === 'passed' ? 'green' : 'red'}>
+              <Typography 
+                color={status === 'passed' ? 'darkgreen' : 'red'} 
+                sx={{
+                  fontSize: '1rem',
+                  fontWeight: 'bold',
+                 }}>
                 {attempts && attempts[attempt - 1]
                   ? attempts[attempt - 1].points
                   : '-'}
@@ -88,6 +103,17 @@ const Statistics = () => {
     !isLoading && !statLoading
       ? coursesList?.map((course) => ({
           groupId: getCourseTitleById(course.id, allCourses!)!,
+          renderHeaderGroup: () => (
+            
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width:'100%' }}>
+                <Chip
+                  icon={<LightbulbIcon />}
+                  label={getCourseTitleById(course.id, allCourses!)!}
+                  sx={{ fontSize: '1rem', margin: '0 5px', fontWeight: 'bold' }}
+                />
+              </div>
+   
+          ),
           children: [
             { field: `${course.id}_1` },
             { field: `${course.id}_2` },

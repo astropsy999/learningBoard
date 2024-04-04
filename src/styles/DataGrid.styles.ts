@@ -24,6 +24,7 @@ export const dataGridStyles = {
       fontWeight: 'bold',
       fontSize: '0.9rem',
     },
+   
     '& .MuiDataGrid-cell': {
       borderBottom: 'none',
       color: '#014040',
@@ -69,6 +70,7 @@ export const dataGridStyles = {
       lineHeight: '0.8rem',
       whiteSpace: 'normal',
       fontSize: '1rem',
+      
     },
     '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': {
       py: '3px',

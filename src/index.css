@@ -96,4 +96,6 @@ main {
 
 .MuiDataGrid-columnHeaderTitleContainerContent {
   height: 100%;
+  width: 100% !important;
+  justify-content: center;
 }

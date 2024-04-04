@@ -1,4 +1,5 @@
-import { Box, useTheme } from '@mui/material';
+import LightbulbIcon from '@mui/icons-material/Lightbulb';
+import { Box, Chip, useTheme } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
@@ -203,12 +204,24 @@ const MyLearners = () => {
     ...((allCourses
       ? allCourses!.map((course) => ({
           field: course.title,
-          headerName: course.title,
+          // headerName: course.title,
+          renderHeader: () => (
+            
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width:'100%' }}>
+            <Chip
+              icon={<LightbulbIcon />}
+              label={course.title}
+              sx={{ fontSize: '0.9rem', margin: '0 5px' }}
+            />
+          </div>
+           
+      
+          ),
           flex: 0.3,
           renderCell: ({ row }) => (
             <AssignedCourseChip row={row} course={course} />
           ),
-          headerClassName: 'name-column--cell',
+          headerClassName: 'name-column--cell header-course',
           type: 'singleSelect',
           filterable: false,
           sortable: false,
