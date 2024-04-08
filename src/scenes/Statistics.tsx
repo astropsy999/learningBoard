@@ -1,3 +1,4 @@
+import LightbulbIcon from '@mui/icons-material/Lightbulb';
 import { Box, Chip, Typography, useTheme } from '@mui/material';
 import {
   DataGrid,
@@ -5,20 +6,18 @@ import {
   GridColumnGroupingModel,
 } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
-import { tokens } from '../theme';
 import useSWR from 'swr';
-import { fetchStatisctics } from '../services/api.service';
 import ProgressLine from '../components/ProgressLine';
-import { dataGridStyles } from '../styles/DataGrid.styles';
-import Header from '../components/Header';
+import { useCourses } from '../data/store/courses.store';
 import {
   AllStatisticsData,
   CourseAttempt,
   findMaxCourses,
 } from '../helpers/findMaxCoursesArrayInStat';
-import { useCourses } from '../data/store/courses.store';
 import { getCourseTitleById } from '../helpers/getCourseTitleById';
-import LightbulbIcon from '@mui/icons-material/Lightbulb';
+import { fetchStatisctics } from '../services/api.service';
+import { dataGridStyles } from '../styles/DataGrid.styles';
+import { tokens } from '../theme';
 
 
 const Statistics = () => {
@@ -143,10 +142,10 @@ const Statistics = () => {
                 py: '3px',
               },
               '& .MuiDataGrid-colCell, & .MuiDataGrid-cell': {
-                borderRight: `1px solid ${theme.palette.divider}`, // Добавление вертикальной черты
+                borderRight: `1px solid ${theme.palette.divider}`, 
                 display: 'flex',
-                alignItems: 'center', // Центрирование содержимого по вертикали
-                justifyContent: 'center', // Центрирование содержимого по горизонтали
+                alignItems: 'center', 
+                justifyContent: 'center', 
               },
             }}
           />

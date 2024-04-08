@@ -2,19 +2,17 @@ import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import LockPersonIcon from '@mui/icons-material/LockPerson';
 import { Box, Button, Chip } from '@mui/material';
-import { DataGrid, GridColDef, GridRowSpacingParams } from '@mui/x-data-grid';
+import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
 import { Bounce, toast } from 'react-toastify';
 import { mutate } from 'swr';
 import { BlockCourseFor } from '../components/BlockCourseFor';
-import Header from '../components/Header';
 import { useCourses } from '../data/store/courses.store';
 import { useLearners } from '../data/store/learners.store';
 import { Course } from '../data/types.store';
+import { truncateDescription } from '../helpers/truncateDescriptions';
 import { lockCourses } from '../services/api.service';
 import { dataGridStyles } from '../styles/DataGrid.styles';
-import { truncateDescription } from '../helpers/truncateDescriptions';
-import { SelectedRowData } from './MyLearners';
 
 interface LockedData {
   [key: number]: string[];

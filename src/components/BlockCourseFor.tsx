@@ -35,12 +35,12 @@ export const BlockCourseFor: React.FC<BlockCourseForProps> = ({
     setSelectedLearnersToLockCourse(value);
   };
 
-  const sortedLearners = allLearners!.sort((a, b) => {
+  const sortedLearners = allLearners ? [...allLearners].sort((a, b) => {
     if (a.name && b.name) {
       return a.name.localeCompare(b.name);
     }
     return 0;
-  });
+  }) : [];
 
   return (
     <React.Fragment>

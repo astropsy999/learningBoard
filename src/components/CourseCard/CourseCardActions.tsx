@@ -70,7 +70,7 @@ export const CourseCardActions: React.FC<CourseCardActionsProps> = (props) => {
             display: !checked ? 'none' : 'block', 
             borderRadius: 1,
             }} >
-        {!isCoursedateLoading 
+        {!globalLoading 
             ? <AssignDatePicker
                 onDateChange={(newDate) => handleDateChange(newDate, courseItem.id)}
                 disabled={!checked}

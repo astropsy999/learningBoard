@@ -2,8 +2,6 @@ import {
   useTheme
 } from '@mui/material';
 import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
 import * as React from 'react';
 import { Bounce, toast } from 'react-toastify';
 import { mutate } from 'swr';
@@ -13,10 +11,10 @@ import { CoursesWithDeadline } from '../../data/types.store';
 import { getDeadlineDate } from '../../helpers/getDeadlineDate';
 import { getLearnerIdByName } from '../../helpers/getLearnerIdByName';
 import { getLockedUsersByCourseId } from '../../helpers/getlockedUsersByCourseId';
-import { truncateDescription } from '../../helpers/truncateDescriptions';
 import { ToUpdateUser, lockCourses, updateAllData } from '../../services/api.service';
 import { tokens } from '../../theme';
 import { CourseCardActions } from './CourseCardActions';
+import { CourseCardContent } from './CoursecardContent';
 
 interface CourseCardProps {
   courseItem: CourseData;
@@ -25,14 +23,12 @@ interface CourseCardProps {
   allLockedCourses: number[];
 }
 
-export const CourseCard: React.FC<CourseCardProps> = ({
-  courseItem,
-  assigned,
-  isLocked,
-}) => {
+export const CourseCard: React.FC<CourseCardProps> = (props) => {
+
+  const {courseItem, assigned, isLocked} = props
   const [checked, setChecked] = React.useState(false);
   const { selectedCoursesToSave, setSelectedCoursesToSave, massAssignedCourses, setMassAssignedCourses } = useCourses();
-  const { onlyLearnerName, allLearners, currentUserData, selectedRowsData, isMassEditMode } =
+  const { onlyLearnerName, allLearners, selectedRowsData, isMassEditMode } =
     useLearners();
   const [deadlineDate, setDeadlineDate] = React.useState<string | number>();
   const [courseLocked, setCourseLocked] = React.useState<boolean>(isLocked);
@@ -99,20 +95,24 @@ export const CourseCard: React.FC<CourseCardProps> = ({
       ? setDeadlineDate(getDeadlineDate(courseItem.id, false, assigned) as string) 
       : setDeadlineDate(stringDate!)
   }, [assigned, courseItem.id]);
-
+  
   const updateCourses = async (
     dataToUpdate: ToUpdateUser[], 
     setLocalLoaderType: (prevState: boolean) => void,
-    newTime: number | undefined = undefined) => {
+    message: string,
+    newTime: number | undefined = undefined
+    ) => {
     setLocalLoaderType(true);
     const stringDate = newTime ? new Date(newTime * 1000).toLocaleDateString() : null
     const filteredDataToUpdate = dataToUpdate?.filter((user) => user !== null) as ToUpdateUser[];
     const result = await updateAllData(filteredDataToUpdate);
 
     mutate('allData').then(() => {
-      toast.success(result[0]?.data?.message, {
+      const toastMessage = message || result[0]?.data?.message
+
+      toast.success( toastMessage, {
         position: 'top-right',
-        autoClose: 1000,
+        autoClose: 1500,
         hideProgressBar: false,
         closeOnClick: true,
         pauseOnHover: false,
@@ -121,6 +121,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
         theme: 'colored',
         transition: Bounce,
       });
+
       stringDate && 
       setDeadlineDate(stringDate!);
       setLocalLoaderType(false);
@@ -146,15 +147,13 @@ export const CourseCard: React.FC<CourseCardProps> = ({
   };
 
   const removeCoursesMass =  async (withOutRemovedCourses: CoursesWithDeadline[]) => {
-
     const dataToUpdate = prepareDataToUpdate(withOutRemovedCourses, selectedRowsData) as ToUpdateUser[];
-    await updateCourses(dataToUpdate, setIsCourseCardLoading);
-
+    await updateCourses(dataToUpdate, setIsCourseCardLoading, 'Курс успешно снят!');
   };
 
   const addCoursesMass =  async (withAddedCourses: CoursesWithDeadline[]) => {
     const dataToUpdate = prepareDataToUpdate(withAddedCourses, selectedRowsData) as ToUpdateUser[]
-    await updateCourses(dataToUpdate, setIsCourseCardLoading);
+    await updateCourses(dataToUpdate, setIsCourseCardLoading, 'Курс успешно назначен!');
   };
 
   const handleMassDateChange =  async (newTime: number, courseId: number) => {
@@ -180,11 +179,10 @@ export const CourseCard: React.FC<CourseCardProps> = ({
       })
       .filter(Boolean) as ToUpdateUser[];
     
-    await updateCourses(dataToUpdate, setIsCoursedateLoading, newTime);
+    await updateCourses(dataToUpdate, setIsCoursedateLoading, 'Дата успешно сохранена', newTime);
   };
 
   const handleCardClick = () => {
-
     const newChecked = !checked;
     setChecked(newChecked);
 
@@ -259,9 +257,11 @@ export const CourseCard: React.FC<CourseCardProps> = ({
     try {
       const result = await lockCourses(lockedLearnersToSend);
       mutate('allData').then(() => {
-        toast.success(result[0].data.message, {
+        const lockedMessage = (courseLocked ? 'Курс разблокирован' : 'Курс заблокирован') || result[0].data.message;
+
+        toast.success(lockedMessage, {
           position: 'top-right',
-          autoClose: 1000,
+          autoClose: 1500,
           hideProgressBar: false,
           closeOnClick: true,
           pauseOnHover: false,
@@ -305,14 +305,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
       }}
       onClick={handleCardClick}
     >
-      <CardContent sx={{ maxHeight: 100 }}>
-        <Typography gutterBottom variant="h5" component="div" fontWeight={isHighlighted}>
-          {courseItem.title}
-        </Typography>
-        <Typography variant="body2"  >
-          {truncateDescription(courseItem.description!)}
-        </Typography>
-      </CardContent>
+      <CourseCardContent courseItem={courseItem} isHighlighted={isHighlighted}/>
       <CourseCardActions
         checked={checked} 
         courseLocked={courseLocked} 

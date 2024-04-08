@@ -1,8 +1,6 @@
 import CloseIcon from '@mui/icons-material/Close';
-import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import { Box, Chip, Container, Grid } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
 import Dialog from '@mui/material/Dialog';
 import IconButton from '@mui/material/IconButton';
 import Slide from '@mui/material/Slide';
@@ -13,11 +11,10 @@ import * as React from 'react';
 import { FC } from 'react';
 import { Bounce, toast } from 'react-toastify';
 import { CourseCard } from '../components/CourseCard/CourseCard';
-import { SubmitDialog } from '../components/SubmitDialog';
 import { useCourses } from '../data/store/courses.store';
 import { useLearners } from '../data/store/learners.store';
-import { SelectedRowData } from './MyLearners';
 import { CoursesWithDeadline } from '../data/types.store';
+import { SelectedRowData } from './MyLearners';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {
@@ -51,7 +48,6 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
 
 
   const {
-    onlyLearnerName,
     selectedRowsData,
     setSelectedRowsDataOnMyLearners,
     allData,
@@ -65,9 +61,6 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
 
   }, [allCourses, allData, setAllCourses]);
 
-  const handleSaveCourses = () => {
-    setOpenSubmitDialog(true);
-  };
 
   React.useEffect(() => {
     // Поставить галочки на тех курсах id которых уже выбраны ранее
@@ -123,14 +116,6 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
       >
         <AppBar sx={{ position: 'relative' }} color="secondary">
           <Toolbar>
-            {/* {!isMassEditMode &&<IconButton
-              edge="start"
-              color="inherit"
-              onClick={onClose}
-              aria-label="close"
-            >
-              <CloseIcon />
-            </IconButton>} */}
             <Box
               sx={{
                 display: 'flex',
@@ -141,7 +126,7 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
               }}
             >
               <Box>
-              {!isMassEditMode ? <b>РЕДАКТИРОВАНИЕ:</b> : <h2 style={{opacity: 0.9}}>МАССОВОЕ РЕДАКТИРОВАНИЕ:</h2>}
+              {!isMassEditMode ? <h2>РЕДАКТИРОВАНИЕ:</h2> : <h2 style={{opacity: 0.9}}>МАССОВОЕ РЕДАКТИРОВАНИЕ:</h2>}
               </Box>
               <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                 <Box m={1}>
@@ -161,17 +146,7 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
                     ))}
                 </Box>
               </Typography>
-              {/* {!isMassEditMode ? (<Button
-                autoFocus
-                color="warning"
-                onClick={handleSaveCourses}
-                variant="contained"
-                startIcon={<SaveAltIcon />}
-                sx={{ height: '40px' }}
-                disabled={isMassEditMode}
-              >
-                Сохранить
-              </Button>) : ( */}
+
               <IconButton
               edge="start"
               color="inherit"
@@ -180,7 +155,6 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
             >
               <CloseIcon />
             </IconButton>
-            {/* )} */}
             </Box>
           </Toolbar>
         </AppBar>
@@ -206,11 +180,7 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
                 </Grid>
               ))}
           </Grid>
-          {/* <SubmitDialog
-            isOpen={openSubmitDialog}
-            onClose={() => setOpenSubmitDialog(false)}
-            dialogTitle="Сохранить назначение обучающих материалов?"
-          /> */}
+  
         </Container>
       </Dialog>
     </React.Fragment>

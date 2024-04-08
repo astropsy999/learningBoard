@@ -13,7 +13,7 @@ import * as React from 'react';
 import { useLearners } from '../data/store/learners.store';
 import { useLocation } from 'react-router-dom';
 
-const options = ['Все сотрудники', 'Мое подразделение'];
+const options = ['Все сотрудники', 'Мой отдел'];
 
 export default function SplitButton() {
   const [open, setOpen] = React.useState(false);
@@ -31,7 +31,7 @@ export default function SplitButton() {
       case 'Все сотрудники':
         setTurnOffDivisionFilter(true);
         break;
-      case 'Мое подразделение':
+      case 'Мой отдел':
         setTurnOffDivisionFilter(false);
         break;
     }

@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 import Header from '../../Header';
-import BarChart from '../../BarChart';
+import BarChart from './BarChart';
 import React from 'react';
 
 const Bar = () => {

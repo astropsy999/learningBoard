@@ -10,7 +10,6 @@ import {
   useGridApiRef,
 } from '@mui/x-data-grid';
 import React, { useEffect, useMemo, useState } from 'react';
-import AssignEditButton from '../components/AssignEditBtn';
 import { AssignedCourseChip } from '../components/AssignedCourseChip';
 import CustomFilterInput from '../components/CustomFilterPanel';
 import ProgressLine from '../components/ProgressLine';
@@ -46,7 +45,6 @@ const MyLearners = () => {
     currentUserDivisionName,
     setIsMassEditMode
   } = useLearners();
-  const theme = useTheme();
 
   const { allCourses } = useCourses();
 
@@ -93,19 +91,6 @@ const MyLearners = () => {
   }, [currentUserDivisionName]);
 
   const isSelectedUser = selectedRows!.length > 0;
-
-  const handleCoursesDialogOpen = (row: SelectedRowData) => {
-    openCoursesDialog(true);
-    setOnlyLearnerName(row.name);
-    const assignedArr = row?.courses?.map((course) => ({
-      id: +Object.keys(course)[0],
-      deadline: course.deadline,
-    }));
-
-    setLockedArr(row?.courses_exclude);
-
-    setAssignedCourses(assignedArr);
-  };
 
   useEffect(() => {
     if (!turnOffDivisionFilter && currentUserDivisionName) {
@@ -213,7 +198,6 @@ const MyLearners = () => {
               sx={{ fontSize: '0.9rem', margin: '0 5px' }}
             />
           </div>
-           
       
           ),
           flex: 0.3,
@@ -227,23 +211,6 @@ const MyLearners = () => {
         }))
       : []) as GridSingleSelectColDef<any, any, any>[]),
 
-    // {
-    //   field: 'addCourses',
-    //   headerName: 'Назначение',
-    //   flex: 0.15,
-    //   headerClassName: 'name-column--cell',
-    //   renderCell: ({ row }) => {
-    //     const hasCourses = row.courses.length;
-    //     return (
-    //       <AssignEditButton
-    //         hasCourses={hasCourses}
-    //         handleCoursesDialogOpen={() => handleCoursesDialogOpen(row)}
-    //         isSelectedUser={isSelectedUser}
-    //       />
-    //     );
-    //   },
-    //   disableColumnMenu: true,
-    // },
   ];
 
   const onChangeFilterModel = (newModel: GridFilterModel) => {
