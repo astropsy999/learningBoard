@@ -43,7 +43,6 @@ export const BlockCourseFor: React.FC<BlockCourseForProps> = ({
   });
 
   return (
-    // Добавляем условный рендеринг для Autocomplete и Skeleton
     <React.Fragment>
       {isLoading ? (
         <Skeleton

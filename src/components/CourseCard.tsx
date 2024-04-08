@@ -111,10 +111,39 @@ export const CourseCard: React.FC<CourseCardProps> = ({
       : setDeadlineDate(stringDate!)
   }, [assigned, courseItem.id]);
 
+  const updateCourses = async (
+    dataToUpdate: ToUpdateUser[], 
+    setLocalLoaderType: (prevState: boolean) => void,
+    newTime: number | undefined = undefined) => {
+    setLocalLoaderType(true);
+    const stringDate = newTime ? new Date(newTime * 1000).toLocaleDateString() : null
+    const filteredDataToUpdate = dataToUpdate?.filter((user) => user !== null) as ToUpdateUser[];
+    const result = await updateAllData(filteredDataToUpdate);
 
-  const removeCoursesMass = async (withOutRemovedCourses: CoursesWithDeadline[]) => {
+    mutate('allData').then(() => {
+      toast.success(result[0]?.data?.message, {
+        position: 'top-right',
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+        theme: 'colored',
+        transition: Bounce,
+      });
+      stringDate && 
+      setDeadlineDate(stringDate!);
+      setLocalLoaderType(false);
+
+    });
+  };
+  
+
+
+  const removeCoursesMass =  (withOutRemovedCourses: CoursesWithDeadline[]) => {
     setIsCourseCardLoading(true);
-   
+
     let dataToUpdate
     dataToUpdate = selectedRowsData
         .map((user) => {
@@ -130,33 +159,13 @@ export const CourseCard: React.FC<CourseCardProps> = ({
             courses: uniqueCourses,
           };
         })
-        .filter(Boolean);
+        .filter(Boolean) as ToUpdateUser[];
 
-    const filteredDataToUpdate = dataToUpdate.filter(
-      (user) => user !== null,
-    ) as ToUpdateUser[];
-
-    const result = await updateAllData(filteredDataToUpdate);
-
-    mutate('allData').then(() => {
-
-      toast.success(result[0]?.data?.message, {
-        position: 'top-right',
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored',
-        transition: Bounce,
-      });
-      setIsCourseCardLoading(false);
-    });
+    updateCourses(dataToUpdate, setIsCourseCardLoading);
 
   };
 
-  const addCoursesMass = async (withAddedCourses: CoursesWithDeadline[]) => {
+  const addCoursesMass =  (withAddedCourses: CoursesWithDeadline[]) => {
     setIsCourseCardLoading(true)
 
     let dataToUpdate
@@ -176,31 +185,12 @@ export const CourseCard: React.FC<CourseCardProps> = ({
             courses: uniqueCourses,
           };
         })
-        .filter(Boolean);
+        .filter(Boolean) as ToUpdateUser[];
 
-    const filteredDataToUpdate = dataToUpdate.filter(
-      (user) => user !== null,
-    ) as ToUpdateUser[];
-
-    const result = await updateAllData(filteredDataToUpdate);
-
-    mutate('allData').then(() => {
-      toast.success(result[0]?.data?.message, {
-        position: 'top-right',
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored',
-        transition: Bounce,
-      });
-      setIsCourseCardLoading(false);
-    });
+    updateCourses(dataToUpdate, setIsCourseCardLoading);
   };
 
-  const handleMassDateChange = async (newTime: number, courseId: number) => {
+  const handleMassDateChange =  (newTime: number, courseId: number) => {
     setIsCoursedateLoading(true);
     // Фильтруем массив massAssignedCourses, чтобы изменить только сроки для курсов с courseId
     const updatedMassAssignedCourses = massAssignedCourses.map(course => {
@@ -222,32 +212,9 @@ export const CourseCard: React.FC<CourseCardProps> = ({
           courses: updatedMassAssignedCourses,
         };
       })
-      .filter(Boolean);
+      .filter(Boolean) as ToUpdateUser[];
     
-    const filteredDataToUpdate = dataToUpdate.filter(
-      (user) => user !== null,
-    ) as ToUpdateUser[];
-
-    const stringDate = newTime ? new Date(newTime * 1000).toLocaleDateString() : null
-    
-    const result = await updateAllData(filteredDataToUpdate);
-    
-    mutate('allData').then(() => {
-      setIsCoursedateLoading(true);
-      toast.success(result[0]?.data?.message, {
-        position: 'top-right',
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-        theme: 'colored',
-        transition: Bounce,
-      });
-      setIsCoursedateLoading(false);
-      setDeadlineDate(stringDate!);
-    });
+    updateCourses(dataToUpdate, setIsCoursedateLoading, newTime);
   };
 
   const handleCardClick = () => {
