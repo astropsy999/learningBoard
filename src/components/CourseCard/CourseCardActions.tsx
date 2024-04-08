@@ -1,13 +1,8 @@
-import { Box, CardActions, Checkbox, CircularProgress, FormControlLabel, Skeleton, Switch } from "@mui/material"
-import React from "react"
-import AssignDatePicker from "../DatePicker"
-import { useLearners } from "../../data/store/learners.store";
-import { getLearnerIdByName } from "../../helpers/getLearnerIdByName";
-import { getLockedUsersByCourseId } from "../../helpers/getlockedUsersByCourseId";
-import { lockCourses } from "../../services/api.service";
-import { mutate } from "swr";
-import { Bounce, toast } from "react-toastify";
+import { Box, CardActions, Checkbox, CircularProgress, FormControlLabel, Skeleton, Switch } from "@mui/material";
+import React from "react";
 import { CourseData } from "../../data/store/courses.store";
+import { useLearners } from "../../data/store/learners.store";
+import AssignDatePicker from "../DatePicker";
 
 interface CourseCardActionsProps {
     courseLocked: boolean,

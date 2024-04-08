@@ -55,11 +55,9 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
     selectedRowsData,
     setSelectedRowsDataOnMyLearners,
     allData,
-    isMassEditMode,
-    setIsMassEditMode
   } = useLearners();
 
-
+  const isMassEditMode = selectedRowsData.length > 1;
 
   React.useEffect(() => {
     allData && setAllCourses(allData.courses);
@@ -125,14 +123,14 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
       >
         <AppBar sx={{ position: 'relative' }} color="secondary">
           <Toolbar>
-            {!isMassEditMode &&<IconButton
+            {/* {!isMassEditMode &&<IconButton
               edge="start"
               color="inherit"
               onClick={onClose}
               aria-label="close"
             >
               <CloseIcon />
-            </IconButton>}
+            </IconButton>} */}
             <Box
               sx={{
                 display: 'flex',
@@ -143,18 +141,11 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
               }}
             >
               <Box>
-              {!isMassEditMode ? <b>Назначение обучения для:</b> : <h2 style={{opacity: 0.9}}>МАССОВОЕ РЕДАКТИРОВАНИЕ:</h2>}
+              {!isMassEditMode ? <b>РЕДАКТИРОВАНИЕ:</b> : <h2 style={{opacity: 0.9}}>МАССОВОЕ РЕДАКТИРОВАНИЕ:</h2>}
               </Box>
               <Typography sx={{ ml: 2, flex: 1 }} variant="h6" component="div">
                 <Box m={1}>
-                  {onlyLearnerName.length ? (
-                    <Chip
-                      label={onlyLearnerName}
-                      color="warning"
-                      variant="filled"
-                      size="medium"
-                    />
-                  ) : (
+                  {selectedRowsData.length &&
                     selectedRowsData?.map((item) => (
                       <Chip
                         label={item.name}
@@ -167,11 +158,10 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
                         data-item-id={item.id}
                         data-item-name={item.name}
                       />
-                    ))
-                  )}
+                    ))}
                 </Box>
               </Typography>
-              {!isMassEditMode ? (<Button
+              {/* {!isMassEditMode ? (<Button
                 autoFocus
                 color="warning"
                 onClick={handleSaveCourses}
@@ -181,7 +171,7 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
                 disabled={isMassEditMode}
               >
                 Сохранить
-              </Button>) : (
+              </Button>) : ( */}
               <IconButton
               edge="start"
               color="inherit"
@@ -189,7 +179,8 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
               aria-label="close"
             >
               <CloseIcon />
-            </IconButton>)}
+            </IconButton>
+            {/* )} */}
             </Box>
           </Toolbar>
         </AppBar>
@@ -215,11 +206,11 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
                 </Grid>
               ))}
           </Grid>
-          <SubmitDialog
+          {/* <SubmitDialog
             isOpen={openSubmitDialog}
             onClose={() => setOpenSubmitDialog(false)}
             dialogTitle="Сохранить назначение обучающих материалов?"
-          />
+          /> */}
         </Container>
       </Dialog>
     </React.Fragment>

@@ -34,9 +34,6 @@ export const CourseCard: React.FC<CourseCardProps> = ({
   const { selectedCoursesToSave, setSelectedCoursesToSave, massAssignedCourses, setMassAssignedCourses } = useCourses();
   const { onlyLearnerName, allLearners, currentUserData, selectedRowsData, isMassEditMode } =
     useLearners();
-  const [deadlineCourseDate, setDeadlineCourseDate] = React.useState<
-    string | null
-  >(null);
   const [deadlineDate, setDeadlineDate] = React.useState<string | number>();
   const [courseLocked, setCourseLocked] = React.useState<boolean>(isLocked);
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -147,9 +144,6 @@ export const CourseCard: React.FC<CourseCardProps> = ({
       })
       .filter(Boolean);
   };
-  
-  
-
 
   const removeCoursesMass =  async (withOutRemovedCourses: CoursesWithDeadline[]) => {
 
@@ -159,7 +153,6 @@ export const CourseCard: React.FC<CourseCardProps> = ({
   };
 
   const addCoursesMass =  async (withAddedCourses: CoursesWithDeadline[]) => {
-
     const dataToUpdate = prepareDataToUpdate(withAddedCourses, selectedRowsData) as ToUpdateUser[]
     await updateCourses(dataToUpdate, setIsCourseCardLoading);
   };

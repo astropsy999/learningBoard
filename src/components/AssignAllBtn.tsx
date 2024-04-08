@@ -4,7 +4,7 @@ import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import { useLearners } from '../data/store/learners.store';
 
 export const RenderAssignAllButton = () => {
-  const { openCoursesDialog } = useLearners();
+  const { openCoursesDialog, selectedRowsData } = useLearners();
   const handleAssignAll = () => {
     openCoursesDialog(true);
   };
@@ -15,7 +15,7 @@ export const RenderAssignAllButton = () => {
       startIcon={<PlaylistAddIcon />}
       onClick={() => handleAssignAll()}
     >
-      Массовое редактирование
+      {selectedRowsData.length > 1 ? 'Массовое редактирование' : 'Редактировать'}
     </Button>
   );
 };

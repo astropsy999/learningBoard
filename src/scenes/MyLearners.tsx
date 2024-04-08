@@ -227,23 +227,23 @@ const MyLearners = () => {
         }))
       : []) as GridSingleSelectColDef<any, any, any>[]),
 
-    {
-      field: 'addCourses',
-      headerName: 'Назначение',
-      flex: 0.15,
-      headerClassName: 'name-column--cell',
-      renderCell: ({ row }) => {
-        const hasCourses = row.courses.length;
-        return (
-          <AssignEditButton
-            hasCourses={hasCourses}
-            handleCoursesDialogOpen={() => handleCoursesDialogOpen(row)}
-            isSelectedUser={isSelectedUser}
-          />
-        );
-      },
-      disableColumnMenu: true,
-    },
+    // {
+    //   field: 'addCourses',
+    //   headerName: 'Назначение',
+    //   flex: 0.15,
+    //   headerClassName: 'name-column--cell',
+    //   renderCell: ({ row }) => {
+    //     const hasCourses = row.courses.length;
+    //     return (
+    //       <AssignEditButton
+    //         hasCourses={hasCourses}
+    //         handleCoursesDialogOpen={() => handleCoursesDialogOpen(row)}
+    //         isSelectedUser={isSelectedUser}
+    //       />
+    //     );
+    //   },
+    //   disableColumnMenu: true,
+    // },
   ];
 
   const onChangeFilterModel = (newModel: GridFilterModel) => {
