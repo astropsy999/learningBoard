@@ -164,8 +164,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
     await updateCourses(dataToUpdate, setIsCourseCardLoading);
   };
 
-  const handleMassDateChange =  (newTime: number, courseId: number) => {
-    // Фильтруем массив massAssignedCourses, чтобы изменить только сроки для курсов с courseId
+  const handleMassDateChange =  async (newTime: number, courseId: number) => {
     const updatedMassAssignedCourses = massAssignedCourses.map(course => {
       if (course.id === courseId) {
         return {
@@ -174,7 +173,9 @@ export const CourseCard: React.FC<CourseCardProps> = ({
         };
       }
       return course;
-    });
+    })
+
+    setMassAssignedCourses(updatedMassAssignedCourses);
     
     let dataToUpdate = selectedRowsData
       .map((user) => {
@@ -186,7 +187,7 @@ export const CourseCard: React.FC<CourseCardProps> = ({
       })
       .filter(Boolean) as ToUpdateUser[];
     
-    updateCourses(dataToUpdate, setIsCoursedateLoading, newTime);
+    await updateCourses(dataToUpdate, setIsCoursedateLoading, newTime);
   };
 
   const handleCardClick = () => {
