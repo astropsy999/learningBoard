@@ -1,30 +1,22 @@
 import {
-  Box,
-  Checkbox,
-  Chip,
-  CircularProgress,
-  FormControlLabel,
-  Switch,
-  useTheme,
+  useTheme
 } from '@mui/material';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { CourseData, useCourses } from '../data/store/courses.store';
-import { tokens } from '../theme';
-import { truncateDescription } from '../helpers/truncateDescriptions';
-import {  ToUpdateUser, lockCourses, updateAllData } from '../services/api.service';
-import AssignDatePicker from './DatePicker';
-import { useLearners } from '../data/store/learners.store';
-import { getLearnerIdByName } from '../helpers/getLearnerIdByName';
-import { mutate } from 'swr';
 import { Bounce, toast } from 'react-toastify';
-import { getLockedUsersByCourseId } from '../helpers/getlockedUsersByCourseId';
-import { CoursesWithDeadline } from '../data/types.store';
-import { getDeadlineDate } from '../helpers/getDeadlineDate';
-import {Skeleton} from '@mui/material';
+import { mutate } from 'swr';
+import { CourseData, useCourses } from '../../data/store/courses.store';
+import { useLearners } from '../../data/store/learners.store';
+import { CoursesWithDeadline } from '../../data/types.store';
+import { getDeadlineDate } from '../../helpers/getDeadlineDate';
+import { getLearnerIdByName } from '../../helpers/getLearnerIdByName';
+import { getLockedUsersByCourseId } from '../../helpers/getlockedUsersByCourseId';
+import { truncateDescription } from '../../helpers/truncateDescriptions';
+import { ToUpdateUser, lockCourses, updateAllData } from '../../services/api.service';
+import { tokens } from '../../theme';
+import { CourseCardActions } from './CourseCardActions';
 
 interface CourseCardProps {
   courseItem: CourseData;
@@ -327,48 +319,18 @@ export const CourseCard: React.FC<CourseCardProps> = ({
           {truncateDescription(courseItem.description!)}
         </Typography>
       </CardContent>
-      <CardActions sx={{ display: 'flex', justifyContent: 'space-between', alignContent: 'center' }}>
-        <Box>
-          {!isCourseCardLoading 
-            ? <Checkbox color="info" checked={checked} /> 
-            : <CircularProgress size={33} color="info"  />
-          }
-        </Box>
-        {currentUserData?.manager.level === 1 && (
-          <Box>
-            {isLoading ? (
-              <CircularProgress size={30} color="info" />
-            ) : (
-              <FormControlLabel
-                control={
-                  <Switch
-                    checked={courseLocked}
-                    color={courseLocked ? 'warning' : 'secondary'}
-                  />
-                }
-                label={courseLocked ? 'Разблокировать' : 'Блокировать'}
-                onClick={(e) =>
-                  handleLockUnlock(e, courseItem.id, courseLocked)
-                }
-              />
-            )}
-          </Box>
-        )}
-        <Box 
-          sx={{
-            backgroundColor: !globalLoading ? (!courseLocked ? 'lightskyblue' : 'lightcoral') : 'inherit', 
-            display: !checked ? 'none' : 'block', 
-            borderRadius: 1,
-            }} >
-        {!isCoursedateLoading 
-            ? <AssignDatePicker
-                onDateChange={(newDate) => handleDateChange(newDate, courseItem.id)}
-                disabled={!checked}
-                defaultValue={deadlineDate as string}
-          />
-            : <Skeleton width={130} height={60}/>}
-        </Box>
-      </CardActions>
+      <CourseCardActions
+        checked={checked} 
+        courseLocked={courseLocked} 
+        handleLockUnlock={handleLockUnlock}
+        courseItem={courseItem}
+        globalLoading={globalLoading}
+        isCoursedateLoading={isCoursedateLoading}
+        isCourseCardLoading={isCourseCardLoading}
+        handleDateChange={handleDateChange}
+        deadlineDate={deadlineDate}
+        isLoading={isLoading}
+        />
     </Card>
   );
 };

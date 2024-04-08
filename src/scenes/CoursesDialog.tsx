@@ -12,7 +12,7 @@ import { TransitionProps } from '@mui/material/transitions';
 import * as React from 'react';
 import { FC } from 'react';
 import { Bounce, toast } from 'react-toastify';
-import { CourseCard } from '../components/CourseCard';
+import { CourseCard } from '../components/CourseCard/CourseCard';
 import { SubmitDialog } from '../components/SubmitDialog';
 import { useCourses } from '../data/store/courses.store';
 import { useLearners } from '../data/store/learners.store';
