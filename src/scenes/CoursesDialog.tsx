@@ -74,7 +74,6 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
   React.useEffect(() => {
     // Поставить галочки на тех курсах id которых уже выбраны ранее
     setSelectedCourseIds(assignedCourses);
-    console.log('assignedCourses: ', assignedCourses);
 
     const filteredWithDeadline = assignedCourses
       .filter((assignedCourse) =>

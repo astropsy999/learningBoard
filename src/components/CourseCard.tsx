@@ -138,60 +138,41 @@ export const CourseCard: React.FC<CourseCardProps> = ({
 
     });
   };
+
+  const prepareDataToUpdate = (courses: CoursesWithDeadline[], selectedRowsData: any[]) => {
+    return selectedRowsData
+      .map((user) => {
+        if (!user) return null;
+        const courseMap: { [id: number]: CoursesWithDeadline } = {};
+        courses.forEach((course) => {
+          courseMap[course.id] = course;
+        });
+        const uniqueCourses = Object.values(courseMap);
+        return {
+          id: user.id,
+          courses: uniqueCourses,
+        };
+      })
+      .filter(Boolean);
+  };
+  
   
 
 
-  const removeCoursesMass =  (withOutRemovedCourses: CoursesWithDeadline[]) => {
-    setIsCourseCardLoading(true);
+  const removeCoursesMass =  async (withOutRemovedCourses: CoursesWithDeadline[]) => {
 
-    let dataToUpdate
-    dataToUpdate = selectedRowsData
-        .map((user) => {
-          if (!user) return null;
-          const courseMap: { [id: number]: CoursesWithDeadline } = {};
-          withOutRemovedCourses.forEach((course) => {
-              courseMap[course.id] = course;
-          });
-          const uniqueCourses = Object.values(courseMap);
-
-          return {
-            id: user.id,
-            courses: uniqueCourses,
-          };
-        })
-        .filter(Boolean) as ToUpdateUser[];
-
-    updateCourses(dataToUpdate, setIsCourseCardLoading);
+    const dataToUpdate = prepareDataToUpdate(withOutRemovedCourses, selectedRowsData) as ToUpdateUser[];
+    await updateCourses(dataToUpdate, setIsCourseCardLoading);
 
   };
 
-  const addCoursesMass =  (withAddedCourses: CoursesWithDeadline[]) => {
-    setIsCourseCardLoading(true)
+  const addCoursesMass =  async (withAddedCourses: CoursesWithDeadline[]) => {
 
-    let dataToUpdate
-
-    dataToUpdate = selectedRowsData
-        .map((user) => {
-          if (!user) return null;
-          const courseMap: { [id: number]: CoursesWithDeadline } = {};
-          withAddedCourses.forEach((course) => {
-              courseMap[course.id] = course;
-          });
-
-          const uniqueCourses = Object.values(courseMap);
-
-          return {
-            id: user.id,
-            courses: uniqueCourses,
-          };
-        })
-        .filter(Boolean) as ToUpdateUser[];
-
-    updateCourses(dataToUpdate, setIsCourseCardLoading);
+    const dataToUpdate = prepareDataToUpdate(withAddedCourses, selectedRowsData) as ToUpdateUser[]
+    await updateCourses(dataToUpdate, setIsCourseCardLoading);
   };
 
   const handleMassDateChange =  (newTime: number, courseId: number) => {
-    setIsCoursedateLoading(true);
     // Фильтруем массив massAssignedCourses, чтобы изменить только сроки для курсов с courseId
     const updatedMassAssignedCourses = massAssignedCourses.map(course => {
       if (course.id === courseId) {
@@ -206,7 +187,6 @@ export const CourseCard: React.FC<CourseCardProps> = ({
     let dataToUpdate = selectedRowsData
       .map((user) => {
         if (!user) return null;
-    
         return {
           id: user.id,
           courses: updatedMassAssignedCourses,
