@@ -12,7 +12,7 @@ import { useLearners } from '../app/data/store/learners';
 import { Course } from '../app/types/types.store';
 import { truncateDescription } from '../shared/helpers/truncateDescriptions';
 import { lockCourses } from '../app/api/api';
-import { dataGridStyles } from '../app/styles/DataGrid.styles';
+// import { dataGridStyles } from '../app/styles/DataGrid.styles';
 
 interface LockedData {
   [key: number]: string[];
@@ -75,7 +75,6 @@ const CoursesList = () => {
     }
   }, [onBlockLearnersMode, setSelectedLearnersToLockCourse]);
 
-  const handleSelectionCoursesChange = () => {};
   const chooseLearnersToLockCourse = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     row: Course,
@@ -263,7 +262,11 @@ const CoursesList = () => {
 
   return (
     <Box m="20px" pt={2}>
-      <Box m="40px 0 0 0" height="75vh" sx={dataGridStyles.root}>
+      <Box
+        m="40px 0 0 0"
+        height="75vh"
+        // sx={dataGridStyles.root}
+      >
         <DataGrid
           autoHeight={true}
           rows={isLoading ? [] : allCourses!}

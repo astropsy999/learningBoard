@@ -21,6 +21,7 @@ interface LearnersGridProps {
   onChangeFilterModel: (newModel: GridFilterModel) => void;
   handleCoursesDialogClose: () => void;
   lockedArr: number[];
+  //   ref: any;
 }
 
 export const LearnersGrid: React.FC<LearnersGridProps> = (props) => {
@@ -33,6 +34,7 @@ export const LearnersGrid: React.FC<LearnersGridProps> = (props) => {
     onChangeFilterModel,
     handleCoursesDialogClose,
     lockedArr,
+    // ref,
   } = props;
 
   const { allLearners, coursesToLearnersDialog } = useLearners();
@@ -41,10 +43,11 @@ export const LearnersGrid: React.FC<LearnersGridProps> = (props) => {
   const apiRef = useGridApiRef();
 
   return (
-    <Box m="20px" pt={2}>
+    <Box m="20px" pt={1}>
       <Box m="10px 0 0 0" sx={dataGridStyles.root}>
         {!isLoading ? (
           <DataGrid
+            // ref={ref}
             autoHeight={true}
             apiRef={apiRef}
             checkboxSelection

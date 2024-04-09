@@ -17,9 +17,7 @@ export const dataGridStyles = {
     '& .cell-margins': {
       margin: '10px 5px',
     },
-    '& .MuiDataGrid-root': {
-      // border: 'none',
-    },
+
     '& .name-cell': {
       fontWeight: 'bold',
       fontSize: '0.9rem',
@@ -27,41 +25,29 @@ export const dataGridStyles = {
 
     '& .MuiDataGrid-cell': {
       borderBottom: 'none',
-      // color: '#014040',
     },
     '& .name-column--cell': {
       backgroundColor: colors.blueAccent[900],
       fontWeight: 'bold',
     },
-    '& .MuiDataGrid-columnHeaders': {
-      borderBottom: 'none',
-      color: '#014040',
-    },
+
     '& .MuiDataGrid-columnHeaderDraggableContainer': {},
     '& .MuiDataGrid-columnHeader': {
-      backgroundColor: '#aedbe5',
+      backgroundColor: '#293541',
       borderRight: `1px solid #81b8c4`,
-      color: '#002A4B',
+      color: 'white',
     },
     '& .MuiDataGrid-virtualScroller': {
       backgroundColor: colors.primary[100],
     },
     '& .MuiDataGrid-footerContainer': {
       borderTop: 'none',
-      backgroundColor: '#aedbe5',
+      backgroundColor: '#293541',
     },
-    '& .MuiCheckbox-root': {
-      color: `${colors.greenAccent[200]} !important`,
-    },
+
     '& .MuiDataGrid-columnHeaderCheckbox': {
-      // backgroundColor: colors.blueAccent[900],
-      backgroundColor: '#aedbe5',
+      backgroundColor: '#293541',
     },
-    // '& .center--cell': {
-    //   display: 'flex',
-    //   alignItems: 'center',
-    //   justifyContent: 'center',
-    // },
     '& .base-Popper-root .MuiTooltip-popper .MuiTooltip-popperInteractive': {
       fontSize: '1em ',
     },
@@ -71,9 +57,9 @@ export const dataGridStyles = {
       whiteSpace: 'normal',
       fontSize: '1rem',
     },
-    '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': {
-      py: '3px',
-    },
+    // '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': {
+    //   py: '3px',
+    // },
     '& .MuiDataGrid-colCell, & .MuiDataGrid-cell': {
       borderRight: `1px solid lightgrey`,
       alignItems: 'center',

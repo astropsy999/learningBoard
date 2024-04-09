@@ -100,7 +100,7 @@ const Topbar: FC<TopbarProps> = () => {
       display="flex"
       justifyContent="space-between"
       alignItems="center"
-      p={2}
+      p={1}
       position={'fixed'}
       width={'100%'}
       boxShadow={
@@ -114,7 +114,6 @@ const Topbar: FC<TopbarProps> = () => {
     >
       <Box ml={4} sx={{ display: 'flex', gap: '16px', marginLeft: '20px' }}>
         {isAssignAllButton && <RenderAssignAllButton />}
-
         <Link to={'/'}>
           <SplitButton />
         </Link>

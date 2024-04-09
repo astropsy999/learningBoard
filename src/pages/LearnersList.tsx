@@ -1,5 +1,5 @@
 import LightbulbIcon from '@mui/icons-material/Lightbulb';
-import { Chip } from '@mui/material';
+import { Chip, Tooltip } from '@mui/material';
 import {
   GridColDef,
   GridFilterItem,
@@ -7,7 +7,7 @@ import {
   GridFilterOperator,
   GridSingleSelectColDef,
 } from '@mui/x-data-grid';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useCourses } from '../app/data/store/courses';
 import { useLearners } from '../app/data/store/learners';
 import { CoursesWithDeadline } from '../app/types/types.store';
@@ -27,7 +27,7 @@ export type SelectedRowData = {
   isDelLoading: boolean;
 };
 
-const MyLearners = () => {
+const LearnersList = () => {
   const {
     openCoursesDialog,
     turnOffDivisionFilter,
@@ -59,6 +59,38 @@ const MyLearners = () => {
   const [filterModel, setFilterModel] = useState<GridFilterModel>();
   const [filterLabel, setFilterLabel] = useState<string>('');
   const [selectedField, setSelectedField] = useState<string>('division');
+
+  const [headerHeight, setHeaderHeight] = useState(0);
+  const [tableHeight, setTableHeight] = useState(0);
+  const [isHeaderFixed, setIsHeaderFixed] = useState(false);
+
+  const tableRef = useRef(null);
+
+  useEffect(() => {
+    const header = document.querySelector('.MuiDataGrid-colCell');
+    if (header) {
+      setHeaderHeight(header.clientHeight);
+    }
+  }, []);
+
+  useEffect(() => {
+    const table = tableRef?.current as any;
+    if (table) {
+      const tableHeight = table.clientHeight;
+      setTableHeight(tableHeight);
+
+      const windowHeight = window.innerHeight;
+      if (tableHeight > windowHeight) {
+        setIsHeaderFixed(true);
+        const virtualScrollerContent = document.querySelector(
+          '.MuiDataGrid-virtualScrollerContent',
+        ) as any;
+        if (virtualScrollerContent) {
+          virtualScrollerContent.style.marginTop = `${headerHeight}px`;
+        }
+      }
+    }
+  }, [headerHeight]);
 
   useEffect(() => {
     if (currentUserDivisionName)
@@ -165,7 +197,7 @@ const MyLearners = () => {
       field: 'name',
       headerName: 'ФИО',
       flex: 0.3,
-      headerClassName: 'name-column--cell',
+      // headerClassName: 'name-column--cell',
       cellClassName: 'name-cell',
       filterOperators: filterOperators,
       headerAlign: 'center',
@@ -176,15 +208,15 @@ const MyLearners = () => {
       type: 'string',
       headerAlign: 'center',
       flex: 0.2,
-      align: 'left',
-      headerClassName: 'name-column--cell',
+      // align: 'left',
+      // headerClassName: 'name-column--cell',
       filterOperators: filterOperators,
     },
     {
       field: 'division',
-      headerName: 'Подразделение',
+      headerName: 'Отдел',
       flex: 0.3,
-      headerClassName: 'name-column--cell',
+      // headerClassName: 'name-column--cell',
       filterOperators,
       headerAlign: 'center',
     },
@@ -193,26 +225,30 @@ const MyLearners = () => {
           field: course.title,
           // headerName: course.title,
           renderHeader: () => (
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '100%',
-              }}
-            >
-              <Chip
-                icon={<LightbulbIcon />}
-                label={course.title}
-                sx={{ fontSize: '0.9rem', margin: '0 5px' }}
-              />
-            </div>
+            <Tooltip title={course.title}>
+              <div
+              // style={{
+              //   display: 'flex',
+              //   alignItems: 'center',
+              //   justifyContent: 'center',
+              //   width: '100%',
+              // }}
+              >
+                {course.title}
+                {/* <Chip
+                  icon={<LightbulbIcon />}
+                  label={course.title}
+                  sx={{ fontSize: '0.9rem', margin: '0 5px' }}
+                /> */}
+              </div>
+            </Tooltip>
           ),
           flex: 0.3,
+          headerAlign: 'center',
           renderCell: ({ row }) => (
             <AssignedCourseChip row={row} course={course} />
           ),
-          headerClassName: 'name-column--cell header-course',
+          // headerClassName: 'name-column--cell header-course',
           type: 'singleSelect',
           filterable: false,
           sortable: false,
@@ -222,6 +258,7 @@ const MyLearners = () => {
 
   return (
     <LearnersGrid
+      // ref={tableRef}
       isLoading={isLoading}
       columns={columns}
       handleSelectionModelChange={handleSelectionModelChange}
@@ -234,4 +271,4 @@ const MyLearners = () => {
   );
 };
 
-export default MyLearners;
+export default LearnersList;
