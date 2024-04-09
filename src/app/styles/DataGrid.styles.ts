@@ -20,7 +20,7 @@ export const dataGridStyles = {
 
     '& .name-cell': {
       fontWeight: 'bold',
-      fontSize: '0.9rem',
+      fontSize: '1.1rem',
     },
 
     '& .MuiDataGrid-cell': {

@@ -71,10 +71,11 @@ const Statistics = () => {
                 width: '100%',
               }}
             >
-              <Chip
+              {/* <Chip
                 label={`${attempt}`}
                 sx={{ fontSize: '0.9rem', margin: '0 5px' }}
-              />
+              /> */}
+              {attempt}
             </div>
           ),
           disableColumnMenu: true,
@@ -116,13 +117,15 @@ const Statistics = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
                 width: '100%',
+                fontWeight: 'bold',
               }}
             >
-              <Chip
+              {/* <Chip
                 icon={<LightbulbIcon />}
                 label={getCourseTitleById(course.id, allCourses!)!}
                 sx={{ fontSize: '1rem', margin: '0 5px', fontWeight: 'bold' }}
-              />
+              /> */}
+              {getCourseTitleById(course.id, allCourses!)!}
             </div>
           ),
           children: [

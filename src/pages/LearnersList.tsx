@@ -197,7 +197,6 @@ const LearnersList = () => {
       field: 'name',
       headerName: 'ФИО',
       flex: 0.3,
-      // headerClassName: 'name-column--cell',
       cellClassName: 'name-cell',
       filterOperators: filterOperators,
       headerAlign: 'center',
@@ -208,39 +207,21 @@ const LearnersList = () => {
       type: 'string',
       headerAlign: 'center',
       flex: 0.2,
-      // align: 'left',
-      // headerClassName: 'name-column--cell',
       filterOperators: filterOperators,
     },
     {
       field: 'division',
       headerName: 'Отдел',
       flex: 0.3,
-      // headerClassName: 'name-column--cell',
       filterOperators,
       headerAlign: 'center',
     },
     ...((allCourses
       ? allCourses!.map((course) => ({
           field: course.title,
-          // headerName: course.title,
           renderHeader: () => (
             <Tooltip title={course.title}>
-              <div
-              // style={{
-              //   display: 'flex',
-              //   alignItems: 'center',
-              //   justifyContent: 'center',
-              //   width: '100%',
-              // }}
-              >
-                {course.title}
-                {/* <Chip
-                  icon={<LightbulbIcon />}
-                  label={course.title}
-                  sx={{ fontSize: '0.9rem', margin: '0 5px' }}
-                /> */}
-              </div>
+              <div>{course.title}</div>
             </Tooltip>
           ),
           flex: 0.3,
@@ -248,7 +229,7 @@ const LearnersList = () => {
           renderCell: ({ row }) => (
             <AssignedCourseChip row={row} course={course} />
           ),
-          // headerClassName: 'name-column--cell header-course',
+
           type: 'singleSelect',
           filterable: false,
           sortable: false,

@@ -122,6 +122,17 @@ main {
   white-space: unset !important;
 }
 
+.MuiTablePagination-root:last-child {
+  color: white !important;
+}
+
+.MuiSvgIcon-root .MuiSelect-icon {
+  color: white !important;
+}
+.MuiSelect-icon {
+  color: white !important;
+}
+
 /* .MuiDataGrid-columnHeaders {
   position: fixed !important;
 }
