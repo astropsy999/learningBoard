@@ -81,6 +81,9 @@ export const LearnersGrid: React.FC<LearnersGridProps> = (props) => {
                 alignItems: 'center',
                 justifyContent: 'center',
               },
+              '& .MuiDataGrid-main' : {
+                marginTop: '0.3em'
+              },
             }}
           />
         ) : (

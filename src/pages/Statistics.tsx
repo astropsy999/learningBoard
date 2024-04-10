@@ -45,13 +45,12 @@ const Statistics = () => {
   }, [statLoading]);
 
   const columns: GridColDef[] = [
-    // { field: 'id', headerName: 'ID', width: 90 },
     {
       field: 'name',
       headerName: 'ФИО',
-      headerClassName: 'name-column--cell',
       cellClassName: 'name-cell',
       flex: 0.3,
+            
     },
   ];
 
@@ -63,20 +62,7 @@ const Statistics = () => {
           field: `${course.id}_${attempt}`,
           headerName: `Попытка ${attempt}`,
           renderHeader: () => (
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '100%',
-              }}
-            >
-              {/* <Chip
-                label={`${attempt}`}
-                sx={{ fontSize: '0.9rem', margin: '0 5px' }}
-              /> */}
-              {attempt}
-            </div>
+              <>{attempt}</>
           ),
           disableColumnMenu: true,
           headerClassName: 'name-column--cell',
@@ -120,11 +106,6 @@ const Statistics = () => {
                 fontWeight: 'bold',
               }}
             >
-              {/* <Chip
-                icon={<LightbulbIcon />}
-                label={getCourseTitleById(course.id, allCourses!)!}
-                sx={{ fontSize: '1rem', margin: '0 5px', fontWeight: 'bold' }}
-              /> */}
               {getCourseTitleById(course.id, allCourses!)!}
             </div>
           ),
@@ -162,6 +143,16 @@ const Statistics = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
               },
+              '& .MuiDataGrid-main' : {
+                marginTop: '0.2em'
+              },
+              '& .MuiDataGrid-columnHeader, & .MuiDataGrid-columnHeaderRow, & .MuiDataGrid-columnHeaderTitleContainerContent, & .MuiDataGrid-columnHeaderDraggableContainer, & .MuiDataGrid-columnHeaders' : {
+                maxHeight: '30px !important',
+              },
+              '& .MuiDataGrid-columnHeaderTitleContainer': {
+                marginLeft: '22px !important'
+              }
+            
             }}
           />
         ) : (
