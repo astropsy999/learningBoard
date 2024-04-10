@@ -18,19 +18,25 @@ import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
 import { fetchStatisctics } from '../app/api/api';
 import { dataGridStyles } from '../app/styles/DataGrid.styles';
 import { tokens } from '../app/theme';
+import { DetailedStatDialog } from '../widgets/DetailedStatDialog';
+
+export type StatInfoType = {course: number, user: number, userName: string, status: string}
 
 const Statistics = () => {
   const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
   const [coursesList, setCoursesList] = useState<CourseAttempt[]>([]);
   const { allCourses } = useCourses();
   const [statLoading, setStatLoading] = useState(true);
+  const [showDetailedStat, setShowDetailedStat] = useState(false)
+  const [statInfo, setStatInfo] = useState<StatInfoType>({course: 0, user: 0, userName: '', status: '' })
 
   const {
     data: rawStatistics,
     isLoading,
-    error,
   } = useSWR('stat', fetchStatisctics);
+
+  console.log('rawStatistics: ', rawStatistics);
+
 
   const ATTEMPTS = 3;
 
@@ -43,6 +49,19 @@ const Statistics = () => {
     setStatLoading(isLoading);
     allCourses && allCourses.length > 0 && setStatLoading(false);
   }, [statLoading]);
+
+  const handleCellClick = (courseId: number, userId: number, userName: string, status: string ) => {
+    return () => {
+      showDetailedStatistic(courseId, userId, userName, status);
+    };
+  };
+
+  const showDetailedStatistic = (course: number, user: number, userName: string, status: string) => {
+    setShowDetailedStat(()=> !showDetailedStat)
+
+    const getStatInfo = {user, course, userName, status}
+    setStatInfo(getStatInfo!)
+  }
 
   const columns: GridColDef[] = [
     {
@@ -80,7 +99,9 @@ const Statistics = () => {
                 sx={{
                   fontSize: '1rem',
                   fontWeight: 'bold',
+                  cursor: 'pointer'
                 }}
+                onClick={handleCellClick(course.id, row.id, row.name, status)}
               >
                 {attempts && attempts[attempt - 1]
                   ? attempts[attempt - 1].points
@@ -155,9 +176,11 @@ const Statistics = () => {
             
             }}
           />
+          
         ) : (
           <ProgressLine />
         )}
+        <DetailedStatDialog open={showDetailedStat} setOpen={setShowDetailedStat} selectedStatInfo={statInfo} />
       </Box>
     </Box>
   );
