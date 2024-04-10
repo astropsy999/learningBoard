@@ -34,7 +34,6 @@ export const LearnersGrid: React.FC<LearnersGridProps> = (props) => {
     onChangeFilterModel,
     handleCoursesDialogClose,
     lockedArr,
-    // ref,
   } = props;
 
   const { allLearners, coursesToLearnersDialog } = useLearners();
@@ -47,7 +46,6 @@ export const LearnersGrid: React.FC<LearnersGridProps> = (props) => {
       <Box m="10px 0 0 0" sx={dataGridStyles.root}>
         {!isLoading ? (
           <DataGrid
-            // ref={ref}
             autoHeight={true}
             apiRef={apiRef}
             checkboxSelection
@@ -79,11 +77,14 @@ export const LearnersGrid: React.FC<LearnersGridProps> = (props) => {
                 borderRight: `1px solid lightgrey`,
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center',
               },
               '& .MuiDataGrid-main' : {
                 marginTop: '0.3em'
               },
+              '& .truncate-cell':{
+                lineHeight: '1 !important',
+                
+              }
             }}
           />
         ) : (

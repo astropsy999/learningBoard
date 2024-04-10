@@ -196,25 +196,33 @@ const LearnersList = () => {
     {
       field: 'name',
       headerName: 'ФИО',
-      flex: 0.3,
+      flex: 0.1,
       cellClassName: 'name-cell',
       filterOperators: filterOperators,
       headerAlign: 'center',
+      align: 'left'
     },
     {
       field: 'position',
       headerName: 'Должность',
       type: 'string',
       headerAlign: 'center',
-      flex: 0.2,
+      flex: 0.1,
       filterOperators: filterOperators,
+      align: 'left',
     },
     {
       field: 'division',
       headerName: 'Отдел',
-      flex: 0.3,
+      flex: 0.1,
       filterOperators,
+      renderCell(params) {
+          return params?.value?.length > 44 ? `${params.value.slice(0,44)}...` : params.value
+      },
       headerAlign: 'center',
+      align: 'left',
+      cellClassName: 'truncate-cell'
+
     },
     ...((allCourses
       ? allCourses!.map((course) => ({
@@ -224,7 +232,7 @@ const LearnersList = () => {
               <div>{course.title}</div>
             </Tooltip>
           ),
-          flex: 0.3,
+          flex: 0.2,
           headerAlign: 'center',
           renderCell: ({ row }) => (
             <AssignedCourseChip row={row} course={course} />
@@ -233,13 +241,13 @@ const LearnersList = () => {
           type: 'singleSelect',
           filterable: false,
           sortable: false,
+          align: 'center'
         }))
       : []) as GridSingleSelectColDef<any, any, any>[]),
   ];
 
   return (
     <LearnersGrid
-      // ref={tableRef}
       isLoading={isLoading}
       columns={columns}
       handleSelectionModelChange={handleSelectionModelChange}
