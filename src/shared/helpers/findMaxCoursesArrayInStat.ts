@@ -3,10 +3,12 @@
 export type Attempt = {
     points: number,
     status: 'passed' | 'failed' | 'incomplete',
+
 }
 export type CourseAttempt = {
     id: number,
-    attempts: Attempt[]
+    attempts: Attempt[],
+    total_points: number,
 }
 
 export type AllStatisticsData = {

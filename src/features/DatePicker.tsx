@@ -38,7 +38,6 @@ export default function AssignDatePicker({
           disabled={disabled}
           closeOnSelect
           disablePast
-         
         />
       </div>
     </LocalizationProvider>

@@ -1,13 +1,12 @@
 import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 import {
-  CurrentUserData,
   CurrentUserInfo,
   Divisions,
   ILearner,
   UserActions,
-  UserState,
+  UserState
 } from '../../types/types.store';
-import { devtools } from 'zustand/middleware';
 
 export const useLearners = create<UserState & UserActions>()(
   devtools((set) => ({

@@ -49,8 +49,7 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (props) =>
     return (
        
           <React.Fragment>
-            <Button onClick={handleClickOpen('paper')}>scroll=paper</Button>
-            <Button onClick={handleClickOpen('body')}>scroll=body</Button>
+            
             <Dialog
               open={open}
               onClose={handleClose}

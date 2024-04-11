@@ -4,6 +4,7 @@ import {
   DataGrid,
   GridColDef,
   GridColumnGroupingModel,
+  GridComparatorFn,
 } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
@@ -63,6 +64,32 @@ const Statistics = () => {
     setStatInfo(getStatInfo!)
   }
 
+  function calculatePercent(points: number, totalPoints: number) {
+    if (totalPoints === 0) {
+      return 0; 
+    }
+    return Number(((points / totalPoints) * 100).toFixed(0));
+  }
+
+  // const sortComparator: GridComparatorFn<any> = (v1, v2, cellParams1, cellParams2) => {
+  //   console.log('cellParams2: ', cellParams2);
+  //   console.log('cellParams1: ', cellParams1);
+  //   console.log('v2: ', v2);
+  //   console.log('v1: ', v1);
+  //   const courseId = +cellParams1?.field?.split('_')[0]; // Получаем courseId из имени поля
+  
+  //   // const percentA = calculatePercent(
+  //   //   cellParams1.value,
+  //   //   cellParams1.row.courses.find((c: AllStatisticsData) => c.id === courseId)?.total_points
+  //   // );
+  //   // const percentB = calculatePercent(
+  //   //   cellParams2.value,
+  //   //   cellParams2.row.courses.find((c: AllStatisticsData) => c.id === courseId)?.total_points
+  //   // );
+  
+  //   // return percentA - percentB; // Сортируем по возрастанию процента
+  // };
+
   const columns: GridColDef[] = [
     {
       field: 'name',
@@ -87,12 +114,22 @@ const Statistics = () => {
           headerClassName: 'name-column--cell',
           cellClassName: 'name-cell',
           flex: 0.1,
-
+          // sortComparator: sortComparator,
           renderCell: ({ row }) => {
             const attempts = row?.courses?.filter(
               (c: AllStatisticsData) => c.id === course.id,
             )[0]?.attempts;
             const status = attempts && attempts[attempt - 1]?.status;
+            const totalPoints = row?.courses?.filter(
+              (c: AllStatisticsData) => c.id === course.id,
+            )[0]?.total_points;
+            const points = attempts && attempts[attempt - 1]?.points
+            const percent = calculatePercent(points, totalPoints);
+            const localStatus = status === 'passed' ? 'Пройден' : 'Не пройден';
+            const unixDate = attempts && attempts[attempt - 1]?.date
+            const date = new Date(unixDate * 1000).toLocaleDateString('ru-RU')
+
+
             return (
               <Typography
                 color={status === 'passed' ? 'darkgreen' : 'red'}
@@ -104,7 +141,7 @@ const Statistics = () => {
                 onClick={handleCellClick(course.id, row.id, row.name, status)}
               >
                 {attempts && attempts[attempt - 1]
-                  ? attempts[attempt - 1].points
+                  ? `${points}/${totalPoints} - ${percent}% - ${localStatus} - ${date} `
                   : '-'}
               </Typography>
             );
