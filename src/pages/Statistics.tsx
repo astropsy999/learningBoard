@@ -1,5 +1,4 @@
-import LightbulbIcon from '@mui/icons-material/Lightbulb';
-import { Box, Chip, Typography, useTheme } from '@mui/material';
+import { Box, Typography, useTheme } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
@@ -9,17 +8,16 @@ import {
 } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import ProgressLine from '../shared/ui/ProgressLine';
+import { fetchStatisctics } from '../app/api/api';
 import { useCourses } from '../app/data/store/courses';
+import { dataGridStyles } from '../app/styles/DataGrid.styles';
 import {
   AllStatisticsData,
   CourseAttempt,
   findMaxCourses,
 } from '../shared/helpers/findMaxCoursesArrayInStat';
 import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
-import { fetchStatisctics } from '../app/api/api';
-import { dataGridStyles } from '../app/styles/DataGrid.styles';
-import { tokens } from '../app/theme';
+import ProgressLine from '../shared/ui/ProgressLine';
 import { DetailedStatDialog } from '../widgets/DetailedStatDialog';
 
 export type StatInfoType = {
@@ -27,6 +25,12 @@ export type StatInfoType = {
   user: number;
   userName: string;
   status: string;
+  unixDate: number;
+  points: number;
+  totalPoints: number;
+  percent: string;
+  passingScore: number;
+  timeSpent: string;
 };
 
 const Statistics = () => {
@@ -40,6 +44,12 @@ const Statistics = () => {
     user: 0,
     userName: '',
     status: '',
+    unixDate: 0,
+    points: 0,
+    totalPoints: 0,
+    percent: '',
+    passingScore: 0,
+    timeSpent: '',
   });
 
   const { data: rawStatistics, isLoading } = useSWR('stat', fetchStatisctics);
@@ -61,9 +71,26 @@ const Statistics = () => {
     userId: number,
     userName: string,
     status: string,
+    unixDate: number,
+    points: number,
+    totalPoints: number,
+    percent: string,
+    passingScore: number,
+    timeSpent: string,
   ) => {
     return () => {
-      showDetailedStatistic(courseId, userId, userName, status);
+      showDetailedStatistic(
+        courseId,
+        userId,
+        userName,
+        status,
+        unixDate,
+        points,
+        totalPoints,
+        percent,
+        passingScore,
+        timeSpent,
+      );
     };
   };
 
@@ -72,10 +99,27 @@ const Statistics = () => {
     user: number,
     userName: string,
     status: string,
+    unixDate: number,
+    points: number,
+    totalPoints: number,
+    percent: string,
+    passingScore: number,
+    timeSpent: string,
   ) => {
     setShowDetailedStat(() => !showDetailedStat);
 
-    const getStatInfo = { user, course, userName, status };
+    const getStatInfo = {
+      user,
+      course,
+      userName,
+      status,
+      unixDate,
+      points,
+      totalPoints,
+      percent,
+      passingScore,
+      timeSpent,
+    };
     setStatInfo(getStatInfo!);
   };
 
@@ -93,7 +137,6 @@ const Statistics = () => {
     cellParams2,
   ) => {
     const courseId = +cellParams1?.field?.split('_')[0];
-
     const getVal = (cellParams: GridSortCellParams) =>
       cellParams?.value?.courses?.filter(
         (v: CourseAttempt) => v.id === courseId,
@@ -151,6 +194,9 @@ const Statistics = () => {
             const localStatus = status === 'passed' ? 'Пройден' : 'Не пройден';
             const unixDate = attempts && attempts[attempt - 1]?.date;
             const date = new Date(unixDate * 1000).toLocaleDateString('ru-RU');
+            const passingScore = totalPoints * 0.7;
+            const timeSpent = '9:99';
+            const perStr = `${percent}%`;
 
             return (
               <Typography
@@ -160,7 +206,18 @@ const Statistics = () => {
                   fontWeight: 'bold',
                   cursor: 'pointer',
                 }}
-                onClick={handleCellClick(course.id, row.id, row.name, status)}
+                onClick={handleCellClick(
+                  course.id,
+                  row.id,
+                  row.name,
+                  status,
+                  unixDate,
+                  points,
+                  totalPoints,
+                  perStr,
+                  passingScore,
+                  timeSpent,
+                )}
               >
                 {attempts && attempts[attempt - 1]
                   ? `${points}/${totalPoints} - ${percent}% - ${localStatus} - ${date} `
