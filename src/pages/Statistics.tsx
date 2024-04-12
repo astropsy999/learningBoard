@@ -3,19 +3,13 @@ import {
   DataGrid,
   GridColDef,
   GridColumnGroupingModel,
-  GridComparatorFn,
-  GridSortCellParams,
 } from '@mui/x-data-grid';
-import React, { useEffect, useState } from 'react';
-import useSWR from 'swr';
-import { fetchStatisctics } from '../app/api/api';
+import React from 'react';
 import { useCourses } from '../app/data/store/courses';
+import { useStatSortComparator } from '../app/hooks/useStatSortComparator';
+import { useStatisticsData } from '../app/hooks/useStatisticsData';
 import { dataGridStyles } from '../app/styles/DataGrid.styles';
-import {
-  AllStatisticsData,
-  CourseAttempt,
-  findMaxCourses,
-} from '../shared/helpers/findMaxCoursesArrayInStat';
+import { AllStatisticsData } from '../shared/helpers/findMaxCoursesArrayInStat';
 import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
 import ProgressLine from '../shared/ui/ProgressLine';
 import { DetailedStatDialog } from '../widgets/DetailedStatDialog';
@@ -34,37 +28,21 @@ export type StatInfoType = {
 };
 
 const Statistics = () => {
+  const {
+    coursesList,
+    statLoading,
+    showDetailedStat,
+    setShowDetailedStat,
+    statInfo,
+    rawStatistics,
+    isLoading,
+    showDetailedStatistic,
+  } = useStatisticsData();
+  const sortComparator = useStatSortComparator();
   const theme = useTheme();
-  const [coursesList, setCoursesList] = useState<CourseAttempt[]>([]);
   const { allCourses } = useCourses();
-  const [statLoading, setStatLoading] = useState(true);
-  const [showDetailedStat, setShowDetailedStat] = useState(false);
-  const [statInfo, setStatInfo] = useState<StatInfoType>({
-    course: 0,
-    user: 0,
-    userName: '',
-    status: '',
-    unixDate: 0,
-    points: 0,
-    totalPoints: 0,
-    percent: '',
-    passingScore: 0,
-    timeSpent: '',
-  });
-
-  const { data: rawStatistics, isLoading } = useSWR('stat', fetchStatisctics);
 
   const ATTEMPTS = 3;
-
-  useEffect(() => {
-    const courses = findMaxCourses(rawStatistics);
-    setCoursesList(courses!);
-  }, [rawStatistics]);
-
-  useEffect(() => {
-    setStatLoading(isLoading);
-    allCourses && allCourses.length > 0 && setStatLoading(false);
-  }, [statLoading]);
 
   const handleCellClick = (
     courseId: number,
@@ -94,69 +72,12 @@ const Statistics = () => {
     };
   };
 
-  const showDetailedStatistic = (
-    course: number,
-    user: number,
-    userName: string,
-    status: string,
-    unixDate: number,
-    points: number,
-    totalPoints: number,
-    percent: string,
-    passingScore: number,
-    timeSpent: string,
-  ) => {
-    setShowDetailedStat(() => !showDetailedStat);
-
-    const getStatInfo = {
-      user,
-      course,
-      userName,
-      status,
-      unixDate,
-      points,
-      totalPoints,
-      percent,
-      passingScore,
-      timeSpent,
-    };
-    setStatInfo(getStatInfo!);
-  };
-
   function calculatePercent(points: number, totalPoints: number) {
     if (totalPoints === 0) {
       return 0;
     }
     return Number(((points / totalPoints) * 100).toFixed(0));
   }
-
-  const sortComparator: GridComparatorFn<any> = (
-    v1,
-    v2,
-    cellParams1,
-    cellParams2,
-  ) => {
-    const courseId = +cellParams1?.field?.split('_')[0];
-    const getVal = (cellParams: GridSortCellParams) =>
-      cellParams?.value?.courses?.filter(
-        (v: CourseAttempt) => v.id === courseId,
-      )[0]?.attempts[0]?.points;
-
-    const getTotalVal = (cellParams: GridSortCellParams) =>
-      +cellParams?.value?.courses?.find(
-        (c: AllStatisticsData) => c.id === courseId,
-      )?.total_points;
-
-    const val1 = getVal(cellParams1);
-    const val2 = getVal(cellParams2);
-    const totalVal1 = getTotalVal(cellParams1);
-    const totalVal2 = getTotalVal(cellParams2);
-
-    const percentA = calculatePercent(val1, totalVal1);
-    const percentB = calculatePercent(val2, totalVal2);
-
-    return percentA - percentB;
-  };
 
   const columns: GridColDef[] = [
     {
@@ -180,7 +101,7 @@ const Statistics = () => {
           cellClassName: 'name-cell',
           flex: 0.1,
           valueGetter: (value, row) => row,
-          sortComparator: sortComparator,
+          sortComparator,
           renderCell: ({ row }) => {
             const attempts = row?.courses?.filter(
               (c: AllStatisticsData) => c.id === course.id,
