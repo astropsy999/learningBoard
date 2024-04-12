@@ -202,8 +202,6 @@ const Statistics = () => {
               <Typography
                 color={status === 'passed' ? 'darkgreen' : 'red'}
                 sx={{
-                  // fontSize: '1rem',
-                  // fontWeight: 'bold',
                   cursor: 'pointer',
                 }}
                 onClick={handleCellClick(

@@ -200,7 +200,7 @@ const LearnersList = () => {
       cellClassName: 'name-cell',
       filterOperators: filterOperators,
       headerAlign: 'center',
-      align: 'left'
+      align: 'left',
     },
     {
       field: 'position',
@@ -217,19 +217,22 @@ const LearnersList = () => {
       flex: 0.1,
       filterOperators,
       renderCell(params) {
-          return params?.value?.length > 44 ? `${params.value.slice(0,44)}...` : params.value
+        return params?.value?.length > 44
+          ? `${params.value.slice(0, 44)}...`
+          : params.value;
       },
       headerAlign: 'center',
       align: 'left',
-      cellClassName: 'truncate-cell'
-
+      cellClassName: 'truncate-cell',
     },
     ...((allCourses
       ? allCourses!.map((course) => ({
           field: course.title,
           renderHeader: () => (
             <Tooltip title={course.title}>
-              <div>{course.title}</div>
+              <div style={{ fontSize: '16px', fontWeight: 'bold' }}>
+                {course.title}
+              </div>
             </Tooltip>
           ),
           flex: 0.2,
@@ -241,7 +244,7 @@ const LearnersList = () => {
           type: 'singleSelect',
           filterable: false,
           sortable: false,
-          align: 'center'
+          align: 'center',
         }))
       : []) as GridSingleSelectColDef<any, any, any>[]),
   ];
