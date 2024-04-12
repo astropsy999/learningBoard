@@ -5,6 +5,7 @@ import {
   GridColDef,
   GridColumnGroupingModel,
   GridComparatorFn,
+  GridSortCellParams,
 } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
 import useSWR from 'swr';
@@ -21,23 +22,27 @@ import { dataGridStyles } from '../app/styles/DataGrid.styles';
 import { tokens } from '../app/theme';
 import { DetailedStatDialog } from '../widgets/DetailedStatDialog';
 
-export type StatInfoType = {course: number, user: number, userName: string, status: string}
+export type StatInfoType = {
+  course: number;
+  user: number;
+  userName: string;
+  status: string;
+};
 
 const Statistics = () => {
   const theme = useTheme();
   const [coursesList, setCoursesList] = useState<CourseAttempt[]>([]);
   const { allCourses } = useCourses();
   const [statLoading, setStatLoading] = useState(true);
-  const [showDetailedStat, setShowDetailedStat] = useState(false)
-  const [statInfo, setStatInfo] = useState<StatInfoType>({course: 0, user: 0, userName: '', status: '' })
+  const [showDetailedStat, setShowDetailedStat] = useState(false);
+  const [statInfo, setStatInfo] = useState<StatInfoType>({
+    course: 0,
+    user: 0,
+    userName: '',
+    status: '',
+  });
 
-  const {
-    data: rawStatistics,
-    isLoading,
-  } = useSWR('stat', fetchStatisctics);
-
-  console.log('rawStatistics: ', rawStatistics);
-
+  const { data: rawStatistics, isLoading } = useSWR('stat', fetchStatisctics);
 
   const ATTEMPTS = 3;
 
@@ -51,44 +56,64 @@ const Statistics = () => {
     allCourses && allCourses.length > 0 && setStatLoading(false);
   }, [statLoading]);
 
-  const handleCellClick = (courseId: number, userId: number, userName: string, status: string ) => {
+  const handleCellClick = (
+    courseId: number,
+    userId: number,
+    userName: string,
+    status: string,
+  ) => {
     return () => {
       showDetailedStatistic(courseId, userId, userName, status);
     };
   };
 
-  const showDetailedStatistic = (course: number, user: number, userName: string, status: string) => {
-    setShowDetailedStat(()=> !showDetailedStat)
+  const showDetailedStatistic = (
+    course: number,
+    user: number,
+    userName: string,
+    status: string,
+  ) => {
+    setShowDetailedStat(() => !showDetailedStat);
 
-    const getStatInfo = {user, course, userName, status}
-    setStatInfo(getStatInfo!)
-  }
+    const getStatInfo = { user, course, userName, status };
+    setStatInfo(getStatInfo!);
+  };
 
   function calculatePercent(points: number, totalPoints: number) {
     if (totalPoints === 0) {
-      return 0; 
+      return 0;
     }
     return Number(((points / totalPoints) * 100).toFixed(0));
   }
 
-  // const sortComparator: GridComparatorFn<any> = (v1, v2, cellParams1, cellParams2) => {
-  //   console.log('cellParams2: ', cellParams2);
-  //   console.log('cellParams1: ', cellParams1);
-  //   console.log('v2: ', v2);
-  //   console.log('v1: ', v1);
-  //   const courseId = +cellParams1?.field?.split('_')[0]; // Получаем courseId из имени поля
-  
-  //   // const percentA = calculatePercent(
-  //   //   cellParams1.value,
-  //   //   cellParams1.row.courses.find((c: AllStatisticsData) => c.id === courseId)?.total_points
-  //   // );
-  //   // const percentB = calculatePercent(
-  //   //   cellParams2.value,
-  //   //   cellParams2.row.courses.find((c: AllStatisticsData) => c.id === courseId)?.total_points
-  //   // );
-  
-  //   // return percentA - percentB; // Сортируем по возрастанию процента
-  // };
+  const sortComparator: GridComparatorFn<any> = (
+    v1,
+    v2,
+    cellParams1,
+    cellParams2,
+  ) => {
+    const courseId = +cellParams1?.field?.split('_')[0];
+
+    const getVal = (cellParams: GridSortCellParams) =>
+      cellParams?.value?.courses?.filter(
+        (v: CourseAttempt) => v.id === courseId,
+      )[0]?.attempts[0]?.points;
+
+    const getTotalVal = (cellParams: GridSortCellParams) =>
+      +cellParams?.value?.courses?.find(
+        (c: AllStatisticsData) => c.id === courseId,
+      )?.total_points;
+
+    const val1 = getVal(cellParams1);
+    const val2 = getVal(cellParams2);
+    const totalVal1 = getTotalVal(cellParams1);
+    const totalVal2 = getTotalVal(cellParams2);
+
+    const percentA = calculatePercent(val1, totalVal1);
+    const percentB = calculatePercent(val2, totalVal2);
+
+    return percentA - percentB;
+  };
 
   const columns: GridColDef[] = [
     {
@@ -96,7 +121,6 @@ const Statistics = () => {
       headerName: 'ФИО',
       cellClassName: 'name-cell',
       flex: 0.3,
-            
     },
   ];
 
@@ -107,14 +131,13 @@ const Statistics = () => {
         columns.push({
           field: `${course.id}_${attempt}`,
           headerName: `Попытка ${attempt}`,
-          renderHeader: () => (
-              <>{attempt}</>
-          ),
+          renderHeader: () => <>{attempt}</>,
           disableColumnMenu: true,
           headerClassName: 'name-column--cell',
           cellClassName: 'name-cell',
           flex: 0.1,
-          // sortComparator: sortComparator,
+          valueGetter: (value, row) => row,
+          sortComparator: sortComparator,
           renderCell: ({ row }) => {
             const attempts = row?.courses?.filter(
               (c: AllStatisticsData) => c.id === course.id,
@@ -123,12 +146,11 @@ const Statistics = () => {
             const totalPoints = row?.courses?.filter(
               (c: AllStatisticsData) => c.id === course.id,
             )[0]?.total_points;
-            const points = attempts && attempts[attempt - 1]?.points
+            const points = attempts && attempts[attempt - 1]?.points;
             const percent = calculatePercent(points, totalPoints);
             const localStatus = status === 'passed' ? 'Пройден' : 'Не пройден';
-            const unixDate = attempts && attempts[attempt - 1]?.date
-            const date = new Date(unixDate * 1000).toLocaleDateString('ru-RU')
-
+            const unixDate = attempts && attempts[attempt - 1]?.date;
+            const date = new Date(unixDate * 1000).toLocaleDateString('ru-RU');
 
             return (
               <Typography
@@ -136,7 +158,7 @@ const Statistics = () => {
                 sx={{
                   fontSize: '1rem',
                   fontWeight: 'bold',
-                  cursor: 'pointer'
+                  cursor: 'pointer',
                 }}
                 onClick={handleCellClick(course.id, row.id, row.name, status)}
               >
@@ -201,23 +223,26 @@ const Statistics = () => {
                 alignItems: 'center',
                 justifyContent: 'center',
               },
-              '& .MuiDataGrid-main' : {
-                marginTop: '0.2em'
+              '& .MuiDataGrid-main': {
+                marginTop: '0.2em',
               },
-              '& .MuiDataGrid-columnHeader, & .MuiDataGrid-columnHeaderRow, & .MuiDataGrid-columnHeaderTitleContainerContent, & .MuiDataGrid-columnHeaderDraggableContainer, & .MuiDataGrid-columnHeaders' : {
-                maxHeight: '30px !important',
-              },
+              '& .MuiDataGrid-columnHeader, & .MuiDataGrid-columnHeaderRow, & .MuiDataGrid-columnHeaderTitleContainerContent, & .MuiDataGrid-columnHeaderDraggableContainer, & .MuiDataGrid-columnHeaders':
+                {
+                  maxHeight: '30px !important',
+                },
               '& .MuiDataGrid-columnHeaderTitleContainer': {
-                marginLeft: '22px !important'
-              }
-            
+                marginLeft: '22px !important',
+              },
             }}
           />
-          
         ) : (
           <ProgressLine />
         )}
-        <DetailedStatDialog open={showDetailedStat} setOpen={setShowDetailedStat} selectedStatInfo={statInfo} />
+        <DetailedStatDialog
+          open={showDetailedStat}
+          setOpen={setShowDetailedStat}
+          selectedStatInfo={statInfo}
+        />
       </Box>
     </Box>
   );
