@@ -46,6 +46,8 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
   const status =
     selectedStatInfo.status === 'passed' ? 'Пройден' : 'Не пройден';
   const statusColor = selectedStatInfo.status === 'passed' ? 'green' : 'red';
+  const statusCardBg =
+    selectedStatInfo.status === 'passed' ? '#90ee9038' : '#ff00001c';
 
   const date = new Date(selectedStatInfo.unixDate * 1000).toLocaleDateString(
     'ru-RU',
@@ -84,7 +86,7 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
             tabIndex={-1}
           >
             <Card>
-              <CardContent>
+              <CardContent sx={{ backgroundColor: statusCardBg }}>
                 <Box p={1}>
                   <div>
                     Дата/Время:{' '}
@@ -107,9 +109,9 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
                   <div>
                     Проходной балл: <b>{Math.floor(passingScore)} (70%)</b>
                   </div>
-                  <div>
+                  {/* <div>
                     Затрачено времени: <b>{timeSpent}</b>
-                  </div>
+                  </div> */}
                   <Stack direction={'row'}>
                     Результат{' '}
                     <Box color={statusColor} fontWeight={'bold'} ml={1}>
@@ -120,10 +122,10 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
               </CardContent>
             </Card>
 
-            <Box m={2}>
+            {/* <Box m={2}>
               <DetailedQuestion isCorrect={true} />
               <DetailedQuestion isCorrect={false} />
-            </Box>
+            </Box> */}
           </DialogContentText>
         </DialogContent>
         <DialogActions>
