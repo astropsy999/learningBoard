@@ -31,6 +31,7 @@ export const useStatisticsData = () => {
     const courses = findMaxCourses(rawStatistics);
     setCoursesList(courses!);
   }, [rawStatistics]);
+  console.log('🚀 ~ useStatisticsData ~ rawStatistics:', rawStatistics);
 
   useEffect(() => {
     setStatLoading(isLoading);

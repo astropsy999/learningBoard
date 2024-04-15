@@ -5,7 +5,7 @@ import {
   Divisions,
   ILearner,
   UserActions,
-  UserState
+  UserState,
 } from '../../types/types.store';
 
 export const useLearners = create<UserState & UserActions>()(
@@ -26,6 +26,13 @@ export const useLearners = create<UserState & UserActions>()(
     divisions: null,
     selectedLearnersToLockCourse: [],
     isMassEditMode: false,
+    currentDivisionUsersList: [],
+    setCurrentDivisionUsersList: (users: string[]) =>
+      set(
+        { currentDivisionUsersList: users },
+        false,
+        'setCurrentDivisionUsersList',
+      ),
     setIsMassEditMode: (value: boolean) =>
       set({ isMassEditMode: value }, false, 'setIsMassEditMode'),
     setSelectedLearnersToLockCourse: (

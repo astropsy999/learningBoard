@@ -4,7 +4,7 @@ import {
   GridColDef,
   GridColumnGroupingModel,
 } from '@mui/x-data-grid';
-import React from 'react';
+import React, { useState } from 'react';
 import { useCourses } from '../app/data/store/courses';
 import { useStatSortComparator } from '../app/hooks/useStatSortComparator';
 import { useStatisticsData } from '../app/hooks/useStatisticsData';
@@ -13,6 +13,7 @@ import { AllStatisticsData } from '../shared/helpers/findMaxCoursesArrayInStat';
 import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
 import ProgressLine from '../shared/ui/ProgressLine';
 import { DetailedStatDialog } from '../widgets/DetailedStatDialog';
+import { useCustomFilterOperators } from '../app/hooks/useCustomFilterOperator';
 
 export type StatInfoType = {
   course: number;
@@ -41,6 +42,9 @@ const Statistics = () => {
   const sortComparator = useStatSortComparator();
   const theme = useTheme();
   const { allCourses } = useCourses();
+
+  // const [selectedField, setSelectedField] = useState<string>('division');
+  // const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
   const ATTEMPTS = 3;
 
@@ -188,6 +192,15 @@ const Statistics = () => {
               sorting: {
                 sortModel: [{ field: 'name', sort: 'asc' }],
               },
+            }}
+            filterModel={{
+              items: [
+                {
+                  field: 'name',
+                  operator: 'isAnyOf',
+                  value: ['Стужук Е.В.'],
+                },
+              ],
             }}
             sx={{
               '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': {

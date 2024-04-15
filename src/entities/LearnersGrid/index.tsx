@@ -3,9 +3,11 @@ import {
   DataGrid,
   GridColDef,
   GridFilterModel,
+  getDefaultGridFilterModel,
+  gridQuickFilterValuesSelector,
   useGridApiRef,
 } from '@mui/x-data-grid';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { dataGridStyles } from '../../app/styles/DataGrid.styles';
 import { useLearners } from '../../app/data/store/learners';
 import ProgressLine from '../../shared/ui/ProgressLine';
@@ -21,7 +23,6 @@ interface LearnersGridProps {
   onChangeFilterModel: (newModel: GridFilterModel) => void;
   handleCoursesDialogClose: () => void;
   lockedArr: number[];
-  //   ref: any;
 }
 
 export const LearnersGrid: React.FC<LearnersGridProps> = (props) => {
@@ -78,13 +79,12 @@ export const LearnersGrid: React.FC<LearnersGridProps> = (props) => {
                 display: 'flex',
                 alignItems: 'center',
               },
-              '& .MuiDataGrid-main' : {
-                marginTop: '0.3em'
+              '& .MuiDataGrid-main': {
+                marginTop: '0.3em',
               },
-              '& .truncate-cell':{
+              '& .truncate-cell': {
                 lineHeight: '1 !important',
-                
-              }
+              },
             }}
           />
         ) : (

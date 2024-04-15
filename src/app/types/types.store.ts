@@ -82,6 +82,7 @@ export type UserState = {
   divisions: Divisions | null;
   selectedLearnersToLockCourse: string[] | ILearner[];
   isMassEditMode: boolean;
+  currentDivisionUsersList: string[];
   // allCourses: Course[] | null;
 };
 
@@ -103,6 +104,7 @@ export type UserActions = {
     newSelectedLearnersToLockCourse: string[] | ILearner[],
   ) => void;
   setIsMassEditMode: (value: boolean) => void;
+  setCurrentDivisionUsersList: (users: string[]) => void;
 };
 
 export interface ILearner {

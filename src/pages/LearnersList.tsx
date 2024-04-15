@@ -1,20 +1,19 @@
-import LightbulbIcon from '@mui/icons-material/Lightbulb';
-import { Chip, Tooltip } from '@mui/material';
+import { Tooltip } from '@mui/material';
 import {
   GridColDef,
-  GridFilterItem,
   GridFilterModel,
-  GridFilterOperator,
   GridSingleSelectColDef,
 } from '@mui/x-data-grid';
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useCourses } from '../app/data/store/courses';
 import { useLearners } from '../app/data/store/learners';
+import { useCustomFilterOperators } from '../app/hooks/useCustomFilterOperator';
 import { CoursesWithDeadline } from '../app/types/types.store';
-import CustomFilterInput from '../entities/CustomFilter/CustomFilterPanel';
 import { LearnersGrid } from '../entities/LearnersGrid';
 import { AssignedCourseChip } from '../features/AssignedCourseChip';
 import { getHeaderNameByField } from '../shared/helpers/getHeaderNameByField';
+import { getCurrentUserDivision } from '../app/api/api';
+import { getDivisionUsersArrayByName } from '../shared/helpers/getDivisionUsersByName';
 
 export type SelectedRowData = {
   id: number;
@@ -39,6 +38,7 @@ const LearnersList = () => {
     divisions,
     currentUserDivisionName,
     setIsMassEditMode,
+    setCurrentDivisionUsersList,
   } = useLearners();
 
   const { allCourses } = useCourses();
@@ -60,38 +60,6 @@ const LearnersList = () => {
   const [filterLabel, setFilterLabel] = useState<string>('');
   const [selectedField, setSelectedField] = useState<string>('division');
 
-  const [headerHeight, setHeaderHeight] = useState(0);
-  const [tableHeight, setTableHeight] = useState(0);
-  const [isHeaderFixed, setIsHeaderFixed] = useState(false);
-
-  const tableRef = useRef(null);
-
-  useEffect(() => {
-    const header = document.querySelector('.MuiDataGrid-colCell');
-    if (header) {
-      setHeaderHeight(header.clientHeight);
-    }
-  }, []);
-
-  useEffect(() => {
-    const table = tableRef?.current as any;
-    if (table) {
-      const tableHeight = table.clientHeight;
-      setTableHeight(tableHeight);
-
-      const windowHeight = window.innerHeight;
-      if (tableHeight > windowHeight) {
-        setIsHeaderFixed(true);
-        const virtualScrollerContent = document.querySelector(
-          '.MuiDataGrid-virtualScrollerContent',
-        ) as any;
-        if (virtualScrollerContent) {
-          virtualScrollerContent.style.marginTop = `${headerHeight}px`;
-        }
-      }
-    }
-  }, [headerHeight]);
-
   useEffect(() => {
     if (currentUserDivisionName)
       setFilterModel({
@@ -103,6 +71,16 @@ const LearnersList = () => {
   useEffect(() => {
     if (allLearners && divisions && allCourses && currentUserDivisionName) {
       setIsLoading(false);
+      const currentDivisionUsersList = getDivisionUsersArrayByName(
+        allLearners,
+        currentUserDivisionName,
+      );
+      console.log(
+        '🚀 ~ useEffect ~ currentDivisionUsersList:',
+        currentDivisionUsersList,
+      );
+
+      setCurrentDivisionUsersList(currentDivisionUsersList as string[]);
     }
   }, [allCourses, allData, allLearners, currentUserDivisionName, divisions]);
 
@@ -154,33 +132,12 @@ const LearnersList = () => {
     setIsMassEditMode(true);
   };
 
-  const filterOperators: GridFilterOperator<any, string, string>[] = [
-    {
-      value: 'isAnyOf',
-      getApplyFilterFn: (filterItem: GridFilterItem) => {
-        if (!filterItem.field || !filterItem.value || !filterItem.operator) {
-          return null;
-        }
-
-        if (selectedValues.length === 0) {
-          return (value: string) => true;
-        }
-
-        return (value: string) => {
-          return selectedValues?.includes(value);
-        };
-      },
-      InputComponent: CustomFilterInput,
-      InputComponentProps: {
-        onChange: (selectedValue: string[]) => {
-          setSelectedValues(selectedValue);
-        },
-        filterLabel,
-        field: selectedField,
-        selectedOptions: selectedValues,
-      },
-    },
-  ];
+  const filterOperators = useCustomFilterOperators(
+    selectedValues,
+    setSelectedValues,
+    filterLabel,
+    selectedField,
+  );
 
   const onChangeFilterModel = (newModel: GridFilterModel) => {
     if (newModel.items) {
