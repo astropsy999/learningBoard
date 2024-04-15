@@ -8,6 +8,7 @@ import * as React from 'react';
 import { useCourses } from '../app/data/store/courses';
 import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
 import { StatInfoType } from '../app/types/stat.types';
+import AttemptDetailsTabs from './AttemptsDetails';
 
 interface DetailedStartDialogProps {
   open: boolean;
@@ -119,6 +120,9 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
                 </Box>
               </CardContent>
             </Card>
+            <Box mt={2}>
+              <AttemptDetailsTabs />
+            </Box>
 
             {/* <Box m={2}>
               <DetailedQuestion isCorrect={true} />

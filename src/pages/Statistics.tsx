@@ -21,10 +21,10 @@ const Statistics = () => {
     showDetailedStat,
     setShowDetailedStat,
     statInfo,
-    rawStatistics,
     isLoading,
     showDetailedStatistic,
   } = useStatisticsData();
+  
   const sortComparator = useStatSortComparator();
   const theme = useTheme();
   const { allCourses } = useCourses();
