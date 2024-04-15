@@ -2,11 +2,10 @@ import useSWR from 'swr';
 import { useCourses } from '../data/store/courses';
 import { useEffect, useState } from 'react';
 import { fetchStatisctics } from '../api/api';
-import {
-  CourseAttempt,
-  findMaxCourses,
-} from '../../shared/helpers/findMaxCoursesArrayInStat';
+
 import { StatInfoType } from '../../pages/Statistics';
+import { CourseAttempt } from '../types/stat.types';
+import { findMaxCourses } from '../../shared/helpers/findMaxCoursesArrayInStat';
 
 export const useStatisticsData = () => {
   const { allCourses } = useCourses();
@@ -31,7 +30,6 @@ export const useStatisticsData = () => {
     const courses = findMaxCourses(rawStatistics);
     setCoursesList(courses!);
   }, [rawStatistics]);
-  console.log('🚀 ~ useStatisticsData ~ rawStatistics:', rawStatistics);
 
   useEffect(() => {
     setStatLoading(isLoading);
@@ -51,7 +49,6 @@ export const useStatisticsData = () => {
     timeSpent: string,
   ) => {
     setShowDetailedStat(!showDetailedStat);
-
     const getStatInfo = {
       user,
       course,

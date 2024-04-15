@@ -1,21 +1,5 @@
+import { AllStatisticsData } from "../../app/types/stat.types";
 
-
-export type Attempt = {
-    points: number,
-    status: 'passed' | 'failed' | 'incomplete',
-
-}
-export type CourseAttempt = {
-    id: number,
-    attempts: Attempt[],
-    total_points: number,
-}
-
-export type AllStatisticsData = {
-    id: number,
-    name: string,
-    courses: CourseAttempt[],
-}
 
 export const findMaxCourses = (stat: AllStatisticsData[]) => {
     const filteredStat = stat?.filter((st) => st.courses.length > 0);

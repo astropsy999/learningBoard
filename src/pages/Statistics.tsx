@@ -9,13 +9,13 @@ import { useCourses } from '../app/data/store/courses';
 import { useStatSortComparator } from '../app/hooks/useStatSortComparator';
 import { useStatisticsData } from '../app/hooks/useStatisticsData';
 import { dataGridStyles } from '../app/styles/DataGrid.styles';
-import { AllStatisticsData } from '../shared/helpers/findMaxCoursesArrayInStat';
 import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
 import ProgressLine from '../shared/ui/ProgressLine';
 import { DetailedStatDialog } from '../widgets/DetailedStatDialog';
 import { useCustomFilterOperators } from '../app/hooks/useCustomFilterOperator';
 import { useLearners } from '../app/data/store/learners';
 import { Box, Typography, useTheme } from '@mui/material';
+import { AllStatisticsData } from '../app/types/stat.types';
 
 export type StatInfoType = {
   course: number;
@@ -29,6 +29,7 @@ export type StatInfoType = {
   passingScore: number;
   timeSpent: string;
 };
+
 
 const Statistics = () => {
   const {
@@ -47,7 +48,9 @@ const Statistics = () => {
   const { currentDivisionUsersList, setCurrentDivisionUsersList } = useLearners()
   const [filterValue, setFilterValue] = useState(currentDivisionUsersList);
 
-  const ATTEMPTS = 3;
+
+  // const ATTEMPTS = 3;
+  const statSubcolumns = [{field: 'result', headerName: 'Результат'}, {field: 'status', headerName: 'Статус'}, {field: 'date', headerName: 'Дата'}];
 
   useEffect(() => {
     setFilterValue(currentDivisionUsersList);
@@ -97,18 +100,20 @@ const Statistics = () => {
       filterOperators: useCustomFilterOperators(
         currentDivisionUsersList, setCurrentDivisionUsersList, 'ФИО', 'name'
       )
-      
     },
   ];
 
   !isLoading &&
     !statLoading &&
     coursesList?.forEach((course) => {
-      for (let attempt = 1; attempt <= ATTEMPTS; attempt++) {
+      for (let subCol = 0; subCol <= statSubcolumns.length-1; subCol++) {
+
+        const subColumnData = statSubcolumns[subCol]
+        const subField = subColumnData?.field
         columns.push({
-          field: `${course.id}_${attempt}`,
-          headerName: `Попытка ${attempt}`,
-          renderHeader: () => <>{attempt}</>,
+          field: `${course.id}_${subField}`,
+          headerName: `${subColumnData?.headerName}`,
+          renderHeader: () => <>{subColumnData?.headerName}</>,
           disableColumnMenu: true,
           headerClassName: 'name-column--cell',
           cellClassName: 'name-cell',
@@ -119,20 +124,30 @@ const Statistics = () => {
             const attempts = row?.courses?.filter(
               (c: AllStatisticsData) => c.id === course.id,
             )[0]?.attempts;
-            const status = attempts && attempts[attempt - 1]?.status;
+
+            const status = attempts && attempts[0]?.status;
+
             const totalPoints = row?.courses?.filter(
               (c: AllStatisticsData) => c.id === course.id,
             )[0]?.total_points;
-            const points = attempts && attempts[attempt - 1]?.points;
+
+            const points = attempts && attempts[0]?.points;
             const percent = calculatePercent(points, totalPoints);
             const localStatus = status === 'passed' ? 'Пройден' : 'Не пройден';
-            const unixDate = attempts && attempts[attempt - 1]?.date;
+            const unixDate = attempts && attempts[0]?.date;
             const date = new Date(unixDate * 1000).toLocaleDateString('ru-RU');
             const passingScore = totalPoints * 0.7;
             const timeSpent = '9:99';
             const perStr = `${percent}%`;
 
+            const displayContent =
+            subField === 'result' ? `${points}/${totalPoints} - ${percent}%` :
+            subField === 'status' ? `${localStatus}` :
+            subField === 'date' ? `${date}` :
+            '-';
+
             return (
+              
               <Typography
                 color={status === 'passed' ? 'darkgreen' : 'red'}
                 sx={{
@@ -151,9 +166,8 @@ const Statistics = () => {
                   timeSpent,
                 )}
               >
-                {attempts && attempts[attempt - 1]
-                  ? `${points}/${totalPoints} - ${percent}% - ${localStatus} - ${date} `
-                  : '-'}
+                {attempts && attempts[0]
+                  ? displayContent : '-'}
               </Typography>
             );
           },
@@ -178,19 +192,14 @@ const Statistics = () => {
               {getCourseTitleById(course.id, allCourses!)!}
             </div>
           ),
-          children: [
-            { field: `${course.id}_1` },
-            { field: `${course.id}_2` },
-            { field: `${course.id}_3` },
-          ],
+          children: statSubcolumns.map((subCol) => ({
+            field: `${course.id}_${subCol.field}`,
+            headerName: subCol.headerName,
+          })),
         }))
       : [];
 
       const onChangeFilterModel = (newModel: GridFilterModel) => {
-        // if (newModel.items) {
-        //   setFilterLabel(getHeaderNameByField(newModel.items[0].field!, columns)!);
-        //   setSelectedField(newModel.items[0].field!);
-        // }
         if (!newModel.items[0].value) {
           setCurrentDivisionUsersList([]);
         }
