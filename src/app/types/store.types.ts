@@ -22,7 +22,7 @@ export type Course = {
 };
 
 export type Divisions = {
-  [key: number]: string;
+  [key: number]: {name: string, short_name: string};
 };
 
 export interface AllUserData {
@@ -119,7 +119,7 @@ export interface ILearner {
 export interface CurrentUserData {
   id: number;
   name: string;
-  division: number;
+  division: Divisions;
   manager: ManagerData;
   last_name?: string;
   father_name?: string;

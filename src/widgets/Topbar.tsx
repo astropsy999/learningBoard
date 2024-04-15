@@ -60,12 +60,15 @@ const Topbar: FC<TopbarProps> = () => {
       // Заполняем поля position, division и courses у каждого пользователя
       const learnersWithData = users.map((user) => ({
         ...user,
-        division: user.division ? divisions[user.division] : undefined,
+        division: user.division ? divisions[user.division].short_name : undefined,
         courses: user.courses.map((courseId) => ({
           [courseId.id]: courseTitlesById[courseId.id],
           deadline: courseId.deadline,
         })),
       }));
+
+      console.log('learnersWithData: ', learnersWithData);
+
 
       // Устанавливаем обновленный массив с данными пользователя
       setAllLearners(learnersWithData);
@@ -75,7 +78,7 @@ const Topbar: FC<TopbarProps> = () => {
       if (allDataFromStore) {
         const userDivisionId = currentUserInfo.division;
 
-        setCurrentUserDivisionName(allDataFromStore?.divisions[userDivisionId]);
+        setCurrentUserDivisionName(allDataFromStore?.divisions[userDivisionId].short_name);
       }
     }
   }, [

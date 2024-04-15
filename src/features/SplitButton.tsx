@@ -126,7 +126,7 @@ export default function SplitButton() {
                       key={option}
                       disabled={index === 2}
                       selected={index === selectedIndex}
-                      onClick={(event) => handleMenuItemClick(event, index)}
+                      onClick={(event: React.MouseEvent<HTMLLIElement, MouseEvent>) => handleMenuItemClick(event, index)}
                     >
                       {option}
                     </MenuItem>

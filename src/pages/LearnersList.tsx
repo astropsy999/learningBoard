@@ -11,9 +11,8 @@ import { useCustomFilterOperators } from '../app/hooks/useCustomFilterOperator';
 import { CoursesWithDeadline } from '../app/types/store.types';
 import { LearnersGrid } from '../entities/LearnersGrid';
 import { AssignedCourseChip } from '../features/AssignedCourseChip';
-import { getHeaderNameByField } from '../shared/helpers/getHeaderNameByField';
-import { getCurrentUserDivision } from '../app/api/api';
 import { getDivisionUsersArrayByName } from '../shared/helpers/getDivisionUsersByName';
+import { getHeaderNameByField } from '../shared/helpers/getHeaderNameByField';
 
 export type SelectedRowData = {
   id: number;
@@ -62,9 +61,10 @@ const LearnersList = () => {
 
   useEffect(() => {
     if (currentUserDivisionName)
+      console.log('currentUserDivisionName: ', currentUserDivisionName);
       setFilterModel({
         items: [],
-        quickFilterValues: [...currentUserDivisionName!, ...selectedValues],
+        // quickFilterValues: [...currentUserDivisionName!, ...selectedValues],
       });
   }, [selectedValues, currentUserDivisionName]);
 
@@ -148,33 +148,33 @@ const LearnersList = () => {
     {
       field: 'name',
       headerName: 'ФИО',
-      flex: 0.1,
+      flex: 0.05,
       cellClassName: 'name-cell',
       filterOperators: filterOperators,
       headerAlign: 'center',
-      align: 'left',
+      align: 'center',
     },
     {
       field: 'position',
       headerName: 'Должность',
       type: 'string',
       headerAlign: 'center',
-      flex: 0.1,
+      flex: 0.05,
       filterOperators: filterOperators,
-      align: 'left',
+      align: 'center',
     },
     {
       field: 'division',
       headerName: 'Отдел',
-      flex: 0.1,
+      flex: 0.05,
       filterOperators,
-      renderCell(params) {
-        return params?.value?.length > 44
-          ? `${params.value.slice(0, 44)}...`
-          : params.value;
-      },
+      // renderCell(params) {
+      //   return params?.value?.length > 44
+      //     ? `${params.value.slice(0, 44)}...`
+      //     : params.value;
+      // },
       headerAlign: 'center',
-      align: 'left',
+      align: 'center',
       cellClassName: 'truncate-cell',
     },
     ...((allCourses

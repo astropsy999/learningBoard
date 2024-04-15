@@ -124,10 +124,7 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
               <AttemptDetailsTabs />
             </Box>
 
-            {/* <Box m={2}>
-              <DetailedQuestion isCorrect={true} />
-              <DetailedQuestion isCorrect={false} />
-            </Box> */}
+       
           </DialogContentText>
         </DialogContent>
         <DialogActions>
