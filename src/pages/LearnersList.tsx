@@ -61,7 +61,6 @@ const LearnersList = () => {
 
   useEffect(() => {
     if (currentUserDivisionName)
-      console.log('currentUserDivisionName: ', currentUserDivisionName);
       setFilterModel({
         items: [],
         // quickFilterValues: [...currentUserDivisionName!, ...selectedValues],

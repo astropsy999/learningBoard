@@ -67,9 +67,6 @@ const Topbar: FC<TopbarProps> = () => {
         })),
       }));
 
-      console.log('learnersWithData: ', learnersWithData);
-
-
       // Устанавливаем обновленный массив с данными пользователя
       setAllLearners(learnersWithData);
       setDivisions(allData?.divisions);
