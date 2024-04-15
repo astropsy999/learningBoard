@@ -3,8 +3,7 @@ import { useCourses } from '../data/store/courses';
 import { useEffect, useState } from 'react';
 import { fetchStatisctics } from '../api/api';
 
-import { StatInfoType } from '../../pages/Statistics';
-import { CourseAttempt } from '../types/stat.types';
+import { CourseAttempt, StatInfoType } from '../types/stat.types';
 import { findMaxCourses } from '../../shared/helpers/findMaxCoursesArrayInStat';
 
 export const useStatisticsData = () => {

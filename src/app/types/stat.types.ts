@@ -26,3 +26,17 @@ export type AllStatisticsData = {
     name: string,
     courses: CourseAttempt[],
 }
+
+
+export type StatInfoType = {
+    course: number;
+    user: number;
+    userName: string;
+    status: string;
+    unixDate: number;
+    points: number;
+    totalPoints: number;
+    percent: string;
+    passingScore: number;
+    timeSpent: string;
+  };

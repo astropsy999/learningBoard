@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import useSWR from 'swr';
 import { useCourses } from '../app/data/store/courses';
 import { useLearners } from '../app/data/store/learners';
-import { AllData } from '../app/types/types.store';
+import { AllData } from '../app/types/store.types';
 import { fetchAllData } from '../app/api/api';
 import { RenderAssignAllButton } from '../features/AssignAllBtn';
 import SplitButton from '../features/SplitButton';

@@ -1,35 +1,18 @@
+import { useTheme } from '@mui/material';
 import {
-  DataGrid,
   GridColDef,
   GridColumnGroupingModel,
-  GridFilterModel,
+  GridFilterModel
 } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
 import { useCourses } from '../app/data/store/courses';
+import { useLearners } from '../app/data/store/learners';
+import { useCustomFilterOperators } from '../app/hooks/useCustomFilterOperator';
 import { useStatSortComparator } from '../app/hooks/useStatSortComparator';
 import { useStatisticsData } from '../app/hooks/useStatisticsData';
-import { dataGridStyles } from '../app/styles/DataGrid.styles';
+import { StatisticsGrid } from '../entities/StatisticsGrid';
+import StatCell from '../entities/StatisticsGrid/StatCell';
 import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
-import ProgressLine from '../shared/ui/ProgressLine';
-import { DetailedStatDialog } from '../widgets/DetailedStatDialog';
-import { useCustomFilterOperators } from '../app/hooks/useCustomFilterOperator';
-import { useLearners } from '../app/data/store/learners';
-import { Box, Typography, useTheme } from '@mui/material';
-import { AllStatisticsData } from '../app/types/stat.types';
-
-export type StatInfoType = {
-  course: number;
-  user: number;
-  userName: string;
-  status: string;
-  unixDate: number;
-  points: number;
-  totalPoints: number;
-  percent: string;
-  passingScore: number;
-  timeSpent: string;
-};
-
 
 const Statistics = () => {
   const {
@@ -50,7 +33,11 @@ const Statistics = () => {
 
 
   // const ATTEMPTS = 3;
-  const statSubcolumns = [{field: 'result', headerName: 'Результат'}, {field: 'status', headerName: 'Статус'}, {field: 'date', headerName: 'Дата'}];
+  const statSubcolumns = [
+    {field: 'result', headerName: 'Результат'}, 
+    {field: 'status', headerName: 'Статус'}, 
+    {field: 'date', headerName: 'Дата'}
+  ];
 
   useEffect(() => {
     setFilterValue(currentDivisionUsersList);
@@ -84,13 +71,6 @@ const Statistics = () => {
     };
   };
 
-  function calculatePercent(points: number, totalPoints: number) {
-    if (totalPoints === 0) {
-      return 0;
-    }
-    return Number(((points / totalPoints) * 100).toFixed(0));
-  }
-
   const columns: GridColDef[] = [
     {
       field: 'name',
@@ -107,70 +87,26 @@ const Statistics = () => {
     !statLoading &&
     coursesList?.forEach((course) => {
       for (let subCol = 0; subCol <= statSubcolumns.length-1; subCol++) {
-
-        const subColumnData = statSubcolumns[subCol]
-        const subField = subColumnData?.field
+        const subColumnData = statSubcolumns[subCol];
+        const subField = subColumnData.field;
         columns.push({
           field: `${course.id}_${subField}`,
-          headerName: `${subColumnData?.headerName}`,
-          renderHeader: () => <>{subColumnData?.headerName}</>,
+          headerName: `${subColumnData.headerName}`,
+          renderHeader: () => <>{subColumnData.headerName}</>,
           disableColumnMenu: true,
           headerClassName: 'name-column--cell',
           cellClassName: 'name-cell',
           flex: 0.1,
           valueGetter: (value, row) => row,
           sortComparator,
-          renderCell: ({ row }) => {
-            const attempts = row?.courses?.filter(
-              (c: AllStatisticsData) => c.id === course.id,
-            )[0]?.attempts;
-
-            const status = attempts && attempts[0]?.status;
-
-            const totalPoints = row?.courses?.filter(
-              (c: AllStatisticsData) => c.id === course.id,
-            )[0]?.total_points;
-
-            const points = attempts && attempts[0]?.points;
-            const percent = calculatePercent(points, totalPoints);
-            const localStatus = status === 'passed' ? 'Пройден' : 'Не пройден';
-            const unixDate = attempts && attempts[0]?.date;
-            const date = new Date(unixDate * 1000).toLocaleDateString('ru-RU');
-            const passingScore = totalPoints * 0.7;
-            const timeSpent = '9:99';
-            const perStr = `${percent}%`;
-
-            const displayContent =
-            subField === 'result' ? `${points}/${totalPoints} - ${percent}%` :
-            subField === 'status' ? `${localStatus}` :
-            subField === 'date' ? `${date}` :
-            '-';
-
-            return (
-              
-              <Typography
-                color={status === 'passed' ? 'darkgreen' : 'red'}
-                sx={{
-                  cursor: 'pointer',
-                }}
-                onClick={handleCellClick(
-                  course.id,
-                  row.id,
-                  row.name,
-                  status,
-                  unixDate,
-                  points,
-                  totalPoints,
-                  perStr,
-                  passingScore,
-                  timeSpent,
-                )}
-              >
-                {attempts && attempts[0]
-                  ? displayContent : '-'}
-              </Typography>
-            );
-          },
+          renderCell: ({ row }) => (
+            <StatCell
+              row={row}
+              course={course}
+              subColumnData={subColumnData}
+              handleCellClick={handleCellClick}
+            />
+          ),
         });
       }
     });
@@ -206,63 +142,16 @@ const Statistics = () => {
       };
 
   return (
-    <Box m="20px" pt={2}>
-      <Box m="10px 0 0 0" sx={dataGridStyles.root}>
-        {!isLoading || !statLoading ? (
-          <DataGrid
-            rows={!isLoading ? rawStatistics || [] : []}
-            columns={columns}
-            disableRowSelectionOnClick
-            columnGroupingModel={columnGroupingModel}
-            autoHeight={true}
-            getRowHeight={() => 'auto'}
-            initialState={{
-              sorting: {
-                sortModel: [{ field: 'name', sort: 'asc' }],
-              },
-            }}
-            filterModel={{
-              items: [
-                {
-                  field: 'name',
-                  operator: 'isAnyOf',
-                  value: filterValue,
-                },
-              ],
-            }}
-            onFilterModelChange={(newModel) => onChangeFilterModel(newModel)}
-            sx={{
-              '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': {
-                py: '3px',
-              },
-              '& .MuiDataGrid-colCell, & .MuiDataGrid-cell': {
-                borderRight: `1px solid ${theme.palette.divider}`,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              },
-              '& .MuiDataGrid-main': {
-                marginTop: '0.2em',
-              },
-              '& .MuiDataGrid-columnHeader, & .MuiDataGrid-columnHeaderRow, & .MuiDataGrid-columnHeaderTitleContainerContent, & .MuiDataGrid-columnHeaderDraggableContainer, & .MuiDataGrid-columnHeaders':
-                {
-                  maxHeight: '30px !important',
-                },
-              '& .MuiDataGrid-columnHeaderTitleContainer': {
-                marginLeft: '22px !important',
-              },
-            }}
-          />
-        ) : (
-          <ProgressLine />
-        )}
-        <DetailedStatDialog
-          open={showDetailedStat}
-          setOpen={setShowDetailedStat}
-          selectedStatInfo={statInfo}
-        />
-      </Box>
-    </Box>
+   <StatisticsGrid 
+      columns={columns}
+      columnGroupingModel={columnGroupingModel}
+      filterValue={filterValue}
+      onChangeFilterModel={onChangeFilterModel} 
+      statInfo={statInfo}
+      setShowDetailedStat={setShowDetailedStat}
+      showDetailedStat={showDetailedStat}
+      />
+      
   );
 };
 

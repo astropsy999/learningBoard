@@ -2,15 +2,12 @@ import React from 'react';
 import { Typography } from '@mui/material';
 import { AllStatisticsData, CourseAttempt } from '../../app/types/stat.types';
 
-
-
-interface StatCellProps {
+export interface StatCellProps {
     row: AllStatisticsData ;
     course: CourseAttempt;
     subColumnData: {field: string, headerName: string};
     handleCellClick: any;
 }
-
 
 const StatCell: React.FC<StatCellProps> = ({ row, course, subColumnData, handleCellClick }) => {
     function calculatePercent(points: number, totalPoints: number) {
@@ -31,8 +28,6 @@ const StatCell: React.FC<StatCellProps> = ({ row, course, subColumnData, handleC
   const passingScore = totalPoints * 0.7;
   const timeSpent = '9:99';
   const perStr = `${percent}%`;
-
-
 
 const displayContent =
     subColumnData.field === 'result' ? `${points}/${totalPoints} - ${percent}%` :

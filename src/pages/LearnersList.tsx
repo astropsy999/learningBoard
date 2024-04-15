@@ -8,7 +8,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useCourses } from '../app/data/store/courses';
 import { useLearners } from '../app/data/store/learners';
 import { useCustomFilterOperators } from '../app/hooks/useCustomFilterOperator';
-import { CoursesWithDeadline } from '../app/types/types.store';
+import { CoursesWithDeadline } from '../app/types/store.types';
 import { LearnersGrid } from '../entities/LearnersGrid';
 import { AssignedCourseChip } from '../features/AssignedCourseChip';
 import { getHeaderNameByField } from '../shared/helpers/getHeaderNameByField';

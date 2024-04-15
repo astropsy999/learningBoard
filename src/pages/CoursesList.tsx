@@ -9,7 +9,7 @@ import { mutate } from 'swr';
 import { BlockCourseFor } from '../features/BlockCourseFor';
 import { useCourses } from '../app/data/store/courses';
 import { useLearners } from '../app/data/store/learners';
-import { Course } from '../app/types/types.store';
+import { Course } from '../app/types/store.types';
 import { truncateDescription } from '../shared/helpers/truncateDescriptions';
 import { lockCourses } from '../app/api/api';
 import { dataGridStyles } from '../app/styles/DataGrid.styles';

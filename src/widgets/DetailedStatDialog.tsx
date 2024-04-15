@@ -1,3 +1,4 @@
+import { Box, Button, Card, CardContent, Stack } from '@mui/material';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -5,10 +6,8 @@ import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import * as React from 'react';
 import { useCourses } from '../app/data/store/courses';
-import { DetailedQuestion } from '../features/DetailedQuestion';
-import { StatInfoType } from '../pages/Statistics';
 import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
-import { Box, Button, Card, CardContent, Stack } from '@mui/material';
+import { StatInfoType } from '../app/types/stat.types';
 
 interface DetailedStartDialogProps {
   open: boolean;

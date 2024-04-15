@@ -6,7 +6,7 @@ import { ToUpdateUser, lockCourses, updateAllData } from '../../app/api/api';
 import { CourseData, useCourses } from '../../app/data/store/courses';
 import { useLearners } from '../../app/data/store/learners';
 import { tokens } from '../../app/theme';
-import { CoursesWithDeadline } from '../../app/types/types.store';
+import { CoursesWithDeadline } from '../../app/types/store.types';
 import { getDeadlineDate } from '../../shared/helpers/getDeadlineDate';
 import { getLearnerIdByName } from '../../shared/helpers/getLearnerIdByName';
 import { getLockedUsersByCourseId } from '../../shared/helpers/getlockedUsersByCourseId';

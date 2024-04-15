@@ -1,4 +1,4 @@
-import { ILearner } from '../../app/types/types.store';
+import { ILearner } from '../../app/types/store.types';
 
 export const getDivisionUsersArrayByName = (
   allLearners: ILearner[],
