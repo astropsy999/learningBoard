@@ -75,11 +75,6 @@ const LearnersList = () => {
         allLearners,
         currentUserDivisionName,
       );
-      console.log(
-        '🚀 ~ useEffect ~ currentDivisionUsersList:',
-        currentDivisionUsersList,
-      );
-
       setCurrentDivisionUsersList(currentDivisionUsersList as string[]);
     }
   }, [allCourses, allData, allLearners, currentUserDivisionName, divisions]);

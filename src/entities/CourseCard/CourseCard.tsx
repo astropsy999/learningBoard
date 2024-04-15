@@ -1,18 +1,18 @@
-import { useTheme } from '@mui/material';
 import Card from '@mui/material/Card';
 import * as React from 'react';
 import { Bounce, toast } from 'react-toastify';
 import { mutate } from 'swr';
+import { ToUpdateUser, lockCourses, updateAllData } from '../../app/api/api';
 import { CourseData, useCourses } from '../../app/data/store/courses';
 import { useLearners } from '../../app/data/store/learners';
+import { tokens } from '../../app/theme';
 import { CoursesWithDeadline } from '../../app/types/types.store';
 import { getDeadlineDate } from '../../shared/helpers/getDeadlineDate';
 import { getLearnerIdByName } from '../../shared/helpers/getLearnerIdByName';
 import { getLockedUsersByCourseId } from '../../shared/helpers/getlockedUsersByCourseId';
-import { ToUpdateUser, lockCourses, updateAllData } from '../../app/api/api';
-import { tokens } from '../../app/theme';
 import { CourseCardActions } from './CourseCardActions';
 import { CourseCardContent } from './CoursecardContent';
+import { useTheme } from '@mui/material';
 
 interface CourseCardProps {
   courseItem: CourseData;

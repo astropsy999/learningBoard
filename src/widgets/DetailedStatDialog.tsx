@@ -1,5 +1,3 @@
-import { Box, Card, CardContent, Stack } from '@mui/material';
-import Button from '@mui/material/Button';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -10,6 +8,7 @@ import { useCourses } from '../app/data/store/courses';
 import { DetailedQuestion } from '../features/DetailedQuestion';
 import { StatInfoType } from '../pages/Statistics';
 import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
+import { Box, Button, Card, CardContent, Stack } from '@mui/material';
 
 interface DetailedStartDialogProps {
   open: boolean;

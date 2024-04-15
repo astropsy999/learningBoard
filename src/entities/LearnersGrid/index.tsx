@@ -1,18 +1,16 @@
-import { Box } from '@mui/material';
+import Box from '@mui/material/Box';
 import {
   DataGrid,
   GridColDef,
   GridFilterModel,
-  getDefaultGridFilterModel,
-  gridQuickFilterValuesSelector,
-  useGridApiRef,
+  useGridApiRef
 } from '@mui/x-data-grid';
-import React, { useEffect, useState } from 'react';
-import { dataGridStyles } from '../../app/styles/DataGrid.styles';
+import React from 'react';
+import { useCourses } from '../../app/data/store/courses';
 import { useLearners } from '../../app/data/store/learners';
+import { dataGridStyles } from '../../app/styles/DataGrid.styles';
 import ProgressLine from '../../shared/ui/ProgressLine';
 import { CoursesToLearner } from '../../widgets/AssignCoursesDialog';
-import { useCourses } from '../../app/data/store/courses';
 
 interface LearnersGridProps {
   isLoading: boolean;

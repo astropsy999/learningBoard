@@ -1,16 +1,9 @@
-import {
-  Box,
-  CardActions,
-  Checkbox,
-  CircularProgress,
-  FormControlLabel,
-  Skeleton,
-  Switch,
-} from '@mui/material';
+
 import React from 'react';
 import { CourseData } from '../../app/data/store/courses';
 import { useLearners } from '../../app/data/store/learners';
 import AssignDatePicker from '../../features/DatePicker';
+import { Box, CardActions, Checkbox, CircularProgress, FormControlLabel, Skeleton, Switch } from '@mui/material';
 
 interface CourseCardActionsProps {
   courseLocked: boolean;
@@ -74,7 +67,7 @@ export const CourseCardActions: React.FC<CourseCardActionsProps> = (props) => {
                 />
               }
               label={courseLocked ? 'Разблокировать' : 'Блокировать'}
-              onClick={(e) => handleLockUnlock(e, courseItem.id, courseLocked)}
+              onClick={(e: React.MouseEvent<HTMLLabelElement, MouseEvent>) => handleLockUnlock(e, courseItem.id, courseLocked)}
             />
           )}
         </Box>

@@ -1,10 +1,10 @@
-import { Box, Typography, useTheme } from '@mui/material';
 import {
   DataGrid,
   GridColDef,
   GridColumnGroupingModel,
+  GridFilterModel,
 } from '@mui/x-data-grid';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useCourses } from '../app/data/store/courses';
 import { useStatSortComparator } from '../app/hooks/useStatSortComparator';
 import { useStatisticsData } from '../app/hooks/useStatisticsData';
@@ -14,6 +14,8 @@ import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
 import ProgressLine from '../shared/ui/ProgressLine';
 import { DetailedStatDialog } from '../widgets/DetailedStatDialog';
 import { useCustomFilterOperators } from '../app/hooks/useCustomFilterOperator';
+import { useLearners } from '../app/data/store/learners';
+import { Box, Typography, useTheme } from '@mui/material';
 
 export type StatInfoType = {
   course: number;
@@ -42,11 +44,14 @@ const Statistics = () => {
   const sortComparator = useStatSortComparator();
   const theme = useTheme();
   const { allCourses } = useCourses();
-
-  // const [selectedField, setSelectedField] = useState<string>('division');
-  // const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const { currentDivisionUsersList, setCurrentDivisionUsersList } = useLearners()
+  const [filterValue, setFilterValue] = useState(currentDivisionUsersList);
 
   const ATTEMPTS = 3;
+
+  useEffect(() => {
+    setFilterValue(currentDivisionUsersList);
+  }, [currentDivisionUsersList]);
 
   const handleCellClick = (
     courseId: number,
@@ -89,6 +94,10 @@ const Statistics = () => {
       headerName: 'ФИО',
       cellClassName: 'name-cell',
       flex: 0.3,
+      filterOperators: useCustomFilterOperators(
+        currentDivisionUsersList, setCurrentDivisionUsersList, 'ФИО', 'name'
+      )
+      
     },
   ];
 
@@ -177,6 +186,16 @@ const Statistics = () => {
         }))
       : [];
 
+      const onChangeFilterModel = (newModel: GridFilterModel) => {
+        // if (newModel.items) {
+        //   setFilterLabel(getHeaderNameByField(newModel.items[0].field!, columns)!);
+        //   setSelectedField(newModel.items[0].field!);
+        // }
+        if (!newModel.items[0].value) {
+          setCurrentDivisionUsersList([]);
+        }
+      };
+
   return (
     <Box m="20px" pt={2}>
       <Box m="10px 0 0 0" sx={dataGridStyles.root}>
@@ -198,10 +217,11 @@ const Statistics = () => {
                 {
                   field: 'name',
                   operator: 'isAnyOf',
-                  value: ['Стужук Е.В.'],
+                  value: filterValue,
                 },
               ],
             }}
+            onFilterModelChange={(newModel) => onChangeFilterModel(newModel)}
             sx={{
               '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': {
                 py: '3px',
