@@ -167,11 +167,6 @@ const LearnersList = () => {
       headerName: 'Отдел',
       flex: 0.05,
       filterOperators,
-      // renderCell(params) {
-      //   return params?.value?.length > 44
-      //     ? `${params.value.slice(0, 44)}...`
-      //     : params.value;
-      // },
       headerAlign: 'center',
       align: 'center',
       cellClassName: 'truncate-cell',
