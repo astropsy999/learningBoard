@@ -15,6 +15,7 @@ import { useCourseLocking } from './hooks/useCourseLocking';
 import { useCoursesAddRemove } from './hooks/useCoursesAddRemove';
 import { useSelectedRowsData } from './hooks/useSelectedRowsData';
 import { useUpdateCourses } from './hooks/useUpdateCourses';
+import { useCourseSelect } from './hooks/useCourseSelect';
 
 interface CourseCardProps {
   courseItem: CourseData;
@@ -96,43 +97,18 @@ export const CourseCard: React.FC<CourseCardProps> = (props) => {
     prepareDataToUpdate,
   );
 
-  const handleCardSelect = () => {
-    const newChecked = !checked;
-    setChecked(newChecked);
-
-    if (isMassEditMode) {
-      if (!checked) {
-        const withAddedCourses = [
-          ...massAssignedCourses,
-          { id: courseItem.id, deadline: null },
-        ];
-        setMassAssignedCourses([
-          ...massAssignedCourses,
-          { id: courseItem.id, deadline: null },
-        ]);
-        addCoursesMass(withAddedCourses);
-      } else {
-        const withOutRemovedCourses = massAssignedCourses.filter(
-          (item) => item.id !== courseItem.id,
-        );
-        setMassAssignedCourses([
-          ...massAssignedCourses.filter((item) => item.id !== courseItem.id),
-        ]);
-        removeCoursesMass(withOutRemovedCourses);
-      }
-    }
-
-    if (!checked) {
-      setSelectedCoursesToSave([
-        ...selectedCoursesToSave,
-        { ...courseItem, deadline: null },
-      ]);
-    } else {
-      setSelectedCoursesToSave(
-        selectedCoursesToSave.filter((item) => item.id !== courseItem.id),
-      );
-    }
-  };
+  const { handleCardSelect } = useCourseSelect(
+    isMassEditMode,
+    checked,
+    courseItem,
+    massAssignedCourses,
+    selectedCoursesToSave,
+    setChecked,
+    setMassAssignedCourses,
+    setSelectedCoursesToSave,
+    addCoursesMass,
+    removeCoursesMass,
+  );
 
   const { handleDateChange } = useCourseDeadline(
     massAssignedCourses,
