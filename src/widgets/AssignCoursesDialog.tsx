@@ -11,8 +11,8 @@ import * as React from 'react';
 import { FC } from 'react';
 import { Bounce, toast } from 'react-toastify';
 import { CourseCard } from '../entities/CourseCard/CourseCard';
-import { useCourses } from '../app/data/store/courses';
-import { useLearners } from '../app/data/store/learners';
+import { useCourses } from '../app/store/courses';
+import { useLearners } from '../app/store/learners';
 import { CoursesWithDeadline } from '../app/types/store.types';
 import { SelectedRowData } from '../pages/LearnersList';
 

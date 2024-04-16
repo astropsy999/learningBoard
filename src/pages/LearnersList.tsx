@@ -5,9 +5,9 @@ import {
   GridSingleSelectColDef,
 } from '@mui/x-data-grid';
 import React, { useEffect, useMemo, useState } from 'react';
-import { useCourses } from '../app/data/store/courses';
-import { useLearners } from '../app/data/store/learners';
-import { useCustomFilterOperators } from '../app/hooks/useCustomFilterOperator';
+import { useCourses } from '../app/store/courses';
+import { useLearners } from '../app/store/learners';
+import { useCustomFilterOperators } from '../entities/CustomFilter/hooks/useCustomFilterOperator';
 import { CoursesWithDeadline } from '../app/types/store.types';
 import { LearnersGrid } from '../entities/LearnersGrid';
 import { AssignedCourseChip } from '../features/AssignedCourseChip';

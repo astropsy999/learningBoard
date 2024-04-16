@@ -1,6 +1,6 @@
 import React from 'react';
-import { CourseData } from '../../app/data/store/courses';
-import { useLearners } from '../../app/data/store/learners';
+import { CourseData } from '../../app/store/courses';
+import { useLearners } from '../../app/store/learners';
 import AssignDatePicker from '../../features/DatePicker';
 import {
   Box,

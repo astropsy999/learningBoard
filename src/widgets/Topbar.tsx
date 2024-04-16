@@ -3,8 +3,8 @@ import { Box, Button } from '@mui/material';
 import React, { FC, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import useSWR from 'swr';
-import { useCourses } from '../app/data/store/courses';
-import { useLearners } from '../app/data/store/learners';
+import { useCourses } from '../app/store/courses';
+import { useLearners } from '../app/store/learners';
 import { AllData } from '../app/types/store.types';
 import { fetchAllData } from '../app/api/api';
 import { RenderAssignAllButton } from '../features/AssignAllBtn';
@@ -60,7 +60,9 @@ const Topbar: FC<TopbarProps> = () => {
       // Заполняем поля position, division и courses у каждого пользователя
       const learnersWithData = users.map((user) => ({
         ...user,
-        division: user.division ? divisions[user.division].short_name : undefined,
+        division: user.division
+          ? divisions[user.division].short_name
+          : undefined,
         courses: user.courses.map((courseId) => ({
           [courseId.id]: courseTitlesById[courseId.id],
           deadline: courseId.deadline,
@@ -75,7 +77,9 @@ const Topbar: FC<TopbarProps> = () => {
       if (allDataFromStore) {
         const userDivisionId = currentUserInfo.division;
 
-        setCurrentUserDivisionName(allDataFromStore?.divisions[userDivisionId].short_name);
+        setCurrentUserDivisionName(
+          allDataFromStore?.divisions[userDivisionId].short_name,
+        );
       }
     }
   }, [

@@ -1,7 +1,7 @@
 import { CardContent, Typography } from '@mui/material';
 import React from 'react';
 import { truncateDescription } from '../../shared/helpers/truncateDescriptions';
-import { CourseData } from '../../app/data/store/courses';
+import { CourseData } from '../../app/store/courses';
 
 interface CourseCardContentProps {
   courseItem: CourseData;

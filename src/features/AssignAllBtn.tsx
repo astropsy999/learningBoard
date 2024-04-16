@@ -1,7 +1,7 @@
 import { Button } from '@mui/material';
 import React from 'react';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
-import { useLearners } from '../app/data/store/learners';
+import { useLearners } from '../app/store/learners';
 
 export const RenderAssignAllButton = () => {
   const { openCoursesDialog, selectedRowsData } = useLearners();

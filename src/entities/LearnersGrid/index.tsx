@@ -7,8 +7,8 @@ import {
   useGridApiRef,
 } from '@mui/x-data-grid';
 import React from 'react';
-import { useCourses } from '../../app/data/store/courses';
-import { useLearners } from '../../app/data/store/learners';
+import { useCourses } from '../../app/store/courses';
+import { useLearners } from '../../app/store/learners';
 import { dataGridStyles } from '../../app/styles/DataGrid.styles';
 import ProgressLine from '../../shared/ui/ProgressLine';
 import { CoursesToLearner } from '../../widgets/AssignCoursesDialog';

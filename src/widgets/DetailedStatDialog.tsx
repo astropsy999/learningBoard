@@ -5,7 +5,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import * as React from 'react';
-import { useCourses } from '../app/data/store/courses';
+import { useCourses } from '../app/store/courses';
 import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
 import { StatInfoType } from '../app/types/stat.types';
 import AttemptDetailsTabs from './AttemptsDetails';
@@ -123,8 +123,6 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
             <Box mt={2}>
               <AttemptDetailsTabs />
             </Box>
-
-       
           </DialogContentText>
         </DialogContent>
         <DialogActions>

@@ -1,5 +1,5 @@
 import { GridFilterItem, GridFilterOperator } from '@mui/x-data-grid';
-import CustomFilterInput from '../../entities/CustomFilter/CustomFilterPanel';
+import CustomFilterInput from '../CustomFilterPanel';
 
 export const useCustomFilterOperators = (
   selectedValues: string[],

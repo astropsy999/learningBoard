@@ -7,7 +7,7 @@ import {
   GridColumnGroupingModel,
   GridFilterModel,
 } from '@mui/x-data-grid';
-import { useStatisticsData } from '../../app/hooks/useStatisticsData';
+import { useStatisticsData } from './hooks/useStatisticsData';
 import ProgressLine from '../../shared/ui/ProgressLine';
 import { DetailedStatDialog } from '../../widgets/DetailedStatDialog';
 import { StatInfoType } from '../../app/types/stat.types';

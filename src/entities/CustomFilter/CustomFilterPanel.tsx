@@ -8,7 +8,7 @@ import {
 } from '@mui/material';
 import { GridFilterInputValueProps } from '@mui/x-data-grid';
 import React, { SyntheticEvent, useEffect, useState } from 'react';
-import { useLearners } from '../../app/data/store/learners';
+import { useLearners } from '../../app/store/learners';
 import { ILearner } from '../../app/types/store.types';
 import { getAllOptions } from '../../shared/helpers/getAllOptions';
 

@@ -10,7 +10,7 @@ import MenuList from '@mui/material/MenuList';
 import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import * as React from 'react';
-import { useLearners } from '../app/data/store/learners';
+import { useLearners } from '../app/store/learners';
 import { useLocation } from 'react-router-dom';
 
 const options = ['Все сотрудники', 'Мой отдел'];
@@ -126,7 +126,9 @@ export default function SplitButton() {
                       key={option}
                       disabled={index === 2}
                       selected={index === selectedIndex}
-                      onClick={(event: React.MouseEvent<HTMLLIElement, MouseEvent>) => handleMenuItemClick(event, index)}
+                      onClick={(
+                        event: React.MouseEvent<HTMLLIElement, MouseEvent>,
+                      ) => handleMenuItemClick(event, index)}
                     >
                       {option}
                     </MenuItem>

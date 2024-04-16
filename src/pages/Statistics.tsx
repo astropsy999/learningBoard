@@ -2,14 +2,14 @@ import { useTheme } from '@mui/material';
 import {
   GridColDef,
   GridColumnGroupingModel,
-  GridFilterModel
+  GridFilterModel,
 } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
-import { useCourses } from '../app/data/store/courses';
-import { useLearners } from '../app/data/store/learners';
-import { useCustomFilterOperators } from '../app/hooks/useCustomFilterOperator';
-import { useStatSortComparator } from '../app/hooks/useStatSortComparator';
-import { useStatisticsData } from '../app/hooks/useStatisticsData';
+import { useCourses } from '../app/store/courses';
+import { useLearners } from '../app/store/learners';
+import { useCustomFilterOperators } from '../entities/CustomFilter/hooks/useCustomFilterOperator';
+import { useStatSortComparator } from '../entities/StatisticsGrid/hooks/useStatSortComparator';
+import { useStatisticsData } from '../entities/StatisticsGrid/hooks/useStatisticsData';
 import { StatisticsGrid } from '../entities/StatisticsGrid';
 import StatCell from '../entities/StatisticsGrid/StatCell';
 import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
@@ -24,19 +24,19 @@ const Statistics = () => {
     isLoading,
     showDetailedStatistic,
   } = useStatisticsData();
-  
+
   const sortComparator = useStatSortComparator();
   const theme = useTheme();
   const { allCourses } = useCourses();
-  const { currentDivisionUsersList, setCurrentDivisionUsersList } = useLearners()
+  const { currentDivisionUsersList, setCurrentDivisionUsersList } =
+    useLearners();
   const [filterValue, setFilterValue] = useState(currentDivisionUsersList);
-
 
   // const ATTEMPTS = 3;
   const statSubcolumns = [
-    {field: 'result', headerName: 'Результат'}, 
-    {field: 'status', headerName: 'Статус'}, 
-    {field: 'date', headerName: 'Дата'}
+    { field: 'result', headerName: 'Результат' },
+    { field: 'status', headerName: 'Статус' },
+    { field: 'date', headerName: 'Дата' },
   ];
 
   useEffect(() => {
@@ -78,15 +78,18 @@ const Statistics = () => {
       cellClassName: 'name-cell',
       flex: 0.3,
       filterOperators: useCustomFilterOperators(
-        currentDivisionUsersList, setCurrentDivisionUsersList, 'ФИО', 'name'
-      )
+        currentDivisionUsersList,
+        setCurrentDivisionUsersList,
+        'ФИО',
+        'name',
+      ),
     },
   ];
 
   !isLoading &&
     !statLoading &&
     coursesList?.forEach((course) => {
-      for (let subCol = 0; subCol <= statSubcolumns.length-1; subCol++) {
+      for (let subCol = 0; subCol <= statSubcolumns.length - 1; subCol++) {
         const subColumnData = statSubcolumns[subCol];
         const subField = subColumnData.field;
         columns.push({
@@ -135,23 +138,22 @@ const Statistics = () => {
         }))
       : [];
 
-      const onChangeFilterModel = (newModel: GridFilterModel) => {
-        if (!newModel.items[0].value) {
-          setCurrentDivisionUsersList([]);
-        }
-      };
+  const onChangeFilterModel = (newModel: GridFilterModel) => {
+    if (!newModel.items[0].value) {
+      setCurrentDivisionUsersList([]);
+    }
+  };
 
   return (
-   <StatisticsGrid 
+    <StatisticsGrid
       columns={columns}
       columnGroupingModel={columnGroupingModel}
       filterValue={filterValue}
-      onChangeFilterModel={onChangeFilterModel} 
+      onChangeFilterModel={onChangeFilterModel}
       statInfo={statInfo}
       setShowDetailedStat={setShowDetailedStat}
       showDetailedStat={showDetailedStat}
-      />
-      
+    />
   );
 };
 

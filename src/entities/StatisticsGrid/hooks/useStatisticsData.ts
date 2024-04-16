@@ -1,10 +1,10 @@
 import useSWR from 'swr';
-import { useCourses } from '../data/store/courses';
+import { useCourses } from '../../../app/store/courses';
 import { useEffect, useState } from 'react';
-import { fetchStatisctics } from '../api/api';
+import { fetchStatisctics } from '../../../app/api/api';
 
-import { CourseAttempt, StatInfoType } from '../types/stat.types';
-import { findMaxCourses } from '../../shared/helpers/findMaxCoursesArrayInStat';
+import { CourseAttempt, StatInfoType } from '../../../app/types/stat.types';
+import { findMaxCourses } from '../../../shared/helpers/findMaxCoursesArrayInStat';
 
 export const useStatisticsData = () => {
   const { allCourses } = useCourses();

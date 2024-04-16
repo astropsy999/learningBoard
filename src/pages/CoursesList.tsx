@@ -1,18 +1,16 @@
-import CheckIcon from '@mui/icons-material/Check';
-import CloseIcon from '@mui/icons-material/Close';
-import LockPersonIcon from '@mui/icons-material/LockPerson';
 import { Box, Button, Chip } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
 import { Bounce, toast } from 'react-toastify';
 import { mutate } from 'swr';
 import { BlockCourseFor } from '../features/BlockCourseFor';
-import { useCourses } from '../app/data/store/courses';
-import { useLearners } from '../app/data/store/learners';
+import { useCourses } from '../app/store/courses';
+import { useLearners } from '../app/store/learners';
 import { Course } from '../app/types/store.types';
 import { truncateDescription } from '../shared/helpers/truncateDescriptions';
 import { lockCourses } from '../app/api/api';
 import { dataGridStyles } from '../app/styles/DataGrid.styles';
+import { LockCoursesButton } from '../features/LockCoursesButton';
 
 interface LockedData {
   [key: number]: string[];
@@ -211,48 +209,15 @@ const CoursesList = () => {
               (id) => onBlockLearnersMode[+id] && id !== row.id,
             );
             return (
-              <Box
-                sx={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  gap: '3px',
-                }}
-              >
-                {!onBlockLearnersMode[row.id] ? (
-                  <Button
-                    variant="contained"
-                    color={'warning'}
-                    disabled={isAnyButtonLocked}
-                    startIcon={<LockPersonIcon />}
-                    onClick={(event) => chooseLearnersToLockCourse(event, row)}
-                  ></Button>
-                ) : (
-                  <Button
-                    variant="contained"
-                    color={'warning'}
-                    startIcon={<CloseIcon />}
-                    onClick={() => {
-                      setOnBlockLearnersMode((prev) => ({
-                        ...prev,
-                        [row.id]: !prev[row.id],
-                      }));
-                      setLockedUsers([]);
-                    }}
-                  ></Button>
-                )}
-                {onBlockLearnersMode[row.id] && (
-                  <Button
-                    variant="contained"
-                    color={'secondary'}
-                    startIcon={<CheckIcon />}
-                    onClick={() => {
-                      saveLockedUsers(row.id);
-                    }}
-                  ></Button>
-                )}
-              </Box>
+              <LockCoursesButton
+                row={row}
+                isAnyButtonLocked={isAnyButtonLocked}
+                onBlockLearnersMode={onBlockLearnersMode}
+                chooseLearnersToLockCourse={chooseLearnersToLockCourse}
+                setOnBlockLearnersMode={setOnBlockLearnersMode}
+                setLockedUsers={setLockedUsers}
+                saveLockedUsers={saveLockedUsers}
+              />
             );
           },
           disableColumnMenu: true,
