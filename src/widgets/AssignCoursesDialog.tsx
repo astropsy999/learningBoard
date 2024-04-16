@@ -69,7 +69,7 @@ export const CoursesToLearner: FC<CoursesToLearnerProps> = ({
           (course) => course.id === assignedCourse.id,
         );
         return { ...course, deadline: assignedCourse.deadline };
-      });
+      }) as CoursesWithDeadline[];
 
     setSelectedCoursesToSave(filteredWithDeadline);
   }, [assignedCourses, allData?.courses, setSelectedCoursesToSave]);

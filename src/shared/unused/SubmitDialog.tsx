@@ -11,7 +11,7 @@ import { styled } from '@mui/material/styles';
 import * as React from 'react';
 import { Bounce, toast } from 'react-toastify';
 import { mutate } from 'swr';
-import { useCourses } from '../../app/data/store/courses';
+import { CourseData, useCourses } from '../../app/data/store/courses';
 import { useLearners } from '../../app/data/store/learners';
 import { ToUpdateUser, updateAllData } from '../../app/api/api';
 import AssignDatePicker from '../../features/DatePicker';
@@ -223,10 +223,10 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
               </Typography>
             ) : null}
 
-            {selectedCoursesToSave.map((course) => (
+            {selectedCoursesToSave.map((course: any) => (
               <Chip
                 key={course.id}
-                label={course.title}
+                label={course?.title}
                 variant="outlined"
                 sx={{ margin: '2px' }}
                 onDelete={handleDelete}

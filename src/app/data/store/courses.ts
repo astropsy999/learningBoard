@@ -37,15 +37,22 @@ export type CourseToSaveWithDeadline = {
 interface CoursesState {
   allCourses: CourseData[] | null;
   setAllCourses: Function;
-  selectedCoursesToSave: CourseData[];
+  selectedCoursesToSave: CoursesWithDeadline[] | CourseData[];
   assignedCourses: CoursesWithDeadline[];
   massAssignedCourses: CoursesWithDeadline[];
-  setSelectedCoursesToSave: Function;
+  setSelectedCoursesToSave: (
+    newSelectedCoursesToSave:
+      | CoursesWithDeadline[]
+      | CourseData[]
+      | CourseToSaveWithDeadline[],
+  ) => void;
   singleSelectedUserCourses: CourseData[];
   selectedCoursesWithDeadlineToSave: CourseToSaveWithDeadline[];
   setSelectedCoursesWithDeadlineToSave: Function;
   setAssignedCourses: Function;
-  setMassAssignedCourses: Function;
+  setMassAssignedCourses: (
+    newMassAssignedCourses: CoursesWithDeadline[],
+  ) => void;
 }
 
 export const useCourses = create<CoursesState>()(
@@ -70,7 +77,9 @@ export const useCourses = create<CoursesState>()(
       set({
         singleSelectedUserCourses: newSingleSelectedUserCourses,
       }),
-    setSelectedCoursesToSave: (newSelectedCoursesToSave: CourseData[]) =>
+    setSelectedCoursesToSave: (
+      newSelectedCoursesToSave: CoursesWithDeadline[],
+    ) =>
       set(
         {
           selectedCoursesToSave: newSelectedCoursesToSave,
