@@ -1,22 +1,20 @@
+import { useTheme } from '@mui/material';
 import Card from '@mui/material/Card';
 import * as React from 'react';
-import { Bounce, toast } from 'react-toastify';
 import { mutate } from 'swr';
-import { ToUpdateUser, lockCourses, updateAllData } from '../../app/api/api';
+import { lockCourses } from '../../app/api/api';
 import { CourseData, useCourses } from '../../app/data/store/courses';
 import { useLearners } from '../../app/data/store/learners';
 import { tokens } from '../../app/theme';
 import { CoursesWithDeadline } from '../../app/types/store.types';
 import { getDeadlineDate } from '../../shared/helpers/getDeadlineDate';
-import { getLearnerIdByName } from '../../shared/helpers/getLearnerIdByName';
-import { getLockedUsersByCourseId } from '../../shared/helpers/getlockedUsersByCourseId';
 import { CourseCardActions } from './CourseCardActions';
 import { CourseCardContent } from './CoursecardContent';
-import { useTheme } from '@mui/material';
+import { useCourseDeadline } from './hooks/useCourseDeadline';
+import { useCourseLocking } from './hooks/useCourseLocking';
+import { useCoursesAddRemove } from './hooks/useCoursesAddRemove';
 import { useSelectedRowsData } from './hooks/useSelectedRowsData';
 import { useUpdateCourses } from './hooks/useUpdateCourses';
-import { useCoursesAddRemove } from './hooks/useCoursesAddRemove';
-import { useCourseDeadline } from './hooks/useCourseDeadline';
 
 interface CourseCardProps {
   courseItem: CourseData;
@@ -147,62 +145,15 @@ export const CourseCard: React.FC<CourseCardProps> = (props) => {
     isMassEditMode,
   );
 
-  const handleLockUnlock = async (
-    e: React.MouseEvent<HTMLLabelElement, MouseEvent>,
-    courseId: number,
-    courseLocked: boolean,
-  ) => {
-    e.stopPropagation();
-    setIsLoading(true);
-
-    const learnerId = getLearnerIdByName(onlyLearnerName, allLearners!);
-    const allLockedLearners = getLockedUsersByCourseId(courseId, allLearners!);
-
-    const learnersToLockIDs = onlyLearnerName
-      ? courseLocked
-        ? allLockedLearners.filter((learner) => learner !== learnerId)
-        : [...allLockedLearners, learnerId!]
-      : courseLocked
-      ? []
-      : Array.from(
-          new Set([
-            ...allLockedLearners,
-            ...selectedRowsData.map((row) => +row.id!),
-          ]),
-        );
-
-    const lockedLearnersToSend = [
-      {
-        id: courseId,
-        users: learnersToLockIDs as number[],
-      },
-    ];
-
-    try {
-      const result = await lockCourses(lockedLearnersToSend);
-      mutate('allData').then(() => {
-        const lockedMessage =
-          (courseLocked ? 'Курс разблокирован' : 'Курс заблокирован') ||
-          result[0].data.message;
-
-        toast.success(lockedMessage, {
-          position: 'top-right',
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: false,
-          draggable: true,
-          progress: undefined,
-          theme: 'colored',
-          transition: Bounce,
-        });
-        setIsLoading(false);
-        setCourseLocked(!courseLocked);
-      });
-    } catch (error) {
-      setIsLoading(false);
-    }
-  };
+  const { handleLockUnlock } = useCourseLocking(
+    selectedRowsData,
+    onlyLearnerName,
+    allLearners!,
+    lockCourses,
+    mutate,
+    setCourseLocked,
+    setIsLoading,
+  );
 
   const globalLoading = isLoading || isCourseCardLoading || isCoursedateLoading;
   const isHighlighted = checked ? 'bold' : 'normal';
