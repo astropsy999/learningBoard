@@ -1,7 +1,7 @@
 import { Bounce, toast } from 'react-toastify';
 import { mutate } from 'swr';
 import { ToUpdateUser, updateAllData } from '../../../app/api/api';
-import { CoursesWithDeadline } from '../../../app/types/store.types';
+import { CoursesWithDeadline, ILearner } from '../../../app/types/store.types';
 
 export const useUpdateCourses = (setDeadlineDate: (date: string) => void) => {
   const updateCourses = async (
@@ -41,7 +41,7 @@ export const useUpdateCourses = (setDeadlineDate: (date: string) => void) => {
 
   const prepareDataToUpdate = (
     courses: CoursesWithDeadline[],
-    selectedRowsData: any[],
+    selectedRowsData: ILearner[],
   ) => {
     return selectedRowsData
       .map((user) => {
@@ -56,7 +56,7 @@ export const useUpdateCourses = (setDeadlineDate: (date: string) => void) => {
           courses: uniqueCourses,
         };
       })
-      .filter(Boolean);
+      .filter(Boolean) as ToUpdateUser[];
   };
 
   return { updateCourses, prepareDataToUpdate };

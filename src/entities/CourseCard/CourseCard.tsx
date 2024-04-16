@@ -15,6 +15,7 @@ import { CourseCardContent } from './CoursecardContent';
 import { useTheme } from '@mui/material';
 import { useSelectedRowsData } from './hooks/useSelectedRowsData';
 import { useUpdateCourses } from './hooks/useUpdateCourses';
+import { useCoursesAddRemove } from './hooks/useCoursesAddRemove';
 
 interface CourseCardProps {
   courseItem: CourseData;
@@ -89,64 +90,14 @@ export const CourseCard: React.FC<CourseCardProps> = (props) => {
   const { updateCourses, prepareDataToUpdate } =
     useUpdateCourses(setDeadlineDate);
 
-  const removeCoursesMass = async (
-    withOutRemovedCourses: CoursesWithDeadline[],
-  ) => {
-    const dataToUpdate = prepareDataToUpdate(
-      withOutRemovedCourses,
-      selectedRowsData,
-    ) as ToUpdateUser[];
-    await updateCourses(
-      dataToUpdate,
-      setIsCourseCardLoading,
-      'Курс успешно снят!',
-    );
-  };
+  const { addCoursesMass, removeCoursesMass } = useCoursesAddRemove(
+    selectedRowsData,
+    setIsCourseCardLoading,
+    updateCourses,
+    prepareDataToUpdate,
+  );
 
-  const addCoursesMass = async (withAddedCourses: CoursesWithDeadline[]) => {
-    const dataToUpdate = prepareDataToUpdate(
-      withAddedCourses,
-      selectedRowsData,
-    ) as ToUpdateUser[];
-    await updateCourses(
-      dataToUpdate,
-      setIsCourseCardLoading,
-      'Курс успешно назначен!',
-    );
-  };
-
-  const handleMassDateChange = async (newTime: number, courseId: number) => {
-    const updatedMassAssignedCourses = massAssignedCourses.map((course) => {
-      if (course.id === courseId) {
-        return {
-          ...course,
-          deadline: newTime,
-        };
-      }
-      return course;
-    });
-
-    setMassAssignedCourses(updatedMassAssignedCourses);
-
-    let dataToUpdate = selectedRowsData
-      .map((user) => {
-        if (!user) return null;
-        return {
-          id: user.id,
-          courses: updatedMassAssignedCourses,
-        };
-      })
-      .filter(Boolean) as ToUpdateUser[];
-
-    await updateCourses(
-      dataToUpdate,
-      setIsCoursedateLoading,
-      'Дата успешно сохранена',
-      newTime,
-    );
-  };
-
-  const handleCardClick = () => {
+  const handleCardSelect = () => {
     const newChecked = !checked;
     setChecked(newChecked);
 
@@ -182,6 +133,37 @@ export const CourseCard: React.FC<CourseCardProps> = (props) => {
         selectedCoursesToSave.filter((item) => item.id !== courseItem.id),
       );
     }
+  };
+
+  const handleMassDateChange = async (newTime: number, courseId: number) => {
+    const updatedMassAssignedCourses = massAssignedCourses.map((course) => {
+      if (course.id === courseId) {
+        return {
+          ...course,
+          deadline: newTime,
+        };
+      }
+      return course;
+    });
+
+    setMassAssignedCourses(updatedMassAssignedCourses);
+
+    let dataToUpdate = selectedRowsData
+      .map((user) => {
+        if (!user) return null;
+        return {
+          id: user.id,
+          courses: updatedMassAssignedCourses,
+        };
+      })
+      .filter(Boolean) as ToUpdateUser[];
+
+    await updateCourses(
+      dataToUpdate,
+      setIsCoursedateLoading,
+      'Дата успешно сохранена',
+      newTime,
+    );
   };
   const handleDateChange = (newDate: Object | null, itemId: number) => {
     // @ts-ignore
@@ -281,7 +263,7 @@ export const CourseCard: React.FC<CourseCardProps> = (props) => {
         opacity: globalLoading ? 0.5 : 1,
         position: 'relative',
       }}
-      onClick={handleCardClick}
+      onClick={handleCardSelect}
     >
       <CourseCardContent
         courseItem={courseItem}
