@@ -3,6 +3,7 @@ import {
   DataGrid,
   GridColDef,
   GridFilterModel,
+  GridSortItem,
   useGridApiRef,
 } from '@mui/x-data-grid';
 import React from 'react';
@@ -40,6 +41,24 @@ export const LearnersGrid: React.FC<LearnersGridProps> = (props) => {
 
   const apiRef = useGridApiRef();
 
+  const filterModel = {
+    items: [
+      {
+        field: selectedField,
+        operator: 'isAnyOf',
+        value: selectedValues,
+      },
+    ],
+  };
+
+  const sortModel = [{ field: 'name', sort: 'asc' }] as GridSortItem[];
+
+  const initialState = {
+    sorting: {
+      sortModel,
+    },
+  };
+
   return (
     <Box m="20px" pt={1}>
       <Box m="10px 0 0 0" sx={dataGridStyles.root}>
@@ -53,20 +72,8 @@ export const LearnersGrid: React.FC<LearnersGridProps> = (props) => {
             columns={isLoading ? [] : columns}
             loading={isLoading}
             onRowSelectionModelChange={handleSelectionModelChange}
-            initialState={{
-              sorting: {
-                sortModel: [{ field: 'name', sort: 'asc' }],
-              },
-            }}
-            filterModel={{
-              items: [
-                {
-                  field: selectedField,
-                  operator: 'isAnyOf',
-                  value: selectedValues,
-                },
-              ],
-            }}
+            initialState={initialState}
+            filterModel={filterModel}
             onFilterModelChange={(newModel) => onChangeFilterModel(newModel)}
             sx={dataGridStyles.learnersGridStyles}
           />

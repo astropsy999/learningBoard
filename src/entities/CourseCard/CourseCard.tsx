@@ -51,6 +51,11 @@ export const CourseCard: React.FC<CourseCardProps> = (props) => {
     everyDate,
   } = useSelectedRowsData(isMassEditMode, selectedRowsData);
 
+  const globalLoading = isLoading || isCourseCardLoading || isCoursedateLoading;
+  const isHighlighted = checked ? 'bold' : 'normal';
+
+  // const classes = useStyles({ globalLoading, checked, courseLocked, colors });
+
   React.useEffect(() => {
     const assignedIds = assigned.map((item) => item.id);
 
@@ -130,9 +135,6 @@ export const CourseCard: React.FC<CourseCardProps> = (props) => {
     setCourseLocked,
     setIsLoading,
   );
-
-  const globalLoading = isLoading || isCourseCardLoading || isCoursedateLoading;
-  const isHighlighted = checked ? 'bold' : 'normal';
 
   return (
     <Card

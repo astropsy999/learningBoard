@@ -42,8 +42,7 @@ export const CourseCardActions: React.FC<CourseCardActionsProps> = (props) => {
     isLoading,
   } = props;
 
-  const { currentUserData, onlyLearnerName, allLearners, selectedRowsData } =
-    useLearners();
+  const { currentUserData } = useLearners();
 
   return (
     <CardActions
