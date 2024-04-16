@@ -3,7 +3,7 @@ import {
   DataGrid,
   GridColDef,
   GridFilterModel,
-  useGridApiRef
+  useGridApiRef,
 } from '@mui/x-data-grid';
 import React from 'react';
 import { useCourses } from '../../app/data/store/courses';
@@ -68,22 +68,7 @@ export const LearnersGrid: React.FC<LearnersGridProps> = (props) => {
               ],
             }}
             onFilterModelChange={(newModel) => onChangeFilterModel(newModel)}
-            sx={{
-              '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': {
-                py: '3px',
-              },
-              '& .MuiDataGrid-colCell, & .MuiDataGrid-cell': {
-                borderRight: `1px solid lightgrey`,
-                display: 'flex',
-                alignItems: 'center',
-              },
-              '& .MuiDataGrid-main': {
-                marginTop: '0.3em',
-              },
-              '& .truncate-cell': {
-                lineHeight: '1 !important',
-              },
-            }}
+            sx={dataGridStyles.learnersGridStyles}
           />
         ) : (
           <ProgressLine />

@@ -19,6 +19,7 @@ export const fetchStatisctics = async () => {
     credentials: 'include',
   });
   const data = await response.json();
+  console.log('🚀 ~ fetchStatisctics ~ data:', data);
   return data[0].data;
 };
 

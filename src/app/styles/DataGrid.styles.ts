@@ -1,3 +1,4 @@
+import { useTheme } from '@emotion/react';
 import { tokens } from '../theme';
 import { themeSettings } from '../theme';
 
@@ -67,6 +68,43 @@ export const dataGridStyles = {
     },
     '& .MuiDataGrid-row-selected::before': {
       background: 'blue',
+    },
+  },
+  learnersGridStyles: {
+    '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': {
+      py: '3px',
+    },
+    '& .MuiDataGrid-colCell, & .MuiDataGrid-cell': {
+      borderRight: `1px solid lightgrey`,
+      display: 'flex',
+      alignItems: 'center',
+    },
+    '& .MuiDataGrid-main': {
+      marginTop: '0.3em',
+    },
+    '& .truncate-cell': {
+      lineHeight: '1 !important',
+    },
+  },
+  statisticsGridStyles: {
+    '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': {
+      py: '3px',
+    },
+    '& .MuiDataGrid-colCell, & .MuiDataGrid-cell': {
+      borderRight: `1px solid lightgrey`,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    '& .MuiDataGrid-main': {
+      marginTop: '0.2em',
+    },
+    '& .MuiDataGrid-columnHeader, & .MuiDataGrid-columnHeaderRow, & .MuiDataGrid-columnHeaderTitleContainerContent, & .MuiDataGrid-columnHeaderDraggableContainer, & .MuiDataGrid-columnHeaders':
+      {
+        maxHeight: '30px !important',
+      },
+    '& .MuiDataGrid-columnHeaderTitleContainer': {
+      marginLeft: '22px !important',
     },
   },
 };
