@@ -2,7 +2,7 @@
 
 import { create } from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { CoursesWithDeadline } from '../types/store.types';
+import { CoursesWithDeadline } from '../types/store';
 
 export type CourseData = {
   id: number;

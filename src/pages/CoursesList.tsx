@@ -6,7 +6,7 @@ import { mutate } from 'swr';
 import { BlockCourseFor } from '../features/BlockCourseFor';
 import { useCourses } from '../app/store/courses';
 import { useLearners } from '../app/store/learners';
-import { Course } from '../app/types/store.types';
+import { Course } from '../app/types/store';
 import { truncateDescription } from '../shared/helpers/truncateDescriptions';
 import { lockCourses } from '../app/api/api';
 import { dataGridStyles } from '../app/styles/DataGrid.styles';

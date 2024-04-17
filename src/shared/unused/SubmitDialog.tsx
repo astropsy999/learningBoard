@@ -16,7 +16,7 @@ import { useLearners } from '../../app/store/learners';
 import { ToUpdateUser, updateAllData } from '../../app/api/api';
 import AssignDatePicker from '../../features/DatePicker';
 import { DateBuilderReturnType } from '@mui/x-date-pickers';
-import { CoursesWithDeadline } from '../../app/types/store.types';
+import { CoursesWithDeadline } from '../../app/types/store';
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {

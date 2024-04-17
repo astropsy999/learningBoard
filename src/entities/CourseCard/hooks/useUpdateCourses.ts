@@ -1,7 +1,7 @@
 import { Bounce, toast } from 'react-toastify';
 import { mutate } from 'swr';
 import { ToUpdateUser, updateAllData } from '../../../app/api/api';
-import { CoursesWithDeadline, ILearner } from '../../../app/types/store.types';
+import { CoursesWithDeadline, ILearner } from '../../../app/types/store';
 
 export const useUpdateCourses = (setDeadlineDate: (date: string) => void) => {
   const updateCourses = async (

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CoursesWithDeadline, ILearner } from '../../../app/types/store.types';
+import { CoursesWithDeadline, ILearner } from '../../../app/types/store';
 import { ToUpdateUser } from '../../../app/api/api';
 
 export const useCourseDeadline = (

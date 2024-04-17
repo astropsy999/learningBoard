@@ -1,4 +1,4 @@
-import { ILearner } from '../../app/types/store.types';
+import { ILearner } from '../../app/types/store';
 
 export const getAllPositions = (allLearners: ILearner[]) => {
   return [

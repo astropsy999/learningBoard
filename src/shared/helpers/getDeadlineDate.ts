@@ -1,4 +1,4 @@
-import { CoursesWithDeadline } from '../../app/types/store.types';
+import { CoursesWithDeadline } from '../../app/types/store';
 
 export const getDeadlineDate = (
   courseId: number,

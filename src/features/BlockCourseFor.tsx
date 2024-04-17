@@ -5,7 +5,7 @@ import Autocomplete from '@mui/material/Autocomplete';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import { useLearners } from '../app/store/learners';
-import { ILearner } from '../app/types/store.types';
+import { ILearner } from '../app/types/store';
 import { Skeleton } from '@mui/material';
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;

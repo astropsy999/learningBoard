@@ -8,7 +8,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 import { useCourses } from '../app/store/courses';
 import { useLearners } from '../app/store/learners';
 import { useCustomFilterOperators } from '../entities/CustomFilter/hooks/useCustomFilterOperator';
-import { CoursesWithDeadline } from '../app/types/store.types';
+import { CoursesWithDeadline } from '../app/types/store';
 import { LearnersGrid } from '../entities/LearnersGrid';
 import { AssignedCourseChip } from '../features/AssignedCourseChip';
 import { getDivisionUsersArrayByName } from '../shared/helpers/getDivisionUsersByName';
@@ -118,7 +118,7 @@ const LearnersList = () => {
 
   const handleSelectionModelChange = (newSelection: Object[]) => {
     const selectedRowData: SelectedRowData[] = newSelection
-      .map((rowId) => allLearners?.find((row) => row.id === rowId))
+      .map((rowId) => allLearners?.find((row: any) => row.id === rowId))
       .filter((row) => !!row) as SelectedRowData[];
 
     setSelectedRows(selectedRowData);
@@ -147,7 +147,7 @@ const LearnersList = () => {
     {
       field: 'name',
       headerName: 'ФИО',
-      flex: 0.05,
+      flex: 1,
       cellClassName: 'name-cell',
       filterOperators: filterOperators,
       headerAlign: 'center',
@@ -158,14 +158,14 @@ const LearnersList = () => {
       headerName: 'Должность',
       type: 'string',
       headerAlign: 'center',
-      flex: 0.05,
+      flex: 1,
       filterOperators: filterOperators,
       align: 'center',
     },
     {
       field: 'division',
       headerName: 'Отдел',
-      flex: 0.05,
+      flex: 1,
       filterOperators,
       headerAlign: 'center',
       align: 'center',
@@ -175,13 +175,13 @@ const LearnersList = () => {
       ? allCourses!.map((course) => ({
           field: course.title,
           renderHeader: () => (
-            <Tooltip title={course.title}>
+          <Tooltip title={course.title}>
               <div style={{ fontSize: '16px', fontWeight: 'bold' }}>
-                {course.title}
+                {window.innerWidth <= 1280 && course.title.length > 15 ? course.title.substring(0, 15) + '...' : course.title}
               </div>
-            </Tooltip>
+          </Tooltip>
           ),
-          flex: 0.2,
+          flex: 1,
           headerAlign: 'center',
           renderCell: ({ row }) => (
             <AssignedCourseChip row={row} course={course} />

@@ -6,7 +6,7 @@ import {
   ILearner,
   UserActions,
   UserState,
-} from '../types/store';
+} from '../../types/store';
 
 export const useLearners = create<UserState & UserActions>()(
   devtools((set) => ({

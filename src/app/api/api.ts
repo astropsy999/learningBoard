@@ -2,7 +2,7 @@ import { Bounce, ToastContent, toast } from 'react-toastify';
 import configApi from '../config';
 import { url } from './endpoints.api';
 import { mockDataCourses, mockDataTeam } from '../data/mockData';
-import { AllData, CoursesWithDeadline, ILearner } from '../types/store.types';
+import { AllData, CoursesWithDeadline, ILearner } from '../types/store';
 
 export type ToUpdateUser = {
   id: number;

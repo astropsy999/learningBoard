@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography } from '@mui/material';
-import { AllStatisticsData, CourseAttempt } from '../../app/types/stat.types';
+import { AllStatisticsData, CourseAttempt } from '../../app/types/stat';
 
 export interface StatCellProps {
     row: AllStatisticsData ;

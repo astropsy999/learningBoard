@@ -6,7 +6,7 @@ import { lockCourses } from '../../app/api/api';
 import { CourseData, useCourses } from '../../app/store/courses';
 import { useLearners } from '../../app/store/learners';
 import { tokens } from '../../app/theme';
-import { CoursesWithDeadline } from '../../app/types/store.types';
+import { CoursesWithDeadline } from '../../app/types/store';
 import { getDeadlineDate } from '../../shared/helpers/getDeadlineDate';
 import { CourseCardActions } from './CourseCardActions';
 import { CourseCardContent } from './CoursecardContent';

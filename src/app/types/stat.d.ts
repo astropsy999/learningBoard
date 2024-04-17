@@ -3,7 +3,6 @@ export type Attempt = {
     status: 'passed' | 'failed' | 'incomplete',
     date: number,
 }
-
 export type Interaction = {
     id: string,
     type: 'choice',
@@ -26,7 +25,6 @@ export type AllStatisticsData = {
     name: string,
     courses: CourseAttempt[],
 }
-
 
 export type StatInfoType = {
     course: number;

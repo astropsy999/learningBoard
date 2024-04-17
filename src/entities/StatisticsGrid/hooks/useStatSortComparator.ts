@@ -2,7 +2,7 @@ import { GridComparatorFn, GridSortCellParams } from '@mui/x-data-grid';
 import {
   AllStatisticsData,
   CourseAttempt,
-} from '../../../app/types/stat.types';
+} from '../../../app/types/stat';
 
 export const useStatSortComparator = () => {
   const calculatePercent = (points: number, totalPoints: number) => {

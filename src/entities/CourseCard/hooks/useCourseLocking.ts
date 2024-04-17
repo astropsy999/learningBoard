@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { getLearnerIdByName } from '../../../shared/helpers/getLearnerIdByName';
 import { getLockedUsersByCourseId } from '../../../shared/helpers/getlockedUsersByCourseId';
 import { Bounce, toast } from 'react-toastify';
-import { ILearner } from '../../../app/types/store.types';
+import { ILearner } from '../../../app/types/store';
 
 export const useCourseLocking = (
   selectedRowsData: any[],

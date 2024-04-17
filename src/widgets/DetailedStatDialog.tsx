@@ -7,7 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import * as React from 'react';
 import { useCourses } from '../app/store/courses';
 import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
-import { StatInfoType } from '../app/types/stat.types';
+import { StatInfoType } from '../app/types/stat';
 import AttemptDetailsTabs from './AttemptsDetails';
 
 interface DetailedStartDialogProps {

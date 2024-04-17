@@ -78,7 +78,7 @@ export default function SplitButton() {
   return (
     <React.Fragment>
       <ButtonGroup
-        variant={location.pathname === '/' ? 'contained' : 'outlined'}
+        variant={location.pathname === '/learners' ? 'contained' : 'outlined'}
         ref={anchorRef}
         aria-label="Button group with a nested menu"
         color={'primary'}

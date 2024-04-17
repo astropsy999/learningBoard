@@ -39,6 +39,8 @@ const Statistics = () => {
     { field: 'date', headerName: 'Дата' },
   ];
 
+
+
   useEffect(() => {
     setFilterValue(currentDivisionUsersList);
   }, [currentDivisionUsersList]);
@@ -86,8 +88,32 @@ const Statistics = () => {
     },
   ];
 
+  const columnGroupingModel: GridColumnGroupingModel | undefined =
+  !isLoading && !statLoading 
+    ? coursesList?.map((course) => ({
+        groupId: getCourseTitleById(course.id, allCourses!)!,
+        renderHeaderGroup: () => (
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '100%',
+              fontWeight: 'bold',
+            }}
+          >
+            {getCourseTitleById(course.id, allCourses!)!}
+          </div>
+        ),
+        children: statSubcolumns.map((subCol) => ({
+          field: `${course.id}_${subCol.field}`,
+          headerName: subCol.headerName,
+        })),
+      }))
+    : [];
+
   !isLoading &&
-    !statLoading &&
+    !statLoading  &&
     coursesList?.forEach((course) => {
       for (let subCol = 0; subCol <= statSubcolumns.length - 1; subCol++) {
         const subColumnData = statSubcolumns[subCol];
@@ -113,31 +139,6 @@ const Statistics = () => {
         });
       }
     });
-
-  const columnGroupingModel: GridColumnGroupingModel | undefined =
-    !isLoading && !statLoading
-      ? coursesList?.map((course) => ({
-          groupId: getCourseTitleById(course.id, allCourses!)!,
-          renderHeaderGroup: () => (
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: '100%',
-                fontWeight: 'bold',
-              }}
-            >
-              {getCourseTitleById(course.id, allCourses!)!}
-            </div>
-          ),
-          children: statSubcolumns.map((subCol) => ({
-            field: `${course.id}_${subCol.field}`,
-            headerName: subCol.headerName,
-          })),
-        }))
-      : [];
-
   const onChangeFilterModel = (newModel: GridFilterModel) => {
     if (!newModel.items[0].value) {
       setCurrentDivisionUsersList([]);

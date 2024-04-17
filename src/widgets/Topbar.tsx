@@ -6,7 +6,7 @@ import { Link, useLocation } from 'react-router-dom';
 import useSWR from 'swr';
 import { useCourses } from '../app/store/courses';
 import { useLearners } from '../app/store/learners';
-import { AllData } from '../app/types/store.types';
+import { AllData } from '../app/types/store';
 import { fetchAllData } from '../app/api/api';
 import { RenderAssignAllButton } from '../features/AssignAllBtn';
 import SplitButton from '../features/SplitButton';
@@ -124,7 +124,7 @@ const Topbar: FC<TopbarProps> = () => {
     >
       <Box ml={4} sx={{ display: 'flex', gap: '16px', marginLeft: '20px' }}>
         {isAssignAllButton && <RenderAssignAllButton />}
-        <Link to={'/'}>
+        <Link to={'/learners'}>
           <SplitButton />
         </Link>
         <Link to="/courses">
@@ -139,9 +139,9 @@ const Topbar: FC<TopbarProps> = () => {
           </Button>
         </Link>
         {!isAssignAllButton ? (
-          <Link to={'/stat'}>
+          <Link to={'/'}>
             <Button
-              variant={location.pathname === '/stat' ? 'contained' : 'outlined'}
+              variant={location.pathname === '/' ? 'contained' : 'outlined'}
               startIcon={<QueryStatsIcon />}
               color="primary"
             >

@@ -4,17 +4,18 @@ import React from 'react';
 import {
   DataGrid,
   GridColDef,
+  GridColumnGroup,
   GridColumnGroupingModel,
   GridFilterModel,
 } from '@mui/x-data-grid';
 import { useStatisticsData } from './hooks/useStatisticsData';
 import ProgressLine from '../../shared/ui/ProgressLine';
 import { DetailedStatDialog } from '../../widgets/DetailedStatDialog';
-import { StatInfoType } from '../../app/types/stat.types';
+import { StatInfoType } from '../../app/types/stat';
 
 interface StatisticsGridProps {
   columns: GridColDef[];
-  columnGroupingModel: GridColumnGroupingModel;
+  columnGroupingModel: GridColumnGroup[];
   filterValue: string[];
   onChangeFilterModel: (model: GridFilterModel) => void;
   statInfo: StatInfoType;
@@ -42,7 +43,7 @@ export const StatisticsGrid: React.FC<StatisticsGridProps> = (props) => {
         {!isLoading || !statLoading ? (
           <DataGrid
             rows={!isLoading ? rawStatistics || [] : []}
-            columns={columns}
+            columns={!isLoading ? columns : []} 
             disableRowSelectionOnClick
             columnGroupingModel={columnGroupingModel}
             autoHeight={true}

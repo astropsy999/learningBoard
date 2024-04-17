@@ -3,7 +3,7 @@ import React from 'react';
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
 import LockPersonIcon from '@mui/icons-material/LockPerson';
-import { Course } from '../app/types/store.types';
+import { Course } from '../app/types/store';
 interface LockCoursesButtonProps {
   row: any;
   isAnyButtonLocked: boolean;

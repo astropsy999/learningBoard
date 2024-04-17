@@ -1,4 +1,4 @@
-import { AllStatisticsData } from "../../app/types/stat.types";
+import { AllStatisticsData } from "../../app/types/stat";
 
 
 export const findMaxCourses = (stat: AllStatisticsData[]) => {

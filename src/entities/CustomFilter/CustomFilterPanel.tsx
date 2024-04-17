@@ -9,7 +9,7 @@ import {
 import { GridFilterInputValueProps } from '@mui/x-data-grid';
 import React, { SyntheticEvent, useEffect, useState } from 'react';
 import { useLearners } from '../../app/store/learners';
-import { ILearner } from '../../app/types/store.types';
+import { ILearner } from '../../app/types/store';
 import { getAllOptions } from '../../shared/helpers/getAllOptions';
 
 export interface CustomFilterInputProps {
