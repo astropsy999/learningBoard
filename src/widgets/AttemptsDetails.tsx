@@ -53,6 +53,8 @@ export default function AttemptDetailsTabs() {
     setValue(index);
   };
 
+  const tabStyles = {background: '#0c4056'}
+
   return (
     <Box sx={{ bgcolor: 'background.paper', width: 500 }}>
       <AppBar position="static">
@@ -64,9 +66,9 @@ export default function AttemptDetailsTabs() {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          <Tab label="Попытка 1" {...a11yProps(0)} />
-          <Tab label="Попытка 2" {...a11yProps(1)} />
-          <Tab label="Попытка 3" {...a11yProps(2)} />
+          <Tab label="Попытка 1" sx={tabStyles}{...a11yProps(0)} />
+          <Tab label="Попытка 2" sx={tabStyles}{...a11yProps(1)} />
+          <Tab label="Попытка 3" sx={tabStyles}{...a11yProps(2)} />
         </Tabs>
       </AppBar>
         <Box>
