@@ -1,4 +1,5 @@
 import SchoolIcon from '@mui/icons-material/School';
+import Groups2Icon from '@mui/icons-material/Groups2';
 import { Box, Button } from '@mui/material';
 import React, { FC, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
@@ -39,10 +40,15 @@ const Topbar: FC<TopbarProps> = () => {
     error,
   } = useSWR<AllData | undefined>('allData', fetchAllData);
 
-  const locationHeaderNames: { [key: string]: string } = {
-    '/': 'Сотрудники',
-    '/courses': 'Курсы',
-    '/stat': 'Статистика',
+  const iconStyle = {
+    color: '#38737f',
+    fontSize: 24,
+  };
+
+  const locationHeaderIcons: { [key: string]: React.ReactNode } = {
+    '/': <Groups2Icon sx={iconStyle} />,
+    '/courses': <SchoolIcon sx={iconStyle} />,
+    '/stat': <QueryStatsIcon sx={iconStyle} />,
   };
 
   useEffect(() => {
@@ -149,7 +155,7 @@ const Topbar: FC<TopbarProps> = () => {
         )}
       </Box>
       <Box mr={10}>
-        <Header title={locationHeaderNames[location.pathname]} subtitle={''} />
+        <Header title={''} subtitle={''} icon={locationHeaderIcons[location.pathname]} />
       </Box>
     </Box>
   );

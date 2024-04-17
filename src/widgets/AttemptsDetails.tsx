@@ -71,9 +71,9 @@ export default function AttemptDetailsTabs() {
       </AppBar>
         <Box>
             <TabPanel value={value} index={0} dir={theme.direction}>
-            <DetailedQuestion isCorrect={true} />
-            <DetailedQuestion isCorrect={false} />
-
+            {/* <DetailedQuestion isCorrect={true} />
+            <DetailedQuestion isCorrect={false} /> */}
+            Попытка 1
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
             Попытка 2

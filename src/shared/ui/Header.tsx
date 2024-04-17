@@ -6,9 +6,10 @@ import React from 'react';
 interface HeaderProps {
   title: string;
   subtitle: string;
+  icon?: React.ReactNode;
 }
 
-const Header: FC<HeaderProps> = ({ title, subtitle }) => {
+const Header: FC<HeaderProps> = ({ title, subtitle, icon }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   return (
@@ -25,6 +26,7 @@ const Header: FC<HeaderProps> = ({ title, subtitle }) => {
       <Typography variant="h5" color={colors.greenAccent[400]}>
         {subtitle}
       </Typography>
+      <Box>{icon}</Box>
     </Box>
   );
 };
