@@ -59,6 +59,8 @@ const LearnersList = () => {
   const [filterLabel, setFilterLabel] = useState<string>('');
   const [selectedField, setSelectedField] = useState<string>('division');
 
+
+
   useEffect(() => {
     if (currentUserDivisionName)
       setFilterModel({
@@ -70,11 +72,11 @@ const LearnersList = () => {
   useEffect(() => {
     if (allLearners && divisions && allCourses && currentUserDivisionName) {
       setIsLoading(false);
-      const currentDivisionUsersList = getDivisionUsersArrayByName(
-        allLearners,
-        currentUserDivisionName,
-      );
-      setCurrentDivisionUsersList(currentDivisionUsersList as string[]);
+      // const currentDivisionUsersList = getDivisionUsersArrayByName(
+      //   allLearners,
+      //   currentUserDivisionName,
+      // );
+      // setCurrentDivisionUsersList(currentDivisionUsersList as string[]);
     }
   }, [allCourses, allData, allLearners, currentUserDivisionName, divisions]);
 

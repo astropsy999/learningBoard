@@ -13,6 +13,7 @@ import { useStatisticsData } from '../entities/StatisticsGrid/hooks/useStatistic
 import { StatisticsGrid } from '../entities/StatisticsGrid';
 import StatCell from '../entities/StatisticsGrid/StatCell';
 import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
+import { getDivisionUsersArrayByName } from '../shared/helpers/getDivisionUsersByName';
 
 const Statistics = () => {
   const {
@@ -28,9 +29,15 @@ const Statistics = () => {
   const sortComparator = useStatSortComparator();
   const theme = useTheme();
   const { allCourses } = useCourses();
-  const { currentDivisionUsersList, setCurrentDivisionUsersList } =
+  const { currentDivisionUsersList, setCurrentDivisionUsersList, allLearners, currentUserDivisionName } =
     useLearners();
+
+  console.log('currentDivisionUsersList: ', currentDivisionUsersList);
+
   const [filterValue, setFilterValue] = useState(currentDivisionUsersList);
+  console.log('filterValue: ', filterValue);
+  const [columns, setColumns] = useState<GridColDef[]>([]);
+  const [columnsGroupingModel, setColumnsGroupingModel] = useState<GridColumnGroupingModel>([]);
 
   // const ATTEMPTS = 3;
   const statSubcolumns = [
@@ -39,11 +46,109 @@ const Statistics = () => {
     { field: 'date', headerName: 'Дата' },
   ];
 
-
+  // useEffect(() => {
+  //  setFilterValue(currentDivisionUsersList);
+  // }, [currentDivisionUsersList]);
 
   useEffect(() => {
-    setFilterValue(currentDivisionUsersList);
-  }, [currentDivisionUsersList]);
+    if (allLearners &&  allCourses && currentUserDivisionName) {
+      // setIsLoading(false);
+      const currentDivisionUsersList = getDivisionUsersArrayByName(
+        allLearners,
+        currentUserDivisionName,
+      );
+      setCurrentDivisionUsersList(currentDivisionUsersList as string[]);
+      setFilterValue(currentDivisionUsersList as string[]);
+    }
+  }, [allCourses, allLearners, currentUserDivisionName]);
+
+  const filterOperators = useCustomFilterOperators(
+    currentDivisionUsersList,
+    setCurrentDivisionUsersList,
+    'ФИО',
+    'name',
+  )
+
+  useEffect(() => {
+    const newColumnsGrouping = coursesList?.map(({id}) => {
+      
+      const courseTitle = getCourseTitleById(id, allCourses!)!;
+      const children = statSubcolumns?.map(({ field, headerName }) => ({
+        field: `${id}_${field}`,
+        headerName,
+      }))
+      
+      return {
+        groupId: courseTitle!,
+        renderHeaderGroup: () => (
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '100%',
+              fontWeight: 'bold',
+            }}
+          >
+            {courseTitle!}
+          </div>
+        ),
+        children
+      };
+    });
+    
+      newColumnsGrouping && coursesList && newColumnsGrouping?.length && setColumnsGroupingModel(newColumnsGrouping);
+
+    
+  }, [coursesList]);
+
+  useEffect(() => {
+    // Создаем столбцы только если coursesList не равен undefined
+    if (coursesList) {
+      const newColumns: GridColDef[] = [
+        {
+          field: 'name',
+          headerName: 'ФИО',
+          cellClassName: 'name-cell',
+          flex: 0.3,
+          filterOperators
+        },
+      ];
+
+      const generateSubcolumns = (course: any) => {
+        return  statSubcolumns?.forEach((subCol) => {
+          const {headerName, field} = subCol
+          const subField = `${course.id}_${field}`;
+          newColumns.push({
+            field: subField,
+            headerName,
+            renderHeader: () => <>{headerName}</>,
+            disableColumnMenu: true,
+            headerClassName: 'name-column--cell',
+            cellClassName: 'name-cell',
+            flex: 0.1,
+            valueGetter: (value, row) => row,
+            sortComparator,
+            renderCell: ({ row }) => (
+              <StatCell
+                row={row}
+                course={course}
+                subColumnData={subCol}
+                handleCellClick={handleCellClick}
+              />
+            ),
+          });
+        });
+      }
+
+      // Добавляем дополнительные столбцы для каждого курса и каждого подстолбца
+      coursesList?.forEach((course) => {
+        generateSubcolumns(course);
+      });
+
+      setColumns(newColumns); // Обновляем состояние столбцов
+    }
+  }, [coursesList, currentDivisionUsersList, setCurrentDivisionUsersList, columnsGroupingModel]);
 
   const handleCellClick = (
     courseId: number,
@@ -73,88 +178,23 @@ const Statistics = () => {
     };
   };
 
-  const columns: GridColDef[] = [
-    {
-      field: 'name',
-      headerName: 'ФИО',
-      cellClassName: 'name-cell',
-      flex: 0.3,
-      filterOperators: useCustomFilterOperators(
-        currentDivisionUsersList,
-        setCurrentDivisionUsersList,
-        'ФИО',
-        'name',
-      ),
-    },
-  ];
-
-  const columnGroupingModel: GridColumnGroupingModel | undefined =
-  !isLoading && !statLoading 
-    ? coursesList?.map((course) => ({
-        groupId: getCourseTitleById(course.id, allCourses!)!,
-        renderHeaderGroup: () => (
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '100%',
-              fontWeight: 'bold',
-            }}
-          >
-            {getCourseTitleById(course.id, allCourses!)!}
-          </div>
-        ),
-        children: statSubcolumns.map((subCol) => ({
-          field: `${course.id}_${subCol.field}`,
-          headerName: subCol.headerName,
-        })),
-      }))
-    : [];
-
-  !isLoading &&
-    !statLoading  &&
-    coursesList?.forEach((course) => {
-      for (let subCol = 0; subCol <= statSubcolumns.length - 1; subCol++) {
-        const subColumnData = statSubcolumns[subCol];
-        const subField = subColumnData.field;
-        columns.push({
-          field: `${course.id}_${subField}`,
-          headerName: `${subColumnData.headerName}`,
-          renderHeader: () => <>{subColumnData.headerName}</>,
-          disableColumnMenu: true,
-          headerClassName: 'name-column--cell',
-          cellClassName: 'name-cell',
-          flex: 0.1,
-          valueGetter: (value, row) => row,
-          sortComparator,
-          renderCell: ({ row }) => (
-            <StatCell
-              row={row}
-              course={course}
-              subColumnData={subColumnData}
-              handleCellClick={handleCellClick}
-            />
-          ),
-        });
-      }
-    });
-  const onChangeFilterModel = (newModel: GridFilterModel) => {
-    if (!newModel.items[0].value) {
+  
+    const onChangeFilterModel = (newModel: GridFilterModel) => {
+    if (!newModel?.items[0]?.value) {
       setCurrentDivisionUsersList([]);
     }
   };
 
   return (
-    <StatisticsGrid
-      columns={columns}
-      columnGroupingModel={columnGroupingModel}
-      filterValue={filterValue}
-      onChangeFilterModel={onChangeFilterModel}
-      statInfo={statInfo}
-      setShowDetailedStat={setShowDetailedStat}
-      showDetailedStat={showDetailedStat}
-    />
+        <StatisticsGrid
+          columns={columns}
+          columnGroupingModel={columnsGroupingModel}
+          filterValue={filterValue}
+          onChangeFilterModel={onChangeFilterModel}
+          statInfo={statInfo}
+          setShowDetailedStat={setShowDetailedStat}
+          showDetailedStat={showDetailedStat}
+        />
   );
 };
 
