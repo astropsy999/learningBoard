@@ -43,7 +43,7 @@ export const StatisticsGrid: React.FC<StatisticsGridProps> = (props) => {
         {!isLoading || !statLoading ? (
           <DataGrid
             rows={!isLoading ? rawStatistics || [] : []}
-            columns={!isLoading ? columns : []} 
+            columns={!isLoading ? columns : []}
             disableRowSelectionOnClick
             columnGroupingModel={columnGroupingModel}
             autoHeight={true}
