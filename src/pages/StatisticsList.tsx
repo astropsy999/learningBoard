@@ -32,12 +32,11 @@ const Statistics = () => {
   const {
     currentDivisionUsersList,
     setCurrentDivisionUsersList,
-    allLearners,
-    currentUserDivisionName,
+    // allLearners,
+    // currentUserDivisionName,
   } = useLearners();
 
 
-  const [filterValue, setFilterValue] = useState(currentDivisionUsersList);
   const [columns, setColumns] = useState<GridColDef[]>([]);
   const [columnsGroupingModel, setColumnsGroupingModel] =
     useState<GridColumnGroupingModel>([]);
@@ -49,17 +48,7 @@ const Statistics = () => {
     { field: 'date', headerName: 'Дата' },
   ];
 
-  useEffect(() => {
-    if (allLearners && allCourses && currentUserDivisionName) {
-      // setIsLoading(false);
-      const currentDivisionUsersList = getDivisionUsersArrayByName(
-        allLearners,
-        currentUserDivisionName,
-      );
-      setCurrentDivisionUsersList(currentDivisionUsersList as string[]);
-      setFilterValue(currentDivisionUsersList as string[]);
-    }
-  }, [allCourses, allLearners, currentUserDivisionName]);
+  
 
   useEffect(() => {
     const newColumnsGrouping = coursesList?.map(({ id }) => {
@@ -101,6 +90,12 @@ const Statistics = () => {
     'ФИО',
     'name',
   );
+
+  const onChangeFilterModel = (newModel: GridFilterModel) => {
+    if (!newModel?.items[0]?.value) {
+      setCurrentDivisionUsersList([]);
+    }
+  };
 
   useEffect(() => {
     // Создаем столбцы только если coursesList не равен undefined
@@ -184,23 +179,17 @@ const Statistics = () => {
     };
   };
 
-  const onChangeFilterModel = (newModel: GridFilterModel) => {
-    if (!newModel?.items[0]?.value) {
-      setCurrentDivisionUsersList([]);
-    }
-  };
 
   return (
     
     <StatisticsGrid
       columns={columns}
       columnGroupingModel={columnsGroupingModel}
-      filterValue={!isLoading && !statLoading ? filterValue : []} // {filterValue}
-      onChangeFilterModel={onChangeFilterModel}
       statInfo={statInfo}
       setShowDetailedStat={setShowDetailedStat}
-      showDetailedStat={showDetailedStat}
-    />
+      showDetailedStat={showDetailedStat} 
+      onChangeFilterModel={onChangeFilterModel} 
+      />
   );
 };
 

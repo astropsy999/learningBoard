@@ -1,22 +1,26 @@
 import { Box, useTheme } from '@mui/material';
 import { dataGridStyles } from '../../app/styles/DataGrid.styles';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   DataGrid,
   GridColDef,
   GridColumnGroup,
   GridColumnGroupingModel,
   GridFilterModel,
+  GridSortItem,
 } from '@mui/x-data-grid';
 import { useStatisticsData } from './hooks/useStatisticsData';
 import ProgressLine from '../../shared/ui/ProgressLine';
 import { DetailedStatDialog } from '../../widgets/DetailedStatDialog';
 import { StatInfoType } from '../../app/types/stat';
+import { useLearners } from '../../app/store/learners';
+import { getDivisionUsersArrayByName } from '../../shared/helpers/getDivisionUsersByName';
+import { useCourses } from '../../app/store/courses';
 
 interface StatisticsGridProps {
   columns: GridColDef[];
   columnGroupingModel: GridColumnGroup[];
-  filterValue: string[] | boolean;
+  // filterValue: string[] | boolean;
   onChangeFilterModel: (model: GridFilterModel) => void;
   statInfo: StatInfoType;
   setShowDetailedStat: (value: boolean) => void;
@@ -27,7 +31,7 @@ export const StatisticsGrid: React.FC<StatisticsGridProps> = (props) => {
   const {
     columns,
     columnGroupingModel,
-    filterValue,
+    // filterValue,
     onChangeFilterModel,
     statInfo,
     setShowDetailedStat,
@@ -36,6 +40,79 @@ export const StatisticsGrid: React.FC<StatisticsGridProps> = (props) => {
   const { statLoading, rawStatistics, isLoading } = useStatisticsData();
 
   const theme = useTheme();
+
+
+
+  const {setCurrentDivisionUsersList, currentDivisionUsersList,  allLearners,
+    currentUserDivisionName} = useLearners()
+
+    const {allCourses} = useCourses()
+    
+  const [filterValue, setFilterValue] = useState(currentDivisionUsersList);
+  const [filterModel, setFilterModel] = useState<GridFilterModel>({
+    items: [
+          {
+            field: 'name',
+            operator: 'isAnyOf',
+            value: filterValue,
+          },
+        ],
+  })
+
+  // useEffect(() => {
+  //   if (allLearners && allCourses && currentUserDivisionName) {
+  //     // setIsLoading(false);
+  //     const currentDivisionUsersList = getDivisionUsersArrayByName(
+  //       allLearners,
+  //       currentUserDivisionName,
+  //     );
+  //     setCurrentDivisionUsersList(currentDivisionUsersList as string[]);
+  //     setFilterValue(currentDivisionUsersList as string[]);
+  //     setFilterModel({
+  //       items: [
+  //         {
+  //           field: 'name',
+  //           operator: 'isAnyOf',
+  //           value: filterValue,
+  //         },
+  //       ],
+  //     })
+  //   }
+  // }, [allCourses, allLearners, currentUserDivisionName]);
+
+  useEffect(() => {
+    if (allLearners && allCourses && currentUserDivisionName) {
+        const currentDivisionUsersList = getDivisionUsersArrayByName(allLearners, currentUserDivisionName);
+        setCurrentDivisionUsersList(currentDivisionUsersList as string[]);
+
+        // Обновляем filterValue
+        setFilterValue(currentDivisionUsersList as string[]);
+
+        // Обновляем filterModel
+        setFilterModel({
+            items: [
+                {
+                    field: 'name',
+                    operator: 'isAnyOf',
+                    value: currentDivisionUsersList,
+                },
+            ],
+        });
+    }
+}, [allCourses, allLearners, currentUserDivisionName, setCurrentDivisionUsersList]);
+
+
+  const sortModel = [{ field: 'name', sort: 'asc' }] as GridSortItem[];
+
+  // const filterModel = {
+  //   items: [
+  //     {
+  //       field: 'name',
+  //       operator: 'isAnyOf',
+  //       value: filterValue,
+  //     },
+  //   ],
+  // }
 
   return (
     <Box m="20px" pt={2}>
@@ -50,18 +127,10 @@ export const StatisticsGrid: React.FC<StatisticsGridProps> = (props) => {
             getRowHeight={() => 'auto'}
             initialState={{
               sorting: {
-                sortModel: [{ field: 'name', sort: 'asc' }],
+                sortModel,
               },
             }}
-            filterModel={{
-              items: [
-                {
-                  field: 'name',
-                  operator: 'isAnyOf',
-                  value: filterValue,
-                },
-              ],
-            }}
+            filterModel={filterModel}
             onFilterModelChange={(newModel) => onChangeFilterModel(newModel)}
             sx={dataGridStyles.statisticsGridStyles}
           />

@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Topbar from '../widgets/Topbar';
 import CoursesList from '../pages/CoursesList';
 import Team from '../pages/LearnersList';
-import Statistics from '../pages/Statistics';
+import Statistics from '../pages/StatisticsList';
 import { ColorModeContext, useMode } from './theme';
 
 function App() {
