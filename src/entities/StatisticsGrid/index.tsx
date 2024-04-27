@@ -16,7 +16,7 @@ import { StatInfoType } from '../../app/types/stat';
 interface StatisticsGridProps {
   columns: GridColDef[];
   columnGroupingModel: GridColumnGroup[];
-  filterValue: string[];
+  filterValue: string[] | boolean;
   onChangeFilterModel: (model: GridFilterModel) => void;
   statInfo: StatInfoType;
   setShowDetailedStat: (value: boolean) => void;

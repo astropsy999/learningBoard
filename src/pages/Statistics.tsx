@@ -8,13 +8,12 @@ import React, { useEffect, useState } from 'react';
 import { useCourses } from '../app/store/courses';
 import { useLearners } from '../app/store/learners';
 import { useCustomFilterOperators } from '../entities/CustomFilter/hooks/useCustomFilterOperator';
-import { useStatSortComparator } from '../entities/StatisticsGrid/hooks/useStatSortComparator';
-import { useStatisticsData } from '../entities/StatisticsGrid/hooks/useStatisticsData';
 import { StatisticsGrid } from '../entities/StatisticsGrid';
 import StatCell from '../entities/StatisticsGrid/StatCell';
+import { useStatSortComparator } from '../entities/StatisticsGrid/hooks/useStatSortComparator';
+import { useStatisticsData } from '../entities/StatisticsGrid/hooks/useStatisticsData';
 import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
 import { getDivisionUsersArrayByName } from '../shared/helpers/getDivisionUsersByName';
-import ProgressLine from '../shared/ui/ProgressLine';
 
 const Statistics = () => {
   const {
@@ -37,10 +36,8 @@ const Statistics = () => {
     currentUserDivisionName,
   } = useLearners();
 
-  console.log('currentDivisionUsersList: ', currentDivisionUsersList);
 
   const [filterValue, setFilterValue] = useState(currentDivisionUsersList);
-  console.log('filterValue: ', filterValue);
   const [columns, setColumns] = useState<GridColDef[]>([]);
   const [columnsGroupingModel, setColumnsGroupingModel] =
     useState<GridColumnGroupingModel>([]);
@@ -51,10 +48,6 @@ const Statistics = () => {
     { field: 'status', headerName: 'Статус' },
     { field: 'date', headerName: 'Дата' },
   ];
-
-  // useEffect(() => {
-  //  setFilterValue(currentDivisionUsersList);
-  // }, [currentDivisionUsersList]);
 
   useEffect(() => {
     if (allLearners && allCourses && currentUserDivisionName) {
@@ -96,13 +89,10 @@ const Statistics = () => {
       };
     });
 
-    // !isLoading &&
     allCourses &&
       coursesList &&
-      // !statLoading &&
       newColumnsGrouping?.length &&
       setColumnsGroupingModel(newColumnsGrouping);
-    console.log('🚀 ~ useEffect ~ newColumnsGrouping:', newColumnsGrouping);
   }, [coursesList, statLoading, isLoading, statInfo, allCourses]);
 
   const filterOperators = useCustomFilterOperators(
@@ -177,6 +167,7 @@ const Statistics = () => {
     passingScore: number,
     timeSpent: string,
   ) => {
+    
     return () => {
       showDetailedStatistic(
         courseId,
@@ -200,10 +191,11 @@ const Statistics = () => {
   };
 
   return (
+    
     <StatisticsGrid
       columns={columns}
       columnGroupingModel={columnsGroupingModel}
-      filterValue={filterValue}
+      filterValue={!isLoading && !statLoading ? filterValue : []} // {filterValue}
       onChangeFilterModel={onChangeFilterModel}
       statInfo={statInfo}
       setShowDetailedStat={setShowDetailedStat}

@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, Stack } from '@mui/material';
+import { Box, Button, Card, CardContent, Stack, Typography } from '@mui/material';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -63,7 +63,7 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
   const timeSpent = selectedStatInfo.timeSpent;
 
   return (
-    <React.Fragment>
+    <Box>
       <Dialog
         open={open}
         onClose={handleClose}
@@ -72,63 +72,56 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
         aria-describedby="scroll-dialog-description"
       >
         <DialogTitle id="scroll-dialog-title">
-          Результаты теста{' '}
-          <strong>
-            {getCourseTitleById(selectedStatInfo!.course, allCourses!)}
-          </strong>{' '}
-          для <strong>{selectedStatInfo.userName}</strong>
+          <Box>
+            Результаты теста{' '}
+            <strong>
+              {getCourseTitleById(selectedStatInfo!.course, allCourses!)}
+            </strong>{' '}
+            для <strong>{selectedStatInfo.userName}</strong>
+          </Box>
         </DialogTitle>
         <DialogContent dividers={scroll === 'paper'}>
-          <DialogContentText
+          <Box
             id="scroll-dialog-description"
             ref={descriptionElementRef}
             tabIndex={-1}
           >
-            <Card>
-              <CardContent sx={{ backgroundColor: statusCardBg }}>
-                <Box p={1}>
-                  <div>
-                    Дата/Время:{' '}
-                    <b>
-                      {date} {time}
-                    </b>
-                  </div>
-                  <div>
-                    Вопросов отвечено:{' '}
-                    <b>
-                      {points} / {totalPoints}
-                    </b>
-                  </div>
-                  <div>
-                    Набрано баллов:{' '}
-                    <b>
-                      {points} / {totalPoints} ({percent})
-                    </b>
-                  </div>
-                  <div>
-                    Проходной балл: <b>{Math.floor(passingScore)} (70%)</b>
-                  </div>
-                  {/* <div>
-                    Затрачено времени: <b>{timeSpent}</b>
-                  </div> */}
-                  <Stack direction={'row'}>
-                    Результат{' '}
-                    <Box color={statusColor} fontWeight={'bold'} ml={1}>
-                      {status}
-                    </Box>
-                  </Stack>
+          <Card>
+            <CardContent sx={{ backgroundColor: statusCardBg }}>
+              <Box p={1}>
+                <Box>
+                  Дата/Время: <b>{date} {time}</b>
                 </Box>
-              </CardContent>
-            </Card>
+                <Box>
+                  Вопросов отвечено: <b>{points} / {totalPoints}</b>
+                </Box>
+                <Box>
+                  Набрано баллов: <b>{points} / {totalPoints} ({percent})</b>
+                </Box>
+                <Box>
+                  Проходной балл: <b>{Math.floor(passingScore)} (70%)</b>
+                </Box>
+                {/* <Box variant="body1">
+                  Затрачено времени: <b>{timeSpent}</b>
+                </Box> */}
+                <Stack direction="row">
+                  <Box>Результат</Box>
+                  <Box color={statusColor} fontWeight="bold" ml={1}>
+                    {status}
+                  </Box>
+                </Stack>
+              </Box>
+            </CardContent>
+          </Card>
             <Box mt={2}>
               <AttemptDetailsTabs />
             </Box>
-          </DialogContentText>
+          </Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Закрыть</Button>
         </DialogActions>
       </Dialog>
-    </React.Fragment>
+    </Box>
   );
 };

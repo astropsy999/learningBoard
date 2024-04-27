@@ -1,3 +1,5 @@
+import { getDetailedStatisctics } from "./api";
+
 export const url = {
   getUserProfileData: '/index.php/profile/info',
   GetAllUsers: '/index.php/admin/GetAllUsers/',
@@ -24,5 +26,6 @@ export const url = {
   learnController: '/index.php/learncontroller/getdata',
   updateDataEndpoint: '/index.php/learncontroller/includecourses',
   lockCoursesEndpoint: '/index.php/learncontroller/excludecourses',
-  getUsersStatistics: '/index.php/Learncontroller/getUsersStatistics'
+  getUsersStatistics: '/index.php/Learncontroller/getUsersStatistics',
+  getDetailedUserStatisctics: '/index.php/Learncontroller/getUserStatistic',
 };
