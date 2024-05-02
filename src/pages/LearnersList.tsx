@@ -37,7 +37,6 @@ const LearnersList = () => {
     divisions,
     currentUserDivisionName,
     setIsMassEditMode,
-    setCurrentDivisionUsersList,
   } = useLearners();
 
   const { allCourses } = useCourses();
@@ -72,11 +71,6 @@ const LearnersList = () => {
   useEffect(() => {
     if (allLearners && divisions && allCourses && currentUserDivisionName) {
       setIsLoading(false);
-      // const currentDivisionUsersList = getDivisionUsersArrayByName(
-      //   allLearners,
-      //   currentUserDivisionName,
-      // );
-      // setCurrentDivisionUsersList(currentDivisionUsersList as string[]);
     }
   }, [allCourses, allData, allLearners, currentUserDivisionName, divisions]);
 
@@ -136,6 +130,7 @@ const LearnersList = () => {
   );
 
   const onChangeFilterModel = (newModel: GridFilterModel) => {
+    console.log('newModelLEARNERS: ', newModel);
     if (newModel.items) {
       setFilterLabel(getHeaderNameByField(newModel.items[0].field!, columns)!);
       setSelectedField(newModel.items[0].field!);

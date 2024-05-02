@@ -2,18 +2,21 @@ import { useTheme } from '@mui/material';
 import {
   GridColDef,
   GridColumnGroupingModel,
+  GridFilterItem,
   GridFilterModel,
 } from '@mui/x-data-grid';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useCourses } from '../app/store/courses';
 import { useLearners } from '../app/store/learners';
-import { useCustomFilterOperators } from '../entities/CustomFilter/hooks/useCustomFilterOperator';
+import CustomFilterInput from '../entities/CustomFilter/CustomFilterPanel';
 import { StatisticsGrid } from '../entities/StatisticsGrid';
 import StatCell from '../entities/StatisticsGrid/StatCell';
 import { useStatSortComparator } from '../entities/StatisticsGrid/hooks/useStatSortComparator';
 import { useStatisticsData } from '../entities/StatisticsGrid/hooks/useStatisticsData';
 import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
 import { getDivisionUsersArrayByName } from '../shared/helpers/getDivisionUsersByName';
+import { getHeaderNameByField } from '../shared/helpers/getHeaderNameByField';
+
 
 const Statistics = () => {
   const {
@@ -30,11 +33,10 @@ const Statistics = () => {
   const theme = useTheme();
   const { allCourses } = useCourses();
   const {
-    currentDivisionUsersList,
-    setCurrentDivisionUsersList,
-    // allLearners,
-    // currentUserDivisionName,
+    allLearners,
+    currentUserDivisionName,
   } = useLearners();
+
 
 
   const [columns, setColumns] = useState<GridColDef[]>([]);
@@ -48,7 +50,17 @@ const Statistics = () => {
     { field: 'date', headerName: 'Дата' },
   ];
 
-  
+  const [selectedValues, setSelectedValues] = useState<string[]>([]);
+  const [selectedField, setSelectedField] = useState<string>('name');
+  const [filterLabel, setFilterLabel] = useState<string>('ФИО');
+
+  useEffect(() => {
+    if (allLearners && currentUserDivisionName) {
+      const currDivUsersList = getDivisionUsersArrayByName(allLearners, currentUserDivisionName);
+      setSelectedValues(currDivUsersList as string[]);
+    }
+  }, [currentUserDivisionName, allLearners]);
+
 
   useEffect(() => {
     const newColumnsGrouping = coursesList?.map(({ id }) => {
@@ -84,21 +96,51 @@ const Statistics = () => {
       setColumnsGroupingModel(newColumnsGrouping);
   }, [coursesList, statLoading, isLoading, statInfo, allCourses]);
 
-  const filterOperators = useCustomFilterOperators(
-    currentDivisionUsersList,
-    setCurrentDivisionUsersList,
-    'ФИО',
-    'name',
-  );
+  const filterOperators = useMemo(() => [
+    {
+      value: 'isAnyOf',
+      getApplyFilterFn: (filterItem: GridFilterItem) => {
+        if (!filterItem.field || !filterItem.value || !filterItem.operator) {
+          return null;
+        }
+
+        if (selectedValues.length === 0) {
+          return (value: string) => true;
+        }
+
+        return (value: string) => {
+          return selectedValues?.includes(value);
+        };
+      },
+      InputComponent: CustomFilterInput,
+      InputComponentProps: {
+        onChange: (selectedValue: string[]) => {
+          console.log('selectedValue: ', selectedValue);
+          
+
+          setSelectedValues(selectedValue);
+        },
+        filterLabel: filterLabel,
+        field: selectedField,
+        selectedOptions: selectedValues,
+      },
+    },
+  ], [selectedValues]);
+
 
   const onChangeFilterModel = (newModel: GridFilterModel) => {
-    if (!newModel?.items[0]?.value) {
-      setCurrentDivisionUsersList([]);
+    console.log('newModelSTATISTICS: ', newModel);
+    if (newModel.items) {
+      setFilterLabel(getHeaderNameByField(newModel.items[0].field!, columns)!);
+      setSelectedField(newModel.items[0].field!);
+    }
+    if (!newModel.items[0].value) {
+      setSelectedValues([]);
     }
   };
 
   useEffect(() => {
-    // Создаем столбцы только если coursesList не равен undefined
+
     if (coursesList?.length > 1) {
       const newColumns: GridColDef[] = [
         {
@@ -106,7 +148,7 @@ const Statistics = () => {
           headerName: 'ФИО',
           cellClassName: 'name-cell',
           flex: 0.3,
-          filterOperators,
+          filterOperators
         },
       ];
 
@@ -145,9 +187,8 @@ const Statistics = () => {
     }
   }, [
     coursesList,
-    currentDivisionUsersList,
-    setCurrentDivisionUsersList,
     columnsGroupingModel,
+    selectedValues,
   ]);
 
   const handleCellClick = (
@@ -181,14 +222,16 @@ const Statistics = () => {
 
 
   return (
-    
     <StatisticsGrid
       columns={columns}
       columnGroupingModel={columnsGroupingModel}
       statInfo={statInfo}
       setShowDetailedStat={setShowDetailedStat}
       showDetailedStat={showDetailedStat} 
-      onChangeFilterModel={onChangeFilterModel} 
+      // onChangeFilterModel={() => onChangeFilterModel({items: [{field: selectedField, operator: 'isAnyOf', value: selectedValues}]} as GridFilterModel)}
+      onChangeFilterModel={onChangeFilterModel}
+      selectedValues={selectedValues}
+      selectedField={selectedField}
       />
   );
 };
