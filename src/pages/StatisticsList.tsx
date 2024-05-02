@@ -129,7 +129,7 @@ const Statistics = () => {
 
 
   const onChangeFilterModel = (newModel: GridFilterModel) => {
-    console.log('newModelSTATISTICS: ', newModel);
+    console.log('newModel: ', newModel);
     if (newModel.items) {
       setFilterLabel(getHeaderNameByField(newModel.items[0].field!, columns)!);
       setSelectedField(newModel.items[0].field!);

@@ -60,11 +60,6 @@ export const StatisticsGrid: React.FC<StatisticsGridProps> = (props) => {
     ]
   }
 
-  console.log('selectedValues: ', selectedValues);
-  console.log('filterModel: ', filterModel);
-
-
-
   return (
     <Box m="20px" pt={2}>
       <Box m="10px 0 0 0" sx={dataGridStyles.root}>

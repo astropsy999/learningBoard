@@ -48,7 +48,7 @@ export const useStatisticsData = () => {
     passingScore: number,
     timeSpent: string,
   ) => {
-    setShowDetailedStat(!showDetailedStat);
+    setShowDetailedStat((prev) => !prev);
     const getStatInfo = {
       user,
       course,
