@@ -27,7 +27,6 @@ export const getDetailedStatisctics = async (
     },
   );
   const data = await response.json();
-  console.log('🚀 ~ getDetailedStatisctics ~ data:', data);
   return data[0].data;
 };
 
