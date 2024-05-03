@@ -6,7 +6,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import * as React from 'react';
 import { getDetailedStatisctics } from '../app/api/api';
 import { useCourses } from '../app/store/courses';
-import { DetailedAttemptStat, StatInfoType } from '../app/types/stat';
+import {
+  DetailedAttemptStat,
+  DetailedStatQuestion,
+  StatInfoType,
+} from '../app/types/stat';
 import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
 import AttemptDetailsTabs from './AttemptsDetails';
 import { DetailedBestAttemptCard } from '../features/DetailedBestAttemptCard';
@@ -29,6 +33,9 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
   const [bestAttempt, setBestAttempt] = React.useState<
     DetailedAttemptStat | []
   >([]);
+  const [detailedQuestions, setDetailedQuestions] = React.useState<
+    DetailedStatQuestion[]
+  >([]);
 
   const handleClickOpen = (scrollType: DialogProps['scroll']) => () => {
     setOpen(true);
@@ -38,13 +45,21 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
   const getBestAttempt = (attempts: DetailedAttemptStat[]) => {
     let bestAttempt = attempts[0];
     for (let i = 1; i < attempts.length; i++) {
-      if (
-        attempts[i].passing_score_percent > bestAttempt.passing_score_percent
-      ) {
+      if (attempts[i].passed_percent > bestAttempt.passed_percent) {
         bestAttempt = attempts[i];
       }
     }
     return bestAttempt;
+  };
+
+  const getDetailedQuestions = (attempts: DetailedAttemptStat[]) => {
+    let detailedQuestions = [];
+    for (let i = 0; i < attempts.length; i++) {
+      const attempt = attempts[i];
+      detailedQuestions.push({ [i + 1]: attempts[i].questions });
+    }
+
+    return detailedQuestions;
   };
 
   const handleClose = () => {
@@ -71,6 +86,11 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
         );
 
         const bestAttempt = getBestAttempt(detailedStatistic);
+        const detailedQuestions = getDetailedQuestions(detailedStatistic);
+        console.log(
+          '🚀 ~ getDetailedStatisctics ~ detailedQuestions:',
+          detailedQuestions,
+        );
         setBestAttempt(bestAttempt);
         setIsDetailedStatLoading(false);
       });

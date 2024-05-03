@@ -63,16 +63,6 @@ export const DetailedBestAttemptCard: React.FC<DetailedBestAttemptCardProps> = (
             isLoading={isLoading}
           />
 
-          {/* <Stack direction="row">
-            <Box>Результат: </Box>
-            <Box
-              color={isPassed ? 'success.main' : 'error.main'}
-              fontWeight="bold"
-              ml={1}
-            >
-              {status}
-            </Box>
-          </Stack> */}
           <DetailedStatCardItem
             itemTitle="Результат"
             value={status}

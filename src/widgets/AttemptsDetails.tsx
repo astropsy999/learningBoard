@@ -6,6 +6,7 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { DetailedQuestion } from '../features/DetailedQuestion';
+import { DetailedStatQuestion } from '../app/types/stat';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -41,7 +42,16 @@ function a11yProps(index: number) {
   };
 }
 
-export default function AttemptDetailsTabs() {
+interface AttemptDetailsTabsProps {
+  detailedQuestions?: DetailedStatQuestion[];
+}
+
+export default function AttemptDetailsTabs(props: AttemptDetailsTabsProps) {
+  const { detailedQuestions } = props;
+  console.log(
+    '🚀 ~ AttemptDetailsTabs ~ detailedQuestions:',
+    detailedQuestions,
+  );
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 
@@ -53,7 +63,7 @@ export default function AttemptDetailsTabs() {
     setValue(index);
   };
 
-  const tabStyles = {background: '#0c4056'}
+  const tabStyles = { background: '#0c4056' };
 
   return (
     <Box sx={{ bgcolor: 'background.paper', width: 500 }}>
@@ -66,24 +76,24 @@ export default function AttemptDetailsTabs() {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          <Tab label="Попытка 1" sx={tabStyles}{...a11yProps(0)} />
-          <Tab label="Попытка 2" sx={tabStyles}{...a11yProps(1)} />
-          <Tab label="Попытка 3" sx={tabStyles}{...a11yProps(2)} />
+          <Tab label="Попытка 1" sx={tabStyles} {...a11yProps(0)} />
+          <Tab label="Попытка 2" sx={tabStyles} {...a11yProps(1)} />
+          <Tab label="Попытка 3" sx={tabStyles} {...a11yProps(2)} />
         </Tabs>
       </AppBar>
-        <Box>
-            <TabPanel value={value} index={0} dir={theme.direction}>
-            {/* <DetailedQuestion isCorrect={true} />
-            <DetailedQuestion isCorrect={false} /> */}
-            Попытка 1
-            </TabPanel>
-            <TabPanel value={value} index={1} dir={theme.direction}>
-            Попытка 2
-            </TabPanel>
-            <TabPanel value={value} index={2} dir={theme.direction}>
-            Попытка 3
-            </TabPanel>
-        </Box>
+      <Box sx={{ bgcolor: '#f6f2f2' }}>
+        <TabPanel value={value} index={0} dir={theme.direction}>
+          <DetailedQuestion isCorrect={true} />
+          <DetailedQuestion isCorrect={false} />
+          Попытка 1
+        </TabPanel>
+        <TabPanel value={value} index={1} dir={theme.direction}>
+          Попытка 2
+        </TabPanel>
+        <TabPanel value={value} index={2} dir={theme.direction}>
+          Попытка 3
+        </TabPanel>
+      </Box>
     </Box>
   );
 }
