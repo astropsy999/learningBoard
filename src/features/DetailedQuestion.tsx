@@ -37,7 +37,12 @@ const QuestionHeader = ({
   index: number;
   question: DetailedStatQuestion;
 }) => (
-  <Box display="flex" alignItems="center" mb={1}>
+  <Box
+    display="flex"
+    alignItems="center"
+    mb={1}
+    justifyContent={'space-around'}
+  >
     <Chip label={`Вопрос ${index + 1}`} style={{ marginRight: '1rem' }} />
     <Badge
       badgeContent={isCorrect(question) ? 'Верно' : 'Неверно'}
@@ -93,10 +98,18 @@ const QuestionContent = ({ question }: { question: DetailedStatQuestion }) => (
 
 export const DetailedQuestion = ({ questionsInAttempt }: any) => {
   return (
-    <Box p={3}>
+    <Box>
       {questionsInAttempt.map(
         (question: DetailedStatQuestion, index: number) => (
-          <Box key={index}>
+          <Box
+            key={index}
+            border={'1px solid lightgray'}
+            p={1}
+            mt={1}
+            mb={3}
+            borderRadius={'10px'}
+            width={'100%'}
+          >
             <QuestionHeader index={index} question={question} />
             <QuestionContent question={question} />
             <QuestionFooter question={question} />
