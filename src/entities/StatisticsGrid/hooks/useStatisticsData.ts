@@ -1,7 +1,7 @@
-import useSWR from 'swr';
-import { useCourses } from '../../../app/store/courses';
 import { useEffect, useState } from 'react';
-import { fetchStatisctics, getDetailedStatisctics } from '../../../app/api/api';
+import useSWR from 'swr';
+import { fetchStatisctics } from '../../../app/api/api';
+import { useCourses } from '../../../app/store/courses';
 
 import { CourseAttempt, StatInfoType } from '../../../app/types/stat';
 import { findMaxCourses } from '../../../shared/helpers/findMaxCoursesArrayInStat';
@@ -33,8 +33,7 @@ export const useStatisticsData = () => {
   useEffect(() => {
     setStatLoading(isLoading);
     allCourses && allCourses.length > 0 && setStatLoading(false);
-  }, [statLoading]);
-
+  }, [statLoading, allCourses, isLoading]);
 
   const showDetailedStatistic = async (
     course: number,
@@ -61,8 +60,7 @@ export const useStatisticsData = () => {
       passingScore,
       timeSpent,
     };
-    const detailedStat = await getDetailedStatisctics(250,13);
-    console.log('detailedStat: ', detailedStat);
+
     setStatInfo(getStatInfo!);
   };
 

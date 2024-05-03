@@ -1,8 +1,8 @@
-import { Bounce, ToastContent, toast } from 'react-toastify';
+import { Bounce, toast } from 'react-toastify';
 import configApi from '../config';
-import { url } from './endpoints.api';
 import { mockDataCourses, mockDataTeam } from '../data/mockData';
 import { AllData, CoursesWithDeadline, ILearner } from '../types/store';
+import { url } from './endpoints.api';
 
 export type ToUpdateUser = {
   id: number;
@@ -14,14 +14,22 @@ export type CourseToLock = {
   users: number[];
 };
 
-export const getDetailedStatisctics = async (userId: number, courseId: number) => {
-  const response = await fetch(configApi.srv + url.getDetailedUserStatisctics +`?user=${userId}&course=${courseId}`, {
-    credentials: 'include',
-  });
+export const getDetailedStatisctics = async (
+  userId: number,
+  courseId: number,
+) => {
+  const response = await fetch(
+    configApi.srv +
+      url.getDetailedUserStatisctics +
+      `?user=${userId}&course=${courseId}`,
+    {
+      credentials: 'include',
+    },
+  );
   const data = await response.json();
   console.log('🚀 ~ getDetailedStatisctics ~ data:', data);
   return data[0].data;
-}
+};
 
 export const fetchStatisctics = async () => {
   const response = await fetch(configApi.srv + url.getUsersStatistics, {

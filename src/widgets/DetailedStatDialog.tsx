@@ -1,13 +1,13 @@
-import { Box, Button, Card, CardContent, Stack, Typography } from '@mui/material';
+import { Box, Button, Card, CardContent, Skeleton, Stack } from '@mui/material';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import * as React from 'react';
+import { getDetailedStatisctics } from '../app/api/api';
 import { useCourses } from '../app/store/courses';
-import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
 import { StatInfoType } from '../app/types/stat';
+import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
 import AttemptDetailsTabs from './AttemptsDetails';
 
 interface DetailedStartDialogProps {
@@ -22,11 +22,29 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
   const { open, setOpen, selectedStatInfo } = props;
   const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
   const { allCourses } = useCourses();
+  const [isDetailedStatLoading, setIsDetailedStatLoading] =
+    React.useState(true);
 
   const handleClickOpen = (scrollType: DialogProps['scroll']) => () => {
     setOpen(true);
     setScroll(scrollType);
   };
+
+  React.useEffect(() => {
+    const { user, course } = selectedStatInfo;
+    console.log('Starting request: user =', user, ', course =', course);
+
+    const startTime = Date.now(); // Время начала запроса
+    setIsDetailedStatLoading(true);
+    getDetailedStatisctics(user, course).then((data) => {
+      const endTime = Date.now(); // Время окончания запроса
+      console.log('Request completed in:', endTime - startTime, 'ms');
+      console.log('🚀 ~ getDetailedStatisctics ~ data:', data);
+
+      // Устанавливаем состояние после завершения запроса
+      setIsDetailedStatLoading(false);
+    });
+  }, [selectedStatInfo]);
 
   const handleClose = () => {
     setOpen(false);
@@ -86,33 +104,42 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
             ref={descriptionElementRef}
             tabIndex={-1}
           >
-          <Card>
-            <CardContent sx={{ backgroundColor: statusCardBg }}>
-              <Box p={1}>
-                <Box>
-                  Дата/Время: <b>{date} {time}</b>
-                </Box>
-                <Box>
-                  Вопросов отвечено: <b>{points} / {totalPoints}</b>
-                </Box>
-                <Box>
-                  Набрано баллов: <b>{points} / {totalPoints} ({percent})</b>
-                </Box>
-                <Box>
-                  Проходной балл: <b>{Math.floor(passingScore)} (70%)</b>
-                </Box>
-                {/* <Box variant="body1">
+            <Card>
+              <CardContent sx={{ backgroundColor: statusCardBg }}>
+                <Box p={1}>
+                  <Box>
+                    Дата/Время:{' '}
+                    <b>
+                      {date} {time}
+                    </b>
+                  </Box>
+                  <Box>
+                    Вопросов отвечено:{' '}
+                    <b>
+                      {points} / {totalPoints}
+                    </b>
+                  </Box>
+                  <Box>
+                    Набрано баллов:{' '}
+                    <b>
+                      {points} / {totalPoints} ({percent})
+                    </b>
+                  </Box>
+                  <Box>
+                    Проходной балл: <b>{Math.floor(passingScore)} (70%)</b>
+                  </Box>
+                  {/* <Box variant="body1">
                   Затрачено времени: <b>{timeSpent}</b>
                 </Box> */}
-                <Stack direction="row">
-                  <Box>Результат</Box>
-                  <Box color={statusColor} fontWeight="bold" ml={1}>
-                    {status}
-                  </Box>
-                </Stack>
-              </Box>
-            </CardContent>
-          </Card>
+                  <Stack direction="row">
+                    <Box>Результат</Box>
+                    <Box color={statusColor} fontWeight="bold" ml={1}>
+                      {status}
+                    </Box>
+                  </Stack>
+                </Box>
+              </CardContent>
+            </Card>
             <Box mt={2}>
               <AttemptDetailsTabs />
             </Box>

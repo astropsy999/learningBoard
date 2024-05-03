@@ -5,11 +5,9 @@ import {
   GridColumnGroup,
   GridFilterModel,
   GridSortItem,
-  useGridApiRef
+  useGridApiRef,
 } from '@mui/x-data-grid';
-import React, { useEffect, useMemo, useState } from 'react';
-import { useCourses } from '../../app/store/courses';
-import { useLearners } from '../../app/store/learners';
+import React from 'react';
 import { dataGridStyles } from '../../app/styles/DataGrid.styles';
 import { StatInfoType } from '../../app/types/stat';
 import ProgressLine from '../../shared/ui/ProgressLine';
@@ -36,19 +34,17 @@ export const StatisticsGrid: React.FC<StatisticsGridProps> = (props) => {
     setShowDetailedStat,
     showDetailedStat,
     selectedField,
-    selectedValues
+    selectedValues,
   } = props;
   const { statLoading, rawStatistics, isLoading } = useStatisticsData();
 
-  const theme = useTheme();
-
-  const apiRef = useGridApiRef()
+  const apiRef = useGridApiRef();
 
   const sortModel = [{ field: 'name', sort: 'asc' }] as GridSortItem[];
 
   const initialState = {
-    sorting: {sortModel},
-  }
+    sorting: { sortModel },
+  };
 
   const filterModel = {
     items: [
@@ -56,9 +52,9 @@ export const StatisticsGrid: React.FC<StatisticsGridProps> = (props) => {
         field: selectedField,
         operator: 'isAnyOf',
         value: selectedValues,
-      }
-    ]
-  }
+      },
+    ],
+  };
 
   return (
     <Box m="20px" pt={2}>
@@ -67,7 +63,7 @@ export const StatisticsGrid: React.FC<StatisticsGridProps> = (props) => {
           <DataGrid
             apiRef={apiRef}
             loading={isLoading}
-            rows={isLoading ?  [] : rawStatistics}
+            rows={isLoading ? [] : rawStatistics}
             columns={isLoading ? [] : columns}
             disableRowSelectionOnClick
             columnGroupingModel={columnGroupingModel}
@@ -75,9 +71,11 @@ export const StatisticsGrid: React.FC<StatisticsGridProps> = (props) => {
             getRowHeight={() => 'auto'}
             initialState={initialState}
             filterModel={filterModel}
-            onFilterModelChange={(newModel) => onChangeFilterModel(newModel=filterModel)}
+            onFilterModelChange={(newModel) =>
+              onChangeFilterModel((newModel = filterModel))
+            }
             sx={dataGridStyles.statisticsGridStyles}
-          />  
+          />
         ) : (
           <ProgressLine />
         )}
