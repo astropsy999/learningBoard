@@ -1,7 +1,15 @@
-import { Box, Card, CardContent, Skeleton, Stack } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  CircularProgress,
+  Skeleton,
+  Stack,
+} from '@mui/material';
 import React from 'react';
 import { DetailedAttemptStat } from '../app/types/stat';
 import { DetailedStatCardItem } from './DetailedStatCardItem';
+import ProgressCircle from '../shared/ui/ProgressCircle';
 
 interface DetailedBestAttemptCardProps {
   data: DetailedAttemptStat;
@@ -32,7 +40,10 @@ export const DetailedBestAttemptCard: React.FC<DetailedBestAttemptCardProps> = (
   return (
     <Card>
       <CardContent
-        sx={{ backgroundColor: isLoading ? 'grey' : statusColor }}
+        sx={{
+          backgroundColor: isLoading ? 'lightgrey' : statusColor,
+          opacity: isLoading ? 0.8 : 1,
+        }}
         // onLoad={isLoading}
       >
         <Box p={1}>

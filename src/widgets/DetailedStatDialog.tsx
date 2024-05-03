@@ -34,7 +34,9 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
     DetailedAttemptStat | []
   >([]);
   const [detailedQuestions, setDetailedQuestions] = React.useState<
-    DetailedStatQuestion[]
+    {
+      [key: number]: DetailedStatQuestion[];
+    }[]
   >([]);
 
   const handleClickOpen = (scrollType: DialogProps['scroll']) => () => {
@@ -87,10 +89,7 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
 
         const bestAttempt = getBestAttempt(detailedStatistic);
         const detailedQuestions = getDetailedQuestions(detailedStatistic);
-        console.log(
-          '🚀 ~ getDetailedStatisctics ~ detailedQuestions:',
-          detailedQuestions,
-        );
+        setDetailedQuestions(detailedQuestions);
         setBestAttempt(bestAttempt);
         setIsDetailedStatLoading(false);
       });
@@ -143,7 +142,7 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
               isLoading={isDetailedStatLoading}
             />
             <Box mt={2}>
-              <AttemptDetailsTabs />
+              <AttemptDetailsTabs detailedQuestions={detailedQuestions} />
             </Box>
           </Box>
         </DialogContent>

@@ -43,7 +43,7 @@ function a11yProps(index: number) {
 }
 
 interface AttemptDetailsTabsProps {
-  detailedQuestions?: DetailedStatQuestion[];
+  detailedQuestions?: { [key: number]: DetailedStatQuestion[] }[];
 }
 
 export default function AttemptDetailsTabs(props: AttemptDetailsTabsProps) {
@@ -76,23 +76,27 @@ export default function AttemptDetailsTabs(props: AttemptDetailsTabsProps) {
           variant="fullWidth"
           aria-label="full width tabs example"
         >
-          <Tab label="Попытка 1" sx={tabStyles} {...a11yProps(0)} />
-          <Tab label="Попытка 2" sx={tabStyles} {...a11yProps(1)} />
-          <Tab label="Попытка 3" sx={tabStyles} {...a11yProps(2)} />
+          {detailedQuestions?.map((item, index) => (
+            <Tab
+              label={`Попытка ${index + 1}`}
+              sx={tabStyles}
+              {...a11yProps(index)}
+              key={index}
+            />
+          ))}
         </Tabs>
       </AppBar>
       <Box sx={{ bgcolor: '#f6f2f2' }}>
-        <TabPanel value={value} index={0} dir={theme.direction}>
-          <DetailedQuestion isCorrect={true} />
-          <DetailedQuestion isCorrect={false} />
-          Попытка 1
-        </TabPanel>
-        <TabPanel value={value} index={1} dir={theme.direction}>
-          Попытка 2
-        </TabPanel>
-        <TabPanel value={value} index={2} dir={theme.direction}>
-          Попытка 3
-        </TabPanel>
+        {detailedQuestions?.map((item, index) => (
+          <TabPanel
+            value={value}
+            index={index}
+            dir={theme.direction}
+            key={index}
+          >
+            <DetailedQuestion questionsInAttempt={item[index + 1]} />
+          </TabPanel>
+        ))}
       </Box>
     </Box>
   );

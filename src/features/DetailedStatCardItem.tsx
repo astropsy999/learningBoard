@@ -12,7 +12,13 @@ export const DetailedStatCardItem = (props: DetailedStatCardItemProps) => {
   const { itemTitle, value, isLoading, color } = props;
 
   return (
-    <Box display={'flex'} flexDirection={'row'} ml={1} alignItems={'center'}>
+    <Box
+      display={'flex'}
+      flexDirection={'row'}
+      ml={1}
+      alignItems={'center'}
+      sx={{ opacity: isLoading ? 0.8 : 1 }}
+    >
       {itemTitle}:{' '}
       {!isLoading ? (
         <Box ml={1} fontWeight={'bold'} color={color}>

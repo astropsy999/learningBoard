@@ -1,56 +1,108 @@
-import { Box, Grid, Paper, Stack, Typography, styled } from "@mui/material"
-import React, { useState } from "react"
+import {
+  Badge,
+  Box,
+  Chip,
+  Grid,
+  Paper,
+  Typography,
+  styled,
+} from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
-
-interface DetailedQuestionProps {
-    isCorrect: boolean
-}
+import React from 'react';
+import { DetailedStatAnswer, DetailedStatQuestion } from '../app/types/stat';
 
 const Item = styled(Paper)(({ theme }) => ({
-    backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-    ...theme.typography.body2,
-    padding: theme.spacing(1),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  }));
-  
+  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  color: theme.palette.text.secondary,
+}));
 
-export const DetailedQuestion: React.FC<DetailedQuestionProps> = (props) => {
+// Helper function to calculate if the question is correct
+const isCorrect = (question: DetailedStatQuestion) =>
+  question.correct === question.answer;
 
-    const {isCorrect} = props
+// Helper function to get the answer text based on the answer index
+const getAnswerText = (answers: DetailedStatAnswer[], answerIndex: number) => {
+  const answer = answers[answerIndex];
+  return answer ? answer.text : null;
+};
 
-    const answerIcon = isCorrect ? <CheckIcon color="success" fontSize="large"/> : <ClearIcon color="error" fontSize="large"/>
-    const answerColor = isCorrect ? 'green' : 'red'
-    const answerText = isCorrect ? 'Верно' : 'Неверно'
+// Component to render the question header
+const QuestionHeader = ({
+  index,
+  question,
+}: {
+  index: number;
+  question: DetailedStatQuestion;
+}) => (
+  <Box display="flex" alignItems="center" mb={1}>
+    <Chip label={`Вопрос ${index + 1}`} style={{ marginRight: '1rem' }} />
+    <Badge
+      badgeContent={isCorrect(question) ? 'Верно' : 'Неверно'}
+      color={isCorrect(question) ? 'success' : 'error'}
+    />
+    <Chip
+      label={`Баллы: ${question.awarded_points} / ${question.max_points}`}
+      style={{ marginLeft: '1rem' }}
+    />
+  </Box>
+);
 
-    return (
-        <Box p={1}>
-            <Stack direction={'row'}><b>Вопрос 1</b><Box pl={1} color={answerColor} fontWeight={'bold'}>{answerText}</Box></Stack>
-            <div>Баллы: <span>1/1</span></div>
-            <Box mb={2}>
-                <b>В какие сроки работники рабочих профессий, принимаемые на работу с вредными и (или)
-                опасными условиями труда, проходят обучение и проверку знаний требований охраны труда?
-            </b>
-            </Box>
-            <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }} m={2} >
-                <Grid xs={6}>
-                    <Item sx={{background: answerColor, fontWeight: 'bold'}}>Ответ пользователя</Item>
-                </Grid>
-                <Grid xs={6}>
-                    <Item sx={{background: 'lightgrey'}}>Правильный ответ</Item>
-                </Grid>
-                <Grid xs={6}>
-                    <Item>
-                        <Box display={'flex'} justifyContent={'space-around'} alignItems={'center'}>
-                            <Typography>{answerIcon} </Typography>
-                            <Typography color={answerColor}>В течение первого месяца после назначения на эти работы</Typography>
-                        </Box></Item>
-                </Grid>
-                <Grid xs={6}>
-                    <Item><Typography>В течение первого месяца после назначения на эти работы</Typography></Item>
-                </Grid>
-            </Grid>
+// Component to render the user and correct answers
+const QuestionFooter = ({ question }: { question: DetailedStatQuestion }) => (
+  <Grid container spacing={2} mb={2}>
+    <Grid item xs={6}>
+      <Item
+        style={{
+          background: isCorrect(question) ? 'lightgreen' : 'lightpink',
+          fontWeight: 'bold',
+        }}
+      >
+        <Box display="flex" justifyContent="space-around" alignItems="center">
+          <Typography>
+            {isCorrect(question) ? (
+              <CheckIcon color="success" fontSize="large" />
+            ) : (
+              <ClearIcon color="error" fontSize="large" />
+            )}
+          </Typography>
+          <Typography color={isCorrect(question) ? 'darkgreen' : 'darkred'}>
+            {getAnswerText(question.answers, question.answer)}
+          </Typography>
         </Box>
-    )
-}
+      </Item>
+    </Grid>
+    <Grid item xs={6}>
+      <Item>
+        <Typography>
+          {getAnswerText(question.answers, question.correct)}
+        </Typography>
+      </Item>
+    </Grid>
+  </Grid>
+);
+
+// Component to render the question content
+const QuestionContent = ({ question }: { question: DetailedStatQuestion }) => (
+  <Box pl={1} fontWeight="bold">
+    {question.text}
+  </Box>
+);
+
+export const DetailedQuestion = ({ questionsInAttempt }: any) => {
+  return (
+    <Box p={3}>
+      {questionsInAttempt.map(
+        (question: DetailedStatQuestion, index: number) => (
+          <Box key={index}>
+            <QuestionHeader index={index} question={question} />
+            <QuestionContent question={question} />
+            <QuestionFooter question={question} />
+          </Box>
+        ),
+      )}
+    </Box>
+  );
+};
