@@ -1,6 +1,7 @@
 import { Box, Card, CardContent, Skeleton, Stack } from '@mui/material';
 import React from 'react';
 import { DetailedAttemptStat } from '../app/types/stat';
+import { DetailedStatCardItem } from './DetailedStatCardItem';
 
 interface DetailedBestAttemptCardProps {
   data: DetailedAttemptStat;
@@ -35,31 +36,34 @@ export const DetailedBestAttemptCard: React.FC<DetailedBestAttemptCardProps> = (
         // onLoad={isLoading}
       >
         <Box p={1}>
-          <Box>
-            Дата/Время: <b>{time_finished}</b>
-          </Box>
-          <Box>
-            Вопросов отвечено:{' '}
-            <b>
-              {passed} / {count_questions}
-            </b>
-          </Box>
-          <Box>
-            Набрано баллов:{' '}
-            <b>
-              {points_scored} / {total_points} ({passed_percent}%)
-            </b>
-          </Box>
-          <Box>
-            Проходной балл:{' '}
-            <b>
-              {passing_score} ({passing_score_percent}%)
-            </b>
-          </Box>
-          <Box>
-            Затрачено времени: <b>{time_spent_format}</b>
-          </Box>
-          <Stack direction="row">
+          <DetailedStatCardItem
+            itemTitle={'Дата/Время'}
+            value={time_finished}
+            isLoading={isLoading}
+          />
+          <DetailedStatCardItem
+            itemTitle={'Вопросов отвечено'}
+            value={`${passed} / ${count_questions}`}
+            isLoading={isLoading}
+          />
+
+          <DetailedStatCardItem
+            itemTitle="Набрано баллов"
+            value={`${points_scored} / ${total_points} (${passed_percent}%)`}
+            isLoading={isLoading}
+          />
+          <DetailedStatCardItem
+            itemTitle="Проходной балл"
+            value={`${passing_score} (${passing_score_percent}%)`}
+            isLoading={isLoading}
+          />
+          <DetailedStatCardItem
+            itemTitle="Затрачено времени"
+            value={time_spent_format}
+            isLoading={isLoading}
+          />
+
+          {/* <Stack direction="row">
             <Box>Результат: </Box>
             <Box
               color={isPassed ? 'success.main' : 'error.main'}
@@ -68,7 +72,13 @@ export const DetailedBestAttemptCard: React.FC<DetailedBestAttemptCardProps> = (
             >
               {status}
             </Box>
-          </Stack>
+          </Stack> */}
+          <DetailedStatCardItem
+            itemTitle="Результат"
+            value={status}
+            isLoading={isLoading}
+            color={isPassed ? 'green' : 'red'}
+          />
         </Box>
       </CardContent>
     </Card>
