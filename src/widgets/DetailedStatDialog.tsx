@@ -22,7 +22,7 @@ interface DetailedStartDialogProps {
 }
 
 export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
-  props,
+  props
 ) => {
   const { open, setOpen, selectedStatInfo } = props;
   const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
@@ -54,9 +54,6 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
     }
     return bestAttempt;
   };
-
-  
-
   const getDetailedQuestions = (attempts: DetailedAttemptStat[]) => {
     let detailedQuestions = [];
     for (let i = 0; i < attempts.length; i++) {
@@ -69,13 +66,15 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
 
   const handleClose = () => {
     setOpen(false);
+    setDetailedQuestions([]);
+    setBestAttempt([]);
   };
 
   const descriptionElementRef = React.useRef<HTMLElement>(null);
   React.useEffect(() => {
     const { user, course } = selectedStatInfo;
 
-    if(course === 10 || course === 12) {
+    if (course === 10 || course === 12) {
       setIsNewCourse(false);
     }
     if (open) {
@@ -95,8 +94,6 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
       });
     }
   }, [open]);
-
-
 
   return (
     <Box>
@@ -127,9 +124,11 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
               isLoading={isDetailedStatLoading}
               oldData={selectedStatInfo}
             />
-            <Box mt={2}>
-             { !isNewCourse && <AttemptDetailsTabs detailedQuestions={detailedQuestions} />}
-            </Box>
+            {!isNewCourse && (
+              <Box mt={2}>
+                <AttemptDetailsTabs detailedQuestions={detailedQuestions} />
+              </Box>
+            )}
           </Box>
         </DialogContent>
         <DialogActions>
