@@ -14,6 +14,7 @@ import {
 import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
 import AttemptDetailsTabs from './AttemptsDetails';
 import { DetailedBestAttemptCard } from '../features/DetailedBestAttemptCard';
+import { getBestAttempt } from '../shared/helpers/getBestAttempt';
 
 interface DetailedStartDialogProps {
   open: boolean;
@@ -45,15 +46,6 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
     setScroll(scrollType);
   };
 
-  const getBestAttempt = (attempts: DetailedAttemptStat[]) => {
-    let bestAttempt = attempts[0];
-    for (let i = 1; i < attempts.length; i++) {
-      if (attempts[i].passed_percent > bestAttempt.passed_percent) {
-        bestAttempt = attempts[i];
-      }
-    }
-    return bestAttempt;
-  };
   const getDetailedQuestions = (attempts: DetailedAttemptStat[]) => {
     let detailedQuestions = [];
     for (let i = 0; i < attempts.length; i++) {
@@ -124,11 +116,10 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
               isLoading={isDetailedStatLoading}
               oldData={selectedStatInfo}
             />
-            {!isNewCourse && (
-              <Box mt={2}>
-                <AttemptDetailsTabs detailedQuestions={detailedQuestions} />
-              </Box>
-            )}
+
+            <Box mt={2}>
+              <AttemptDetailsTabs detailedQuestions={detailedQuestions} />
+            </Box>
           </Box>
         </DialogContent>
         <DialogActions>

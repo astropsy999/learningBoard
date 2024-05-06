@@ -16,6 +16,7 @@ import { useStatisticsData } from '../entities/StatisticsGrid/hooks/useStatistic
 import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
 import { getDivisionUsersArrayByName } from '../shared/helpers/getDivisionUsersByName';
 import { getHeaderNameByField } from '../shared/helpers/getHeaderNameByField';
+import { useCustomFilterOperators } from '../entities/CustomFilter/hooks/useCustomFilterOperator';
 
 const Statistics = () => {
   const {
@@ -52,7 +53,7 @@ const Statistics = () => {
     if (allLearners && currentUserDivisionName) {
       const currDivUsersList = getDivisionUsersArrayByName(
         allLearners,
-        currentUserDivisionName,
+        currentUserDivisionName
       );
       setSelectedValues(currDivUsersList as string[]);
     }
@@ -92,46 +93,52 @@ const Statistics = () => {
       setColumnsGroupingModel(newColumnsGrouping);
   }, [coursesList, statInfo, allCourses]);
 
-  const filterOperators = useMemo(
-    () => [
-      {
-        value: 'isAnyOf',
-        getApplyFilterFn: (filterItem: GridFilterItem) => {
-          if (!filterItem.field || !filterItem.value || !filterItem.operator) {
-            return null;
-          }
+  // const filterOperators = useMemo(
+  //   () => [
+  //     {
+  //       value: 'isAnyOf',
+  //       getApplyFilterFn: (filterItem: GridFilterItem) => {
+  //         if (!filterItem.field || !filterItem.value || !filterItem.operator) {
+  //           return null;
+  //         }
 
-          if (selectedValues.length === 0) {
-            return (value: string) => true;
-          }
+  //         if (selectedValues.length === 0) {
+  //           return (value: string) => true;
+  //         }
 
-          return (value: string) => {
-            return selectedValues?.includes(value);
-          };
-        },
-        InputComponent: CustomFilterInput,
-        InputComponentProps: {
-          onChange: (selectedValue: string[]) => {
-            console.log('selectedValue: ', selectedValue);
+  //         return (value: string) => {
+  //           return selectedValues?.includes(value);
+  //         };
+  //       },
+  //       InputComponent: CustomFilterInput,
+  //       InputComponentProps: {
+  //         onChange: (selectedValue: string[]) => {
+  //           console.log('selectedValue: ', selectedValue);
 
-            setSelectedValues(selectedValue);
-          },
-          filterLabel: filterLabel,
-          field: selectedField,
-          selectedOptions: selectedValues,
-        },
-      },
-    ],
-    [selectedValues],
+  //           setSelectedValues(selectedValue);
+  //         },
+  //         filterLabel: filterLabel,
+  //         field: selectedField,
+  //         selectedOptions: selectedValues,
+  //       },
+  //     },
+  //   ],
+  //   [selectedValues]
+  // );
+
+  const filterOperators = useCustomFilterOperators(
+    selectedValues,
+    setSelectedValues,
+    filterLabel,
+    selectedField
   );
 
   const onChangeFilterModel = (newModel: GridFilterModel) => {
-    console.log('newModel: ', newModel);
     if (newModel.items) {
-      setFilterLabel(getHeaderNameByField(newModel.items[0].field!, columns)!);
-      setSelectedField(newModel.items[0].field!);
+      setFilterLabel('ФИО');
+      setSelectedField(newModel.items[0]?.field! || 'name');
     }
-    if (!newModel.items[0].value) {
+    if (!newModel.items[0]?.value) {
       setSelectedValues([]);
     }
   };
@@ -193,7 +200,7 @@ const Statistics = () => {
     totalPoints: number,
     percent: string,
     passingScore: number,
-    timeSpent: string,
+    timeSpent: string
   ) => {
     return () => {
       showDetailedStatistic(
@@ -206,7 +213,7 @@ const Statistics = () => {
         totalPoints,
         percent,
         passingScore,
-        timeSpent,
+        timeSpent
       );
     };
   };

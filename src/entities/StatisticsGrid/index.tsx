@@ -7,7 +7,7 @@ import {
   GridSortItem,
   useGridApiRef,
 } from '@mui/x-data-grid';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { dataGridStyles } from '../../app/styles/DataGrid.styles';
 import { StatInfoType } from '../../app/types/stat';
 import ProgressLine from '../../shared/ui/ProgressLine';
@@ -56,6 +56,11 @@ export const StatisticsGrid: React.FC<StatisticsGridProps> = (props) => {
     ],
   };
 
+  useEffect(() => {
+    console.log('selectedValues IN useEffect: ', selectedValues);
+    console.log('filterModel: ', filterModel);
+  }, [selectedValues]);
+
   return (
     <Box m="20px" pt={2}>
       <Box m="10px 0 0 0" sx={dataGridStyles.root}>
@@ -71,9 +76,7 @@ export const StatisticsGrid: React.FC<StatisticsGridProps> = (props) => {
             getRowHeight={() => 'auto'}
             initialState={initialState}
             filterModel={filterModel}
-            onFilterModelChange={(newModel) =>
-              onChangeFilterModel((newModel = filterModel))
-            }
+            onFilterModelChange={(newModel) => onChangeFilterModel(newModel)}
             sx={dataGridStyles.statisticsGridStyles}
           />
         ) : (
