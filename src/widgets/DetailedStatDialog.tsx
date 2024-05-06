@@ -27,7 +27,6 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
   const { open, setOpen, selectedStatInfo } = props;
   const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
   const { allCourses } = useCourses();
-  const [detailedStatistic, setDetailedStatistic] = React.useState({});
   const [isDetailedStatLoading, setIsDetailedStatLoading] =
     React.useState(true);
   const [bestAttempt, setBestAttempt] = React.useState<
@@ -38,6 +37,8 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
       [key: number]: DetailedStatQuestion[];
     }[]
   >([]);
+
+  const [isNewCourse, setIsNewCourse] = React.useState(true);
 
   const handleClickOpen = (scrollType: DialogProps['scroll']) => () => {
     setOpen(true);
@@ -53,6 +54,8 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
     }
     return bestAttempt;
   };
+
+  
 
   const getDetailedQuestions = (attempts: DetailedAttemptStat[]) => {
     let detailedQuestions = [];
@@ -70,23 +73,20 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
 
   const descriptionElementRef = React.useRef<HTMLElement>(null);
   React.useEffect(() => {
+    const { user, course } = selectedStatInfo;
+
+    if(course === 10 || course === 12) {
+      setIsNewCourse(false);
+    }
     if (open) {
       const { current: descriptionElement } = descriptionElementRef;
       if (descriptionElement !== null) {
         descriptionElement.focus();
       }
 
-      const { user, course } = selectedStatInfo;
-      console.log('Starting request: user =', user, ', course =', course);
-
       setIsDetailedStatLoading(true);
       getDetailedStatisctics(user, course).then((data) => {
         const detailedStatistic = data.attempts;
-        console.log(
-          '🚀 ~ getDetailedStatisctics ~ detailedStatistic:',
-          detailedStatistic,
-        );
-
         const bestAttempt = getBestAttempt(detailedStatistic);
         const detailedQuestions = getDetailedQuestions(detailedStatistic);
         setDetailedQuestions(detailedQuestions);
@@ -96,22 +96,7 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
     }
   }, [open]);
 
-  const status =
-    selectedStatInfo.status === 'passed' ? 'Пройден' : 'Не пройден';
 
-  const date = new Date(selectedStatInfo.unixDate * 1000).toLocaleDateString(
-    'ru-RU',
-  );
-  const time = new Date(selectedStatInfo.unixDate * 1000).toLocaleTimeString(
-    'ru-RU',
-    { hour: '2-digit', minute: '2-digit' },
-  );
-
-  const points = selectedStatInfo.points;
-  const totalPoints = selectedStatInfo.totalPoints;
-  const percent = selectedStatInfo.percent;
-  const passingScore = selectedStatInfo.passingScore;
-  const timeSpent = selectedStatInfo.timeSpent;
 
   return (
     <Box>
@@ -140,9 +125,10 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
             <DetailedBestAttemptCard
               data={bestAttempt as DetailedAttemptStat}
               isLoading={isDetailedStatLoading}
+              oldData={selectedStatInfo}
             />
             <Box mt={2}>
-              <AttemptDetailsTabs detailedQuestions={detailedQuestions} />
+             { !isNewCourse && <AttemptDetailsTabs detailedQuestions={detailedQuestions} />}
             </Box>
           </Box>
         </DialogContent>

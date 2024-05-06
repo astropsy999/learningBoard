@@ -66,14 +66,14 @@ const QuestionFooter = ({ question }: { question: DetailedStatQuestion }) => (
         }}
       >
         <Box display="flex" justifyContent="space-around" alignItems="center">
-          <Typography>
+          <Typography lineHeight={1}>
             {isCorrect(question) ? (
               <CheckIcon color="success" fontSize="large" />
             ) : (
               <ClearIcon color="error" fontSize="large" />
             )}
           </Typography>
-          <Typography color={isCorrect(question) ? 'darkgreen' : 'darkred'}>
+          <Typography color={isCorrect(question) ? 'darkgreen' : 'darkred'} lineHeight={1.1} align='left' marginLeft={1} >
             {getAnswerText(question.answers, question.answer)}
           </Typography>
         </Box>
@@ -81,7 +81,7 @@ const QuestionFooter = ({ question }: { question: DetailedStatQuestion }) => (
     </Grid>
     <Grid item xs={6}>
       <Item>
-        <Typography>
+        <Typography lineHeight={1.1} align='left'>
           {getAnswerText(question.answers, question.correct)}
         </Typography>
       </Item>
@@ -91,7 +91,7 @@ const QuestionFooter = ({ question }: { question: DetailedStatQuestion }) => (
 
 // Component to render the question content
 const QuestionContent = ({ question }: { question: DetailedStatQuestion }) => (
-  <Box pl={1} fontWeight="bold">
+  <Box p={2} fontWeight="bold">
     {question.text}
   </Box>
 );
@@ -104,14 +104,15 @@ export const DetailedQuestion = ({ questionsInAttempt }: any) => {
           <Box
             key={index}
             border={'1px solid lightgray'}
-            p={1}
+            p={2}
             mt={1}
             mb={3}
             borderRadius={'10px'}
             width={'100%'}
+            bgcolor={'white'}
           >
             <QuestionHeader index={index} question={question} />
-            <QuestionContent question={question} />
+            <QuestionContent question={question}  />
             <QuestionFooter question={question} />
           </Box>
         ),

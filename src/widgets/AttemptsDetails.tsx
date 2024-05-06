@@ -48,10 +48,7 @@ interface AttemptDetailsTabsProps {
 
 export default function AttemptDetailsTabs(props: AttemptDetailsTabsProps) {
   const { detailedQuestions } = props;
-  console.log(
-    '🚀 ~ AttemptDetailsTabs ~ detailedQuestions:',
-    detailedQuestions,
-  );
+
   const theme = useTheme();
   const [value, setValue] = React.useState(0);
 

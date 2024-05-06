@@ -1,41 +1,55 @@
 import {
+  Badge,
   Box,
   Card,
-  CardContent,
-  CircularProgress,
-  Skeleton,
-  Stack,
+  CardContent
 } from '@mui/material';
 import React from 'react';
-import { DetailedAttemptStat } from '../app/types/stat';
+import { DetailedAttemptStat, StatInfoType } from '../app/types/stat';
 import { DetailedStatCardItem } from './DetailedStatCardItem';
-import ProgressCircle from '../shared/ui/ProgressCircle';
 
 interface DetailedBestAttemptCardProps {
   data: DetailedAttemptStat;
+  oldData?: StatInfoType;
   isLoading: boolean;
 }
 
 export const DetailedBestAttemptCard: React.FC<DetailedBestAttemptCardProps> = (
   props,
 ) => {
-  const { data, isLoading } = props;
-  const {
-    passing_score_percent,
-    passed_percent,
-    time_finished,
-    passed,
-    count_questions,
-    passing_score,
-    total_points,
-    points_scored,
-    time_spent_format,
-  } = data;
+  const { data, isLoading, oldData } = props;
+  console.log('oldData: ', oldData);
+  // const {
+  //   // passing_score_percent,
+  //   // passed_percent,
+  //   // time_finished,
+  //   // passed,
+  //   // count_questions,
+  //   // passing_score,
+  //   // total_points,
+  //   // points_scored,
+  //   // time_spent_format,
+  // } = data;
+  console.log('data: ', data);
 
-  const isPassed = passed_percent >= passing_score_percent;
+  let isPassed
+
+  if(data) {
+    isPassed = data.passed_percent >= data.passing_score_percent;
+  } else {
+    isPassed = oldData?.status === 'passed';
+  }
   const status = isPassed ? 'Пройдено' : 'Не пройдено';
 
   const statusColor = isPassed ? '#E7FCE8' : '#FFE8E6';
+
+  const date = new Date(oldData!.unixDate * 1000).toLocaleDateString(
+    'ru-RU',
+  );
+  const time = new Date(oldData!.unixDate * 1000).toLocaleTimeString(
+    'ru-RU',
+    { hour: '2-digit', minute: '2-digit' },
+  );
 
   return (
     <Card>
@@ -44,33 +58,39 @@ export const DetailedBestAttemptCard: React.FC<DetailedBestAttemptCardProps> = (
           backgroundColor: isLoading ? 'lightgrey' : statusColor,
           opacity: isLoading ? 0.8 : 1,
         }}
-        // onLoad={isLoading}
       >
         <Box p={1}>
+          <Badge 
+            color='secondary' 
+            badgeContent={'Лучшая попытка'}
+            sx={{ whiteSpace: 'nowrap', alignContent: 'right', marginLeft: '90%', opacity: 0.8 }}
+           
+            />
+
           <DetailedStatCardItem
             itemTitle={'Дата/Время'}
-            value={time_finished}
+            value={data?.time_finished || date + ' ' + time}
             isLoading={isLoading}
           />
           <DetailedStatCardItem
             itemTitle={'Вопросов отвечено'}
-            value={`${passed} / ${count_questions}`}
+            value={`${data?.passed || oldData!.points} / ${data?.count_questions || oldData!.totalPoints}`}
             isLoading={isLoading}
           />
 
           <DetailedStatCardItem
             itemTitle="Набрано баллов"
-            value={`${points_scored} / ${total_points} (${passed_percent}%)`}
+            value={`${data?.points_scored || oldData!.points} / ${data?.total_points || oldData!.totalPoints} (${data?.passed_percent || (oldData!.points/oldData!.totalPoints)*100}%)`}
             isLoading={isLoading}
           />
           <DetailedStatCardItem
             itemTitle="Проходной балл"
-            value={`${passing_score} (${passing_score_percent}%)`}
+            value={`${data?.passing_score || Math.floor(oldData!.passingScore)} (${data?.passing_score_percent || 70}%)`}
             isLoading={isLoading}
           />
           <DetailedStatCardItem
             itemTitle="Затрачено времени"
-            value={time_spent_format}
+            value={data?.time_spent_format || ''}
             isLoading={isLoading}
           />
 
