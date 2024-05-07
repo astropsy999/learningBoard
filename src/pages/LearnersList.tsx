@@ -58,8 +58,6 @@ const LearnersList = () => {
   const [filterLabel, setFilterLabel] = useState<string>('');
   const [selectedField, setSelectedField] = useState<string>('division');
 
-
-
   useEffect(() => {
     if (currentUserDivisionName)
       setFilterModel({
@@ -69,10 +67,10 @@ const LearnersList = () => {
   }, [selectedValues, currentUserDivisionName]);
 
   useEffect(() => {
-    if (allLearners && divisions && allCourses && currentUserDivisionName) {
+    if (allLearners && divisions && allCourses) {
       setIsLoading(false);
     }
-  }, [allCourses, allData, allLearners, currentUserDivisionName, divisions]);
+  }, [allCourses, allData, allLearners, divisions]);
 
   const unsetDivisionFilter = useMemo(() => {
     return {
@@ -172,11 +170,13 @@ const LearnersList = () => {
       ? allCourses!.map((course) => ({
           field: course.title,
           renderHeader: () => (
-          <Tooltip title={course.title}>
+            <Tooltip title={course.title}>
               <div style={{ fontSize: '16px', fontWeight: 'bold' }}>
-                {window.innerWidth <= 1280 && course.title.length > 15 ? course.title.substring(0, 15) + '...' : course.title}
+                {window.innerWidth <= 1280 && course.title.length > 15
+                  ? course.title.substring(0, 15) + '...'
+                  : course.title}
               </div>
-          </Tooltip>
+            </Tooltip>
           ),
           flex: 1,
           headerAlign: 'center',

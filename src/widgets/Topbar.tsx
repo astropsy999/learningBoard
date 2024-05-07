@@ -84,7 +84,7 @@ const Topbar: FC<TopbarProps> = () => {
         const userDivisionId = currentUserInfo.division;
 
         setCurrentUserDivisionName(
-          allDataFromStore?.divisions[userDivisionId].short_name,
+          allDataFromStore?.divisions[userDivisionId]?.short_name,
         );
       }
     }
@@ -155,7 +155,11 @@ const Topbar: FC<TopbarProps> = () => {
         )}
       </Box>
       <Box mr={10}>
-        <Header title={''} subtitle={''} icon={locationHeaderIcons[location.pathname]} />
+        <Header
+          title={''}
+          subtitle={''}
+          icon={locationHeaderIcons[location.pathname]}
+        />
       </Box>
     </Box>
   );
