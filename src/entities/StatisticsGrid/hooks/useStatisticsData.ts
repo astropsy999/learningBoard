@@ -47,21 +47,23 @@ export const useStatisticsData = () => {
     passingScore: number,
     timeSpent: string,
   ) => {
-    setShowDetailedStat((prev) => !prev);
-    const getStatInfo = {
-      user,
-      course,
-      userName,
-      status,
-      unixDate,
-      points,
-      totalPoints,
-      percent,
-      passingScore,
-      timeSpent,
-    };
+    if (points) {
+      setShowDetailedStat((prev) => !prev);
+      const getStatInfo = {
+        user,
+        course,
+        userName,
+        status,
+        unixDate,
+        points,
+        totalPoints,
+        percent,
+        passingScore,
+        timeSpent,
+      };
 
-    setStatInfo(getStatInfo!);
+      setStatInfo(getStatInfo!);
+    }
   };
 
   return {

@@ -7,23 +7,11 @@ import {
 import React, { useEffect, useMemo, useState } from 'react';
 import { useCourses } from '../app/store/courses';
 import { useLearners } from '../app/store/learners';
+import { SelectedRowData } from '../app/types/store';
 import { useCustomFilterOperators } from '../entities/CustomFilter/hooks/useCustomFilterOperator';
-import { CoursesWithDeadline } from '../app/types/store';
 import { LearnersGrid } from '../entities/LearnersGrid';
 import { AssignedCourseChip } from '../features/AssignedCourseChip';
-import { getDivisionUsersArrayByName } from '../shared/helpers/getDivisionUsersByName';
 import { getHeaderNameByField } from '../shared/helpers/getHeaderNameByField';
-
-export type SelectedRowData = {
-  id: number;
-  name: string;
-  position?: string;
-  division?: string;
-  access?: string;
-  courses: CoursesWithDeadline[];
-  courses_exclude: number[];
-  isDelLoading: boolean;
-};
 
 const LearnersList = () => {
   const {
@@ -128,7 +116,6 @@ const LearnersList = () => {
   );
 
   const onChangeFilterModel = (newModel: GridFilterModel) => {
-    console.log('newModelLEARNERS: ', newModel);
     if (newModel.items) {
       setFilterLabel(getHeaderNameByField(newModel.items[0].field!, columns)!);
       setSelectedField(newModel.items[0].field!);

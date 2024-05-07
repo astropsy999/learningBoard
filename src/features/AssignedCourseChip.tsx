@@ -1,7 +1,8 @@
 import { Chip } from '@mui/material';
 import React from 'react';
-import { SelectedRowData } from '../pages/LearnersList';
+
 import { CourseData } from '../app/store/courses';
+import { SelectedRowData } from '../app/types/store';
 
 interface AssignedCourseChipProps {
   row: SelectedRowData;

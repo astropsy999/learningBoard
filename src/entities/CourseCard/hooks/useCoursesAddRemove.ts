@@ -1,7 +1,5 @@
-import { useState } from 'react';
-import { CoursesWithDeadline, ILearner } from '../../../app/types/store';
 import { ToUpdateUser } from '../../../app/api/api';
-import { SelectedRowData } from '../../../pages/LearnersList';
+import { CoursesWithDeadline, ILearner } from '../../../app/types/store';
 
 export const useCoursesAddRemove = (
   selectedRowsData: ILearner[],

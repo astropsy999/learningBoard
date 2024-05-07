@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import { SelectedRowData } from '../../../pages/LearnersList';
 import { ILearner } from '../../../app/types/store';
 
 export const useSelectedRowsData = (

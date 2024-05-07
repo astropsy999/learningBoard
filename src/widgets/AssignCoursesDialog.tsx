@@ -13,8 +13,7 @@ import { Bounce, toast } from 'react-toastify';
 import { CourseCard } from '../entities/CourseCard/CourseCard';
 import { useCourses } from '../app/store/courses';
 import { useLearners } from '../app/store/learners';
-import { CoursesWithDeadline } from '../app/types/store';
-import { SelectedRowData } from '../pages/LearnersList';
+import { CoursesWithDeadline, SelectedRowData } from '../app/types/store';
 
 const Transition = React.forwardRef(function Transition(
   props: TransitionProps & {

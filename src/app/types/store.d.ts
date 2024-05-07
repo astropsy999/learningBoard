@@ -22,7 +22,7 @@ export type Course = {
 };
 
 export type Divisions = {
-  [key: number]: {name: string, short_name: string};
+  [key: number]: { name: string; short_name: string };
 };
 
 export interface AllUserData {
@@ -134,3 +134,14 @@ export interface CurrentUserData {
   PhotoName?: string;
   learn_show?: number;
 }
+
+export type SelectedRowData = {
+  id: number;
+  name: string;
+  position?: string;
+  division?: string;
+  access?: string;
+  courses: CoursesWithDeadline[];
+  courses_exclude: number[];
+  isDelLoading: boolean;
+};

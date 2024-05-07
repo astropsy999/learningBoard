@@ -44,22 +44,34 @@ export const StatisticsGrid: React.FC<StatisticsGridProps> = (props) => {
 
   const initialState = {
     sorting: { sortModel },
-  };
-
-  const filterModel = {
-    items: [
-      {
-        field: selectedField,
-        operator: 'isAnyOf',
-        value: selectedValues,
+    filter: {
+      filterModel: {
+        items: [
+          {
+            field: selectedField,
+            operator: 'isAnyOf',
+            value: selectedValues,
+          },
+        ],
       },
-    ],
+    },
   };
 
   useEffect(() => {
-    console.log('selectedValues IN useEffect: ', selectedValues);
-    console.log('filterModel: ', filterModel);
-  }, [selectedValues]);
+    console.log('🚀 ~ selectedValues:', selectedValues);
+
+    if (apiRef.current && !isLoading) {
+      return apiRef?.current?.setFilterModel({
+        items: [
+          {
+            field: selectedField,
+            operator: 'isAnyOf',
+            value: selectedValues,
+          },
+        ],
+      });
+    }
+  }, [selectedValues, selectedField]);
 
   return (
     <Box m="20px" pt={2}>
@@ -67,7 +79,7 @@ export const StatisticsGrid: React.FC<StatisticsGridProps> = (props) => {
         {!isLoading ? (
           <DataGrid
             apiRef={apiRef}
-            loading={isLoading}
+            loading={statLoading}
             rows={isLoading ? [] : rawStatistics}
             columns={isLoading ? [] : columns}
             disableRowSelectionOnClick
@@ -75,8 +87,10 @@ export const StatisticsGrid: React.FC<StatisticsGridProps> = (props) => {
             autoHeight={true}
             getRowHeight={() => 'auto'}
             initialState={initialState}
-            filterModel={filterModel}
-            onFilterModelChange={(newModel) => onChangeFilterModel(newModel)}
+            // filterModel={filterModel}
+            // onFilterModelChange={(newModel) =>
+            //   onChangeFilterModel((newModel = filterModel))
+            // }
             sx={dataGridStyles.statisticsGridStyles}
           />
         ) : (
