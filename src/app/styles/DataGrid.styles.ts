@@ -103,8 +103,10 @@ export const dataGridStyles = {
       {
         maxHeight: '30px !important',
       },
-    '& .MuiDataGrid-columnHeaderTitleContainer': {
-      marginLeft: '22px !important',
+    '@media (min-width: 1140px)': {
+      '& .MuiDataGrid-columnHeaderTitleContainer': {
+        marginLeft: '22px !important',
+      },
     },
   },
   coursesGridStyles: {

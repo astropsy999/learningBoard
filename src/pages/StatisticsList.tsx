@@ -52,7 +52,7 @@ const Statistics = () => {
     if (allLearners && currentUserDivisionName) {
       const currDivUsersList = getDivisionUsersArrayByName(
         allLearners,
-        currentUserDivisionName,
+        currentUserDivisionName
       );
       setSelectedValues(currDivUsersList as string[]);
     }
@@ -122,7 +122,7 @@ const Statistics = () => {
         },
       },
     ],
-    [selectedValues],
+    [selectedValues]
   );
 
   const onChangeFilterModel = (newModel: GridFilterModel) => {
@@ -192,7 +192,7 @@ const Statistics = () => {
     totalPoints: number,
     percent: string,
     passingScore: number,
-    timeSpent: string,
+    timeSpent: string
   ) => {
     return () => {
       showDetailedStatistic(
@@ -205,7 +205,7 @@ const Statistics = () => {
         totalPoints,
         percent,
         passingScore,
-        timeSpent,
+        timeSpent
       );
     };
   };

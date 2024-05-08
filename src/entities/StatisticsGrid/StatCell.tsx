@@ -23,6 +23,7 @@ const StatCell: React.FC<StatCellProps> = ({
   }
 
   const attempts = row?.courses?.filter((c) => c.id === course.id)[0]?.attempts;
+
   const status = attempts && attempts[0]?.status;
   const totalPoints = row?.courses?.filter((c) => c.id === course.id)[0]
     ?.total_points;
