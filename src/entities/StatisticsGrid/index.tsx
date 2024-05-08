@@ -58,8 +58,6 @@ export const StatisticsGrid: React.FC<StatisticsGridProps> = (props) => {
   };
 
   useEffect(() => {
-    console.log('🚀 ~ selectedValues:', selectedValues);
-
     if (apiRef.current && !isLoading) {
       return apiRef?.current?.setFilterModel({
         items: [

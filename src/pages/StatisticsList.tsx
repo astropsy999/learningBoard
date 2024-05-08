@@ -6,7 +6,7 @@ import {
   GridFilterModel,
 } from '@mui/x-data-grid';
 import React, { useEffect, useMemo, useState } from 'react';
-import { useCourses } from '../app/store/courses';
+import { CourseData, useCourses } from '../app/store/courses';
 import { useLearners } from '../app/store/learners';
 import CustomFilterInput from '../entities/CustomFilter/CustomFilterPanel';
 import { StatisticsGrid } from '../entities/StatisticsGrid';
@@ -15,6 +15,7 @@ import { useStatSortComparator } from '../entities/StatisticsGrid/hooks/useStatS
 import { useStatisticsData } from '../entities/StatisticsGrid/hooks/useStatisticsData';
 import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
 import { getDivisionUsersArrayByName } from '../shared/helpers/getDivisionUsersByName';
+import { CourseAttempt } from '../app/types/stat';
 
 const Statistics = () => {
   const {
@@ -58,72 +59,59 @@ const Statistics = () => {
     }
   }, [currentUserDivisionName, allLearners]);
 
-  useEffect(() => {
-    const newColumnsGrouping = coursesList?.map(({ id }) => {
-      const courseTitle = getCourseTitleById(id, allCourses!)!;
-
-      const children = statSubcolumns?.map(({ field, headerName }) => ({
-        field: `${id}_${field}`,
-        headerName,
-      }));
-
-      return {
-        groupId: courseTitle!,
-        renderHeaderGroup: () => (
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '100%',
-              fontWeight: 'bold',
-            }}
-          >
-            {courseTitle!}
-          </div>
-        ),
-        children,
-      };
-    });
-
-    allCourses &&
-      coursesList &&
-      newColumnsGrouping?.length &&
-      setColumnsGroupingModel(newColumnsGrouping);
-  }, [coursesList, statInfo, allCourses]);
-
-  const filterOperators = useMemo(
-    () => [
-      {
-        value: 'isAnyOf',
-        getApplyFilterFn: (filterItem: GridFilterItem) => {
-          if (!filterItem.field || !filterItem.value || !filterItem.operator) {
-            return null;
-          }
-
-          if (selectedValues.length === 0) {
-            return (value: string) => true;
-          }
-
-          return (value: string) => {
-            return selectedValues?.includes(value);
-          };
-        },
-        InputComponent: CustomFilterInput,
-        InputComponentProps: {
-          onChange: (selectedValue: string[]) => {
-            console.log('selectedValue: ', selectedValue);
-
-            setSelectedValues(selectedValue);
-          },
-          filterLabel: filterLabel,
-          field: selectedField,
-          selectedOptions: selectedValues,
-        },
-      },
-    ],
-    [selectedValues]
+  const renderHeaderGroup = (courseTitle: string) => (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: '100%',
+        fontWeight: 'bold',
+      }}
+    >
+      {courseTitle}
+    </div>
   );
+
+  const generateColumnsGrouping = (
+    coursesList: CourseAttempt[],
+    allCourses: CourseData[]
+  ) => {
+    return coursesList
+      ?.map(({ id }) => {
+        const courseTitle = getCourseTitleById(id, allCourses);
+
+        if (!courseTitle) {
+          console.error(`Course title not found for ID: ${id}`);
+          return null;
+        }
+
+        const children = statSubcolumns.map(({ field, headerName }) => ({
+          field: `${id}_${field}`,
+          headerName,
+        }));
+
+        return {
+          groupId: courseTitle,
+          renderHeaderGroup: () => renderHeaderGroup(courseTitle),
+          children,
+        };
+      })
+      .filter(Boolean); // Filter out any null entries
+  };
+
+  // Memoize the columns grouping generation to avoid unnecessary recomputation
+  const newColumnsGrouping = useMemo(() => {
+    return generateColumnsGrouping(coursesList, allCourses!);
+  }, [coursesList, allCourses]);
+
+  useEffect(() => {
+    if (newColumnsGrouping && newColumnsGrouping?.length) {
+      setColumnsGroupingModel(newColumnsGrouping as GridColumnGroupingModel);
+    }
+  }, [coursesList, allCourses, setColumnsGroupingModel]);
+
+  // const filterOperators =
 
   const onChangeFilterModel = (newModel: GridFilterModel) => {
     if (newModel.items) {
@@ -143,7 +131,39 @@ const Statistics = () => {
         headerName: 'ФИО',
         cellClassName: 'name-cell',
         flex: 0.3,
-        filterOperators,
+        filterOperators: [
+          {
+            value: 'isAnyOf',
+            getApplyFilterFn: (filterItem: GridFilterItem) => {
+              if (
+                !filterItem.field ||
+                !filterItem.value ||
+                !filterItem.operator
+              ) {
+                return null;
+              }
+
+              if (selectedValues.length === 0) {
+                return (value: string) => true;
+              }
+
+              return (value: string) => {
+                return selectedValues?.includes(value);
+              };
+            },
+            InputComponent: CustomFilterInput,
+            InputComponentProps: {
+              onChange: (selectedValue: string[]) => {
+                console.log('selectedValue: ', selectedValue);
+
+                setSelectedValues(selectedValue);
+              },
+              filterLabel: 'ФИО',
+              field: 'name',
+              selectedOptions: selectedValues,
+            },
+          },
+        ],
       },
     ];
 
@@ -180,7 +200,7 @@ const Statistics = () => {
 
     setColumns(newColumns); // Обновляем состояние столбцов
     // }
-  }, [coursesList, columnsGroupingModel, selectedValues, filterOperators]);
+  }, [coursesList, columnsGroupingModel, selectedValues]);
 
   const handleCellClick = (
     courseId: number,
