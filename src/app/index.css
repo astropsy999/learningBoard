@@ -1,0 +1,160 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600;700&display=swap');
+ */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap')body; .MuiDataGrid-root {
+  font-family: 'Roboto', sans-serif !important;
+}
+
+.app {
+  display: flex;
+  position: relative;
+  z-index: 10;
+}
+
+.content {
+  height: 100%;
+  width: 100%;
+}
+
+main {
+  margin-top: 40px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #e0e0e0;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.MuiDataGrid-menuIcon,
+.MuiDataGrid-iconButtonContainer {
+  visibility: visible !important;
+  margin-right: 22px !important;
+  opacity: 0.8 !important;
+}
+
+.MuiDataGrid-columnHeaderTitleContainer:hover .MuiDataGrid-menuIcon {
+  transform: none !important;
+  margin: 0 !important;
+}
+
+.MuiDataGrid-menuIcon:hover {
+  opacity: 1 !important;
+}
+
+.MuiDataGrid-columnHeader {
+  line-height: 1;
+}
+
+.MuiDataGrid-columnHeader:hover .MuiButtonBase-root:not(.MuiCheckbox-root) {
+  transform: none !important;
+  margin-right: -28px !important;
+}
+
+.MuiDataGrid-filterFormOperatorInput,
+.MuiDataGrid-filterFormColumnInput {
+  display: none !important;
+}
+
+.MuiDataGrid-panelWrapper {
+  width: 100%;
+  /* background: black; */
+}
+
+
+#customized-hook-demo-listbox {
+  z-index: 1000;
+  position: relative;
+  overflow: visible;
+}
+
+.MuiCheckbox-root:hover {
+  background-color: transparent !important;
+}
+
+.MuiDataGrid-columnHeaderTitleContainerContent {
+  height: 100% !important;
+  width: 100% !important;
+  justify-content: center;
+}
+
+.MuiIconButton-root {
+  color: #73b1bf !important;
+  opacity: 0.9 !important;
+}
+
+.MuiDataGrid-columnHeaderTitleContainerContent .MuiCheckbox-root {
+  color: white !important;
+}
+
+.MuiDataGrid-columnHeaderTitleContainer {
+  white-space: inherit !important;
+}
+
+.MuiDataGrid-columnHeader--filtered .MuiDataGrid-iconButtonContainer {
+  width: 0 !important;
+}
+
+.MuiDataGrid-columnHeader--sorted .MuiDataGrid-iconButtonContainer {
+  width: 0 !important;
+}
+
+.MuiDataGrid-columnHeaderTitle {
+  overflow: hidden !important;
+  line-height: 1 !important;
+}
+
+.MuiDataGrid-cell {
+  line-height: 1.1 !important;
+  white-space: unset !important;
+  font-size: 14px;
+}
+
+.MuiTablePagination-root:last-child {
+  color: white !important;
+}
+
+.MuiSvgIcon-root .MuiSelect-icon {
+  color: white !important;
+}
+.MuiSelect-icon {
+  color: white !important;
+}
+
+.MuiDataGrid-topContainer {
+  position: fixed !important;
+  top: 5em !important;
+}
+
+.MuiDataGrid-topContainer::before {
+  content: "";
+  position: absolute;
+  top: -5em; /* Регулируйте этот отступ в зависимости от высоты вашей шапки */
+  left: -1em;
+  width: 101%;
+  height: 5em; /* Регулируйте эту высоту в зависимости от высоты вашей шапки */
+  background-color: whitesmoke;
+  z-index: -1;
+}
+
+.MuiDataGrid-root {
+  margin-top: 5em !important;
+}
+
+
+
+
+
+
