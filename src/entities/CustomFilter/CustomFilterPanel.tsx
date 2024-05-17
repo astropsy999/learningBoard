@@ -240,4 +240,4 @@ function CustomFilterInput(
   );
 }
 
-export default React.memo(CustomFilterInput);
+export default CustomFilterInput;
