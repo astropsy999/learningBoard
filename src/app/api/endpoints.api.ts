@@ -25,5 +25,7 @@ export const url = {
   updateDataEndpoint: '/index.php/learncontroller/includecourses',
   lockCoursesEndpoint: '/index.php/learncontroller/excludecourses',
   getUsersStatistics: '/index.php/Learncontroller/getUsersStatistics',
+  getUsersStatisticsBestTry:
+    '/index.php/Learncontroller/getUsersStatisticsBestTry',
   getDetailedUserStatisctics: '/index.php/Learncontroller/getUserStatistic',
 };

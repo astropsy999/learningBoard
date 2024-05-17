@@ -37,6 +37,13 @@ export const fetchStatisctics = async () => {
   const data = await response.json();
   return data[0].data;
 };
+export const fetchStatiscticsBestTry = async () => {
+  const response = await fetch(configApi.srv + url.getUsersStatisticsBestTry, {
+    credentials: 'include',
+  });
+  const data = await response.json();
+  return data[0].data;
+};
 
 export const fetchAllData = async (): Promise<AllData | undefined> => {
   let allData;

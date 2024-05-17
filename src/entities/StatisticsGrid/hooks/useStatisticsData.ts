@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
-import { fetchStatisctics } from '../../../app/api/api';
+import {
+  fetchStatisctics,
+  fetchStatiscticsBestTry,
+} from '../../../app/api/api';
 import { useCourses } from '../../../app/store/courses';
 
 import { CourseAttempt, StatInfoType } from '../../../app/types/stat';
@@ -9,6 +12,10 @@ import { findMaxCourses } from '../../../shared/helpers/findMaxCoursesArrayInSta
 export const useStatisticsData = () => {
   const { allCourses } = useCourses();
   const { data: rawStatistics, isLoading } = useSWR('stat', fetchStatisctics);
+  const { data: rawStatisticsBestTry, isLoading: isLoadingBestTry } = useSWR(
+    'stat',
+    fetchStatiscticsBestTry,
+  );
   const [coursesList, setCoursesList] = useState<CourseAttempt[]>([]);
   const [statLoading, setStatLoading] = useState(true);
   const [showDetailedStat, setShowDetailedStat] = useState(false);
@@ -29,6 +36,13 @@ export const useStatisticsData = () => {
     const courses = findMaxCourses(rawStatistics);
     setCoursesList(courses!);
   }, [rawStatistics]);
+
+  useEffect(() => {
+    console.log(
+      '🚀 ~ useStatisticsData ~ rawStatisticsBestTry:',
+      rawStatisticsBestTry,
+    );
+  }, [rawStatisticsBestTry]);
 
   useEffect(() => {
     setStatLoading(isLoading);
