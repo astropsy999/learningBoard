@@ -26,6 +26,26 @@ export type AllStatisticsData = {
   courses: CourseAttempt[];
 };
 
+export type BestTryResult = {
+  percent: number;
+  points: number;
+  state: boolean;
+};
+
+export type BestTry = {
+  course_id: number;
+  datetime_finished: string;
+  points: number;
+  result: BestTryResult;
+  title: string;
+};
+
+export type AllStatisticsDataBestTry = {
+  id: number;
+  name: string;
+  courses: BestTry[];
+};
+
 export type StatInfoType = {
   course: number;
   user: number;

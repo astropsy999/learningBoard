@@ -8,6 +8,7 @@ import { useCourses } from '../../../app/store/courses';
 
 import { CourseAttempt, StatInfoType } from '../../../app/types/stat';
 import { findMaxCourses } from '../../../shared/helpers/findMaxCoursesArrayInStat';
+import { getBestTry } from '../../../shared/helpers/getBestTry';
 
 export const useStatisticsData = () => {
   const { allCourses } = useCourses();
@@ -42,6 +43,8 @@ export const useStatisticsData = () => {
       '🚀 ~ useStatisticsData ~ rawStatisticsBestTry:',
       rawStatisticsBestTry
     );
+    // const courses1 = getBestTry(rawStatisticsBestTry);
+    // console.log('courses1: ', courses1);
   }, [rawStatisticsBestTry]);
 
   useEffect(() => {
@@ -86,6 +89,8 @@ export const useStatisticsData = () => {
     showDetailedStat,
     statInfo,
     rawStatistics,
+    rawStatisticsBestTry,
+    isLoadingBestTry,
     isLoading,
     showDetailedStatistic,
     setShowDetailedStat,

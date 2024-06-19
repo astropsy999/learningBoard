@@ -1,9 +1,14 @@
 import React from 'react';
 import { Typography } from '@mui/material';
-import { AllStatisticsData, CourseAttempt } from '../../app/types/stat';
+import {
+  AllStatisticsData,
+  AllStatisticsDataBestTry,
+  CourseAttempt,
+} from '../../app/types/stat';
+import { formatDate } from '../../shared/helpers/formatDateStr';
 
 export interface StatCellProps {
-  row: AllStatisticsData;
+  row: AllStatisticsDataBestTry;
   course: CourseAttempt;
   subColumnData: { field: string; headerName: string };
   handleCellClick: any;
@@ -15,23 +20,15 @@ const StatCell: React.FC<StatCellProps> = ({
   subColumnData,
   handleCellClick,
 }) => {
-  function calculatePercent(points: number, totalPoints: number) {
-    if (totalPoints === 0) {
-      return 0;
-    }
-    return Number(((points / totalPoints) * 100).toFixed(0));
-  }
+  const attempts = row?.courses;
 
-  const attempts = row?.courses?.filter((c) => c.id === course.id)[0]?.attempts;
-
-  const status = attempts && attempts[0]?.status;
-  const totalPoints = row?.courses?.filter((c) => c.id === course.id)[0]
-    ?.total_points;
-  const points = attempts && attempts[0]?.points;
-  const percent = calculatePercent(points, totalPoints);
-  const localStatus = status === 'passed' ? 'Пройден' : 'Не пройден';
-  const unixDate = attempts && attempts[0]?.date;
-  const date = new Date(unixDate * 1000).toLocaleDateString('ru-RU');
+  const status = attempts && attempts[0]?.result?.state;
+  const totalPoints = row?.courses[0]?.points;
+  const points = attempts && attempts[0]?.result?.points;
+  const percent = attempts && attempts[0]?.result?.percent;
+  const localStatus = status ? 'Пройден' : 'Не пройден';
+  const dateStr = attempts && attempts[0]?.datetime_finished;
+  const date = formatDate(dateStr);
   const passingScore = totalPoints * 0.7;
   const timeSpent = '9:99';
   const perStr = `${percent}%`;
@@ -47,14 +44,13 @@ const StatCell: React.FC<StatCellProps> = ({
 
   return (
     <Typography
-      color={status === 'passed' ? 'darkgreen' : 'red'}
+      color={status ? 'darkgreen' : 'red'}
       sx={{ cursor: 'pointer' }}
       onClick={handleCellClick(
         course.id,
         row.id,
         row.name,
         status,
-        unixDate,
         points,
         totalPoints,
         perStr,

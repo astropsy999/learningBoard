@@ -36,7 +36,13 @@ export const StatisticsGrid: React.FC<StatisticsGridProps> = (props) => {
     selectedField,
     selectedValues,
   } = props;
-  const { statLoading, rawStatistics, isLoading } = useStatisticsData();
+  const {
+    statLoading,
+    rawStatistics,
+    rawStatisticsBestTry,
+    isLoading,
+    isLoadingBestTry,
+  } = useStatisticsData();
 
   const apiRef = useGridApiRef();
 
@@ -58,7 +64,7 @@ export const StatisticsGrid: React.FC<StatisticsGridProps> = (props) => {
   };
 
   useEffect(() => {
-    if (apiRef.current && !isLoading) {
+    if (apiRef.current && !isLoadingBestTry) {
       return apiRef?.current?.setFilterModel({
         items: [
           {
@@ -74,12 +80,12 @@ export const StatisticsGrid: React.FC<StatisticsGridProps> = (props) => {
   return (
     <Box m="20px" pt={2}>
       <Box m="10px 0 0 0" sx={dataGridStyles.root}>
-        {!isLoading ? (
+        {!isLoadingBestTry ? (
           <DataGrid
             apiRef={apiRef}
             loading={statLoading}
-            rows={isLoading ? [] : rawStatistics}
-            columns={isLoading ? [] : columns}
+            rows={isLoadingBestTry ? [] : rawStatisticsBestTry}
+            columns={isLoadingBestTry ? [] : columns}
             disableRowSelectionOnClick
             columnGroupingModel={columnGroupingModel}
             autoHeight={true}
