@@ -73,7 +73,12 @@ const QuestionFooter = ({ question }: { question: DetailedStatQuestion }) => (
               <ClearIcon color="error" fontSize="large" />
             )}
           </Typography>
-          <Typography color={isCorrect(question) ? 'darkgreen' : 'darkred'} lineHeight={1.1} align='left' marginLeft={1} >
+          <Typography
+            color={isCorrect(question) ? 'darkgreen' : 'darkred'}
+            lineHeight={1.1}
+            align="left"
+            marginLeft={1}
+          >
             {getAnswerText(question.answers, question.answer)}
           </Typography>
         </Box>
@@ -81,7 +86,7 @@ const QuestionFooter = ({ question }: { question: DetailedStatQuestion }) => (
     </Grid>
     <Grid item xs={6}>
       <Item>
-        <Typography lineHeight={1.1} align='left'>
+        <Typography lineHeight={1.1} align="left">
           {getAnswerText(question.answers, question.correct)}
         </Typography>
       </Item>
@@ -112,10 +117,10 @@ export const DetailedQuestion = ({ questionsInAttempt }: any) => {
             bgcolor={'white'}
           >
             <QuestionHeader index={index} question={question} />
-            <QuestionContent question={question}  />
+            <QuestionContent question={question} />
             <QuestionFooter question={question} />
           </Box>
-        ),
+        )
       )}
     </Box>
   );

@@ -13,8 +13,8 @@ export const useStatisticsData = () => {
   const { allCourses } = useCourses();
   const { data: rawStatistics, isLoading } = useSWR('stat', fetchStatisctics);
   const { data: rawStatisticsBestTry, isLoading: isLoadingBestTry } = useSWR(
-    'stat',
-    fetchStatiscticsBestTry,
+    'statBestTry',
+    fetchStatiscticsBestTry
   );
   const [coursesList, setCoursesList] = useState<CourseAttempt[]>([]);
   const [statLoading, setStatLoading] = useState(true);
@@ -40,7 +40,7 @@ export const useStatisticsData = () => {
   useEffect(() => {
     console.log(
       '🚀 ~ useStatisticsData ~ rawStatisticsBestTry:',
-      rawStatisticsBestTry,
+      rawStatisticsBestTry
     );
   }, [rawStatisticsBestTry]);
 
@@ -59,9 +59,9 @@ export const useStatisticsData = () => {
     totalPoints: number,
     percent: string,
     passingScore: number,
-    timeSpent: string,
+    timeSpent: string
   ) => {
-    if (points) {
+    if (status) {
       setShowDetailedStat((prev) => !prev);
       const getStatInfo = {
         user,

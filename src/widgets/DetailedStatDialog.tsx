@@ -97,12 +97,16 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
         aria-describedby="scroll-dialog-description"
       >
         <DialogTitle id="scroll-dialog-title">
-          <Box>
-            Результаты теста{' '}
-            <strong>
-              {getCourseTitleById(selectedStatInfo!.course, allCourses!)}
-            </strong>{' '}
-            для <strong>{selectedStatInfo.userName}</strong>
+          <Box display={'flex'} flexDirection={'row'} gap={1}>
+            <Box>Результаты теста </Box>
+            <Box>
+              <strong>
+                {getCourseTitleById(selectedStatInfo!.course, allCourses!)}
+              </strong>{' '}
+            </Box>
+            <Box>
+              для <strong>{selectedStatInfo.userName}</strong>
+            </Box>
           </Box>
         </DialogTitle>
         <DialogContent dividers={scroll === 'paper'}>
