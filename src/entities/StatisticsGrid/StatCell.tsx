@@ -51,6 +51,7 @@ const StatCell: React.FC<StatCellProps> = ({
         row.id,
         row.name,
         status,
+        dateStr,
         points,
         totalPoints,
         perStr,

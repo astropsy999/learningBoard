@@ -10,9 +10,10 @@ interface DetailedBestAttemptCardProps {
 }
 
 export const DetailedBestAttemptCard: React.FC<DetailedBestAttemptCardProps> = (
-  props,
+  props
 ) => {
   const { data, isLoading, oldData } = props;
+  console.log('data: ', data);
 
   let isPassed;
 
@@ -32,7 +33,7 @@ export const DetailedBestAttemptCard: React.FC<DetailedBestAttemptCardProps> = (
   });
 
   const oldPercentage = Math.round(
-    (oldData!.points / oldData!.totalPoints) * 100,
+    (oldData!.points / oldData!.totalPoints) * 100
   );
 
   return (
@@ -62,9 +63,7 @@ export const DetailedBestAttemptCard: React.FC<DetailedBestAttemptCardProps> = (
           />
           <DetailedStatCardItem
             itemTitle={'Вопросов отвечено'}
-            value={`${data?.passed || oldData!.points} / ${
-              data?.count_questions || oldData!.totalPoints
-            }`}
+            value={`${data?.answered_questions} / ${data?.count_questions}`}
             isLoading={isLoading}
           />
 

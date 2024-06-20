@@ -32,7 +32,7 @@ const Statistics = () => {
     if (allLearners && currentUserDivisionName) {
       const currDivUsersList = getDivisionUsersArrayByName(
         allLearners,
-        currentUserDivisionName,
+        currentUserDivisionName
       );
       setSelectedValues(currDivUsersList as string[]);
     }
@@ -48,7 +48,7 @@ const Statistics = () => {
     totalPoints: number,
     percent: string,
     passingScore: number,
-    timeSpent: string,
+    timeSpent: string
   ) => {
     return () => {
       showDetailedStatistic(
@@ -61,7 +61,7 @@ const Statistics = () => {
         totalPoints,
         percent,
         passingScore,
-        timeSpent,
+        timeSpent
       );
     };
   };
@@ -71,7 +71,7 @@ const Statistics = () => {
     allCourses!,
     handleCellClick,
     selectedValues,
-    setSelectedValues,
+    setSelectedValues
   );
 
   return (

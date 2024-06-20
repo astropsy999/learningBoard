@@ -39,15 +39,6 @@ export const useStatisticsData = () => {
   }, [rawStatistics]);
 
   useEffect(() => {
-    console.log(
-      '🚀 ~ useStatisticsData ~ rawStatisticsBestTry:',
-      rawStatisticsBestTry
-    );
-    // const courses1 = getBestTry(rawStatisticsBestTry);
-    // console.log('courses1: ', courses1);
-  }, [rawStatisticsBestTry]);
-
-  useEffect(() => {
     setStatLoading(isLoading);
     allCourses && allCourses.length > 0 && setStatLoading(false);
   }, [statLoading, allCourses, isLoading]);
