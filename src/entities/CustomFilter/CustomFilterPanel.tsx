@@ -76,7 +76,12 @@ const InputWrapper = styled('div')(
 interface TagProps extends ReturnType<AutocompleteGetTagProps> {
   label: string;
 }
-
+/**
+ * Renders a Tag component.
+ *
+ * @param {TagProps} props - The properties for the Tag component.
+ * @return {JSX.Element} The rendered Tag component.
+ */
 function Tag(props: TagProps) {
   const { label, onDelete, ...other } = props;
   return (
@@ -168,6 +173,7 @@ const Listbox = styled('ul')(
   }
 `,
 );
+
 
 function CustomFilterInput(
   props: GridFilterInputValueProps & CustomFilterInputProps,

@@ -1,13 +1,13 @@
-import { useEffect, useMemo, useState } from 'react';
-import { GridColDef, GridColumnGroupingModel } from '@mui/x-data-grid';
+import { GridColDef } from '@mui/x-data-grid';
+import { useMemo } from 'react';
 
-import { CourseAttempt } from '../../../app/types/stat';
-import { CourseData } from '../../../app/store/courses';
 import React from 'react';
+import { CourseData } from '../../../app/store/courses';
+import { CourseAttempt } from '../../../app/types/stat';
 import { getCourseTitleById } from '../../../shared/helpers/getCourseTitleById';
+import CustomFilterInput from '../../CustomFilter/CustomFilterPanel';
 import StatCell from '../StatCell';
 import { useStatSortComparator } from './useStatSortComparator';
-import CustomFilterInput from '../../CustomFilter/CustomFilterPanel';
 
 const statSubcolumns = [
   { field: 'result', headerName: 'Результат' },

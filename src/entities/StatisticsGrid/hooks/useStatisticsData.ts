@@ -10,10 +10,10 @@ import { CourseAttempt, StatInfoType } from '../../../app/types/stat';
 import { findMaxCourses } from '../../../shared/helpers/findMaxCoursesArrayInStat';
 
 /**
- * Хук для получения данных статистики.
- * @returns {Object} Объект с данными статистики и методами.
+ * Custom hook for managing statistics data.
+ *
+ * @return {Object} Object containing various statistics data and functions to manipulate the data.
  */
-
 export const useStatisticsData = () => {
   const { allCourses } = useCourses();
   const { data: rawStatistics, isLoading } = useSWR('stat', fetchStatisctics);
@@ -39,12 +39,6 @@ export const useStatisticsData = () => {
 
   useEffect(() => {
     const courses = findMaxCourses(rawStatistics);
-    console.log("🚀 ~ useEffect ~ rawStatistics:", rawStatistics)
-    console.log(
-      '🚀 ~ useStatisticsData ~ rawStatisticsBestTry:',
-      rawStatisticsBestTry,
-    );
-
     setCoursesList(courses!);
   }, [rawStatistics]);
 
@@ -54,19 +48,20 @@ export const useStatisticsData = () => {
   }, [statLoading, allCourses, isLoading]);
 
   /**
-   * Показать подробную статистику.
-   * @param {number} course - Идентификатор курса.
-   * @param {number} user - Идентификатор пользователя.
-   * @param {string} userName - Имя пользователя.
-   * @param {string} status - Статус прохождения.
-   * @param {number} unixDate - Дата в формате Unix.
-   * @param {number} points - Набранные баллы.
-   * @param {number} totalPoints - Общее количество баллов.
-   * @param {string} percent - Процент выполнения.
-   * @param {number} passingScore - Проходной балл.
-   * @param {string} timeSpent - Потраченное время.
+   * Asynchronously shows detailed statistics for a user on a specific course.
+   *
+   * @param {number} course - The ID of the course.
+   * @param {number} user - The ID of the user.
+   * @param {string} userName - The name of the user.
+   * @param {string} status - The status of the user's attempt on the course.
+   * @param {number} unixDate - The Unix timestamp of the user's attempt.
+   * @param {number} points - The number of points scored by the user.
+   * @param {number} totalPoints - The total number of points possible on the course.
+   * @param {string} percent - The percentage of points scored by the user.
+   * @param {number} passingScore - The passing score for the course.
+   * @param {string} timeSpent - The time spent by the user on the course.
+   * @return {Promise<void>} A promise that resolves when the detailed statistics are shown.
    */
-
   const showDetailedStatistic = async (
     course: number,
     user: number,

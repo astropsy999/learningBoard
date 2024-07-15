@@ -3,7 +3,11 @@ import {
   AllStatisticsData,
   CourseAttempt,
 } from '../../../app/types/stat';
-
+/**
+ * Returns a comparator function for sorting statistics data based on the percentage of points achieved in a course.
+ *
+ * @return {GridComparatorFn<any>} A comparator function that takes in two statistics data objects, cell parameters, and compares their percentage of points achieved in a course.
+ */
 export const useStatSortComparator = () => {
   const calculatePercent = (points: number, totalPoints: number) => {
     if (totalPoints === 0) {

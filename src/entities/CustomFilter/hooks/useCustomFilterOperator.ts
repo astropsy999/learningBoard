@@ -1,6 +1,15 @@
 import { GridFilterItem, GridFilterOperator } from '@mui/x-data-grid';
 import CustomFilterInput from '../CustomFilterPanel';
 
+/**
+ * Custom hook that returns an array of filter operators for custom filtering.
+ *
+ * @param {string[]} selectedValues - Array of selected values
+ * @param {Function} setSelectedValues - Function to set selected values
+ * @param {string} filterLabel - Label for the filter
+ * @param {string} selectedField - Selected field for filtering
+ * @return {GridFilterOperator<any, string, string>[]} Array of filter operators
+ */
 export const useCustomFilterOperators = (
   selectedValues: string[],
   setSelectedValues: Function,
