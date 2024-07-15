@@ -10,7 +10,7 @@ import { TransitionProps } from '@mui/material/transitions';
 import * as React from 'react';
 import { FC } from 'react';
 import { Bounce, toast } from 'react-toastify';
-import { CourseCard } from '../entities/CourseCard/CourseCard';
+import { CourseCard } from '../entities/CourseCard';
 import { useCourses } from '../app/store/courses';
 import { useLearners } from '../app/store/learners';
 import { CoursesWithDeadline, SelectedRowData } from '../app/types/store';

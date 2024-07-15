@@ -23,7 +23,12 @@ interface CourseCardProps {
   isLocked: boolean;
   allLockedCourses: number[];
 }
-
+/**
+ * Renders a Course Card component with all necessary functionality and UI elements.
+ *
+ * @param {CourseCardProps} props - The properties required for rendering the Course Card.
+ * @return {JSX.Element} The Course Card component JSX.
+ */
 export const CourseCard: React.FC<CourseCardProps> = (props) => {
   const { courseItem, assigned, isLocked } = props;
   const [checked, setChecked] = React.useState(false);

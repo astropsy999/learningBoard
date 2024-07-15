@@ -1,7 +1,7 @@
 import { Bounce, toast } from 'react-toastify';
 import configApi from '../config';
 import { mockDataCourses, mockDataTeam } from '../data/mockData';
-import { AllData, CoursesWithDeadline, ILearner } from '../types/store';
+import { AllData, CoursesWithDeadline } from '../types/store';
 import { url } from './endpoints.api';
 
 export type ToUpdateUser = {
@@ -14,6 +14,13 @@ export type CourseToLock = {
   users: number[];
 };
 
+/**
+ * Fetches detailed statistics for a user on a specific course.
+ *
+ * @param {number} userId - The ID of the user.
+ * @param {number} courseId - The ID of the course.
+ * @return {Promise<Object>} A promise that resolves to the detailed statistics data of the user on the course.
+ */
 export const getDetailedStatisctics = async (
   userId: number,
   courseId: number,
@@ -30,6 +37,11 @@ export const getDetailedStatisctics = async (
   return data[0].data;
 };
 
+/**
+ * Fetches statistics for users (deprecated).
+ *
+ * @return {Promise<Object>} The data of the user statistics.
+ */
 export const fetchStatisctics = async () => {
   const response = await fetch(configApi.srv + url.getUsersStatistics, {
     credentials: 'include',
@@ -37,6 +49,12 @@ export const fetchStatisctics = async () => {
   const data = await response.json();
   return data[0].data;
 };
+
+/**
+ * Fetches the best try statistics for users.
+ *
+ * @return {Promise<Object>} The data of the best try statistics.
+ */
 export const fetchStatiscticsBestTry = async () => {
   const response = await fetch(configApi.srv + url.getUsersStatisticsBestTry, {
     credentials: 'include',
@@ -45,6 +63,12 @@ export const fetchStatiscticsBestTry = async () => {
   return data[0].data;
 };
 
+/**
+ * Fetches all data from the learnController endpoint. This data is for all users table.
+ *
+ * @return {Promise<AllData | undefined>} A promise that resolves to the fetched data or undefined if an error occurs.
+ * @throws {Error} If an error occurs during the fetch.
+ */
 export const fetchAllData = async (): Promise<AllData | undefined> => {
   let allData;
   try {
@@ -85,7 +109,13 @@ export const fetchAllData = async (): Promise<AllData | undefined> => {
     throw new Error(e.message);
   }
 };
-
+/**
+ * Locks the specified courses by sending a POST request to the server.
+ *
+ * @param {CourseToLock[]} dataToLock - An array of courses to lock, including the course ID and the user IDs to lock the course for.
+ * @return {Promise<any>} A promise that resolves to the locked data returned by the server.
+ * @throws {Error} If there is an error while making the POST request or parsing the response.
+ */
 export const lockCourses = async (dataToLock: CourseToLock[]) => {
   try {
     const response = await fetch(configApi.srv + url.lockCoursesEndpoint, {
@@ -115,6 +145,12 @@ export const lockCourses = async (dataToLock: CourseToLock[]) => {
   }
 };
 
+/**
+ * Updates all data with the provided data to update.
+ *
+ * @param {ToUpdateUser[]} dataToUpdate - The data to update.
+ * @return {Promise<any>} The updated data from the server.
+ */
 export const updateAllData = async (dataToUpdate: ToUpdateUser[]) => {
   try {
     const response = await fetch(configApi.srv + url.updateDataEndpoint, {
@@ -143,13 +179,23 @@ export const updateAllData = async (dataToUpdate: ToUpdateUser[]) => {
     });
   }
 };
-
+/**
+ * A function that fetches all learners asynchronously with a delay (mock).
+ *
+ * @return {Promise<any>} The mock data for all learners.
+ */
 export const fetchAllLearners = async () => {
   // Имитируем асинхронный запрос с задержкой
   await new Promise((resolve) => setTimeout(resolve, 1000));
 
   return mockDataTeam;
 };
+
+/**
+ * Fetches all courses asynchronously (mock).
+ *
+ * @return {Promise<any>} A promise that resolves to the fetched courses.
+ */
 export const fetchAllCourses = async () => {
   // Имитируем асинхронный запрос с задержкой
   await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -157,16 +203,4 @@ export const fetchAllCourses = async () => {
   return mockDataCourses;
 };
 
-export const filterLearners = (division: string, allLearners: ILearner[]) => {
-  return allLearners.filter((learner) => learner.division === '');
-};
 
-export const getCurrentUserDivision = (
-  currentUserName: string,
-  allLearners: ILearner[],
-) => {
-  const currentLearner = allLearners?.filter(
-    (learner) => learner?.name === currentUserName,
-  );
-  return currentLearner[0]?.division;
-};

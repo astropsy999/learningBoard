@@ -28,7 +28,12 @@ interface CourseCardActionsProps {
   checked?: boolean;
   isLoading?: boolean;
 }
-
+/**
+ * Renders the CourseCardActions component with various conditional UI elements based on props.
+ *
+ * @param {CourseCardActionsProps} props - The props for the CourseCardActions component
+ * @return {JSX.Element} The rendered CourseCardActions component
+ */
 export const CourseCardActions: React.FC<CourseCardActionsProps> = (props) => {
   const {
     checked,

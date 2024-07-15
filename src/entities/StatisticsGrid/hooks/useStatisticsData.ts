@@ -8,14 +8,18 @@ import { useCourses } from '../../../app/store/courses';
 
 import { CourseAttempt, StatInfoType } from '../../../app/types/stat';
 import { findMaxCourses } from '../../../shared/helpers/findMaxCoursesArrayInStat';
-import { getBestTry } from '../../../shared/helpers/getBestTry';
+
+/**
+ * Хук для получения данных статистики.
+ * @returns {Object} Объект с данными статистики и методами.
+ */
 
 export const useStatisticsData = () => {
   const { allCourses } = useCourses();
   const { data: rawStatistics, isLoading } = useSWR('stat', fetchStatisctics);
   const { data: rawStatisticsBestTry, isLoading: isLoadingBestTry } = useSWR(
     'statBestTry',
-    fetchStatiscticsBestTry
+    fetchStatiscticsBestTry,
   );
   const [coursesList, setCoursesList] = useState<CourseAttempt[]>([]);
   const [statLoading, setStatLoading] = useState(true);
@@ -35,6 +39,12 @@ export const useStatisticsData = () => {
 
   useEffect(() => {
     const courses = findMaxCourses(rawStatistics);
+    console.log("🚀 ~ useEffect ~ rawStatistics:", rawStatistics)
+    console.log(
+      '🚀 ~ useStatisticsData ~ rawStatisticsBestTry:',
+      rawStatisticsBestTry,
+    );
+
     setCoursesList(courses!);
   }, [rawStatistics]);
 
@@ -42,6 +52,20 @@ export const useStatisticsData = () => {
     setStatLoading(isLoading);
     allCourses && allCourses.length > 0 && setStatLoading(false);
   }, [statLoading, allCourses, isLoading]);
+
+  /**
+   * Показать подробную статистику.
+   * @param {number} course - Идентификатор курса.
+   * @param {number} user - Идентификатор пользователя.
+   * @param {string} userName - Имя пользователя.
+   * @param {string} status - Статус прохождения.
+   * @param {number} unixDate - Дата в формате Unix.
+   * @param {number} points - Набранные баллы.
+   * @param {number} totalPoints - Общее количество баллов.
+   * @param {string} percent - Процент выполнения.
+   * @param {number} passingScore - Проходной балл.
+   * @param {string} timeSpent - Потраченное время.
+   */
 
   const showDetailedStatistic = async (
     course: number,
@@ -53,7 +77,7 @@ export const useStatisticsData = () => {
     totalPoints: number,
     percent: string,
     passingScore: number,
-    timeSpent: string
+    timeSpent: string,
   ) => {
     if (status) {
       setShowDetailedStat((prev) => !prev);

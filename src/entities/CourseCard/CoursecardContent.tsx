@@ -7,7 +7,12 @@ interface CourseCardContentProps {
   courseItem: CourseData;
   isHighlighted: string;
 }
-
+/**
+ * Renders the content of a course card.
+ *
+ * @param {CourseCardContentProps} props - The properties for the course card content.
+ * @return {JSX.Element} The JSX element representing the course card content.
+ */
 export const CourseCardContent: React.FC<CourseCardContentProps> = (props) => {
   const { courseItem, isHighlighted } = props;
   return (
