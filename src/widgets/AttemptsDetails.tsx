@@ -1,12 +1,11 @@
-import * as React from 'react';
-import { useTheme } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { DetailedQuestion } from '../features/DetailedQuestion';
+import { useTheme } from '@mui/material/styles';
+import Tab from '@mui/material/Tab';
+import Tabs from '@mui/material/Tabs';
+import * as React from 'react';
 import { DetailedStatQuestion } from '../app/types/stat';
+import { DetailedQuestion } from '../features/DetailedQuestion';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -54,10 +53,6 @@ export default function AttemptDetailsTabs(props: AttemptDetailsTabsProps) {
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
-  };
-
-  const handleChangeIndex = (index: number) => {
-    setValue(index);
   };
 
   const tabStyles = { background: '#0c4056' };

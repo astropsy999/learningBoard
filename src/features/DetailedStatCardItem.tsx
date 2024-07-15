@@ -1,4 +1,4 @@
-import { Badge, Box, Skeleton } from '@mui/material';
+import { Box, Skeleton } from '@mui/material';
 import React from 'react';
 
 interface DetailedStatCardItemProps {

@@ -1,4 +1,4 @@
-import { Box, Button, Card, CardContent, Skeleton, Stack } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import Dialog, { DialogProps } from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
@@ -11,10 +11,10 @@ import {
   DetailedStatQuestion,
   StatInfoType,
 } from '../app/types/stat';
-import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
-import AttemptDetailsTabs from './AttemptsDetails';
 import { DetailedBestAttemptCard } from '../features/DetailedBestAttemptCard';
 import { getBestAttempt } from '../shared/helpers/getBestAttempt';
+import { getCourseTitleById } from '../shared/helpers/getCourseTitleById';
+import AttemptDetailsTabs from './AttemptsDetails';
 
 interface DetailedStartDialogProps {
   open: boolean;
@@ -26,7 +26,7 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
   props
 ) => {
   const { open, setOpen, selectedStatInfo } = props;
-  const [scroll, setScroll] = React.useState<DialogProps['scroll']>('paper');
+  const [scroll] = React.useState<DialogProps['scroll']>('paper');
   const { allCourses } = useCourses();
   const [isDetailedStatLoading, setIsDetailedStatLoading] =
     React.useState(true);
@@ -39,17 +39,12 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
     }[]
   >([]);
 
-  const [isNewCourse, setIsNewCourse] = React.useState(true);
 
-  const handleClickOpen = (scrollType: DialogProps['scroll']) => () => {
-    setOpen(true);
-    setScroll(scrollType);
-  };
 
   const getDetailedQuestions = (attempts: DetailedAttemptStat[]) => {
     let detailedQuestions = [];
     for (let i = 0; i < attempts.length; i++) {
-      const attempt = attempts[i];
+
       detailedQuestions.push({ [i + 1]: attempts[i].questions });
     }
 
@@ -66,9 +61,7 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
   React.useEffect(() => {
     const { user, course } = selectedStatInfo;
 
-    if (course === 10 || course === 12) {
-      setIsNewCourse(false);
-    }
+
     if (open) {
       const { current: descriptionElement } = descriptionElementRef;
       if (descriptionElement !== null) {
@@ -85,7 +78,7 @@ export const DetailedStatDialog: React.FC<DetailedStartDialogProps> = (
         setIsDetailedStatLoading(false);
       });
     }
-  }, [open]);
+  }, [open, selectedStatInfo]);
 
   return (
     <Box>

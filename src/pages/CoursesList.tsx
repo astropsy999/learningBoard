@@ -1,16 +1,16 @@
-import { Box, Button, Chip } from '@mui/material';
+import { Box, Chip } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 import React, { useEffect, useState } from 'react';
 import { Bounce, toast } from 'react-toastify';
 import { mutate } from 'swr';
-import { BlockCourseFor } from '../features/BlockCourseFor';
+import { lockCourses } from '../app/api/api';
 import { useCourses } from '../app/store/courses';
 import { useLearners } from '../app/store/learners';
-import { Course } from '../app/types/store';
-import { truncateDescription } from '../shared/helpers/truncateDescriptions';
-import { lockCourses } from '../app/api/api';
 import { dataGridStyles } from '../app/styles/DataGrid.styles';
+import { Course } from '../app/types/store';
+import { BlockCourseFor } from '../features/BlockCourseFor';
 import { LockCoursesButton } from '../features/LockCoursesButton';
+import { truncateDescription } from '../shared/helpers/truncateDescriptions';
 
 interface LockedData {
   [key: number]: string[];
