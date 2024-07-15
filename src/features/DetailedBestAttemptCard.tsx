@@ -13,7 +13,6 @@ export const DetailedBestAttemptCard: React.FC<DetailedBestAttemptCardProps> = (
   props
 ) => {
   const { data, isLoading, oldData } = props;
-  console.log('data: ', data);
 
   let isPassed;
 
