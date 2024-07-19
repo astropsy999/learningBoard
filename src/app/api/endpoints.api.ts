@@ -28,4 +28,5 @@ export const url = {
   getUsersStatisticsBestTry:
     '/index.php/Learncontroller/getUsersStatisticsBestTry',
   getDetailedUserStatisctics: '/index.php/Learncontroller/getUserStatistic',
+  deleteAttempt: '/index.php/learnController/deleteAttempt',
 };

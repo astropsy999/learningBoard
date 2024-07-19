@@ -91,6 +91,7 @@ export const fetchAllData = async (): Promise<AllData | undefined> => {
           });
         }
         allData = data[0].data;
+        console.log("🚀 ~ .then ~ allData:", allData)
       });
 
     return allData;
@@ -177,6 +178,26 @@ export const updateAllData = async (dataToUpdate: ToUpdateUser[]) => {
       theme: 'colored',
       transition: Bounce,
     });
+  }
+};
+
+export const deleteAttempt = async (userId: number, courseId: number) => {
+  const delUrl = `${configApi.srv}${url.deleteAttempt}?user=${userId}&course=${courseId}`;
+
+  try {
+    const response = await fetch(delUrl, {
+      method: 'GET',
+      credentials: 'include',
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    console.log('🚀 ~ deleteAttempt ~ data:', data);
+  } catch (error) {
+    console.error('🚀 ~ deleteAttempt ~ error:', error);
   }
 };
 /**

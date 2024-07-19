@@ -1,4 +1,4 @@
-import { Tooltip } from '@mui/material';
+import { Badge, Tooltip } from '@mui/material';
 import {
   GridColDef,
   GridFilterModel,
@@ -168,7 +168,7 @@ const LearnersList = () => {
           flex: 1,
           headerAlign: 'center',
           renderCell: ({ row }) => (
-            <AssignedCourseChip row={row} course={course} />
+                <AssignedCourseChip row={row} course={course} />
           ),
 
           type: 'singleSelect',
