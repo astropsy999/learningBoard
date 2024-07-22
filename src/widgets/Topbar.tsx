@@ -67,7 +67,7 @@ const Topbar: FC<TopbarProps> = () => {
       const learnersWithData = users.map((user) => ({
         ...user,
         division: user.division
-          ? divisions[user.division].short_name
+          ? divisions[user.division]?.short_name
           : undefined,
         courses: user.courses.map((courseId) => ({
           [courseId.id]: courseTitlesById[courseId.id],
