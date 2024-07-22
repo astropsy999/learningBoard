@@ -89,8 +89,9 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
     }
     const deleteCourse = event.currentTarget.parentElement as HTMLButtonElement;
     const id = Number(deleteCourse.getAttribute('data-item-id'));
+    // @ts-ignore
     const newSelectedCourses = selectedCoursesToSave.filter(
-      (course) => course.id !== id,
+      (course: any) => course.id !== id
     );
     setSelectedCoursesToSave(newSelectedCourses);
   };
@@ -143,7 +144,7 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
     } else {
       dataToUpdate = [];
       dataToUpdate.push(
-        allLearners?.find((learner) => learner.name === onlyLearnerName),
+        allLearners?.find((learner) => learner.name === onlyLearnerName)
       );
       dataToUpdate = dataToUpdate.map((user) => {
         return {
@@ -152,9 +153,9 @@ export const SubmitDialog: React.FC<SubmitDialogProps> = ({
         };
       });
     }
-
+    // @ts-ignore
     const filteredDataToUpdate = dataToUpdate.filter(
-      (user) => user !== null,
+      (user: any) => user !== null
     ) as ToUpdateUser[];
 
     const result = await updateAllData(filteredDataToUpdate);

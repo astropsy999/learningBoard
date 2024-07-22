@@ -23,7 +23,7 @@ export type CourseToLock = {
  */
 export const getDetailedStatisctics = async (
   userId: number,
-  courseId: number,
+  courseId: number
 ) => {
   const response = await fetch(
     configApi.srv +
@@ -31,7 +31,7 @@ export const getDetailedStatisctics = async (
       `?user=${userId}&course=${courseId}`,
     {
       credentials: 'include',
-    },
+    }
   );
   const data = await response.json();
   return data[0].data;
@@ -91,7 +91,6 @@ export const fetchAllData = async (): Promise<AllData | undefined> => {
           });
         }
         allData = data[0].data;
-        console.log("🚀 ~ .then ~ allData:", allData)
       });
 
     return allData;
@@ -223,5 +222,3 @@ export const fetchAllCourses = async () => {
 
   return mockDataCourses;
 };
-
-

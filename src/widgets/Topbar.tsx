@@ -72,6 +72,7 @@ const Topbar: FC<TopbarProps> = () => {
         courses: user.courses.map((courseId) => ({
           [courseId.id]: courseTitlesById[courseId.id],
           deadline: courseId.deadline,
+          availability: courseId.availability,
         })),
       }));
 
@@ -84,7 +85,7 @@ const Topbar: FC<TopbarProps> = () => {
         const userDivisionId = currentUserInfo.division;
 
         setCurrentUserDivisionName(
-          allDataFromStore?.divisions[userDivisionId]?.short_name,
+          allDataFromStore?.divisions[userDivisionId]?.short_name
         );
       }
     }

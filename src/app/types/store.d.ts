@@ -12,6 +12,7 @@ export type User = {
 export type CoursesWithDeadline = {
   id: number;
   deadline?: number | null;
+  availability?: boolean;
 };
 
 export type Course = {
@@ -101,7 +102,7 @@ export type UserActions = {
   setCurrentUserDivisionName: (name: string) => void;
   setDivisions: (newDivisions: Divisions) => void;
   setSelectedLearnersToLockCourse: (
-    newSelectedLearnersToLockCourse: string[] | ILearner[],
+    newSelectedLearnersToLockCourse: string[] | ILearner[]
   ) => void;
   setIsMassEditMode: (value: boolean) => void;
   setCurrentDivisionUsersList: (users: string[]) => void;

@@ -112,7 +112,7 @@ const LearnersList = () => {
     selectedValues,
     setSelectedValues,
     filterLabel,
-    selectedField,
+    selectedField
   );
 
   const onChangeFilterModel = (newModel: GridFilterModel) => {
@@ -168,7 +168,7 @@ const LearnersList = () => {
           flex: 1,
           headerAlign: 'center',
           renderCell: ({ row }) => (
-                <AssignedCourseChip row={row} course={course} />
+            <AssignedCourseChip row={row} course={course} />
           ),
 
           type: 'singleSelect',
