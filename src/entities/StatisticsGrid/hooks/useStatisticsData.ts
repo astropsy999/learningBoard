@@ -74,7 +74,7 @@ export const useStatisticsData = () => {
     passingScore: number,
     timeSpent: string,
   ) => {
-    if (status) {
+    if (totalPoints) {
       setShowDetailedStat((prev) => !prev);
       const getStatInfo = {
         user,
